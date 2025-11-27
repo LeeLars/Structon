@@ -83,46 +83,52 @@ export function createProductCard(product, isLoggedIn = false) {
     ? `product.html?id=${product.slug || product.id}`
     : `pages/product.html?id=${product.slug || product.id}`;
 
-  // Button voor niet-ingelogde bezoekers: Offerte aanvragen (split button)
-  // Button voor ingelogde bezoekers: Toevoegen aan winkelwagen
-  const actionButton = isLoggedIn 
-    ? `<a href="${productUrl}" class="btn-split btn-split-sm">
-        <span class="btn-split-text">Bekijken</span>
-        <span class="btn-split-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-      </a>`
-    : `<a href="/contact/?product=${product.slug || product.id}" class="btn-split btn-split-sm">
-        <span class="btn-split-text">Offerte aanvragen</span>
-        <span class="btn-split-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        </span>
-      </a>`;
+  // Specs formatting (e.g. 34 kg | 42 liter)
+  const specs = [];
+  if (product.weight) specs.push(`${product.weight} kg`);
+  if (product.volume) specs.push(`${product.volume} liter`);
+  if (product.width) specs.push(`${product.width}mm`); // of 1 meter als tekst
+  // Attachment type (CW00) vaak in titel, maar kan ook hier
 
-  const priceSection = isLoggedIn
-    ? `<span class="product-price">€${product.price_excl_vat || '0.00'}</span>`
-    : `<span class="price-locked">Login voor prijs</span>`;
+  const specsHtml = specs.length > 0 
+    ? `<p class="product-card-specs">${specs.join(' | ')}</p>`
+    : '';
+
+  // Footer content based on login state
+  let footerHtml;
+  
+  if (isLoggedIn) {
+    footerHtml = `
+      <div class="product-price-row">
+        <span class="product-price">€${product.price_excl_vat || '0.00'}</span>
+        <span class="product-vat">,- excl. BTW</span>
+      </div>
+      <button class="btn-outline btn-full add-to-cart" data-id="${product.id}">
+        In winkelwagen
+      </button>
+    `;
+  } else {
+    // Niet ingelogd: Offerte aanvragen knop, geen prijs
+    footerHtml = `
+      <a href="/contact/?product=${product.slug || product.id}" class="btn-outline btn-full">
+        Offerte aanvragen
+      </a>
+    `;
+  }
 
   return `
-    <article class="product-card" data-product-id="${product.id}">
+    <article class="product-card clean-card" data-product-id="${product.id}">
       <a href="${productUrl}" class="product-card-image">
         <img src="${imageUrl}" alt="${product.title}" loading="lazy">
       </a>
+      <div class="product-card-divider"></div>
       <div class="product-card-content">
-        <span class="product-card-category">${product.category_title || 'Product'}</span>
         <h3 class="product-card-title">
           <a href="${productUrl}">${product.title}</a>
         </h3>
-        <p class="product-card-specs">
-          ${product.volume ? `${product.volume}L` : ''} 
-          ${product.width ? `• ${product.width}mm` : ''} 
-          ${product.attachment_type ? `• ${product.attachment_type}` : ''}
-        </p>
+        ${specsHtml}
         <div class="product-card-footer">
-          <div class="product-price-section">
-            ${priceSection}
-          </div>
-          ${actionButton}
+          ${footerHtml}
         </div>
       </div>
     </article>

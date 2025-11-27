@@ -334,13 +334,134 @@
   gap: 30px;
 }
 
-@media (max-width: 1024px) {
+/* Clean Product Card Design (Figma Style) */
+.product-card.clean-card {
+  background: white;
+  border: 1px solid #e5e7eb; /* Subtiele border voor definitie */
+  box-shadow: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  border-radius: var(--radius-md);
+}
+
+.product-card.clean-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+  border-color: transparent;
+}
+
+.product-card-image {
+  height: 220px; /* Vaste hoogte voor afbeelding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.product-card-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-card-image img {
+  transform: scale(1.05);
+}
+
+.product-card-divider {
+  height: 2px;
+  background-color: #236773; /* Petrol divider */
+  width: 40px; /* Korte lijn */
+  margin-bottom: 16px;
+}
+
+.product-card-title {
+  font-family: var(--font-body); /* Of Heading? Screenshot lijkt vrij standaard bold */
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1E4851;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.product-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card-specs {
+  font-size: 0.9rem;
+  color: #64748b; /* Lichter grijs */
+  font-weight: 300;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.product-card-footer {
+  margin-top: auto;
+}
+
+.product-price-row {
+  margin-bottom: 15px;
+  color: #1E4851;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.product-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.product-vat {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #64748b;
+}
+
+/* Outline button style voor deze kaart */
+.clean-card .btn-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centreren tekst */
+  padding: 10px 20px;
+  border: 2px solid #1E4851;
+  color: #1E4851;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border-radius: 4px;
+  transition: all 0.2s;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+.clean-card .btn-outline:hover {
+  background-color: #1E4851;
+  color: white;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+  #featured-products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
   #featured-products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
   #featured-products-grid {
     grid-template-columns: 1fr;
   }

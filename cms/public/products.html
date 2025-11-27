@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Producten – Structon CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/cms/assets/css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="logo-box">S</div>
+        <div class="sidebar-brand">
+          <h1 class="sidebar-logo">STRUCTON</h1>
+          <span class="sidebar-subtitle">Content Management</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="/cms/" class="nav-item" data-page="dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="/cms/products.html" class="nav-item active" data-page="products">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <span>Producten</span>
+        </a>
+        <a href="/cms/categories.html" class="nav-item" data-page="categories">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Categorieën</span>
+        </a>
+        <a href="/cms/brands.html" class="nav-item" data-page="brands">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+          <span>Merken</span>
+        </a>
+        <a href="/cms/sectors.html" class="nav-item" data-page="sectors">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>Sectoren</span>
+        </a>
+        <a href="/cms/prices.html" class="nav-item" data-page="prices">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          <span>Prijzen</span>
+        </a>
+        <a href="/cms/users.html" class="nav-item" data-page="users">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Gebruikers</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">A</div>
+          <div class="user-details">
+            <span class="user-name" id="sidebar-user-name">Admin</span>
+            <span class="user-role">Beheerder</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="logout-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Uitloggen</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="header-left">
+          <h2 class="page-title">Producten</h2>
+          <p class="page-subtitle">Beheer je productcatalogus</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="btn-new-product">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Nieuw Product
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <!-- Filters & Search -->
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="search-box">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <input type="text" id="search-products" placeholder="Zoek producten..." class="search-input">
+            </div>
+            
+            <select id="filter-category" class="filter-select">
+              <option value="">Alle Categorieën</option>
+              <option value="slotenbakken">Slotenbakken</option>
+              <option value="dieplepelbakken">Dieplepelbakken</option>
+              <option value="puinbakken">Puinbakken</option>
+            </select>
+            
+            <select id="filter-brand" class="filter-select">
+              <option value="">Alle Merken</option>
+              <option value="caterpillar">Caterpillar</option>
+              <option value="komatsu">Komatsu</option>
+              <option value="volvo">Volvo</option>
+            </select>
+            
+            <select id="filter-status" class="filter-select">
+              <option value="">Alle Status</option>
+              <option value="active">Actief</option>
+              <option value="inactive">Inactief</option>
+              <option value="featured">Featured</option>
+            </select>
+          </div>
+          
+          <div class="toolbar-right">
+            <button class="btn-icon" id="view-grid" title="Grid weergave">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </button>
+            <button class="btn-icon active" id="view-list" title="Lijst weergave">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions" id="bulk-actions" style="display: none;">
+          <div class="bulk-info">
+            <span id="selected-count">0</span> producten geselecteerd
+          </div>
+          <div class="bulk-buttons">
+            <button class="btn btn-secondary" id="bulk-activate">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Activeren
+            </button>
+            <button class="btn btn-secondary" id="bulk-deactivate">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+              Deactiveren
+            </button>
+            <button class="btn btn-danger" id="bulk-delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              Verwijderen
+            </button>
+          </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="products-container">
+          <div class="table-container">
+            <table class="admin-table" id="products-table">
+              <thead>
+                <tr>
+                  <th width="40">
+                    <input type="checkbox" id="select-all" class="checkbox">
+                  </th>
+                  <th width="80">Afbeelding</th>
+                  <th>Product</th>
+                  <th>Categorie</th>
+                  <th>Merk</th>
+                  <th>Specificaties</th>
+                  <th>Voorraad</th>
+                  <th>Prijs</th>
+                  <th>Status</th>
+                  <th width="120" class="text-right">Acties</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <tr>
+                  <td colspan="10" class="loading-cell">
+                    <div class="loading-spinner"></div>
+                    <span>Producten laden...</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Pagination -->
+          <div class="pagination" id="pagination">
+            <button class="pagination-btn" id="prev-page" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              Vorige
+            </button>
+            <div class="pagination-info">
+              Pagina <span id="current-page">1</span> van <span id="total-pages">1</span>
+            </div>
+            <button class="pagination-btn" id="next-page">
+              Volgende
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- New/Edit Product Modal -->
+  <div class="modal" id="product-modal" style="display: none;">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="modal-title">Nieuw Product</h2>
+        <button class="btn-close" id="close-modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <form id="product-form">
+        <div class="modal-body">
+          <div class="form-grid">
+            <!-- Basis Info -->
+            <div class="form-section">
+              <h3 class="form-section-title">Basis Informatie</h3>
+              
+              <div class="form-group">
+                <label for="product-title">Titel *</label>
+                <input type="text" id="product-title" name="title" required placeholder="Bijv. Slotenbak 300mm CW10">
+              </div>
+              
+              <div class="form-group">
+                <label for="product-slug">Slug *</label>
+                <input type="text" id="product-slug" name="slug" required placeholder="slotenbak-300mm-cw10">
+                <span class="form-hint">Automatisch gegenereerd uit titel</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="product-description">Beschrijving</label>
+                <textarea id="product-description" name="description" rows="4" placeholder="Uitgebreide productbeschrijving..."></textarea>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="product-category">Categorie *</label>
+                  <select id="product-category" name="category_id" required>
+                    <option value="">Selecteer categorie</option>
+                    <option value="1">Slotenbakken</option>
+                    <option value="2">Dieplepelbakken</option>
+                    <option value="3">Puinbakken</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="product-brand">Merk</label>
+                  <select id="product-brand" name="brand_id">
+                    <option value="">Geen merk</option>
+                    <option value="1">Caterpillar</option>
+                    <option value="2">Komatsu</option>
+                    <option value="3">Volvo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Specificaties -->
+            <div class="form-section">
+              <h3 class="form-section-title">Specificaties</h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="product-width">Breedte (mm)</label>
+                  <input type="number" id="product-width" name="width" placeholder="300">
+                </div>
+                
+                <div class="form-group">
+                  <label for="product-volume">Inhoud (liter)</label>
+                  <input type="number" id="product-volume" name="volume" placeholder="80">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="product-weight">Gewicht (kg)</label>
+                  <input type="number" id="product-weight" name="weight" placeholder="45">
+                </div>
+                
+                <div class="form-group">
+                  <label for="product-attachment">Ophanging</label>
+                  <select id="product-attachment" name="attachment_type">
+                    <option value="">Selecteer type</option>
+                    <option value="CW00">CW00</option>
+                    <option value="CW05">CW05</option>
+                    <option value="CW10">CW10</option>
+                    <option value="CW20">CW20</option>
+                    <option value="CW30">CW30</option>
+                    <option value="CW40">CW40</option>
+                    <option value="CW45">CW45</option>
+                    <option value="S40">S40</option>
+                    <option value="S50">S50</option>
+                    <option value="S60">S60</option>
+                    <option value="S70">S70</option>
+                    <option value="S80">S80</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="product-min-weight">Min. graafmachine (kg)</label>
+                  <input type="number" id="product-min-weight" name="excavator_weight_min" placeholder="1000">
+                </div>
+                
+                <div class="form-group">
+                  <label for="product-max-weight">Max. graafmachine (kg)</label>
+                  <input type="number" id="product-max-weight" name="excavator_weight_max" placeholder="2000">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Afbeeldingen -->
+            <div class="form-section full-width">
+              <h3 class="form-section-title">Afbeeldingen</h3>
+              
+              <div class="image-upload-area" id="image-upload-area">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <p>Sleep afbeeldingen hierheen of <span class="link">klik om te uploaden</span></p>
+                <input type="file" id="image-input" accept="image/*" multiple hidden>
+              </div>
+              
+              <div class="image-preview-grid" id="image-preview-grid">
+                <!-- Images will be added here -->
+              </div>
+            </div>
+            
+            <!-- Voorraad & Status -->
+            <div class="form-section">
+              <h3 class="form-section-title">Voorraad & Status</h3>
+              
+              <div class="form-group">
+                <label for="product-stock">Voorraad</label>
+                <input type="number" id="product-stock" name="stock_quantity" value="0" min="0">
+              </div>
+              
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="product-active" name="is_active" checked>
+                  <span>Product is actief</span>
+                </label>
+              </div>
+              
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="product-featured" name="is_featured">
+                  <span>Toon op homepage (Featured)</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Prijs -->
+            <div class="form-section">
+              <h3 class="form-section-title">Prijs</h3>
+              
+              <div class="form-group">
+                <label for="product-price">Prijs (excl. BTW)</label>
+                <div class="input-group">
+                  <span class="input-prefix">€</span>
+                  <input type="number" id="product-price" name="price" step="0.01" placeholder="1250.00">
+                </div>
+                <span class="form-hint">Prijs kan ook later via Prijzen pagina worden ingesteld</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancel-product">Annuleren</button>
+          <button type="submit" class="btn btn-primary" id="save-product">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Product Opslaan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/cms/assets/js/products.js"></script>
+</body>
+</html>

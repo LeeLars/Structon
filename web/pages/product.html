@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Productdetails - Structon kraanbakken en aanbouwdelen">
+  <title>Product | Structon</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/pages/product.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="../index.html" class="logo">
+          <span class="logo-text">STRUCTON</span>
+        </a>
+        
+        <nav class="nav-main">
+          <a href="../index.html" class="nav-link">Home</a>
+          <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
+          <a href="category.html?cat=dieplepelbakken" class="nav-link">Dieplepelbakken</a>
+          <a href="category.html?cat=sloopgereedschap" class="nav-link">Sloopgereedschap</a>
+          <a href="about.html" class="nav-link">Over Ons</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="login.html" class="btn btn-primary btn-sm" id="login-btn">
+            <span>Inloggen</span>
+          </a>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav class="nav-mobile" id="nav-mobile">
+    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
+    <a href="category.html?cat=dieplepelbakken" class="nav-link">Dieplepelbakken</a>
+    <a href="category.html?cat=sloopgereedschap" class="nav-link">Sloopgereedschap</a>
+    <a href="about.html" class="nav-link">Over Ons</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <a href="login.html" class="btn btn-primary">Inloggen</a>
+  </nav>
+
+  <main>
+    <!-- Breadcrumb -->
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <a href="category.html" id="breadcrumb-category-link">Producten</a>
+          <span>/</span>
+          <span id="breadcrumb-product">Product</span>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Product Detail -->
+    <section class="section product-section">
+      <div class="container">
+        <div class="product-detail" id="product-detail">
+          <!-- Loading State -->
+          <div class="loading">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Action Section (Large Work Photo) -->
+    <section class="section product-action-section bg-gray" id="product-action-section" style="display: none;">
+      <div class="container">
+        <div class="product-action-grid">
+          <div class="product-action-content">
+            <h2 class="product-action-title">Deze Structon Kraanbak</h2>
+            <p class="product-action-text" id="product-action-text">
+              Ontworpen voor de zwaarste klussen. Vervaardigd uit hoogwaardig Hardox staal 
+              voor maximale slijtvastheid en een lange levensduur.
+            </p>
+            <ul class="product-action-features">
+              <li>✓ Hardox 450 slijtplaten</li>
+              <li>✓ Versterkte constructie</li>
+              <li>✓ Passend voor alle gangbare snelwissels</li>
+              <li>✓ Direct uit voorraad leverbaar</li>
+            </ul>
+          </div>
+          <div class="product-action-image">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=600&fit=crop" 
+                 alt="Kraanbak in actie" 
+                 id="product-action-img">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="section related-section" id="related-section" style="display: none;">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Gerelateerde Producten</h2>
+        </div>
+        <div class="products-grid grid grid-4" id="related-products">
+          <!-- Dynamically loaded -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="footer-col-title">Structon</h4>
+          <p class="footer-about">
+            Al meer dan 25 jaar uw specialist in kraanbakken en graafmachine aanbouwdelen.
+          </p>
+        </div>
+        
+        <div class="footer-col">
+          <h4 class="footer-col-title">Producten</h4>
+          <nav class="footer-links">
+            <a href="category.html?cat=slotenbakken" class="footer-link">Slotenbakken</a>
+            <a href="category.html?cat=dieplepelbakken" class="footer-link">Dieplepelbakken</a>
+            <a href="category.html?cat=sloopgereedschap" class="footer-link">Sloopgereedschap</a>
+            <a href="category.html?cat=adapters" class="footer-link">Adapters</a>
+          </nav>
+        </div>
+        
+        <div class="footer-col">
+          <h4 class="footer-col-title">Informatie</h4>
+          <nav class="footer-links">
+            <a href="about.html" class="footer-link">Over Ons</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+            <a href="login.html" class="footer-link">Klant Login</a>
+          </nav>
+        </div>
+        
+        <div class="footer-col">
+          <h4 class="footer-col-title">Contact</h4>
+          <div class="footer-contact">
+            <p>📍 Industrieweg 123, 1234 AB Plaats</p>
+            <p>📞 +31 (0)12 345 6789</p>
+            <p>✉️ info@structon.nl</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2024 Structon. Alle rechten voorbehouden.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../assets/js/pages/product.js"></script>
+</body>
+</html>

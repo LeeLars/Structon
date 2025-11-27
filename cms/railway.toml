@@ -1,0 +1,4 @@
+[service]
+name = "grafix-cms-starter"
+root = "."
+start = "npm start"

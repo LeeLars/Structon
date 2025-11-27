@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structon CMS – Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/cms/assets/css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <h1 class="sidebar-logo">STRUCTON</h1>
+        <span class="sidebar-subtitle">CMS</span>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="/cms/" class="nav-item active" data-page="dashboard">
+          <span class="nav-icon">📊</span>
+          Dashboard
+        </a>
+        <a href="/cms/products.html" class="nav-item" data-page="products">
+          <span class="nav-icon">📦</span>
+          Producten
+        </a>
+        <a href="/cms/categories.html" class="nav-item" data-page="categories">
+          <span class="nav-icon">📁</span>
+          Categorieën
+        </a>
+        <a href="/cms/brands.html" class="nav-item" data-page="brands">
+          <span class="nav-icon">🏷️</span>
+          Merken
+        </a>
+        <a href="/cms/sectors.html" class="nav-item" data-page="sectors">
+          <span class="nav-icon">🏭</span>
+          Sectoren
+        </a>
+        <a href="/cms/prices.html" class="nav-item" data-page="prices">
+          <span class="nav-icon">💰</span>
+          Prijzen
+        </a>
+        <a href="/cms/users.html" class="nav-item" data-page="users">
+          <span class="nav-icon">👥</span>
+          Gebruikers
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logout-btn">Uitloggen</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h2 class="page-title">Dashboard</h2>
+        <div class="header-actions">
+          <span class="user-info" id="user-info">Admin</span>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <!-- Dashboard Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-info">
+              <span class="stat-value" id="stat-products">-</span>
+              <span class="stat-label">Producten</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-info">
+              <span class="stat-value" id="stat-categories">-</span>
+              <span class="stat-label">Categorieën</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <span class="stat-value" id="stat-users">-</span>
+              <span class="stat-label">Gebruikers</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🏷️</div>
+            <div class="stat-info">
+              <span class="stat-value" id="stat-brands">-</span>
+              <span class="stat-label">Merken</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <section class="admin-section">
+          <h3 class="section-title">Snelle Acties</h3>
+          <div class="quick-actions">
+            <a href="/cms/products.html?action=new" class="action-card">
+              <span class="action-icon">➕</span>
+              <span class="action-text">Nieuw Product</span>
+            </a>
+            <a href="/cms/users.html?action=new" class="action-card">
+              <span class="action-icon">👤</span>
+              <span class="action-text">Nieuwe Gebruiker</span>
+            </a>
+            <a href="/cms/prices.html" class="action-card">
+              <span class="action-icon">💰</span>
+              <span class="action-text">Prijzen Beheren</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- Recent Products -->
+        <section class="admin-section">
+          <h3 class="section-title">Recente Producten</h3>
+          <div class="table-container">
+            <table class="admin-table" id="recent-products">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Categorie</th>
+                  <th>Prijs</th>
+                  <th>Status</th>
+                  <th>Acties</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="5" class="loading-cell">Laden...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Login Modal (shown if not authenticated) -->
+  <div class="modal" id="login-modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Admin Login</h2>
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Wachtwoord</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-error" id="login-error" style="display: none;"></div>
+        <button type="submit" class="btn btn-primary">Inloggen</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/cms/assets/js/admin.js"></script>
+</body>
+</html>

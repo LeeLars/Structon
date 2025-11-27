@@ -186,30 +186,48 @@
 .usp-list {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
 }
 
 .usp-item {
   display: flex;
   gap: 24px;
-  padding-left: 24px;
-  border-left: 4px solid #1E4851; /* Donkere border */
   position: relative;
+  align-items: flex-start;
+}
+
+/* Border links van het nummer */
+.usp-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #1E4851;
+  border-radius: 2px;
 }
 
 .usp-number {
   font-family: var(--font-heading);
-  font-size: 4rem;
+  font-size: 5rem; /* Groter */
   font-weight: 700;
-  color: #1E4851; /* Donkere kleur */
-  line-height: 1;
-  flex-shrink: 0;
+  color: #1E4851;
+  line-height: 0.8;
+  margin-left: 20px; /* Ruimte na de border */
+  min-width: 60px; /* Vaste breedte voor uitlijning */
+}
+
+.usp-content {
+  flex: 1;
+  text-align: left; /* Links uitgelijnd */
+  padding-top: 5px; /* Visueel uitlijnen met nummer */
 }
 
 .usp-content h4 {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
   color: white;
   text-transform: uppercase;
 }
@@ -217,20 +235,37 @@
 .usp-content p {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
   font-weight: 300;
 }
 
-/* Button override voor deze sectie */
-.section-usp .btn-dark-petrol {
+/* Button override voor Split Button in deze sectie */
+.section-usp .btn-split {
   background-color: #1E4851;
-  border-color: #1E4851;
-  padding: 12px 30px;
-  font-size: 1.1rem;
+  color: white;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0; /* Reset padding voor split button layout */
+  margin-top: 20px;
 }
 
-.section-usp .btn-dark-petrol:hover {
+.section-usp .btn-split-text {
+  padding: 12px 24px;
+  font-weight: 500;
+}
+
+.section-usp .btn-split-icon {
+  background-color: rgba(0,0,0,0.2);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-usp .btn-split:hover {
   background-color: #16363d;
   transform: translateY(-2px);
 }

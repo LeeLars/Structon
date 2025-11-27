@@ -431,11 +431,21 @@ p {
   text-decoration: none;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: #2C5F6F; /* Match Top Bar */
+  height: 140px; /* Tall enough to hang from top */
+  width: 120px;
+  position: absolute;
+  top: -55px; /* Pull up to cover top bar area */
+  left: 20px;
+  border-radius: 0 0 20px 20px;
+  z-index: 20;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .logo-image {
-  height: 50px;
-  width: auto;
+  height: auto;
+  width: 80px; /* Adjust size inside box */
 }
 
 .logo-box {
@@ -445,9 +455,10 @@ p {
 /* Menu items */
 .menu {
   display: none;
-  gap: 60px; /* Increased spacing */
+  gap: 60px;
   flex: 1;
-  justify-content: center; /* Center items */
+  justify-content: center;
+  margin-left: 140px; /* Push menu right to avoid logo */
 }
 
 @media (min-width: 1024px) {

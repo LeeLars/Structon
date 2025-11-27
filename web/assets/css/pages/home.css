@@ -4,9 +4,9 @@
 
 /* Hero Section Enhancement */
 .hero {
-  background-color: var(--color-white); /* Wit ipv gradient */
-  padding: var(--space-16) 0 var(--space-8); /* Minder bottom padding voor betere aansluiting */
-  text-align: right; /* Rechts uitgelijnd */
+  background-color: var(--color-white);
+  padding: var(--space-16) 0 var(--space-8);
+  text-align: left; /* Links uitgelijnd */
 }
 
 .hero-content {

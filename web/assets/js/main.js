@@ -9,7 +9,25 @@ import { initAuth } from './auth.js';
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initAuth();
+  initCmsLink();
 });
+
+/**
+ * CMS Admin Link - Auto-detect URL
+ */
+function initCmsLink() {
+  const cmsLinks = document.querySelectorAll('.cms-admin-icon');
+  const hostname = window.location.hostname;
+  
+  // Determine CMS URL based on environment
+  const cmsUrl = (hostname === 'localhost' || hostname === '127.0.0.1')
+    ? 'http://localhost:4000/cms/'
+    : 'https://structon-cms.up.railway.app/cms/';
+  
+  cmsLinks.forEach(link => {
+    link.href = cmsUrl;
+  });
+}
 
 /**
  * Mobile Menu Toggle

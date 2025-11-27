@@ -6,11 +6,12 @@
 .hero {
   background-color: var(--color-white);
   padding: var(--space-16) 0 var(--space-8);
-  text-align: left; /* Links uitgelijnd */
+  text-align: center; /* Gecentreerd */
 }
 
 .hero-content {
   width: 100%; /* Use full container width */
+  margin: 0 auto;
 }
 
 .hero-title {
@@ -18,6 +19,7 @@
   margin-bottom: 0;
   color: var(--color-primary-dark);
   line-height: 1.2;
+  text-align: center;
 }
 
 .hero-subtitle {
@@ -191,7 +193,7 @@
 
 .usp-item {
   display: flex; /* Terug naar Flex voor betere controle */
-  gap: 30px;
+  gap: 40px; /* Increased gap for better separation */
   padding: 50px 0; /* Increased from 35px */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   align-items: flex-start;
@@ -216,13 +218,12 @@
   font-size: 5rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.9);
-  line-height: 0.7; /* Strakke line-height voor top alignment */
+  line-height: 1; /* Adjusted line height for better vertical centering with text block top */
   margin: 0;
   min-width: 70px;
   text-align: center;
   flex-shrink: 0;
-  transform: none; /* Geen verschuiving meer */
-  margin-top: 5px; /* Kleine correctie voor font baseline */
+  transform: translateY(-10px); /* Slight lift to align top with H4 */
   position: static; /* Reset absolute positioning if any inherited */
 }
 

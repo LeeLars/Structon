@@ -3,10 +3,20 @@
  * Handles all communication with the CMS API
  */
 
-// API Base URL - change for production
-const API_BASE = window.location.hostname === 'localhost' 
-  ? 'http://localhost:4000/api'
-  : 'https://structon-production.up.railway.app/api';
+// API Base URL - automatically detects environment
+const getApiBaseUrl = () => {
+  const hostname = window.location.hostname;
+  
+  // Local development
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:4000/api';
+  }
+  
+  // Production (GitHub Pages or custom domain)
+  return 'https://structon-cms.up.railway.app/api';
+};
+
+const API_BASE = getApiBaseUrl();
 
 /**
  * Make API request with error handling

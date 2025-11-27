@@ -434,6 +434,12 @@
 /* ============================================
    SEO BRANDS SECTION
    ============================================ */
+/* Special modifier for brands section to stack content */
+.usp-container.brands-container {
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
 .brands-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

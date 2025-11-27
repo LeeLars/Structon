@@ -213,15 +213,16 @@
 
 .usp-number {
   font-family: var(--font-heading);
-  font-size: 5rem; /* Nog groter */
+  font-size: 5rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.9); /* Bijna volledig wit voor maximale zichtbaarheid */
-  line-height: 0.8;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 0.7; /* Strakke line-height voor top alignment */
   margin: 0;
   min-width: 70px;
   text-align: center;
   flex-shrink: 0;
-  transform: translateY(5px);
+  transform: none; /* Geen verschuiving meer */
+  margin-top: 5px; /* Kleine correctie voor font baseline */
 }
 
 .usp-content {

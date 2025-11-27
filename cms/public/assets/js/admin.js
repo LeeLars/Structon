@@ -1,6 +1,9 @@
 /**
  * Structon CMS Admin JavaScript
+ * Dashboard functionality with new design
  */
+
+import api from './api-client.js';
 
 const API_BASE = '/api';
 
@@ -11,6 +14,7 @@ let currentUser = null;
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   setupEventListeners();
+  updateSidebarUser();
 });
 
 /**
@@ -37,7 +41,11 @@ async function checkAuth() {
     }
 
     // Update UI
-    document.getElementById('user-info').textContent = currentUser.email;
+    updateSidebarUser();
+    const userInfo = document.getElementById('user-info');
+    if (userInfo) {
+      userInfo.textContent = currentUser.email;
+    }
     
     // Load dashboard data
     loadDashboardData();
@@ -95,7 +103,11 @@ async function handleLogin(e) {
 
     currentUser = data.user;
     hideLoginModal();
-    document.getElementById('user-info').textContent = currentUser.email;
+    updateSidebarUser();
+    const userInfo = document.getElementById('user-info');
+    if (userInfo) {
+      userInfo.textContent = currentUser.email;
+    }
     loadDashboardData();
 
   } catch (error) {
@@ -253,7 +265,49 @@ async function adminFetch(endpoint, options = {}) {
   return data;
 }
 
+/**
+ * Update sidebar user info
+ */
+function updateSidebarUser() {
+  const sidebarUserName = document.getElementById('sidebar-user-name');
+  if (sidebarUserName && currentUser) {
+    sidebarUserName.textContent = currentUser.email.split('@')[0];
+  }
+}
+
+/**
+ * Show toast notification
+ */
+function showToast(message, type = 'success') {
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  
+  // Add to body
+  document.body.appendChild(toast);
+  
+  // Show toast
+  setTimeout(() => toast.classList.add('show'), 100);
+  
+  // Remove after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+/**
+ * Confirm dialog
+ */
+function confirm(message) {
+  return window.confirm(message);
+}
+
 // Export for use in other admin pages
 window.adminFetch = adminFetch;
 window.formatPrice = formatPrice;
 window.escapeHtml = escapeHtml;
+window.showToast = showToast;
+window.confirmAction = confirm;
+window.currentUser = () => currentUser;

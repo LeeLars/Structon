@@ -365,6 +365,8 @@ p {
   color: white;
   padding: 10px 0;
   font-size: 14px;
+  position: relative; /* Ensure z-index works */
+  z-index: 30; /* Higher than logo (20) so links are clickable */
 }
 
 .top-bar .container {
@@ -410,7 +412,7 @@ p {
 .main-nav {
   background-color: white;
   border-bottom: 2px solid #2C5F6F; /* Border in Petrol color */
-  padding: 15px 0;
+  padding: 15px 0 45px 0; /* Increased bottom padding for button space */
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
@@ -500,7 +502,7 @@ p {
   display: none;
   background-color: #2C5F6F;
   color: white;
-  padding: 12px 40px; /* Slightly wider for better look */
+  padding: 12px 35px; /* Adjusted padding */
   border-radius: 25px; /* Specific radius requested */
   text-decoration: none;
   font-weight: bold;

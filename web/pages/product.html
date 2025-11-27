@@ -12,40 +12,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/global.css?v=4">
   <link rel="stylesheet" href="../assets/css/pages/product.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
+  <!-- Top bar -->
+  <div class="top-bar">
     <div class="container">
-      <div class="header-inner">
-        <a href="../index.html" class="logo">
-          <span class="logo-text">STRUCTON</span>
-        </a>
-        
-        <nav class="nav-main">
-          <a href="../index.html" class="nav-link">Home</a>
-          <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
-          <a href="category.html?cat=dieplepelbakken" class="nav-link">Dieplepelbakken</a>
-          <a href="category.html?cat=sloopgereedschap" class="nav-link">Sloopgereedschap</a>
-          <a href="about.html" class="nav-link">Over Ons</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        
-        <div class="header-actions">
-          <a href="login.html" class="btn btn-primary btn-sm" id="login-btn">
-            <span>Inloggen</span>
-          </a>
-          <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
+      <span class="tagline">Makkelijk & snel online een kraanbak kopen</span>
+      <nav class="top-nav">
+        <a href="login.html" id="login-btn"><span class="icon">👤</span> Inloggen</a>
+        <a href="/over-ons/"><span class="icon">ℹ️</span> Over</a>
+        <a href="/kennisbank/"><span class="icon">🔖</span> Blog</a>
+        <a href="contact.html"><span class="icon">✉️</span> Contact</a>
+      </nav>
     </div>
-  </header>
+  </div>
+
+  <!-- Main navigation -->
+  <nav class="main-nav">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-box">S</div>
+      </a>
+      
+      <div class="menu">
+        <a href="/kraanbakken/" class="menu-item">
+          Kraanbakken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="/sorteergrijpers/" class="menu-item">
+          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="/adapters/" class="menu-item">
+          Adapterstukken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="/sloophamers/" class="menu-item">
+          Sloophamer <span class="dropdown-arrow">▼</span>
+        </a>
+      </div>
+      
+      <a href="category.html" class="cta-button">Bekijk alles</a>
+      
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
 
   <!-- Mobile Navigation -->
   <nav class="nav-mobile" id="nav-mobile">
@@ -54,9 +68,7 @@
     <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
     <a href="category.html?cat=dieplepelbakken" class="nav-link">Dieplepelbakken</a>
     <a href="category.html?cat=sloopgereedschap" class="nav-link">Sloopgereedschap</a>
-    <a href="about.html" class="nav-link">Over Ons</a>
     <a href="contact.html" class="nav-link">Contact</a>
-    <a href="login.html" class="btn btn-primary">Inloggen</a>
   </nav>
 
   <main>

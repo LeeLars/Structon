@@ -265,8 +265,8 @@
 }
 
 .usp-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); /* Alleen schaduw bij hover */
+  transform: translateX(5px); /* Hele knop schuift rechts */
+  box-shadow: none;
 }
 
 .usp-btn .btn-split-text {
@@ -296,6 +296,7 @@
   height: 24px !important;
   min-width: 24px; /* Voorkom verkleinen */
   stroke-width: 2.5;
+  transition: transform 0.3s ease; /* Voor het extra schuif effect */
 }
 
 .usp-btn:hover .btn-split-text {
@@ -304,6 +305,10 @@
 
 .usp-btn:hover .btn-split-icon {
   background-color: #1e4851; /* Mee lichter worden */
+}
+
+.usp-btn:hover .btn-split-icon svg {
+  transform: translateX(4px); /* Pijltje schuift extra op */
 }
 
 /* ============================================

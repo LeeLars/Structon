@@ -1350,51 +1350,23 @@ p {
 }
 
 /* ============================================
-   CMS ADMIN LINK (Subtiel slotje rechtsonder)
+   CMS ADMIN ICON (Subtiel slotje in footer)
    ============================================ */
-.cms-admin-link {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
-  background: var(--color-primary);
-  border-radius: 50%;
-  display: flex;
+.cms-admin-icon {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.3);
-  transition: all 0.3s ease;
-  z-index: 999;
-  opacity: 0.7;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
 }
 
-.cms-admin-link:hover {
+.cms-admin-icon:hover {
   opacity: 1;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(35, 103, 115, 0.4);
-  background: var(--color-primary-dark);
 }
 
-.cms-admin-link svg {
-  width: 24px;
-  height: 24px;
-  color: var(--color-white);
-}
-
-/* Responsive: kleiner op mobiel */
-@media (max-width: 768px) {
-  .cms-admin-link {
-    width: 40px;
-    height: 40px;
-    bottom: 16px;
-    right: 16px;
-  }
-  
-  .cms-admin-link svg {
-    width: 20px;
-    height: 20px;
-  }
+.cms-admin-icon svg {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
 }
 
 /* ============================================
@@ -1405,7 +1377,7 @@ p {
   .site-footer,
   .btn,
   .filters,
-  .cms-admin-link {
+  .cms-admin-icon {
     display: none !important;
   }
   

@@ -361,17 +361,6 @@ p {
   height: 1.25em;
 }
 
-/* Arrow Icon for Buttons */
-.btn-arrow::after {
-  content: '→';
-  margin-left: var(--space-2);
-  transition: transform var(--transition-fast);
-}
-
-.btn-arrow:hover::after {
-  transform: translateX(4px);
-}
-
 /* SPLIT BUTTON (Exact User Request) */
 .btn-split {
   display: inline-flex;

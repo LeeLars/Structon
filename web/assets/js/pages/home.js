@@ -2,28 +2,37 @@
  * Structon - Home Page JavaScript
  */
 
-import { products, categories } from '../api/client.js';
-import { createProductCard, showLoading, showError } from '../main.js';
+import { products } from '../api/client.js';
+import { createProductCard, showLoading } from '../main.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadFeaturedProducts();
-  loadCategories();
 });
 
 /**
- * Load featured products
+ * Load featured products (Random selection)
  */
 async function loadFeaturedProducts() {
-  const container = document.getElementById('featured-products');
+  const container = document.getElementById('featured-products-grid');
   if (!container) return;
 
   showLoading(container);
 
+  // Check login status for price visibility
+  const token = localStorage.getItem('token');
+  const isLoggedIn = !!token;
+
   try {
-    const data = await products.getFeatured(8);
+    // Fetch featured products
+    const data = await products.getFeatured(12); // Get more to shuffle
     
     if (data.products && data.products.length > 0) {
-      container.innerHTML = data.products.map(createProductCard).join('');
+      // Shuffle array
+      const shuffled = data.products.sort(() => 0.5 - Math.random());
+      // Take first 4
+      const selected = shuffled.slice(0, 4);
+      
+      container.innerHTML = selected.map(p => createProductCard(p, isLoggedIn)).join('');
     } else {
       container.innerHTML = `
         <div class="no-results" style="grid-column: 1/-1;">
@@ -33,37 +42,9 @@ async function loadFeaturedProducts() {
     }
   } catch (error) {
     console.error('Error loading featured products:', error);
-    // Show placeholder products for demo
-    container.innerHTML = getDemoProducts().map(createProductCard).join('');
-  }
-}
-
-/**
- * Load categories for hero section
- */
-async function loadCategories() {
-  const container = document.getElementById('hero-categories');
-  if (!container) return;
-
-  try {
-    const data = await categories.getAll(true);
-    
-    if (data.categories && data.categories.length > 0) {
-      // Only show first 3 categories
-      const topCategories = data.categories.slice(0, 3);
-      container.innerHTML = topCategories.map(cat => `
-        <a href="pages/category.html?cat=${cat.slug}" class="hero-category">
-          <img src="${cat.image_url || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop'}" 
-               alt="${cat.title}">
-          <div class="hero-category-overlay">
-            <h3 class="hero-category-title">${cat.title}</h3>
-          </div>
-        </a>
-      `).join('');
-    }
-  } catch (error) {
-    console.error('Error loading categories:', error);
-    // Keep default HTML
+    // Fallback to demo products if API fails
+    const demo = getDemoProducts().sort(() => 0.5 - Math.random()).slice(0, 4);
+    container.innerHTML = demo.map(p => createProductCard(p, isLoggedIn)).join('');
   }
 }
 

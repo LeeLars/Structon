@@ -1349,6 +1349,43 @@ p {
   .hide-desktop { display: none !important; }
 }
 
+/* Button Variants */
+.btn-dark-petrol {
+  background-color: #1E4851;
+  color: white;
+  border: 2px solid #1E4851;
+}
+
+.btn-dark-petrol:hover {
+  background-color: #16363d;
+  border-color: #16363d;
+  transform: translateY(-2px);
+}
+
+.btn-outline-light {
+  background-color: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline-light:hover {
+  background-color: white;
+  color: #236773;
+  border-color: white;
+  transform: translateY(-2px);
+}
+
+.btn-outline-petrol {
+  background-color: transparent;
+  color: #236773;
+  border: 2px solid #236773;
+}
+
+.btn-outline-petrol:hover {
+  background-color: #236773;
+  color: white;
+}
+
 /* ============================================
    CMS ADMIN ICON (Subtiel slotje in footer)
    ============================================ */
@@ -1357,6 +1394,7 @@ p {
   align-items: center;
   opacity: 0.5;
   transition: opacity 0.2s ease;
+  margin-left: 10px;
 }
 
 .cms-admin-icon:hover {
@@ -1367,6 +1405,29 @@ p {
   width: 16px;
   height: 16px;
   color: currentColor;
+}
+
+.footer-branding {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: auto;
+  padding-left: 20px;
+}
+
+.footer-branding a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.footer-branding a:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 /* ============================================

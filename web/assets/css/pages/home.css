@@ -194,13 +194,14 @@
   gap: 24px;
   position: relative;
   align-items: flex-start;
+  padding-left: 4rem;
 }
 
 /* Border links van het nummer */
 .usp-item::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: -20px;
   top: 0;
   bottom: 0;
   width: 4px;
@@ -215,6 +216,7 @@
   color: #1E4851;
   line-height: 0.8;
   margin-left: 20px; /* Ruimte na de border */
+  margin-top: 24px;
   min-width: 60px; /* Vaste breedte voor uitlijning */
 }
 

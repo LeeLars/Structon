@@ -196,6 +196,7 @@
   padding: 35px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   align-items: flex-start;
+  position: relative; /* Ensure relative context */
 }
 
 .usp-item:first-child {
@@ -223,6 +224,7 @@
   flex-shrink: 0;
   transform: none; /* Geen verschuiving meer */
   margin-top: 5px; /* Kleine correctie voor font baseline */
+  position: static; /* Reset absolute positioning if any inherited */
 }
 
 .usp-content {

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorieën – Structon CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/cms/assets/css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="logo-box">S</div>
+        <div class="sidebar-brand">
+          <h1 class="sidebar-logo">STRUCTON</h1>
+          <span class="sidebar-subtitle">Content Management</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="/cms/" class="nav-item" data-page="dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="/cms/products.html" class="nav-item" data-page="products">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <span>Producten</span>
+        </a>
+        <a href="/cms/categories.html" class="nav-item active" data-page="categories">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Categorieën</span>
+        </a>
+        <a href="/cms/brands.html" class="nav-item" data-page="brands">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+          <span>Merken</span>
+        </a>
+        <a href="/cms/sectors.html" class="nav-item" data-page="sectors">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>Sectoren</span>
+        </a>
+        <a href="/cms/prices.html" class="nav-item" data-page="prices">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          <span>Prijzen</span>
+        </a>
+        <a href="/cms/users.html" class="nav-item" data-page="users">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Gebruikers</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">A</div>
+          <div class="user-details">
+            <span class="user-name" id="sidebar-user-name">Admin</span>
+            <span class="user-role">Beheerder</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="logout-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Uitloggen</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="header-left">
+          <h2 class="page-title">Categorieën</h2>
+          <p class="page-subtitle">Organiseer je productcatalogus</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="btn-new-category">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Nieuwe Categorie
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <!-- Info Banner -->
+        <div class="info-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <div class="info-content">
+            <strong>Sorteervolgorde</strong>
+            <p>Sleep categorieën om de volgorde te wijzigen. Lagere nummers verschijnen eerst op de website.</p>
+          </div>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="categories-grid" id="categories-grid">
+          <!-- Loading State -->
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <span>Categorieën laden...</span>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <h3>Nog geen categorieën</h3>
+          <p>Maak je eerste categorie aan om producten te organiseren</p>
+          <button class="btn btn-primary" onclick="document.getElementById('btn-new-category').click()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Eerste Categorie Aanmaken
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- New/Edit Category Modal -->
+  <div class="modal" id="category-modal" style="display: none;">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="modal-title">Nieuwe Categorie</h2>
+        <button class="btn-close" id="close-modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <form id="category-form">
+        <div class="modal-body">
+          <div class="form-grid">
+            <!-- Basis Info -->
+            <div class="form-section">
+              <h3 class="form-section-title">Basis Informatie</h3>
+              
+              <div class="form-group">
+                <label for="category-title">Titel *</label>
+                <input type="text" id="category-title" name="title" required placeholder="Bijv. Slotenbakken">
+              </div>
+              
+              <div class="form-group">
+                <label for="category-slug">Slug *</label>
+                <input type="text" id="category-slug" name="slug" required placeholder="slotenbakken">
+                <span class="form-hint">Automatisch gegenereerd uit titel</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="category-description">Beschrijving</label>
+                <textarea id="category-description" name="description" rows="4" placeholder="Korte beschrijving van de categorie..."></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label for="category-sort">Sorteervolgorde</label>
+                <input type="number" id="category-sort" name="sort_order" value="0" min="0">
+                <span class="form-hint">Lagere nummers verschijnen eerst</span>
+              </div>
+              
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="category-active" name="is_active" checked>
+                  <span>Categorie is actief</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- SEO -->
+            <div class="form-section">
+              <h3 class="form-section-title">SEO Optimalisatie</h3>
+              
+              <div class="form-group">
+                <label for="category-seo-title">SEO Title</label>
+                <input type="text" id="category-seo-title" name="seo_title" maxlength="70" placeholder="Slotenbak Kopen | Slotenbakken voor Minigraver">
+                <span class="form-hint">Max 70 karakters voor Google</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="category-seo-description">Meta Description</label>
+                <textarea id="category-seo-description" name="seo_description" rows="3" maxlength="160" placeholder="Slotenbak kopen? Structon levert slotenbakken voor minigravers..."></textarea>
+                <span class="form-hint">Max 160 karakters</span>
+              </div>
+              
+              <div class="form-group">
+                <label for="category-seo-h1">H1 Heading</label>
+                <input type="text" id="category-seo-h1" name="seo_h1" placeholder="Slotenbak Kopen voor Jouw Minigraver">
+              </div>
+              
+              <div class="form-group">
+                <label for="category-seo-intro">Intro Tekst</label>
+                <textarea id="category-seo-intro" name="seo_intro" rows="3" placeholder="Korte intro tekst voor SEO..."></textarea>
+              </div>
+            </div>
+            
+            <!-- Afbeelding -->
+            <div class="form-section full-width">
+              <h3 class="form-section-title">Categorie Afbeelding</h3>
+              
+              <div class="image-upload-area" id="image-upload-area">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <p>Sleep afbeelding hierheen of <span class="link">klik om te uploaden</span></p>
+                <input type="file" id="image-input" accept="image/*" hidden>
+              </div>
+              
+              <div class="image-preview" id="image-preview" style="display: none;">
+                <img id="preview-img" src="" alt="Preview">
+                <button type="button" class="image-preview-remove" id="remove-image">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- SEO Content -->
+            <div class="form-section full-width">
+              <h3 class="form-section-title">SEO Content (Optioneel)</h3>
+              
+              <div class="form-group">
+                <label for="category-seo-content">Uitgebreide SEO Content</label>
+                <textarea id="category-seo-content" name="seo_content" rows="8" placeholder="Uitgebreide tekst voor SEO met keywords, voordelen, etc..."></textarea>
+                <span class="form-hint">Deze tekst wordt onderaan de categoriepagina getoond</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancel-category">Annuleren</button>
+          <button type="submit" class="btn btn-primary" id="save-category">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Categorie Opslaan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/cms/assets/js/categories.js"></script>
+</body>
+</html>

@@ -1350,13 +1350,62 @@ p {
 }
 
 /* ============================================
+   CMS ADMIN LINK (Subtiel slotje rechtsonder)
+   ============================================ */
+.cms-admin-link {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.3);
+  transition: all 0.3s ease;
+  z-index: 999;
+  opacity: 0.7;
+}
+
+.cms-admin-link:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(35, 103, 115, 0.4);
+  background: var(--color-primary-dark);
+}
+
+.cms-admin-link svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-white);
+}
+
+/* Responsive: kleiner op mobiel */
+@media (max-width: 768px) {
+  .cms-admin-link {
+    width: 40px;
+    height: 40px;
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  .cms-admin-link svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ============================================
    PRINT STYLES
    ============================================ */
 @media print {
   .site-header,
   .site-footer,
   .btn,
-  .filters {
+  .filters,
+  .cms-admin-link {
     display: none !important;
   }
   

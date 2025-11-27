@@ -75,9 +75,9 @@
   --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
-  --space-16: 4rem;
-  --space-20: 5rem;
-  --space-24: 6rem;
+  --space-16: 6rem; /* Increased from 4rem */
+  --space-20: 8rem; /* Increased from 5rem */
+  --space-24: 10rem; /* Increased from 6rem */
   
   /* Border Radius */
   --radius-sm: 0.25rem;
@@ -494,7 +494,7 @@ p {
   font-weight: bold;
   transition: background-color 0.3s ease;
   position: relative;
-  top: 28px; /* Push down to overlap border (15px padding + 1/2 button height approx) */
+  top: 40px; /* Adjusted to center on bottom border (80px height / 2 offset) */
   z-index: 10;
 }
 

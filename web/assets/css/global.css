@@ -372,6 +372,89 @@ p {
   transform: translateX(4px);
 }
 
+/* SPLIT BUTTON (New Brand Style) */
+.btn-split {
+  display: inline-flex;
+  align-items: stretch;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-split:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-split-text {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 12px 24px;
+  font-weight: var(--font-bold);
+  font-size: var(--text-base);
+  display: flex;
+  align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color var(--transition-fast);
+}
+
+.btn-split-icon {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-split:hover .btn-split-text,
+.btn-split:hover .btn-split-icon {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-split-icon svg {
+  width: 20px;
+  height: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.btn-split:hover .btn-split-icon svg {
+  transform: translateX(4px);
+}
+
+/* White version for dark backgrounds */
+.btn-split-white .btn-split-text,
+.btn-split-white .btn-split-icon {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border-right-color: rgba(35, 103, 115, 0.1); /* Petrol with opacity */
+}
+
+.btn-split-white:hover .btn-split-text,
+.btn-split-white:hover .btn-split-icon {
+  background-color: var(--color-gray-100);
+}
+
+/* Small version */
+.btn-split-sm .btn-split-text {
+  padding: 8px 16px;
+  font-size: var(--text-sm);
+}
+
+.btn-split-sm .btn-split-icon {
+  padding: 0 12px;
+}
+
+.btn-split-sm .btn-split-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* ============================================
    TOP BAR
    ============================================ */

@@ -3,9 +3,20 @@
  * Handles all API requests with authentication
  */
 
-const API_BASE_URL = window.location.hostname === 'localhost' 
-  ? 'http://localhost:4000/api'
-  : 'https://structon-cms.up.railway.app/api';
+// Detect API URL based on environment
+const getApiBaseUrl = () => {
+  const hostname = window.location.hostname;
+  
+  // Local development
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:4000/api';
+  }
+  
+  // GitHub Pages or production
+  return 'https://structon-cms.up.railway.app/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 class APIClient {
   constructor() {

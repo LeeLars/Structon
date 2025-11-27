@@ -366,7 +366,7 @@ p {
   padding: 10px 0;
   font-size: 14px;
   position: relative; /* Ensure z-index works */
-  z-index: 30; /* Higher than logo (20) so links are clickable */
+  z-index: 300; /* Higher than main-nav (sticky=200) to be clickable on mobile */
 }
 
 .top-bar .container {
@@ -510,7 +510,7 @@ p {
   position: absolute; /* Absolute positioning for centering */
   left: 50%;
   transform: translateX(-50%);
-  bottom: -22px; /* Half of height (approx 44px) to center on border */
+  bottom: -70px; /* Half of height (approx 44px) to center on border */
   top: auto; /* Reset top */
   z-index: 10;
   white-space: nowrap;

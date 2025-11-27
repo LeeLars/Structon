@@ -64,8 +64,8 @@
   font-weight: bold;
   color: rgba(255, 255, 255, 0.08);
   position: absolute;
-  left: -20px;
-  top: -40px;
+  left: -50px;
+  top: 0px;
   line-height: 1;
   z-index: 0;
   pointer-events: none;

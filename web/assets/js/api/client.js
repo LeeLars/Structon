@@ -6,7 +6,7 @@
 // API Base URL - change for production
 const API_BASE = window.location.hostname === 'localhost' 
   ? 'http://localhost:4000/api'
-  : 'https://your-railway-app.railway.app/api';
+  : 'https://structon-production.up.railway.app/api';
 
 /**
  * Make API request with error handling

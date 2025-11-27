@@ -331,11 +331,12 @@
 /* Swiper Customization */
 .swiper {
   width: 100%;
-  padding-bottom: 70px; /* Increased space for pagination */
+  padding-bottom: 60px; /* Space for pagination */
 }
 
 .swiper-pagination {
-  bottom: 0 !important; /* Ensure dots are at the very bottom */
+  bottom: 0px !important; /* Ensure dots are at the very bottom */
+  position: absolute;
 }
 
 .swiper-slide {
@@ -353,15 +354,17 @@
   background: white;
   border: none; /* Minimalistisch: geen border */
   box-shadow: none;
-  transition: transform 0.2s ease;
+  transition: none; /* Disable all transitions on the card container */
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 0; /* Geen padding op card zelf voor maximale foto ruimte */
+  transform: none !important; /* Force no transform */
 }
 
 .product-card.clean-card:hover {
-  /* Removed transform: translateY(-5px); */
+  transform: none !important; /* Ensure no movement on hover */
+  box-shadow: none !important;
 }
 
 .product-card-image {

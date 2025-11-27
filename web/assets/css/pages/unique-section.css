@@ -1,0 +1,161 @@
+/* ============================================
+   WAT MAAKT STRUCTON UNIEK? SECTION
+   ============================================ */
+
+.unique-section {
+  background-color: #236773;
+  color: white;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.unique-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ============================================
+   LINKS: Content
+   ============================================ */
+.unique-content {
+  position: relative;
+  z-index: 2;
+}
+
+.unique-title {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.unique-description {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  opacity: 0.95;
+  max-width: 540px;
+}
+
+/* ============================================
+   RECHTS: USPs met nummers
+   ============================================ */
+.unique-usps {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  position: relative;
+}
+
+.unique-usp {
+  position: relative;
+  padding-left: 0;
+}
+
+.usp-number {
+  font-family: var(--font-heading);
+  font-size: 120px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.08);
+  position: absolute;
+  left: -20px;
+  top: -40px;
+  line-height: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.usp-heading {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+  text-transform: capitalize;
+}
+
+.usp-text {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+}
+
+/* ============================================
+   RESPONSIVE - Tablet
+   ============================================ */
+@media (max-width: 1024px) {
+  .unique-section {
+    padding: 60px 0;
+  }
+
+  .unique-grid {
+    gap: 60px;
+  }
+
+  .unique-title {
+    font-size: 40px;
+  }
+
+  .usp-number {
+    font-size: 100px;
+    left: -15px;
+    top: -30px;
+  }
+
+  .usp-heading {
+    font-size: 20px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - Mobile
+   ============================================ */
+@media (max-width: 768px) {
+  .unique-section {
+    padding: 48px 0;
+  }
+
+  .unique-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .unique-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .unique-description {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  .unique-usps {
+    gap: 40px;
+  }
+
+  .usp-number {
+    font-size: 80px;
+    left: -10px;
+    top: -25px;
+  }
+
+  .usp-heading {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .usp-text {
+    font-size: 14px;
+  }
+}

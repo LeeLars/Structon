@@ -304,8 +304,8 @@
 }
 
 .usp-btn:hover .btn-split-icon {
-  background-color: #1e4851; /* Mee lichter worden */
-  padding-left: 36px; /* Blok schuift/groeit visueel naar rechts */
+  background-color: #23525c; /* Zelfde kleur als tekstdeel voor uniform blok */
+  padding-left: 48px; /* Blok schuift/groeit nog verder naar rechts */
 }
 
 .usp-btn:hover .btn-split-icon svg {

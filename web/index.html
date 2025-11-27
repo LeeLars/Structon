@@ -73,28 +73,98 @@
   </script>
 </head>
 <body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <span class="top-bar-tagline">Makkelijk & snel online een kraanbak kopen</span>
+      <nav class="top-bar-nav">
+        <a href="pages/login.html" class="top-bar-link" id="login-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Inloggen
+        </a>
+        <a href="/over-ons/" class="top-bar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          Over
+        </a>
+        <a href="/kennisbank/" class="top-bar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Blog
+        </a>
+        <a href="/contact/" class="top-bar-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Contact
+        </a>
+      </nav>
+    </div>
+  </div>
+
   <!-- Header -->
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
         <a href="/" class="logo">
-          <span class="logo-text">STRUCTON</span>
+          <div class="logo-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="60" height="60" rx="8" fill="#1E636D"/>
+              <path d="M30 12C22 12 18 16 18 22C18 26 20 29 24 30C20 31 18 34 18 38C18 44 22 48 30 48C34 48 37 47 39 45" stroke="white" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="38" cy="18" r="4" fill="white"/>
+            </svg>
+          </div>
         </a>
         
         <nav class="nav-main" aria-label="Hoofdnavigatie">
-          <a href="/" class="nav-link active">Home</a>
-          <a href="/kraanbakken/" class="nav-link">Kraanbakken</a>
-          <a href="/slotenbakken/" class="nav-link">Slotenbakken</a>
-          <a href="/sorteergrijpers/" class="nav-link">Sorteergrijpers</a>
-          <a href="/sloophamers/" class="nav-link">Sloophamers</a>
-          <a href="/over-ons/" class="nav-link">Over Ons</a>
-          <a href="/contact/" class="nav-link">Contact</a>
+          <div class="nav-item has-dropdown">
+            <a href="/kraanbakken/" class="nav-link">
+              Kraanbakken
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+              <a href="/slotenbakken/" class="dropdown-link">Slotenbakken</a>
+              <a href="/kraanbakken/dieplepelbakken/" class="dropdown-link">Dieplepelbakken</a>
+              <a href="/kraanbakken/puinbakken/" class="dropdown-link">Puinbakken</a>
+              <a href="/kraanbakken/kantelbakken/" class="dropdown-link">Kantelbakken</a>
+            </div>
+          </div>
+          
+          <div class="nav-item has-dropdown">
+            <a href="/sorteergrijpers/" class="nav-link">
+              Sloop- en sorteergrijpers
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+              <a href="/sorteergrijpers/cw05/" class="dropdown-link">Sorteergrijper CW05</a>
+              <a href="/sorteergrijpers/cw10/" class="dropdown-link">Sorteergrijper CW10</a>
+              <a href="/sorteergrijpers/cw20/" class="dropdown-link">Sorteergrijper CW20</a>
+            </div>
+          </div>
+          
+          <div class="nav-item has-dropdown">
+            <a href="/adapters/" class="nav-link">
+              Adapterstukken
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+              <a href="/adapters/cw05-cw10/" class="dropdown-link">CW05 → CW10</a>
+              <a href="/adapters/cw10-cw20/" class="dropdown-link">CW10 → CW20</a>
+              <a href="/adapters/s-systeem/" class="dropdown-link">S-systeem adapters</a>
+            </div>
+          </div>
+          
+          <div class="nav-item has-dropdown">
+            <a href="/sloophamers/" class="nav-link">
+              Sloophamer
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+              <a href="/sloophamers/minigraver/" class="dropdown-link">Sloophamer minigraver</a>
+              <a href="/sloophamers/middenklasse/" class="dropdown-link">Sloophamer middenklasse</a>
+              <a href="/sloophamers/zwaar/" class="dropdown-link">Zware sloophamers</a>
+            </div>
+          </div>
         </nav>
         
         <div class="header-actions">
-          <a href="pages/login.html" class="btn btn-primary btn-sm" id="login-btn">
-            <span>Inloggen</span>
-          </a>
+          <a href="/kraanbakken/" class="btn btn-primary btn-cta">Bekijk alles</a>
           <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
             <span></span>
             <span></span>
@@ -108,14 +178,16 @@
   <!-- Mobile Navigation -->
   <nav class="nav-mobile" id="nav-mobile" aria-label="Mobiele navigatie">
     <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
-    <a href="/" class="nav-link">Home</a>
     <a href="/kraanbakken/" class="nav-link">Kraanbakken</a>
     <a href="/slotenbakken/" class="nav-link">Slotenbakken</a>
-    <a href="/sorteergrijpers/" class="nav-link">Sorteergrijpers</a>
+    <a href="/sorteergrijpers/" class="nav-link">Sloop- en sorteergrijpers</a>
+    <a href="/adapters/" class="nav-link">Adapterstukken</a>
     <a href="/sloophamers/" class="nav-link">Sloophamers</a>
-    <a href="/over-ons/" class="nav-link">Over Ons</a>
+    <hr>
+    <a href="/over-ons/" class="nav-link">Over ons</a>
+    <a href="/kennisbank/" class="nav-link">Blog</a>
     <a href="/contact/" class="nav-link">Contact</a>
-    <a href="/login/" class="btn btn-primary">Klant Login</a>
+    <a href="pages/login.html" class="btn btn-primary">Inloggen</a>
   </nav>
 
   <main>

@@ -186,16 +186,16 @@
 .usp-list {
   display: flex;
   flex-direction: column;
-  gap: 0; /* Gap verplaatsen naar padding voor borders */
+  gap: 0;
+  width: 100%; /* Zeker zijn dat hij breedte pakt */
 }
 
 .usp-item {
-  display: grid;
-  grid-template-columns: 70px 1fr; /* Iets meer ruimte voor groter nummer */
-  gap: 25px;
+  display: flex; /* Terug naar Flex voor betere controle */
+  gap: 30px;
   padding: 35px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  align-items: start;
+  align-items: flex-start;
 }
 
 .usp-item:first-child {
@@ -207,26 +207,29 @@
   padding-bottom: 0;
 }
 
-/* Oude border weghalen */
 .usp-item::before {
   display: none;
 }
 
 .usp-number {
   font-family: var(--font-heading);
-  font-size: 4rem; /* Weer lekker groot */
+  font-size: 4rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.4); /* Wit met transparantie voor goede zichtbaarheid */
+  color: rgba(255, 255, 255, 0.4); /* Zichtbaar nummer */
   line-height: 0.8;
   margin: 0;
+  min-width: 60px; /* Vaste breedte */
   text-align: right;
-  transform: translateY(5px); /* Mooi uitlijnen met bovenkant tekst */
+  flex-shrink: 0; /* Voorkom dat nummer in elkaar wordt gedrukt */
+  transform: translateY(5px);
 }
 
 .usp-content {
+  flex: 1; /* Neem resterende ruimte in */
   display: flex;
   flex-direction: column;
   text-align: left;
+  min-width: 0; /* Voorkom flexbox overflow issues */
 }
 
 .usp-content h4 {
@@ -246,29 +249,30 @@
   font-weight: 300;
 }
 
-/* Button styling (Unified Primary Look) */
+/* Button styling Fixes */
 .usp-btn.btn-split {
   display: inline-flex;
-  align-items: stretch; /* Zorg dat beide delen even hoog zijn */
+  align-items: stretch;
   text-decoration: none;
   border: none;
   padding: 0;
   margin-top: 30px;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: none; /* Schaduw verwijderen */
+  background: transparent; /* Geen achtergrond op container */
+  transition: transform 0.2s ease;
   overflow: hidden;
   border-radius: var(--radius-md);
 }
 
 .usp-btn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); /* Alleen schaduw bij hover */
 }
 
 .usp-btn .btn-split-text {
-  background-color: #1E4851; /* Zelfde kleur als icoon */
+  background-color: #1E4851;
   color: white;
-  padding: 14px 24px; /* Standaard padding */
+  padding: 16px 28px; /* Iets ruimer */
   font-weight: 600;
   font-size: 1rem;
   display: flex;
@@ -277,14 +281,20 @@
 }
 
 .usp-btn .btn-split-icon {
-  background-color: #1a424b; /* Iets donkerder tint voor subtiel contrast */
+  background-color: #1a424b;
   color: white;
-  padding: 0 20px;
+  padding: 0 24px; /* Bredere knop voor icoon */
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-  border-left: 1px solid rgba(255,255,255,0.1); /* Subtiele divider */
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.usp-btn .btn-split-icon svg {
+  width: 24px; /* Groter icoon */
+  height: 24px;
+  stroke-width: 2.5; /* Dikker lijntje */
 }
 
 .usp-btn:hover .btn-split-text {

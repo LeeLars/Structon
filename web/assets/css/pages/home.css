@@ -191,10 +191,10 @@
 
 .usp-item {
   display: grid;
-  grid-template-columns: 60px 1fr; /* Vaste breedte voor nummer kolom */
+  grid-template-columns: 70px 1fr; /* Iets meer ruimte voor groter nummer */
   gap: 25px;
   padding: 35px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtiele scheidingslijn */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   align-items: start;
 }
 
@@ -214,13 +214,13 @@
 
 .usp-number {
   font-family: var(--font-heading);
-  font-size: 3.5rem;
+  font-size: 4rem; /* Weer lekker groot */
   font-weight: 700;
-  color: rgba(30, 72, 81, 0.5); /* Donker petrol, subtiel transparant */
-  line-height: 1;
+  color: rgba(255, 255, 255, 0.4); /* Wit met transparantie voor goede zichtbaarheid */
+  line-height: 0.8;
   margin: 0;
-  text-align: right; /* Uitlijnen tegen de tekst aan */
-  transform: translateY(-5px); /* Optische uitlijning met titel */
+  text-align: right;
+  transform: translateY(5px); /* Mooi uitlijnen met bovenkant tekst */
 }
 
 .usp-content {

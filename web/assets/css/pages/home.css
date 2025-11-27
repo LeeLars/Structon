@@ -246,38 +246,40 @@
   font-weight: 300;
 }
 
-/* Button styling (Two Blocks Look) */
+/* Button styling (Unified Primary Look) */
 .usp-btn.btn-split {
   display: inline-flex;
-  align-items: center;
+  align-items: stretch; /* Zorg dat beide delen even hoog zijn */
   text-decoration: none;
   border: none;
   padding: 0;
   margin-top: 30px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
 }
 
 .usp-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .usp-btn .btn-split-text {
-  background-color: #1E4851;
+  background-color: #1E4851; /* Zelfde kleur als icoon */
   color: white;
-  padding: 14px 30px;
+  padding: 14px 24px; /* Standaard padding */
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
   transition: background-color 0.2s;
 }
 
 .usp-btn .btn-split-icon {
-  background-color: #16363d; /* Duidelijk donkerder vlak */
+  background-color: #1a424b; /* Iets donkerder tint voor subtiel contrast */
   color: white;
-  padding: 14px 18px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,11 +288,11 @@
 }
 
 .usp-btn:hover .btn-split-text {
-  background-color: #23525c;
+  background-color: #23525c; /* Iets lichter bij hover */
 }
 
 .usp-btn:hover .btn-split-icon {
-  background-color: #1E4851;
+  background-color: #1e4851; /* Mee lichter worden */
 }
 
 /* ============================================

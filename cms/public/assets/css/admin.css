@@ -1774,3 +1774,112 @@ a:hover {
     width: 100%;
   }
 }
+
+/* ============================================
+   BRANDS PAGE SPECIFIC
+   ============================================ */
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.brand-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.brand-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.brand-logo {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.brand-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.brand-logo-placeholder {
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.brand-logo-placeholder svg {
+  width: 40px;
+  height: 40px;
+  color: var(--text-muted);
+}
+
+.brand-info {
+  width: 100%;
+}
+
+.brand-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+}
+
+.brand-slug {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-family: 'Courier New', monospace;
+}
+
+.brand-meta {
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.brand-meta svg {
+  width: 16px;
+  height: 16px;
+}
+
+.brand-actions {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.brand-actions .btn {
+  flex: 1;
+  justify-content: center;
+}

@@ -433,21 +433,22 @@ p {
   align-items: center;
   justify-content: center;
   background-color: #2C5F6F; /* Match Top Bar */
-  height: 140px; /* Tall enough to hang from top */
-  width: 130px;
+  height: 170px; /* Tall enough to hang from top */
+  width: 140px;
   position: absolute;
   top: -55px; /* Pull up to cover top bar area */
   left: var(--container-padding); /* Align with content start */
   border-radius: 0 0 20px 20px;
   z-index: 20;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding-top: 2rem;
 }
 
 .logo-image {
   height: auto;
   width: 50px; /* Adjust size inside box */
 }
-
+  
 .logo-box {
   display: none; /* Remove old box style */
 }
@@ -489,24 +490,28 @@ p {
 
 /* CTA Button on Border */
 .nav-actions {
-  position: relative;
   height: 100%;
   display: flex;
   align-items: center;
+  /* Removed position: relative to allow button to position relative to container */
 }
 
 .cta-button {
   display: none;
   background-color: #2C5F6F;
   color: white;
-  padding: 12px 30px;
-  border-radius: 25px;
+  padding: 12px 40px; /* Slightly wider for better look */
+  border-radius: 25px; /* Specific radius requested */
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  position: relative;
-  top: 40px; /* Adjusted to center on bottom border (80px height / 2 offset) */
+  position: absolute; /* Absolute positioning for centering */
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -22px; /* Half of height (approx 44px) to center on border */
+  top: auto; /* Reset top */
   z-index: 10;
+  white-space: nowrap;
 }
 
 @media (min-width: 1024px) {

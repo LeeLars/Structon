@@ -214,16 +214,19 @@
   font-size: 5rem; /* Groter */
   font-weight: 700;
   color: #1E4851;
-  line-height: 0.8;
+  line-height: 0.7; /* Iets strakker voor betere top alignment */
   margin-left: 20px; /* Ruimte na de border */
-  margin-top: 24px;
+  margin-top: 0; /* Reset top margin */
   min-width: 60px; /* Vaste breedte voor uitlijning */
 }
 
 .usp-content {
   flex: 1;
   text-align: left; /* Links uitgelijnd */
-  padding-top: 5px; /* Visueel uitlijnen met nummer */
+  padding-top: 0; /* Reset padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Uitlijnen aan bovenkant */
 }
 
 .usp-content h4 {

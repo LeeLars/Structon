@@ -312,6 +312,21 @@ p {
   background-color: var(--color-primary-light);
 }
 
+/* Small variant (voor product cards) */
+.btn-split-sm .btn-split-text {
+  padding: 10px 16px;
+  font-size: 13px;
+}
+
+.btn-split-sm .btn-split-icon {
+  width: 40px;
+}
+
+.btn-split-sm .btn-split-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* ============================================
    RESPONSIVE - Tablet
    ============================================ */

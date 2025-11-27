@@ -55,7 +55,7 @@ const STOCK_PHOTOS = [
   'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&h=400&fit=crop'
 ];
 
-export function createProductCard(product) {
+export function createProductCard(product, isLoggedIn = false) {
   // Use product image, or random stock photo based on product id
   const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
   const imageUrl = product.cloudinary_images?.[0]?.url 
@@ -64,6 +64,26 @@ export function createProductCard(product) {
   const productUrl = window.location.pathname.includes('/pages/')
     ? `product.html?id=${product.slug || product.id}`
     : `pages/product.html?id=${product.slug || product.id}`;
+
+  // Button voor niet-ingelogde bezoekers: Offerte aanvragen (split button)
+  // Button voor ingelogde bezoekers: Toevoegen aan winkelwagen
+  const actionButton = isLoggedIn 
+    ? `<a href="${productUrl}" class="btn-split btn-split-sm">
+        <span class="btn-split-text">Bekijken</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
+      </a>`
+    : `<a href="/contact/?product=${product.slug || product.id}" class="btn-split btn-split-sm">
+        <span class="btn-split-text">Offerte aanvragen</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </span>
+      </a>`;
+
+  const priceSection = isLoggedIn
+    ? `<span class="product-price">€${product.price_excl_vat || '0.00'}</span>`
+    : `<span class="price-locked">Login voor prijs</span>`;
 
   return `
     <article class="product-card" data-product-id="${product.id}">
@@ -81,10 +101,10 @@ export function createProductCard(product) {
           ${product.attachment_type ? `• ${product.attachment_type}` : ''}
         </p>
         <div class="product-card-footer">
-          <div class="product-price-section price-locked">
-            <span class="price-locked">Login voor prijs</span>
+          <div class="product-price-section">
+            ${priceSection}
           </div>
-          <a href="${productUrl}" class="btn btn-secondary btn-sm btn-arrow">Meer info</a>
+          ${actionButton}
         </div>
       </div>
     </article>

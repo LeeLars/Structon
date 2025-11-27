@@ -215,12 +215,12 @@
   font-family: var(--font-heading);
   font-size: 4rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.4); /* Zichtbaar nummer */
+  color: rgba(255, 255, 255, 0.8); /* Duidelijker zichtbaar */
   line-height: 0.8;
   margin: 0;
-  min-width: 60px; /* Vaste breedte */
-  text-align: right;
-  flex-shrink: 0; /* Voorkom dat nummer in elkaar wordt gedrukt */
+  min-width: 60px;
+  text-align: center; /* Centreren ipv rechts */
+  flex-shrink: 0;
   transform: translateY(5px);
 }
 
@@ -292,9 +292,10 @@
 }
 
 .usp-btn .btn-split-icon svg {
-  width: 24px; /* Groter icoon */
-  height: 24px;
-  stroke-width: 2.5; /* Dikker lijntje */
+  width: 24px !important; /* Forceer grootte */
+  height: 24px !important;
+  min-width: 24px; /* Voorkom verkleinen */
+  stroke-width: 2.5;
 }
 
 .usp-btn:hover .btn-split-text {

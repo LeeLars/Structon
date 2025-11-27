@@ -437,7 +437,12 @@
 /* Special modifier for brands section to stack content */
 .usp-container.brands-container {
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 20px; /* Reduced gap */
+  text-align: center; /* Center align text */
+}
+
+.usp-container.brands-container .usp-left {
+  text-align: center; /* Ensure h3 is centered */
 }
 
 .brands-grid {

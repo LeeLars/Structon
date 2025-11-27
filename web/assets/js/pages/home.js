@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Load featured products (Random selection)
  */
 async function loadFeaturedProducts() {
-  const container = document.getElementById('featured-products-grid');
+  const container = document.getElementById('featured-products-wrapper');
   if (!container) return;
 
   showLoading(container);
@@ -22,6 +22,8 @@ async function loadFeaturedProducts() {
   const token = localStorage.getItem('token');
   const isLoggedIn = !!token;
 
+  let selected = [];
+
   try {
     // Fetch featured products
     const data = await products.getFeatured(12); // Get more to shuffle
@@ -29,23 +31,62 @@ async function loadFeaturedProducts() {
     if (data.products && data.products.length > 0) {
       // Shuffle array
       const shuffled = data.products.sort(() => 0.5 - Math.random());
-      // Take first 4
-      const selected = shuffled.slice(0, 4);
-      
-      container.innerHTML = selected.map(p => createProductCard(p, isLoggedIn)).join('');
-    } else {
-      container.innerHTML = `
-        <div class="no-results" style="grid-column: 1/-1;">
-          <p>Binnenkort beschikbaar</p>
-        </div>
-      `;
+      // Take first 8 for slider
+      selected = shuffled.slice(0, 8);
     }
   } catch (error) {
     console.error('Error loading featured products:', error);
-    // Fallback to demo products if API fails
-    const demo = getDemoProducts().sort(() => 0.5 - Math.random()).slice(0, 4);
-    container.innerHTML = demo.map(p => createProductCard(p, isLoggedIn)).join('');
+    // Fallback to demo products if API fails or returns empty
+    selected = getDemoProducts().sort(() => 0.5 - Math.random());
   }
+
+  if (selected.length > 0) {
+    container.innerHTML = selected.map(p => `
+      <div class="swiper-slide">
+        ${createProductCard(p, isLoggedIn)}
+      </div>
+    `).join('');
+    
+    // Initialize Swiper
+    initSwiper();
+  } else {
+    container.innerHTML = `
+      <div class="no-results" style="width: 100%; text-align: center;">
+        <p>Binnenkort beschikbaar</p>
+      </div>
+    `;
+  }
+}
+
+function initSwiper() {
+  // Check if Swiper is loaded
+  if (typeof Swiper === 'undefined') {
+    console.warn('Swiper library not loaded');
+    return;
+  }
+
+  new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 30,
+      },
+    },
+  });
 }
 
 /**

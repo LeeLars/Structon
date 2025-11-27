@@ -47,9 +47,19 @@ function initMobileMenu() {
 /**
  * Utility: Create product card HTML
  */
+// Stock photos for products without images
+const STOCK_PHOTOS = [
+  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&h=400&fit=crop'
+];
+
 export function createProductCard(product) {
+  // Use product image, or random stock photo based on product id
+  const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
   const imageUrl = product.cloudinary_images?.[0]?.url 
-    || 'https://via.placeholder.com/400x400?text=Geen+Afbeelding';
+    || STOCK_PHOTOS[stockIndex];
   
   const productUrl = window.location.pathname.includes('/pages/')
     ? `product.html?id=${product.slug || product.id}`

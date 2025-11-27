@@ -361,63 +361,81 @@ p {
   height: 1.25em;
 }
 
-/* SPLIT BUTTON (Exact User Request) */
+/* ============================================
+   SPLIT BUTTON - Two Solid Blocks
+   ============================================ */
 .btn-split {
   display: inline-flex;
-  align-items: center;
-  background-color: var(--color-primary); /* #236773 */
-  color: white;
+  align-items: stretch;
+  gap: 2px; /* Vaste afstand tussen de twee blokken */
   text-decoration: none;
-  border-radius: 8px;
-  overflow: hidden;
+}
+
+/* Blok 1: Tekst */
+.btn-split-text {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 14px 24px;
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 16px;
+  border-radius: 8px 0 0 8px;
+  display: flex;
+  align-items: center;
   transition: background-color 0.3s ease;
-  padding: 0; /* Reset padding */
-  border: none; /* Reset border */
-  box-shadow: none; /* Reset shadow */
 }
 
-.btn-split-text {
-  padding: 15px 25px;
-  background: none;
-  color: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  border: none;
-}
-
+/* Blok 2: Pijl */
 .btn-split-icon {
-  padding: 15px 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: var(--color-primary);
+  color: white;
+  width: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: inherit;
-}
-
-.btn-split:hover {
-  background-color: var(--color-primary-light); /* Lighter variant on hover */
-  transform: none;
-  box-shadow: none;
-}
-
-/* Reset inner styles from previous implementation */
-.btn-split:hover .btn-split-text,
-.btn-split:hover .btn-split-icon {
-  background-color: transparent;
+  border-radius: 0 8px 8px 0;
+  transition: background-color 0.3s ease;
 }
 
 .btn-split-icon svg {
   width: 20px;
   height: 20px;
-  transition: none; /* Remove SVG animation if strict to request */
 }
 
-.btn-split:hover .btn-split-icon svg {
-  transform: none;
+/* Hover: beide blokken tegelijk */
+.btn-split:hover .btn-split-text,
+.btn-split:hover .btn-split-icon {
+  background-color: var(--color-primary-light);
+}
+
+/* ============================================
+   RESPONSIVE - Tablet
+   ============================================ */
+@media (max-width: 1024px) {
+  .btn-split-text {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+  .btn-split-icon {
+    width: 48px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - Mobile
+   ============================================ */
+@media (max-width: 640px) {
+  .btn-split-text {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  .btn-split-icon {
+    width: 44px;
+  }
+  .btn-split-icon svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 /* ============================================

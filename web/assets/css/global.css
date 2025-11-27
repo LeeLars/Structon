@@ -371,9 +371,9 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
+  max-width: var(--container-max); /* Align with global max width */
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--container-padding);
 }
 
 .tagline {
@@ -419,9 +419,9 @@ p {
 .main-nav .container {
   display: flex;
   align-items: center;
-  max-width: 1400px;
+  max-width: var(--container-max); /* Align with global max width */
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--container-padding);
   gap: 30px;
   position: relative; /* For absolute positioning context if needed */
 }
@@ -434,10 +434,10 @@ p {
   justify-content: center;
   background-color: #2C5F6F; /* Match Top Bar */
   height: 140px; /* Tall enough to hang from top */
-  width: 120px;
+  width: 130px;
   position: absolute;
   top: -55px; /* Pull up to cover top bar area */
-  left: 20px;
+  left: var(--container-padding); /* Align with content start */
   border-radius: 0 0 20px 20px;
   z-index: 20;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);

@@ -182,66 +182,66 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Rechter Kolom */
+/* Rechter Kolom - Redesign */
 .usp-list {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 0; /* Gap verplaatsen naar padding voor borders */
 }
 
 .usp-item {
-  display: flex;
-  position: relative;
-  align-items: flex-start;
-  /* Padding verwijderd, we gebruiken flex gap en elementen */
+  display: grid;
+  grid-template-columns: 60px 1fr; /* Vaste breedte voor nummer kolom */
+  gap: 25px;
+  padding: 35px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtiele scheidingslijn */
+  align-items: start;
 }
 
-/* Border element als apart visueel element links */
+.usp-item:first-child {
+  padding-top: 0;
+}
+
+.usp-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Oude border weghalen */
 .usp-item::before {
-  content: '';
-  display: block;
-  width: 4px;
-  background-color: #1E4851;
-  margin-right: 20px;
-  border-radius: 2px;
-  /* Zorg dat de border minstens zo hoog is als het nummer */
-  min-height: 80px; 
-  align-self: stretch;
+  display: none;
 }
 
 .usp-number {
   font-family: var(--font-heading);
-  font-size: 5rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  color: #1E4851;
-  line-height: 0.75;
+  color: rgba(30, 72, 81, 0.5); /* Donker petrol, subtiel transparant */
+  line-height: 1;
   margin: 0;
-  min-width: 50px;
-  /* Visuele correctie om nummer gelijk te trekken met tekst */
-  transform: translateY(-2px); 
-  margin-right: 20px;
+  text-align: right; /* Uitlijnen tegen de tekst aan */
+  transform: translateY(-5px); /* Optische uitlijning met titel */
 }
 
 .usp-content {
-  flex: 1;
-  text-align: left;
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 
 .usp-content h4 {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
-  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  margin: 0 0 12px 0;
   color: white;
   text-transform: uppercase;
-  line-height: 1.1;
+  letter-spacing: 0.5px;
 }
 
 .usp-content p {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
   margin: 0;
   font-weight: 300;
 }

@@ -11,41 +11,41 @@ const CUSTOM_MENU_STRUCTURE = {
       title: 'Slotenbakken', 
       slug: 'slotenbakken', 
       tonnages: [
-        { label: '1t - 2.5t', id: '1t-2-5t' },
-        { label: '2.5t - 5t', id: '2-5t-5t' },
-        { label: '5t - 10t', id: '5t-10t' },
-        { label: '10t - 15t', id: '10t-15t' },
-        { label: '15t - 25t', id: '15t-25t' }
+        { label: 'Slotenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+        { label: 'Slotenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+        { label: 'Slotenbakken voor kranen van 5t - 10t', id: '5t-10t' },
+        { label: 'Slotenbakken voor kranen van 10t - 15t', id: '10t-15t' },
+        { label: 'Slotenbakken voor kranen van 15t - 25t', id: '15t-25t' }
       ]
     },
     { 
       title: 'Dieplepelbakken', 
       slug: 'dieplepelbakken',
       tonnages: [
-        { label: '1t - 2.5t', id: '1t-2-5t' },
-        { label: '2.5t - 5t', id: '2-5t-5t' },
-        { label: '5t - 10t', id: '5t-10t' },
-        { label: '10t - 15t', id: '10t-15t' },
-        { label: '15t - 25t', id: '15t-25t' },
-        { label: '25t+', id: '25t-plus' }
+        { label: 'Dieplepelbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+        { label: 'Dieplepelbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+        { label: 'Dieplepelbakken voor kranen van 5t - 10t', id: '5t-10t' },
+        { label: 'Dieplepelbakken voor kranen van 10t - 15t', id: '10t-15t' },
+        { label: 'Dieplepelbakken voor kranen van 15t - 25t', id: '15t-25t' },
+        { label: 'Dieplepelbakken voor kranen van 25t+', id: '25t-plus' }
       ]
     },
     { 
       title: 'Sleuvenbakken', 
       slug: 'sleuvenbakken',
       tonnages: [
-         { label: '1t - 2.5t', id: '1t-2-5t' },
-         { label: '2.5t - 5t', id: '2-5t-5t' },
-         { label: '5t - 10t', id: '5t-10t' }
+         { label: 'Sleuvenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+         { label: 'Sleuvenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+         { label: 'Sleuvenbakken voor kranen van 5t - 10t', id: '5t-10t' }
       ]
     },
     { 
       title: 'Kantelbakken', 
       slug: 'kantelbakken',
       tonnages: [
-        { label: '1t - 2.5t', id: '1t-2-5t' },
-        { label: '2.5t - 5t', id: '2-5t-5t' },
-        { label: '5t - 10t', id: '5t-10t' }
+        { label: 'Kantelbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+        { label: 'Kantelbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+        { label: 'Kantelbakken voor kranen van 5t - 10t', id: '5t-10t' }
       ]
     }
   ],
@@ -54,37 +54,37 @@ const CUSTOM_MENU_STRUCTURE = {
       title: 'Sloophamers', 
       slug: 'sloophamers',
       tonnages: [
-        { label: '1t - 2.5t', id: '1t-2-5t' },
-        { label: '2.5t - 5t', id: '2-5t-5t' },
-        { label: '5t - 10t', id: '5t-10t' },
-        { label: '10t - 15t', id: '10t-15t' },
-        { label: '15t - 25t', id: '15t-25t' }
+        { label: 'Sloophamers voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+        { label: 'Sloophamers voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+        { label: 'Sloophamers voor kranen van 5t - 10t', id: '5t-10t' },
+        { label: 'Sloophamers voor kranen van 10t - 15t', id: '10t-15t' },
+        { label: 'Sloophamers voor kranen van 15t - 25t', id: '15t-25t' }
       ]
     },
     { 
       title: 'Rippers', 
       slug: 'rippers',
       tonnages: [
-        { label: '1t - 2.5t', id: '1t-2-5t' },
-        { label: '2.5t - 5t', id: '2-5t-5t' }
+        { label: 'Rippers voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+        { label: 'Rippers voor kranen van 2,5t - 5t', id: '2-5t-5t' }
       ]
     },
     { 
       title: 'Sorteergrijpers', 
       slug: 'sorteergrijpers',
       tonnages: [
-        { label: '2.5t - 5t', id: '2-5t-5t' },
-        { label: '5t - 10t', id: '5t-10t' },
-        { label: '10t - 15t', id: '10t-15t' },
-        { label: '15t - 25t', id: '15t-25t' }
+        { label: 'Sorteergrijpers voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+        { label: 'Sorteergrijpers voor kranen van 5t - 10t', id: '5t-10t' },
+        { label: 'Sorteergrijpers voor kranen van 10t - 15t', id: '10t-15t' },
+        { label: 'Sorteergrijpers voor kranen van 15t - 25t', id: '15t-25t' }
       ]
     },
     { 
       title: 'Roterende grijpers', 
       slug: 'roterende-sorteergrijpers',
       tonnages: [
-        { label: '5t - 10t', id: '5t-10t' },
-        { label: '10t - 15t', id: '10t-15t' }
+        { label: 'Roterende grijpers voor kranen van 5t - 10t', id: '5t-10t' },
+        { label: 'Roterende grijpers voor kranen van 10t - 15t', id: '10t-15t' }
       ]
     }
   ],
@@ -197,18 +197,21 @@ function createDropdownMenu(menuItem, categorySlug, items) {
         const tLink = document.createElement('a');
         tLink.href = `/${item.slug}/${t.id}/`;
         tLink.className = 'menu-tonnage-link';
-        tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; transition:all 0.2s; display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:6px;';
-        tLink.innerHTML = `<span style="color:#2C5F6F; font-size:12px; font-weight:bold;">›</span> ${t.label}`;
+        // Updated style for multi-line text
+        tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; line-height:1.4; transition:all 0.2s; display:flex; align-items:start; gap:8px; padding:8px 12px; border-radius:6px;';
+        
+        // Use a small dot instead of arrow for cleaner list look with long text
+        tLink.innerHTML = `<span style="color:#2C5F6F; font-size:18px; line-height:1; margin-top:-2px;">•</span> <span>${t.label}</span>`;
         
         tLink.onmouseover = () => {
           tLink.style.color = '#2C5F6F';
           tLink.style.background = '#f8f9fa';
-          tLink.style.paddingLeft = '14px';
+          tLink.style.transform = 'translateX(2px)';
         };
         tLink.onmouseout = () => {
           tLink.style.color = '#666';
           tLink.style.background = 'transparent';
-          tLink.style.paddingLeft = '10px';
+          tLink.style.transform = 'translateX(0)';
         };
         
         list.appendChild(tLink);

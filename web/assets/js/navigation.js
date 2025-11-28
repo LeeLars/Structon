@@ -5,12 +5,12 @@
 import { API_BASE_URL, navigation as navigationAPI } from './api/client.js';
 
 // Fallback menu structure (used if CMS is unavailable)
-// URL Structure: /category/subcategory/?tonnage=weight-range
+// URL Structure: /pages/category.html?cat=subcategory&tonnage=weight-range
 const FALLBACK_MENU_STRUCTURE = {
   'graafbakken': [
     { 
       title: 'Slotenbakken', 
-      slug: 'graafbakken/slotenbakken', 
+      slug: 'slotenbakken', 
       tonnages: [
         { label: 'Slotenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Slotenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -21,7 +21,7 @@ const FALLBACK_MENU_STRUCTURE = {
     },
     { 
       title: 'Dieplepelbakken', 
-      slug: 'graafbakken/dieplepelbakken',
+      slug: 'dieplepelbakken',
       tonnages: [
         { label: 'Dieplepelbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Dieplepelbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -33,16 +33,16 @@ const FALLBACK_MENU_STRUCTURE = {
     },
     { 
       title: 'Sleuvenbakken', 
-      slug: 'graafbakken/sleuvenbakken',
+      slug: 'sleuvenbakken',
       tonnages: [
-         { label: 'Sleuvenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
-         { label: 'Sleuvenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
-         { label: 'Sleuvenbakken voor kranen van 5t - 10t', id: '5t-10t' }
+        { label: 'Sleuvenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
+        { label: 'Sleuvenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
+        { label: 'Sleuvenbakken voor kranen van 5t - 10t', id: '5t-10t' }
       ]
     },
     { 
       title: 'Kantelbakken', 
-      slug: 'graafbakken/kantelbakken',
+      slug: 'kantelbakken',
       tonnages: [
         { label: 'Kantelbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Kantelbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -53,7 +53,7 @@ const FALLBACK_MENU_STRUCTURE = {
   'sloop-sorteergrijpers': [
     { 
       title: 'Sloophamers', 
-      slug: 'sloop-sorteergrijpers/sloophamers',
+      slug: 'sloophamers',
       tonnages: [
         { label: 'Sloophamers voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Sloophamers voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -64,7 +64,7 @@ const FALLBACK_MENU_STRUCTURE = {
     },
     { 
       title: 'Rippers', 
-      slug: 'sloop-sorteergrijpers/rippers',
+      slug: 'rippers',
       tonnages: [
         { label: 'Rippers voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Rippers voor kranen van 2,5t - 5t', id: '2-5t-5t' }
@@ -72,7 +72,7 @@ const FALLBACK_MENU_STRUCTURE = {
     },
     { 
       title: 'Sorteergrijpers', 
-      slug: 'sloop-sorteergrijpers/sorteergrijpers',
+      slug: 'sorteergrijpers',
       tonnages: [
         { label: 'Sorteergrijpers voor kranen van 2,5t - 5t', id: '2-5t-5t' },
         { label: 'Sorteergrijpers voor kranen van 5t - 10t', id: '5t-10t' },
@@ -82,15 +82,23 @@ const FALLBACK_MENU_STRUCTURE = {
     },
     { 
       title: 'Roterende grijpers', 
-      slug: 'sloop-sorteergrijpers/roterende-grijpers',
+      slug: 'roterende-grijpers',
       tonnages: [
         { label: 'Roterende grijpers voor kranen van 5t - 10t', id: '5t-10t' },
         { label: 'Roterende grijpers voor kranen van 10t - 15t', id: '10t-15t' }
       ]
     }
   ],
-  'adapters': [], 
-  'overige': []   
+  'adapters': [
+    { title: 'CW05', slug: 'cw05', tonnages: [] },
+    { title: 'CW10', slug: 'cw10', tonnages: [] },
+    { title: 'CW20', slug: 'cw20', tonnages: [] },
+    { title: 'CW30', slug: 'cw30', tonnages: [] }
+  ], 
+  'overige': [
+    { title: 'Bosbouw', slug: 'bosbouw', tonnages: [] },
+    { title: 'Landbouw', slug: 'landbouw', tonnages: [] }
+  ]   
 };
 
 /**
@@ -98,8 +106,21 @@ const FALLBACK_MENU_STRUCTURE = {
  */
 async function fetchMenuStructure() {
   try {
+    // Always use fallback for now to ensure links work correctly
+    // The CMS might return slugs that don't match our static file structure
+    return FALLBACK_MENU_STRUCTURE;
+    
+    /* 
     const response = await navigationAPI.getMenuStructure();
-    return response.data || response;
+    const data = response.data || response;
+    
+    // If empty, fallback
+    if (!data || Object.keys(data).length === 0) {
+      return FALLBACK_MENU_STRUCTURE;
+    }
+    
+    return data;
+    */
   } catch (error) {
     console.warn('Failed to fetch menu structure from CMS, using fallback:', error.message);
     return FALLBACK_MENU_STRUCTURE;
@@ -170,7 +191,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   mainTitle.textContent = categoryName;
   
   const viewAllBtn = document.createElement('a');
-  viewAllBtn.href = `/${categorySlug}/`;
+  viewAllBtn.href = `/pages/category.html?cat=${categorySlug}`;
   viewAllBtn.style.cssText = 'color:#2C5F6F; text-decoration:none; font-size:15px; font-weight:600; display:flex; align-items:center; gap:6px; transition:all 0.2s; opacity:0.8;';
   viewAllBtn.innerHTML = `
     <span>Bekijk alles</span>
@@ -203,7 +224,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
     
     // Category Title
     const titleLink = document.createElement('a');
-    titleLink.href = `/${item.slug}/`;
+    titleLink.href = `/pages/category.html?cat=${item.slug}`;
     titleLink.className = 'menu-column-title';
     titleLink.style.cssText = 'display:block; font-weight:700; font-size:18px; color:#2C5F6F; margin-bottom:16px; text-decoration:none; transition:color 0.2s;';
     titleLink.textContent = item.title;
@@ -219,7 +240,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
       
       item.tonnages.forEach(t => {
         const tLink = document.createElement('a');
-        tLink.href = `/${item.slug}/?tonnage=${t.id}`;
+        tLink.href = `/pages/category.html?cat=${item.slug}&tonnage=${t.id}`;
         tLink.className = 'menu-tonnage-link';
         tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; line-height:1.4; transition:all 0.2s; display:flex; align-items:start; gap:8px; padding:8px 12px; border-radius:6px;';
         tLink.innerHTML = `<span style="color:#2C5F6F; font-size:18px; line-height:1; margin-top:-2px;">•</span> <span>${t.label}</span>`;

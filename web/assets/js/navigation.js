@@ -168,14 +168,10 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   header.appendChild(viewAllBtn);
   contentCol.appendChild(header);
 
-  // Wrapper for columns + help box
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'display:grid; grid-template-columns:1fr 350px; gap:60px;';
-
-  // Grid of categories (Columns)
+  // Grid of categories (Columns) - NO wrapper, direct in contentCol
   const grid = document.createElement('div');
   grid.className = 'menu-dropdown-grid';
-  grid.style.cssText = `display:grid; grid-template-columns:repeat(${items.length}, 1fr); gap:30px; align-items:start;`;
+  grid.style.cssText = `display:grid; grid-template-columns:repeat(${Math.min(items.length, 4)}, 1fr); gap:40px; align-items:start; margin-bottom:40px;`;
 
   items.forEach((item) => {
     const column = document.createElement('div');
@@ -201,10 +197,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
         const tLink = document.createElement('a');
         tLink.href = `/${item.slug}/${t.id}/`;
         tLink.className = 'menu-tonnage-link';
-        // Updated style for multi-line text
         tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; line-height:1.4; transition:all 0.2s; display:flex; align-items:start; gap:8px; padding:8px 12px; border-radius:6px;';
-        
-        // Use a small dot instead of arrow for cleaner list look with long text
         tLink.innerHTML = `<span style="color:#2C5F6F; font-size:18px; line-height:1; margin-top:-2px;">•</span> <span>${t.label}</span>`;
         
         tLink.onmouseover = () => {
@@ -226,28 +219,28 @@ function createDropdownMenu(menuItem, categorySlug, items) {
     grid.appendChild(column);
   });
   
-  wrapper.appendChild(grid);
+  contentCol.appendChild(grid);
 
-  // --- HELP BOX ---
+  // --- HELP BOX (at bottom, full width) ---
   const helpBox = document.createElement('div');
-  helpBox.style.cssText = 'background:#2C5F6F; color:white; padding:40px; border-radius:12px; height:fit-content; box-shadow:0 10px 30px rgba(44, 95, 111, 0.2);';
+  helpBox.style.cssText = 'background:#2C5F6F; color:white; padding:30px 40px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; gap:40px; box-shadow:0 10px 30px rgba(44, 95, 111, 0.2);';
   helpBox.innerHTML = `
-    <h4 style="font-size:22px; margin:0 0 20px 0; font-weight:700; color:white; text-transform:uppercase; letter-spacing:1px;">HULP NODIG?</h4>
-    <p style="font-size:15px; line-height:1.7; opacity:0.9; margin:0 0 30px 0; color:white;">
-      Weet u niet zeker welke ${categoryName.toLowerCase()} geschikt zijn voor uw machine? 
-      Onze specialisten helpen u graag met persoonlijk advies.
-    </p>
-    <a href="/pages/contact.html" class="btn-split" style="background:white; color:#2C5F6F; width:100%; justify-content:center;">
+    <div style="flex:1;">
+      <h4 style="font-size:20px; margin:0 0 10px 0; font-weight:700; color:white; text-transform:uppercase; letter-spacing:1px;">HULP NODIG?</h4>
+      <p style="font-size:14px; line-height:1.6; opacity:0.95; margin:0; color:white;">
+        Weet u niet zeker welke ${categoryName.toLowerCase()} geschikt zijn voor uw machine? Onze specialisten helpen u graag.
+      </p>
+    </div>
+    <a href="/pages/contact.html" class="btn-split" style="background:white; color:#2C5F6F; flex-shrink:0;">
       <span class="btn-split-text" style="color:#2C5F6F;">Neem contact op</span>
-      <span class="btn-split-icon" style="background:#f0f0f0; color:#2C5F6F;">
+      <span class="btn-split-icon" style="background:#2C5F6F; color:white;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </span>
     </a>
   `;
   
-  wrapper.appendChild(helpBox);
-  contentCol.appendChild(wrapper);
-  container.appendChild(contentCol); // THIS WAS MISSING!
+  contentCol.appendChild(helpBox);
+  container.appendChild(contentCol);
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);

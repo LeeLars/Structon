@@ -2,7 +2,7 @@
  * Sectors Management Page
  */
 
-import { apiClient } from './api-client.js';
+import apiClient from './api-client.js';
 
 let allSectors = [];
 
@@ -50,7 +50,7 @@ function initEventListeners() {
  */
 async function loadSectors() {
   try {
-    const response = await apiClient('/api/sectors');
+    const response = await apiClient.get('/api/sectors');
     allSectors = response.sectors || response || [];
     renderSectors();
   } catch (error) {
@@ -160,7 +160,7 @@ window.editSector = (id) => {
 
 window.toggleSectorStatus = async (id, newStatus) => {
   try {
-    await apiClient(`/api/sectors/${id}`, {
+    await apiClient.request(`/api/sectors/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ is_active: newStatus })
     });
@@ -174,7 +174,7 @@ window.deleteSector = async (id) => {
   if (!confirm('Weet je zeker dat je deze sector wilt verwijderen?')) return;
   
   try {
-    await apiClient(`/api/sectors/${id}`, { method: 'DELETE' });
+    await apiClient.delete(`/api/sectors/${id}`);
     loadSectors();
   } catch (error) {
     showError('Kon sector niet verwijderen');

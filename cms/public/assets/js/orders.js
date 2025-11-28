@@ -2,7 +2,7 @@
  * Orders Management Page
  */
 
-import { apiClient } from './api-client.js';
+import apiClient from './api-client.js';
 
 let allOrders = [];
 let currentFilter = 'all';
@@ -56,7 +56,7 @@ function initEventListeners() {
  */
 async function loadOrders() {
   try {
-    const response = await apiClient('/api/sales/orders');
+    const response = await apiClient.get('/api/sales/orders');
     allOrders = response.orders || [];
     renderOrders();
   } catch (error) {

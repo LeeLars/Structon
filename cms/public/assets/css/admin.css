@@ -419,3 +419,57 @@ body {
   }
   /* Add a toggle button later if needed */
 }
+
+/* --- FORM CONTROLS --- */
+.search-box {
+  position: relative;
+  min-width: 280px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--col-text-main);
+  transition: 0.2s;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--col-primary);
+  box-shadow: 0 0 0 3px rgba(35, 103, 115, 0.1);
+}
+
+.filters-bar {
+  display: flex;
+  background: #f8fafc;
+  padding: 4px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+}
+
+.filter-pill {
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  color: var(--col-text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filter-pill:hover {
+  color: var(--col-text-main);
+}
+
+.filter-pill.active {
+  background: white;
+  color: var(--col-primary);
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}

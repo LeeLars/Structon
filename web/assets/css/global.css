@@ -277,13 +277,13 @@ p {
 
 /* Blok 1: Tekst */
 .btn-split-text {
-  background-color: var(--color-primary);
+  background-color: #236773;
   color: white;
   padding: 14px 24px;
   font-family: Arial, sans-serif;
   font-weight: bold;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 8px 0 0 8px; /* Afgeronde hoeken links */
   display: flex;
   align-items: center;
   transition: background-color 0.3s ease;
@@ -291,13 +291,13 @@ p {
 
 /* Blok 2: Pijl */
 .btn-split-icon {
-  background-color: var(--color-primary);
+  background-color: #236773;
   color: white;
   width: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0; /* Afgeronde hoeken rechts */
   transition: background-color 0.3s ease;
 }
 
@@ -309,7 +309,7 @@ p {
 /* Hover: beide blokken tegelijk */
 .btn-split:hover .btn-split-text,
 .btn-split:hover .btn-split-icon {
-  background-color: var(--color-primary-light);
+  background-color: #2a7d8a;
 }
 
 /* Small variant (voor product cards) */
@@ -709,7 +709,7 @@ p {
   position: absolute; /* Absolute positioning for centering */
   left: 50%;
   transform: translateX(-50%);
-  bottom: -70px; /* Half of height (approx 44px) to center on border */
+  bottom: -27px; /* Half of height (approx 44px) to center on border */
   top: auto; /* Reset top */
   z-index: 10;
   white-space: nowrap;

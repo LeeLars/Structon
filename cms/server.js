@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -38,10 +39,39 @@ app.use(cors({
   credentials: true
 }));
 
+// Compression middleware - compress all responses
+app.use(compression({
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    return compression.filter(req, res);
+  },
+  level: 6 // Balance between speed and compression ratio
+}));
+
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
+
+// Cache control middleware
+app.use((req, res, next) => {
+  // API responses - short cache for dynamic content
+  if (req.path.startsWith('/api/')) {
+    // Public API endpoints can be cached briefly
+    if (req.path.includes('/products') || req.path.includes('/categories') || req.path.includes('/subcategories')) {
+      res.set('Cache-Control', 'public, max-age=300, s-maxage=600'); // 5min client, 10min CDN
+    } else {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+  }
+  // Static files - long cache
+  else if (req.path.startsWith('/cms/')) {
+    res.set('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
+  }
+  next();
+});
 
 // Rate limiting for API
 app.use('/api', apiLimiter);

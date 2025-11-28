@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Product, ProductPrice } from '../../models/index.js';
 import { authenticate, optionalAuth } from '../../middleware/auth.js';
+import { cacheMiddleware } from '../../middleware/cache.js';
 
 const router = Router();
 
@@ -8,7 +9,7 @@ const router = Router();
  * GET /api/products
  * Get all products (public, no prices)
  */
-router.get('/', async (req, res, next) => {
+router.get('/', cacheMiddleware(5 * 60 * 1000), async (req, res, next) => {
   try {
     const {
       category, category_id, brand_id, attachment_type,

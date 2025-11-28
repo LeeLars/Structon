@@ -5,6 +5,7 @@
 
 import { initAuth } from './auth.js';
 import { initNavigation } from './navigation.js';
+import { registerServiceWorker } from './sw-register.js';
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuth();
   initCmsLink();
   initNavigation();
+  
+  // Register service worker for offline support and caching
+  registerServiceWorker();
 });
 
 /**

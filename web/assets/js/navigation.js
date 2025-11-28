@@ -48,13 +48,10 @@ const FALLBACK_SUBCATEGORIES = {
  * Initialize navigation with subcategories
  */
 export async function initNavigation() {
-  console.log('🔧 Initializing navigation with mega menus...');
   const menuItems = document.querySelectorAll('.menu-item');
-  console.log(`Found ${menuItems.length} menu items`);
   
   for (const menuItem of menuItems) {
     const categorySlug = getCategorySlugFromMenuItem(menuItem);
-    console.log(`Processing menu item: ${categorySlug}`);
     
     if (categorySlug) {
       try {
@@ -62,28 +59,21 @@ export async function initNavigation() {
         
         // Fallback naar hardcoded data als API faalt
         if (!subcategories || subcategories.length === 0) {
-          console.log(`Using fallback data for ${categorySlug}`);
           subcategories = FALLBACK_SUBCATEGORIES[categorySlug] || [];
         }
         
         if (subcategories && subcategories.length > 0) {
-          console.log(`Creating mega menu for ${categorySlug} with ${subcategories.length} items`);
           createDropdownMenu(menuItem, categorySlug, subcategories);
-        } else {
-          console.log(`No subcategories found for ${categorySlug}`);
         }
       } catch (error) {
-        console.error(`Failed to load subcategories for ${categorySlug}:`, error);
-        // Probeer fallback data
+        // Probeer fallback data bij error
         const fallbackData = FALLBACK_SUBCATEGORIES[categorySlug];
         if (fallbackData) {
-          console.log(`Using fallback data after error for ${categorySlug}`);
           createDropdownMenu(menuItem, categorySlug, fallbackData);
         }
       }
     }
   }
-  console.log('✅ Navigation initialization complete');
 }
 
 /**
@@ -121,14 +111,11 @@ async function fetchSubcategories(categorySlug) {
  * Create mega menu with subcategories
  */
 function createDropdownMenu(menuItem, categorySlug, subcategories) {
-  console.log(`📋 Creating mega menu for ${categorySlug}`, subcategories);
-  
   const categoryName = menuItem.textContent.trim().replace('▼', '').trim();
   
   // Create mega menu container
   const dropdown = document.createElement('div');
   dropdown.className = 'menu-dropdown';
-  dropdown.style.backgroundColor = 'white'; // Ensure visibility
   
   // Create inner container
   const container = document.createElement('div');
@@ -141,7 +128,6 @@ function createDropdownMenu(menuItem, categorySlug, subcategories) {
   const title = document.createElement('h3');
   title.className = 'menu-dropdown-title';
   title.textContent = `${categoryName} per tonnage`;
-  title.style.color = '#2C5F6F'; // Ensure text is visible
   
   const viewAllLink = document.createElement('a');
   viewAllLink.href = `/${categorySlug}/`;
@@ -153,20 +139,16 @@ function createDropdownMenu(menuItem, categorySlug, subcategories) {
   container.appendChild(header);
   
   // Add subcategory links in grid
-  subcategories.forEach((subcat, index) => {
+  subcategories.forEach((subcat) => {
     const link = document.createElement('a');
     link.href = `/${categorySlug}/${subcat.slug}/`;
     link.className = 'menu-dropdown-item';
     link.textContent = subcat.title;
     container.appendChild(link);
-    console.log(`  ✓ Added subcategory ${index + 1}: ${subcat.title}`);
   });
   
   dropdown.appendChild(container);
-  
-  // Append mega menu to menu item
   menuItem.appendChild(dropdown);
-  console.log(`✅ Mega menu appended to ${categorySlug} menu item`);
   
   // Prevent default click on menu item (keep hover behavior)
   menuItem.addEventListener('click', (e) => {

@@ -5,7 +5,7 @@
 /* Hero Section Enhancement */
 .hero {
   background-color: var(--color-white);
-  padding: var(--space-10) 0 var(--space-8);
+  padding: var(--space-16) 0 var(--space-4);
   text-align: center; /* Gecentreerd */
 }
 
@@ -181,7 +181,7 @@
   font-weight: 300; /* Light variant */
   font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -261,7 +261,7 @@
   text-decoration: none;
   border: none;
   padding: 0;
-  margin-top: 30px;
+  margin-top: 16px;
   box-shadow: none; /* Schaduw verwijderen */
   background: transparent; /* Geen achtergrond op container */
   transition: transform 0.2s ease;

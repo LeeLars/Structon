@@ -155,7 +155,13 @@ function getCategorySlugFromMenuItem(menuItem) {
   const href = menuItem.getAttribute('href');
   if (!href) return null;
   
-  // Extract slug from href like "/graafbakken/"
+  // Check if it's a query parameter URL (e.g., "category.html?cat=graafbakken")
+  if (href.includes('?cat=')) {
+    const urlParams = new URLSearchParams(href.split('?')[1]);
+    return urlParams.get('cat');
+  }
+  
+  // Fallback: Extract slug from href like "/graafbakken/"
   const match = href.match(/\/([^\/]+)\/?$/);
   return match ? match[1] : null;
 }

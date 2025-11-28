@@ -29,21 +29,49 @@ export const API_BASE_URL = API_BASE;
 function getDemoDataForEndpoint(endpoint) {
   console.log(`⚠️ Using DEMO DATA for: ${endpoint}`);
   
-  // Products
+  // Products - Featured
   if (endpoint.includes('/products/featured')) {
     return DEMO_PRODUCTS.slice(0, 6);
   }
-  if (endpoint.includes('/products/') && !endpoint.includes('filters')) {
-    // Single product by ID or Slug
+  
+  // Products - Single product by ID or Slug
+  if (endpoint.includes('/products/') && !endpoint.includes('filters') && !endpoint.includes('?')) {
     const idOrSlug = endpoint.split('/products/')[1].split('?')[0];
     const product = DEMO_PRODUCTS.find(p => p.id == idOrSlug || p.slug == idOrSlug);
     return product || DEMO_PRODUCTS[0];
   }
+  
+  // Products - List (with filters)
   if (endpoint.includes('/products')) {
-    return DEMO_PRODUCTS;
+    // Parse query params to filter
+    let filteredProducts = [...DEMO_PRODUCTS];
+    
+    // Extract category filter from URL
+    const urlParams = new URLSearchParams(endpoint.split('?')[1] || '');
+    const categoryFilter = urlParams.get('category');
+    
+    if (categoryFilter) {
+      filteredProducts = filteredProducts.filter(p => 
+        p.category_slug === categoryFilter || 
+        p.category_slug?.includes(categoryFilter)
+      );
+    }
+    
+    // Return in expected format: { products: [...], total: N }
+    return {
+      products: filteredProducts,
+      total: filteredProducts.length
+    };
   }
 
-  // Categories
+  // Categories - Single
+  if (endpoint.includes('/categories/') && !endpoint.includes('?')) {
+    const slug = endpoint.split('/categories/')[1];
+    const category = DEMO_CATEGORIES.find(c => c.slug === slug);
+    return category ? { category } : { category: DEMO_CATEGORIES[0] };
+  }
+  
+  // Categories - List
   if (endpoint.includes('/categories')) {
     return DEMO_CATEGORIES;
   }

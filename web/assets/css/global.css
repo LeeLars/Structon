@@ -442,7 +442,7 @@ p {
   width: 120px;
   position: absolute;
   top: -40px; /* Adjust overlap */
-  left: var(--container-padding); /* Align with content start */
+  left: max(var(--container-padding), calc((100vw - var(--container-max)) / 2 + var(--container-padding))); /* Stay within container */
   border-radius: 0 0 20px 20px;
   z-index: 20;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);

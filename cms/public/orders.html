@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Structon CMS – Offertes</title>
+  <title>Structon CMS – Bestellingen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="admin-layout">
-    <!-- Sidebar (Loaded dynamically or static copy) -->
+    <!-- Sidebar -->
     <aside class="admin-sidebar">
       <div class="sidebar-header">
         <div class="logo-box">S</div>
@@ -31,7 +31,7 @@
           </svg>
           <span>Dashboard</span>
         </a>
-        <a href="/cms/quotes.html" class="nav-item active" data-page="quotes">
+        <a href="/cms/quotes.html" class="nav-item" data-page="quotes">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -41,7 +41,7 @@
           </svg>
           <span>Offertes</span>
         </a>
-        <a href="/cms/orders.html" class="nav-item" data-page="orders">
+        <a href="/cms/orders.html" class="nav-item active" data-page="orders">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
@@ -119,8 +119,8 @@
     <main class="admin-main">
       <header class="admin-header">
         <div class="header-left">
-          <h2 class="page-title">Offerte Aanvragen</h2>
-          <p class="page-subtitle">Beheer inkomende aanvragen</p>
+          <h2 class="page-title">Bestellingen</h2>
+          <p class="page-subtitle">Beheer klantbestellingen</p>
         </div>
         <div class="header-actions">
           <div class="search-box">
@@ -128,7 +128,7 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" placeholder="Zoeken..." id="search-quotes">
+            <input type="text" placeholder="Zoeken..." id="search-orders">
           </div>
           <button class="btn btn-primary">
             Export CSV
@@ -139,27 +139,29 @@
       <div class="admin-content">
         <div class="filters-bar">
           <button class="filter-pill active" data-status="all">Alle</button>
-          <button class="filter-pill" data-status="new">Nieuw</button>
-          <button class="filter-pill" data-status="processing">In behandeling</button>
-          <button class="filter-pill" data-status="quoted">Geoffreerd</button>
+          <button class="filter-pill" data-status="pending">In afwachting</button>
+          <button class="filter-pill" data-status="paid">Betaald</button>
+          <button class="filter-pill" data-status="shipped">Verzonden</button>
+          <button class="filter-pill" data-status="completed">Voltooid</button>
         </div>
 
         <div class="table-container">
-          <table class="admin-table" id="quotes-table">
+          <table class="admin-table" id="orders-table">
             <thead>
               <tr>
+                <th>Bestelnummer</th>
                 <th>Datum</th>
                 <th>Klant</th>
-                <th>Product</th>
+                <th>Totaal</th>
                 <th>Status</th>
                 <th class="text-right">Acties</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td colspan="5" class="loading-cell">
+                <td colspan="6" class="loading-cell">
                   <div class="loading-spinner"></div>
-                  <span>Aanvragen laden...</span>
+                  <span>Bestellingen laden...</span>
                 </td>
               </tr>
             </tbody>
@@ -169,6 +171,6 @@
     </main>
   </div>
 
-  <script type="module" src="/cms/assets/js/quotes.js"></script>
+  <script type="module" src="/cms/assets/js/orders.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Structon CMS – Offertes</title>
+  <title>Structon CMS – Sectoren</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="admin-layout">
-    <!-- Sidebar (Loaded dynamically or static copy) -->
+    <!-- Sidebar -->
     <aside class="admin-sidebar">
       <div class="sidebar-header">
         <div class="logo-box">S</div>
@@ -31,7 +31,7 @@
           </svg>
           <span>Dashboard</span>
         </a>
-        <a href="/cms/quotes.html" class="nav-item active" data-page="quotes">
+        <a href="/cms/quotes.html" class="nav-item" data-page="quotes">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -70,7 +70,7 @@
           </svg>
           <span>Merken</span>
         </a>
-        <a href="/cms/sectors.html" class="nav-item" data-page="sectors">
+        <a href="/cms/sectors.html" class="nav-item active" data-page="sectors">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="3" y1="9" x2="21" y2="9"></line>
@@ -119,8 +119,8 @@
     <main class="admin-main">
       <header class="admin-header">
         <div class="header-left">
-          <h2 class="page-title">Offerte Aanvragen</h2>
-          <p class="page-subtitle">Beheer inkomende aanvragen</p>
+          <h2 class="page-title">Sectoren</h2>
+          <p class="page-subtitle">Beheer industriesectoren</p>
         </div>
         <div class="header-actions">
           <div class="search-box">
@@ -128,29 +128,26 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" placeholder="Zoeken..." id="search-quotes">
+            <input type="text" placeholder="Zoeken..." id="search-sectors">
           </div>
-          <button class="btn btn-primary">
-            Export CSV
+          <button class="btn btn-primary" id="add-sector-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Sector Toevoegen
           </button>
         </div>
       </header>
 
       <div class="admin-content">
-        <div class="filters-bar">
-          <button class="filter-pill active" data-status="all">Alle</button>
-          <button class="filter-pill" data-status="new">Nieuw</button>
-          <button class="filter-pill" data-status="processing">In behandeling</button>
-          <button class="filter-pill" data-status="quoted">Geoffreerd</button>
-        </div>
-
         <div class="table-container">
-          <table class="admin-table" id="quotes-table">
+          <table class="admin-table" id="sectors-table">
             <thead>
               <tr>
-                <th>Datum</th>
-                <th>Klant</th>
-                <th>Product</th>
+                <th>Naam</th>
+                <th>Slug</th>
+                <th>Beschrijving</th>
                 <th>Status</th>
                 <th class="text-right">Acties</th>
               </tr>
@@ -159,7 +156,7 @@
               <tr>
                 <td colspan="5" class="loading-cell">
                   <div class="loading-spinner"></div>
-                  <span>Aanvragen laden...</span>
+                  <span>Sectoren laden...</span>
                 </td>
               </tr>
             </tbody>
@@ -169,6 +166,6 @@
     </main>
   </div>
 
-  <script type="module" src="/cms/assets/js/quotes.js"></script>
+  <script type="module" src="/cms/assets/js/sectors.js"></script>
 </body>
 </html>

@@ -122,3 +122,8 @@ export const setAuthCookie = (res, token) => {
 export const clearAuthCookie = (res) => {
   res.clearCookie('auth_token');
 };
+
+/**
+ * Alias for backward compatibility
+ */
+export const authenticateToken = authenticate;

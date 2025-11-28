@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * CMS Admin Link - Auto-detect URL
  */
 function initCmsLink() {
-  const cmsLinks = document.querySelectorAll('.cms-admin-icon');
+  const cmsLinks = document.querySelectorAll('.cms-admin-icon, .cms-lock-link');
   const hostname = window.location.hostname;
   
   // Determine CMS URL based on environment

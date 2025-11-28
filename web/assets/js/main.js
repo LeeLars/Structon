@@ -4,12 +4,14 @@
  */
 
 import { initAuth } from './auth.js';
+import { initNavigation } from './navigation.js';
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initAuth();
   initCmsLink();
+  initNavigation();
 });
 
 /**

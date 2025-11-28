@@ -17,6 +17,7 @@ router.get('/', async (req, res, next) => {
     const result = await pool.query(`
       SELECT p.*, 
              c.title as category_title,
+             sc.title as subcategory_title,
              b.title as brand_title,
              (SELECT price FROM product_prices pp 
               WHERE pp.product_id = p.id 
@@ -24,6 +25,7 @@ router.get('/', async (req, res, next) => {
               ORDER BY pp.created_at DESC LIMIT 1) as current_price
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN subcategories sc ON p.subcategory_id = sc.id
       LEFT JOIN brands b ON p.brand_id = b.id
       ORDER BY p.created_at DESC
     `);
@@ -41,7 +43,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const {
-      title, slug, description, category_id, brand_id,
+      title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, cloudinary_images, specs, stock_quantity, is_featured, sector_ids,
       price
@@ -74,6 +76,7 @@ router.post('/', async (req, res, next) => {
       slug: productSlug,
       description,
       category_id,
+      subcategory_id,
       brand_id,
       excavator_weight_min,
       excavator_weight_max,
@@ -106,7 +109,7 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     const {
-      title, slug, description, category_id, brand_id,
+      title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, cloudinary_images, specs, stock_quantity, is_active, is_featured, sector_ids,
       price
@@ -131,6 +134,7 @@ router.patch('/:id', async (req, res, next) => {
       slug,
       description,
       category_id,
+      subcategory_id,
       brand_id,
       excavator_weight_min,
       excavator_weight_max,

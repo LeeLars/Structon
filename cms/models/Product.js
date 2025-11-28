@@ -8,9 +8,11 @@ export const Product = {
     let query = `
       SELECT p.*, 
              c.title as category_title, c.slug as category_slug,
+             sc.title as subcategory_title, sc.slug as subcategory_slug,
              b.title as brand_title, b.slug as brand_slug
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN subcategories sc ON p.subcategory_id = sc.id
       LEFT JOIN brands b ON p.brand_id = b.id
       WHERE p.is_active = true
     `;
@@ -25,6 +27,16 @@ export const Product = {
     if (filters.category_slug) {
       query += ` AND c.slug = $${paramCount++}`;
       values.push(filters.category_slug);
+    }
+
+    // Subcategory filter
+    if (filters.subcategory_id) {
+      query += ` AND p.subcategory_id = $${paramCount++}`;
+      values.push(filters.subcategory_id);
+    }
+    if (filters.subcategory_slug) {
+      query += ` AND sc.slug = $${paramCount++}`;
+      values.push(filters.subcategory_slug);
     }
 
     // Brand filter
@@ -102,9 +114,11 @@ export const Product = {
     const result = await pool.query(`
       SELECT p.*, 
              c.title as category_title, c.slug as category_slug,
+             sc.title as subcategory_title, sc.slug as subcategory_slug,
              b.title as brand_title, b.slug as brand_slug
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN subcategories sc ON p.subcategory_id = sc.id
       LEFT JOIN brands b ON p.brand_id = b.id
       WHERE p.id = $1
     `, [id]);
@@ -128,9 +142,11 @@ export const Product = {
     const result = await pool.query(`
       SELECT p.*, 
              c.title as category_title, c.slug as category_slug,
+             sc.title as subcategory_title, sc.slug as subcategory_slug,
              b.title as brand_title, b.slug as brand_slug
       FROM products p
       LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN subcategories sc ON p.subcategory_id = sc.id
       LEFT JOIN brands b ON p.brand_id = b.id
       WHERE p.slug = $1
     `, [slug]);
@@ -151,20 +167,20 @@ export const Product = {
    */
   async create(data) {
     const {
-      title, slug, description, category_id, brand_id,
+      title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, cloudinary_images, specs, stock_quantity, is_featured, sector_ids
     } = data;
 
     const result = await pool.query(`
       INSERT INTO products (
-        title, slug, description, category_id, brand_id,
+        title, slug, description, category_id, subcategory_id, brand_id,
         excavator_weight_min, excavator_weight_max, width, volume, weight,
         attachment_type, cloudinary_images, specs, stock_quantity, is_featured
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
       RETURNING *
     `, [
-      title, slug, description, category_id, brand_id,
+      title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, JSON.stringify(cloudinary_images || []), JSON.stringify(specs || {}),
       stock_quantity || 0, is_featured || false
@@ -189,7 +205,7 @@ export const Product = {
    */
   async update(id, data) {
     const {
-      title, slug, description, category_id, brand_id,
+      title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, cloudinary_images, specs, stock_quantity, is_active, is_featured, sector_ids
     } = data;
@@ -199,7 +215,7 @@ export const Product = {
     let paramCount = 1;
 
     const fields = {
-      title, slug, description, category_id, brand_id,
+      title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, stock_quantity, is_active, is_featured
     };

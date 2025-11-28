@@ -142,6 +142,58 @@ async function seed() {
     const categoryMap = {};
     catResult.rows.forEach(row => categoryMap[row.slug] = row.id);
 
+    // Create subcategories with tonnage ranges
+    console.log('📂 Creating subcategories...');
+    const subcategories = [
+      // Kraanbakken subcategorieën
+      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
+      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
+      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
+      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
+      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 },
+      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 25t+', slug: '25t-plus', tonnage_min: 25.0, tonnage_max: null, sort_order: 6 },
+      
+      // Slotenbakken subcategorieën
+      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
+      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
+      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
+      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
+      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 },
+      
+      // Dieplepelbakken subcategorieën
+      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
+      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
+      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
+      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
+      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 },
+      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 25t+', slug: '25t-plus', tonnage_min: 25.0, tonnage_max: null, sort_order: 6 },
+      
+      // Sorteergrijpers subcategorieën
+      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 1 },
+      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 2 },
+      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 3 },
+      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 4 },
+      
+      // Sloophamers subcategorieën
+      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
+      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
+      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
+      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
+      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 }
+    ];
+
+    for (const subcat of subcategories) {
+      const categoryId = categoryMap[subcat.category_slug];
+      if (categoryId) {
+        await pool.query(`
+          INSERT INTO subcategories (category_id, title, slug, tonnage_min, tonnage_max, sort_order)
+          VALUES ($1, $2, $3, $4, $5, $6)
+          ON CONFLICT (category_id, slug) DO UPDATE SET 
+            title = $2, tonnage_min = $4, tonnage_max = $5, sort_order = $6
+        `, [categoryId, subcat.title, subcat.slug, subcat.tonnage_min, subcat.tonnage_max, subcat.sort_order]);
+      }
+    }
+
     // Create products
     console.log('📦 Creating products...');
     const products = [

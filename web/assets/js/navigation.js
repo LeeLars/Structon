@@ -150,15 +150,19 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding-bottom:20px; border-bottom:2px solid #f0f0f0;';
   
   const mainTitle = document.createElement('h3');
-  mainTitle.style.cssText = 'font-size:24px; font-weight:700; color:#2C5F6F; margin:0;';
+  mainTitle.style.cssText = 'font-size:24px; font-weight:700; color:#2C5F6F; margin:0; text-transform:uppercase; letter-spacing:1px;';
   mainTitle.textContent = categoryName;
   
   const viewAllBtn = document.createElement('a');
   viewAllBtn.href = `/${categorySlug}/`;
-  viewAllBtn.style.cssText = 'padding:12px 28px; background:#2C5F6F; color:white; border-radius:25px; text-decoration:none; font-weight:600; transition:background 0.3s;';
-  viewAllBtn.textContent = 'Bekijk alles →';
-  viewAllBtn.onmouseover = () => viewAllBtn.style.background = '#3a7a8c';
-  viewAllBtn.onmouseout = () => viewAllBtn.style.background = '#2C5F6F';
+  viewAllBtn.className = 'btn-split'; // Use global button class
+  viewAllBtn.style.cssText = 'margin-left: auto;'; // Push to right if needed
+  viewAllBtn.innerHTML = `
+    <span class="btn-split-text">Bekijk alles</span>
+    <span class="btn-split-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </span>
+  `;
   
   header.appendChild(mainTitle);
   header.appendChild(viewAllBtn);
@@ -166,7 +170,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
 
   // Wrapper for columns + help box
   const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'display:grid; grid-template-columns:1fr 300px; gap:40px;';
+  wrapper.style.cssText = 'display:grid; grid-template-columns:1fr 350px; gap:60px;';
 
   // Grid of categories (Columns)
   const grid = document.createElement('div');
@@ -226,21 +230,23 @@ function createDropdownMenu(menuItem, categorySlug, items) {
 
   // --- HELP BOX ---
   const helpBox = document.createElement('div');
-  helpBox.style.cssText = 'background:#2C5F6F; color:white; padding:30px; border-radius:12px; height:fit-content;';
+  helpBox.style.cssText = 'background:#2C5F6F; color:white; padding:40px; border-radius:12px; height:fit-content; box-shadow:0 10px 30px rgba(44, 95, 111, 0.2);';
   helpBox.innerHTML = `
-    <h4 style="font-size:20px; margin:0 0 15px 0; font-weight:700;">Hulp nodig?</h4>
-    <p style="font-size:14px; line-height:1.6; opacity:0.95; margin:0 0 20px 0;">
+    <h4 style="font-size:22px; margin:0 0 20px 0; font-weight:700; color:white; text-transform:uppercase; letter-spacing:1px;">HULP NODIG?</h4>
+    <p style="font-size:15px; line-height:1.7; opacity:0.9; margin:0 0 30px 0; color:white;">
       Weet u niet zeker welke ${categoryName.toLowerCase()} geschikt zijn voor uw machine? 
       Onze specialisten helpen u graag met persoonlijk advies.
     </p>
-    <a href="/pages/contact.html" style="display:inline-block; padding:12px 24px; background:white; color:#2C5F6F; border-radius:20px; text-decoration:none; font-weight:600; font-size:14px; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-      Neem contact op →
+    <a href="/pages/contact.html" class="btn-split" style="background:white; color:#2C5F6F; width:100%; justify-content:center;">
+      <span class="btn-split-text" style="color:#2C5F6F;">Neem contact op</span>
+      <span class="btn-split-icon" style="background:#f0f0f0; color:#2C5F6F;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </span>
     </a>
   `;
   
   wrapper.appendChild(helpBox);
   contentCol.appendChild(wrapper);
-  container.appendChild(contentCol);
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);

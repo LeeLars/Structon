@@ -16,6 +16,7 @@
 
 .hero-title {
   font-size: 3.5rem;
+  font-weight: var(--font-black);
   margin-bottom: 0;
   color: var(--color-primary-dark);
   line-height: 1.2;

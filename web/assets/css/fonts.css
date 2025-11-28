@@ -1,0 +1,34 @@
+/**
+ * Arthouse Font Family
+ * Custom font declarations
+ */
+
+/* Arthouse Light (300) */
+@font-face {
+  font-family: 'Arthouse';
+  src: url('../fonts/Arthouse-Light.woff2') format('woff2'),
+       url('../fonts/Arthouse-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Arthouse Regular (400) */
+@font-face {
+  font-family: 'Arthouse';
+  src: url('../fonts/Arthouse-Regular.woff2') format('woff2'),
+       url('../fonts/Arthouse-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Arthouse Bold (700) */
+@font-face {
+  font-family: 'Arthouse';
+  src: url('../fonts/Arthouse-Bold.woff2') format('woff2'),
+       url('../fonts/Arthouse-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

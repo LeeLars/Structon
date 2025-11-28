@@ -58,10 +58,12 @@
   --text-5xl: 3rem;
   --text-6xl: 3.75rem;
   
-  /* Font Weights - Arthouse */
-  --font-light: 300;    /* Arthouse Light */
-  --font-normal: 400;   /* Arthouse Regular */
-  --font-bold: 700;     /* Arthouse Bold */
+  /* Font Weights - Arthouse Owned */
+  --font-light: 300;    /* Arthouse Owned Light */
+  --font-normal: 400;   /* Fallback to Medium for body text */
+  --font-medium: 500;   /* Arthouse Owned Medium */
+  --font-bold: 700;     /* Arthouse Owned Bold */
+  --font-black: 900;    /* Arthouse Owned Black */
   
   /* Spacing */
   --space-1: 0.25rem;
@@ -130,7 +132,7 @@ html {
 body {
   font-family: var(--font-body);
   font-size: var(--text-base);
-  font-weight: var(--font-normal);
+  font-weight: var(--font-medium);
   line-height: 1.6;
   color: var(--color-gray-800);
   background-color: var(--color-white);

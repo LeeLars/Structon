@@ -1,34 +1,40 @@
 /**
- * Arthouse Font Family
+ * Arthouse Owned Font Family
  * Custom font declarations
  */
 
-/* Arthouse Light (300) */
+/* Arthouse Owned Light (300) */
 @font-face {
   font-family: 'Arthouse';
-  src: url('../fonts/Arthouse-Light.woff2') format('woff2'),
-       url('../fonts/Arthouse-Light.woff') format('woff');
+  src: url('../fonts/ArthouseOwnedLight.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
-/* Arthouse Regular (400) */
+/* Arthouse Owned Medium (500) */
 @font-face {
   font-family: 'Arthouse';
-  src: url('../fonts/Arthouse-Regular.woff2') format('woff2'),
-       url('../fonts/Arthouse-Regular.woff') format('woff');
-  font-weight: 400;
+  src: url('../fonts/ArthouseOwnedMedium 1.woff2') format('woff2');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
-/* Arthouse Bold (700) */
+/* Arthouse Owned Bold (700) */
 @font-face {
   font-family: 'Arthouse';
-  src: url('../fonts/Arthouse-Bold.woff2') format('woff2'),
-       url('../fonts/Arthouse-Bold.woff') format('woff');
+  src: url('../fonts/ArthouseOwnedBold.woff2') format('woff2');
   font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Arthouse Owned Black (900) */
+@font-face {
+  font-family: 'Arthouse';
+  src: url('../fonts/ArthouseOwnedBlack.woff2') format('woff2');
+  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }

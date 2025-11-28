@@ -1824,3 +1824,82 @@ p {
     background: #fff;
   }
 }
+/* ============================================
+   ECOMMERCE ELEMENTS (Product Cards, Badges, Stock)
+   ============================================ */
+
+/* Product Header Layout */
+.product-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/* Stock Status */
+.stock-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-in-stock {
+  color: var(--color-success);
+}
+.status-in-stock .status-dot {
+  background-color: var(--color-success);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.status-low-stock {
+  color: var(--color-warning);
+}
+.status-low-stock .status-dot {
+  background-color: var(--color-warning);
+}
+
+.status-out-stock {
+  color: var(--color-error);
+}
+.status-out-stock .status-dot {
+  background-color: var(--color-error);
+}
+
+/* New Badge */
+.badge-new {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #236773;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Price on Request */
+.product-price-hidden {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  font-style: italic;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.product-price-row {
+  margin-bottom: 8px;
+}

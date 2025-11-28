@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="assets/css/fonts.css">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="assets/css/global.css?v=5">
+  <link rel="stylesheet" href="assets/css/global.css?v=6">
   <link rel="stylesheet" href="assets/css/pages/home.css?v=2">
   <link rel="stylesheet" href="assets/css/pages/unique-section.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -142,6 +142,21 @@
         <div class="hero-content">
           <h1 class="hero-title">Structon de kraanbak specialist<br>voor uw graafmachine!</h1>
           <p class="hero-subtitle-text">Bestel direct online of vraag eenvoudig een offerte aan. Snelle levering in heel België.</p>
+          
+          <!-- Hero Search Bar -->
+          <div class="hero-search-container">
+            <form action="/zoeken/" method="GET" class="hero-search-form">
+              <div class="search-input-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" name="q" placeholder="Zoek op CW-waarde, merk of type..." aria-label="Zoek producten">
+              </div>
+              <button type="submit" class="search-btn">Zoeken</button>
+            </form>
+          </div>
+
           <div class="hero-cta-wrapper">
             <a href="#categorieen" class="btn-split usp-btn">
               <span class="btn-split-text">Bekijk Webshop</span>

@@ -91,12 +91,22 @@ export function createProductCard(product, isLoggedIn = false) {
     ? `product.html?id=${product.slug || product.id}`
     : `pages/product.html?id=${product.slug || product.id}`;
 
+  // Stock status logic
+  const stock = product.stock || 0;
+  let stockStatusHtml = '';
+  if (stock > 5) {
+    stockStatusHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>Op voorraad</span>';
+  } else if (stock > 0) {
+    stockStatusHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>Nog slechts enkele stuks</span>';
+  } else {
+    stockStatusHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>Op bestelling</span>';
+  }
+
   // Specs formatting (e.g. 34 kg | 42 liter)
   const specs = [];
   if (product.weight) specs.push(`${product.weight} kg`);
   if (product.volume) specs.push(`${product.volume} liter`);
   if (product.width) specs.push(`${product.width}mm`); // of 1 meter als tekst
-  // Attachment type (CW00) vaak in titel, maar kan ook hier
 
   const specsHtml = specs.length > 0 
     ? `<p class="product-card-specs">${specs.join(' | ')}</p>`
@@ -119,8 +129,11 @@ export function createProductCard(product, isLoggedIn = false) {
       </button>
     `;
   } else {
-    // Niet ingelogd: Offerte aanvragen knop, geen prijs
+    // Niet ingelogd: Offerte aanvragen knop, wel "Prijs op aanvraag" tekst
     footerHtml = `
+      <div class="product-price-row">
+        <span class="product-price-hidden">Prijs op aanvraag</span>
+      </div>
       <a href="/contact/?product=${product.slug || product.id}" class="btn-split usp-btn btn-full">
         <span class="btn-split-text">Offerte aanvragen</span>
         <span class="btn-split-icon">
@@ -139,13 +152,17 @@ export function createProductCard(product, isLoggedIn = false) {
   return `
     <article class="product-card clean-card" data-product-id="${product.id}">
       <a href="${productUrl}" class="product-card-image">
+        ${product.is_new ? '<span class="badge-new">Nieuw</span>' : ''}
         <img src="${imageUrl}" alt="${product.title}" loading="lazy">
       </a>
       <div class="product-card-divider"></div>
       <div class="product-card-content">
-        <h3 class="product-card-title">
-          <a href="${productUrl}">${product.title}</a>
-        </h3>
+        <div class="product-header">
+          <h3 class="product-card-title">
+            <a href="${productUrl}">${product.title}</a>
+          </h3>
+          ${stockStatusHtml}
+        </div>
         ${specsHtml}
         <div class="product-card-footer">
           ${footerHtml}

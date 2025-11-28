@@ -500,7 +500,7 @@ p {
   background: white;
   
   /* Invisible hover bridge - use padding trick */
-  padding-top: 85px;
+  padding-top: 65px;
   margin-top: -23px;
   
   border-bottom: 4px solid #2C5F6F;
@@ -547,9 +547,9 @@ p {
 /* Full Width Layout */
 .menu-dropdown-container {
   width: 100%;
-  max-width: none; /* Remove max-width restriction */
+  max-width: var(--container-max); /* Use standard 1280px max-width */
   margin: 0 auto;
-  padding: 40px 60px 40px;
+  padding: 40px var(--container-padding) 40px; /* Use standard container padding */
 }
 
 .menu-dropdown-content {

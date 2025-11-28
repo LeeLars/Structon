@@ -5,276 +5,455 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Structon CMS – Dashboard</title>
   <link rel="stylesheet" href="/cms/assets/css/admin.css">
+  <style>
+    /* Dashboard Specific Styles */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--col-primary) 0%, var(--col-primary-dark) 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .welcome-banner h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .welcome-banner p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+    .welcome-banner .btn {
+      background: var(--col-accent);
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+    
+    /* Stats Row - HORIZONTAL */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--col-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stat-icon.green { background: #dcfce7; color: #16a34a; }
+    .stat-icon.blue { background: #dbeafe; color: #2563eb; }
+    .stat-icon.yellow { background: #fef3c7; color: #d97706; }
+    .stat-icon.purple { background: #f3e8ff; color: #9333ea; }
+    .stat-content h3 {
+      font-size: 0.8rem;
+      color: var(--col-text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--col-text-main);
+      line-height: 1.2;
+    }
+    .stat-change {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+    .stat-change.up { color: #16a34a; }
+    .stat-change.down { color: #dc2626; }
+    
+    /* Main Grid: 2/3 + 1/3 */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    /* Recent Activity Table */
+    .activity-card {
+      background: white;
+      border: 1px solid var(--col-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .activity-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--col-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .activity-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .activity-header a {
+      color: var(--col-primary);
+      font-size: 0.85rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .activity-list {
+      list-style: none;
+    }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .activity-icon.quote { background: #fef3c7; color: #d97706; }
+    .activity-icon.order { background: #dcfce7; color: #16a34a; }
+    .activity-icon.user { background: #dbeafe; color: #2563eb; }
+    .activity-icon.product { background: #f3e8ff; color: #9333ea; }
+    .activity-text {
+      flex: 1;
+    }
+    .activity-text strong { font-weight: 600; }
+    .activity-text p {
+      font-size: 0.9rem;
+      color: var(--col-text-main);
+      margin: 0;
+    }
+    .activity-time {
+      font-size: 0.8rem;
+      color: var(--col-text-muted);
+      white-space: nowrap;
+    }
+    
+    /* Quick Actions */
+    .actions-card {
+      background: white;
+      border: 1px solid var(--col-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .actions-card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--col-border);
+    }
+    .quick-action {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--col-text-main);
+      transition: 0.2s;
+      border: 1px solid transparent;
+    }
+    .quick-action:hover {
+      background: #f8fafc;
+      border-color: var(--col-border);
+    }
+    .quick-action-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--col-primary);
+      color: white;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quick-action span {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    /* Alerts Section */
+    .alerts-section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--col-border);
+    }
+    .alerts-section h3 {
+      font-size: 0.85rem;
+      color: var(--col-text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .alert-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      font-size: 0.85rem;
+    }
+    .alert-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .alert-dot.warning { background: #f59e0b; }
+    .alert-dot.danger { background: #ef4444; }
+    
+    @media (max-width: 1200px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
   <div class="admin-layout">
     <!-- Sidebar -->
     <aside class="admin-sidebar">
       <div class="sidebar-header">
-        <div class="logo-box">S</div>
         <div class="sidebar-brand">
-          <h1 class="sidebar-logo">STRUCTON</h1>
-          <span class="sidebar-subtitle">Content Management</span>
+          <div class="logo-box">S</div>
+          <span>STRUCTON</span>
         </div>
       </div>
       
       <nav class="sidebar-nav">
-        <a href="/cms/" class="nav-item active" data-page="dashboard">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-          <span>Dashboard</span>
+        <a href="/cms/" class="nav-item active">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
         </a>
-        <a href="/cms/quotes.html" class="nav-item" data-page="quotes">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          <span>Offertes</span>
+        <a href="/cms/quotes.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Offertes
         </a>
-        <a href="/cms/orders.html" class="nav-item" data-page="orders">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <span>Bestellingen</span>
+        <a href="/cms/orders.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          Bestellingen
         </a>
-        <a href="/cms/products.html" class="nav-item" data-page="products">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-          </svg>
-          <span>Producten</span>
+        <a href="/cms/products.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          Producten
         </a>
-        <a href="/cms/categories.html" class="nav-item" data-page="categories">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-          </svg>
-          <span>Categorieën</span>
+        <a href="/cms/categories.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          Categorieën
         </a>
-        <a href="/cms/brands.html" class="nav-item" data-page="brands">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-            <line x1="7" y1="7" x2="7.01" y2="7"></line>
-          </svg>
-          <span>Merken</span>
+        <a href="/cms/brands.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+          Merken
         </a>
-        <a href="/cms/sectors.html" class="nav-item" data-page="sectors">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="3" y1="9" x2="21" y2="9"></line>
-            <line x1="9" y1="21" x2="9" y2="9"></line>
-          </svg>
-          <span>Sectoren</span>
+        <a href="/cms/sectors.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          Sectoren
         </a>
-        <a href="/cms/prices.html" class="nav-item" data-page="prices">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="1" x2="12" y2="23"></line>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-          </svg>
-          <span>Prijzen</span>
+        <a href="/cms/prices.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Prijzen
         </a>
-        <a href="/cms/users.html" class="nav-item" data-page="users">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
-          <span>Gebruikers</span>
+        <a href="/cms/users.html" class="nav-item">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+          Gebruikers
         </a>
       </nav>
       
       <div class="sidebar-footer">
         <div class="user-profile">
           <div class="user-avatar">A</div>
-          <div class="user-details">
-            <span class="user-name" id="sidebar-user-name">Admin</span>
-            <span class="user-role">Beheerder</span>
+          <div>
+            <div class="user-name" style="color:white;font-weight:600;">Admin</div>
+            <div class="user-role" style="font-size:0.75rem;color:#94a3b8;">Beheerder</div>
           </div>
         </div>
         <button class="btn-logout" id="logout-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
-          <span>Uitloggen</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Uitloggen
         </button>
       </div>
     </aside>
 
     <!-- Main Content -->
     <main class="admin-main">
-      <header class="admin-header">
-        <div class="header-left">
-          <h2 class="page-title">Dashboard</h2>
-          <p class="page-subtitle">Welkom terug bij Structon CMS</p>
-        </div>
-        <div class="header-actions">
-          <button class="btn-icon" title="Notificaties">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-            <span class="badge" style="position: absolute; top: -5px; right: -5px; font-size: 0.6rem; padding: 0.2em 0.5em;">3</span>
-          </button>
-          <button class="btn-icon" title="Instellingen">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M12 1v6m0 6v6m5.196-14.196l-4.242 4.242m-2.828 2.828l-4.242 4.242m14.196 0l-4.242-4.242m-2.828-2.828l-4.242-4.242"></path>
-            </svg>
-          </button>
-        </div>
-      </header>
-
       <div class="admin-content">
-        <!-- Quick Stats Grid -->
-        <div class="stats-grid">
-          <!-- Revenue -->
+        
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div>
+            <h1>Welkom terug, Admin!</h1>
+            <p>Hier is een overzicht van je Structon webshop vandaag.</p>
+          </div>
+          <a href="/cms/products.html" class="btn">+ Nieuw Product</a>
+        </div>
+        
+        <!-- Stats Row - 4 columns -->
+        <div class="stats-row">
           <div class="stat-card">
-            <div class="stat-info">
-              <h3>Totale Omzet</h3>
-              <div class="stat-value">€ 124.500</div>
-              <div class="stat-trend trend-up">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                <span>+12.5%</span>
-              </div>
-            </div>
-            <div class="stat-icon" style="background: var(--success-bg); color: var(--success);">
+            <div class="stat-icon green">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
             </div>
+            <div class="stat-content">
+              <h3>Totale Omzet</h3>
+              <div class="stat-value">€ 124.500</div>
+              <div class="stat-change up">↑ 12,5% vs vorige maand</div>
+            </div>
           </div>
-
-          <!-- Open Quotes -->
+          
           <div class="stat-card">
-            <div class="stat-info">
+            <div class="stat-icon yellow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            </div>
+            <div class="stat-content">
               <h3>Open Offertes</h3>
               <div class="stat-value">8</div>
-              <div class="stat-trend trend-up">
-                <span>Nieuw: 3</span>
-              </div>
-            </div>
-            <div class="stat-icon" style="background: var(--warning-bg); color: var(--warning);">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+              <div class="stat-change">3 nieuwe vandaag</div>
             </div>
           </div>
-
-          <!-- Active Products -->
+          
           <div class="stat-card">
-            <div class="stat-info">
-              <h3>Producten</h3>
-              <div class="stat-value">24</div>
-              <div class="stat-trend">
-                <span class="text-muted">Voorraad laag: 2</span>
-              </div>
-            </div>
-            <div class="stat-icon" style="background: var(--info-bg); color: var(--info);">
+            <div class="stat-icon blue">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
             </div>
+            <div class="stat-content">
+              <h3>Producten</h3>
+              <div class="stat-value">24</div>
+              <div class="stat-change">Actief in catalogus</div>
+            </div>
           </div>
-
-          <!-- Users -->
+          
           <div class="stat-card">
-            <div class="stat-info">
+            <div class="stat-icon purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="stat-content">
               <h3>Klanten</h3>
               <div class="stat-value">156</div>
-              <div class="stat-trend trend-up">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                <span>+4 deze week</span>
-              </div>
-            </div>
-            <div class="stat-icon" style="background: #f3e8ff; color: #9333ea;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              <div class="stat-change up">↑ 4 deze week</div>
             </div>
           </div>
         </div>
-
-        <!-- Recent Activity & Actions -->
-        <div class="dashboard-split">
+        
+        <!-- Main Grid: Activity + Actions -->
+        <div class="dashboard-grid">
           
           <!-- Recent Activity -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Recente Activiteit</h3>
-              <a href="#" style="color: var(--col-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">Bekijk alles</a>
+          <div class="activity-card">
+            <div class="activity-header">
+              <h2>Recente Activiteit</h2>
+              <a href="/cms/quotes.html">Bekijk alles →</a>
             </div>
+            <ul class="activity-list">
+              <li class="activity-item">
+                <div class="activity-icon quote">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                </div>
+                <div class="activity-text">
+                  <p><strong>Jansen Grondverzet</strong> heeft een offerte aangevraagd</p>
+                </div>
+                <span class="activity-time">2 min geleden</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon order">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <div class="activity-text">
+                  <p>Bestelling <strong>#ORD-2024-042</strong> is betaald (€ 1.250)</p>
+                </div>
+                <span class="activity-time">1 uur geleden</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon user">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle></svg>
+                </div>
+                <div class="activity-text">
+                  <p>Nieuwe klant geregistreerd: <strong>Van Dijk BV</strong></p>
+                </div>
+                <span class="activity-time">3 uur geleden</span>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon product">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+                <div class="activity-text">
+                  <p>Product <strong>Slotenbak 120cm</strong> bijgewerkt</p>
+                </div>
+                <span class="activity-time">Gisteren</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Quick Actions + Alerts -->
+          <div class="actions-card">
+            <h2>Snelle Acties</h2>
             
-            <div class="table-container" style="border:none;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Omschrijving</th>
-                    <th>Tijd</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="badge badge-new">Offerte</span></td>
-                    <td><strong>Jansen Grondverzet</strong> heeft een offerte aangevraagd</td>
-                    <td style="color: var(--col-text-muted);">2 min geleden</td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge badge-paid">Bestelling</span></td>
-                    <td>Nieuwe bestelling <strong>#ORD-2024-001</strong> (€ 1.250)</td>
-                    <td style="color: var(--col-text-muted);">1 uur geleden</td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge badge-warning">Voorraad</span></td>
-                    <td>Slotenbak 120cm voorraad laag (2 stuks)</td>
-                    <td style="color: var(--col-text-muted);">3 uur geleden</td>
-                  </tr>
-                </tbody>
-              </table>
+            <a href="/cms/products.html" class="quick-action">
+              <div class="quick-action-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <span>Nieuw Product</span>
+            </a>
+            
+            <a href="/cms/quotes.html" class="quick-action">
+              <div class="quick-action-icon" style="background: var(--col-accent); color: #1a1a1a;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+              </div>
+              <span>Offertes Bekijken</span>
+            </a>
+            
+            <a href="/cms/categories.html" class="quick-action">
+              <div class="quick-action-icon" style="background: #e2e8f0; color: #475569;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <span>Categorieën Beheren</span>
+            </a>
+            
+            <a href="/cms/users.html" class="quick-action">
+              <div class="quick-action-icon" style="background: #e2e8f0; color: #475569;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+              </div>
+              <span>Gebruiker Toevoegen</span>
+            </a>
+            
+            <!-- Alerts -->
+            <div class="alerts-section">
+              <h3>Aandachtspunten</h3>
+              <div class="alert-item">
+                <span class="alert-dot warning"></span>
+                <span>Slotenbak 120cm: voorraad laag (2)</span>
+              </div>
+              <div class="alert-item">
+                <span class="alert-dot danger"></span>
+                <span>3 offertes wachten > 48 uur</span>
+              </div>
             </div>
           </div>
-
-          <!-- Quick Actions -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Snelle Acties</h3>
-            </div>
-            <div class="quick-actions-grid">
-              <a href="/cms/products.html" class="action-btn">
-                <div class="action-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </div>
-                <div class="action-info">
-                  <h4>Product Toevoegen</h4>
-                  <p>Nieuw item in catalogus</p>
-                </div>
-              </a>
-              
-              <a href="/cms/quotes.html" class="action-btn">
-                <div class="action-icon" style="background: var(--col-accent); color: var(--col-text-main);">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                </div>
-                <div class="action-info">
-                  <h4>Offertes Bekijken</h4>
-                  <p>3 nieuwe aanvragen</p>
-                </div>
-              </a>
-              
-              <a href="/cms/users.html" class="action-btn">
-                <div class="action-icon" style="background: #e2e8f0; color: #64748b;">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                </div>
-                <div class="action-info">
-                  <h4>Klant Toevoegen</h4>
-                  <p>Registreer nieuwe gebruiker</p>
-                </div>
-              </a>
-            </div>
-          </div>
+          
         </div>
       </div>
     </main>

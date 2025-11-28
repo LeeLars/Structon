@@ -154,93 +154,127 @@ function hideLoginModal() {
 }
 
 /**
- * Load dashboard data
+ * Load all dashboard data
  */
 async function loadDashboardData() {
   try {
-    // Load stats in parallel
-    const [productsRes, categoriesRes, brandsRes, usersRes] = await Promise.all([
-      fetch(`${API_BASE}/products`),
-      fetch(`${API_BASE}/categories`),
-      fetch(`${API_BASE}/brands`),
-      fetch(`${API_BASE}/admin/users`, { credentials: 'include' })
+    await Promise.all([
+      loadDashboardStats(),
+      loadRecentQuotes()
     ]);
-
-    const products = await productsRes.json();
-    const categories = await categoriesRes.json();
-    const brands = await brandsRes.json();
-    
-    // Update stats
-    document.getElementById('stat-products').textContent = products.total || products.products?.length || 0;
-    document.getElementById('stat-categories').textContent = categories.categories?.length || 0;
-    document.getElementById('stat-brands').textContent = brands.brands?.length || 0;
-
-    if (usersRes.ok) {
-      const users = await usersRes.json();
-      document.getElementById('stat-users').textContent = users.users?.length || 0;
-    }
-
-    // Load recent products table
-    loadRecentProducts(products.products || []);
-
   } catch (error) {
-    console.error('Error loading dashboard:', error);
+    console.error('Error loading dashboard data:', error);
   }
 }
 
 /**
- * Load recent products table
+ * Load dashboard statistics
  */
-function loadRecentProducts(products) {
-  const tbody = document.querySelector('#recent-products tbody');
-  if (!tbody) return;
-
-  if (products.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="loading-cell">Geen producten gevonden</td></tr>';
-    return;
+async function loadDashboardStats() {
+  try {
+    const response = await api.get('/sales/stats');
+    const stats = response; // api client returns data directly
+    
+    updateStat('stat-quotes', stats.quotes);
+    updateStat('stat-orders', stats.orders);
+    updateStat('stat-products', stats.products);
+    updateStat('stat-users', stats.customers);
+  } catch (error) {
+    console.error('Failed to load stats:', error);
   }
-
-  // Show first 5 products
-  const recent = products.slice(0, 5);
-
-  tbody.innerHTML = recent.map(product => `
-    <tr>
-      <td>
-        <strong>${escapeHtml(product.title)}</strong>
-        <br><small style="color: var(--text-muted)">${product.slug}</small>
-      </td>
-      <td>${escapeHtml(product.category_title || '-')}</td>
-      <td>${product.current_price ? formatPrice(product.current_price) : '-'}</td>
-      <td>
-        <span class="badge ${product.is_active ? 'badge-success' : 'badge-error'}">
-          ${product.is_active ? 'Actief' : 'Inactief'}
-        </span>
-      </td>
-      <td>
-        <a href="/cms/products.html?id=${product.id}" class="btn btn-secondary btn-sm">Bewerken</a>
-      </td>
-    </tr>
-  `).join('');
 }
 
 /**
- * Format price
+ * Load recent quotes
  */
-function formatPrice(price) {
-  return new Intl.NumberFormat('nl-NL', {
-    style: 'currency',
-    currency: 'EUR'
-  }).format(price);
+async function loadRecentQuotes() {
+  const tableBody = document.querySelector('#recent-quotes tbody');
+  if (!tableBody) return;
+  
+  try {
+    const quotes = await api.get('/sales/quotes');
+    
+    if (quotes.length === 0) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="5" class="text-center text-muted">Geen recente aanvragen</td>
+        </tr>
+      `;
+      return;
+    }
+    
+    tableBody.innerHTML = quotes.map(quote => `
+      <tr>
+        <td>
+          <div class="font-medium">${formatDate(quote.created_at)}</div>
+          <div class="text-sm text-muted">${formatTime(quote.created_at)}</div>
+        </td>
+        <td>
+          <div class="font-medium">${quote.customer_name}</div>
+          <div class="text-sm text-muted">${quote.customer_email}</div>
+        </td>
+        <td>
+          ${quote.product_title || quote.product_name || 'Algemene aanvraag'}
+        </td>
+        <td>
+          <span class="badge badge-${getStatusColor(quote.status)}">${getStatusLabel(quote.status)}</span>
+        </td>
+        <td class="text-right">
+          <button class="btn-icon btn-sm" onclick="viewQuote(${quote.id})" title="Bekijken">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </td>
+      </tr>
+    `).join('');
+    
+  } catch (error) {
+    console.error('Failed to load quotes:', error);
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center text-error">Fout bij laden gegevens</td>
+      </tr>
+    `;
+  }
 }
 
-/**
- * Escape HTML
- */
-function escapeHtml(text) {
-  if (!text) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+function getStatusColor(status) {
+  const colors = {
+    new: 'primary',
+    processing: 'warning',
+    quoted: 'info',
+    won: 'success',
+    lost: 'error'
+  };
+  return colors[status] || 'secondary';
+}
+
+function getStatusLabel(status) {
+  const labels = {
+    new: 'Nieuw',
+    processing: 'In behandeling',
+    quoted: 'Geoffreerd',
+    won: 'Gewonnen',
+    lost: 'Verloren'
+  };
+  return labels[status] || status;
+}
+
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString('nl-NL', { day: '2-digit', month: 'short' });
+}
+
+function formatTime(dateString) {
+  return new Date(dateString).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+}
+
+function updateStat(id, value) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.textContent = value;
+  }
 }
 
 /**

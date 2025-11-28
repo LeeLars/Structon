@@ -6,6 +6,7 @@ import categoriesRoutes from './categories.routes.js';
 import subcategoriesRoutes from './subcategories.routes.js';
 import brandsRoutes from './brands.routes.js';
 import sectorsRoutes from './sectors.routes.js';
+import salesRoutes from './sales.js';
 import adminRoutes from '../admin/index.js';
 
 const router = Router();
@@ -20,6 +21,9 @@ router.use('/categories', categoriesRoutes);
 router.use('/subcategories', subcategoriesRoutes);
 router.use('/brands', brandsRoutes);
 router.use('/sectors', sectorsRoutes);
+
+// Sales Stats (Protected)
+router.use('/sales', salesRoutes);
 
 // Admin routes
 router.use('/admin', adminRoutes);

@@ -31,6 +31,24 @@
           </svg>
           <span>Dashboard</span>
         </a>
+        <a href="/cms/quotes.html" class="nav-item" data-page="quotes">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Offertes</span>
+        </a>
+        <a href="/cms/orders.html" class="nav-item" data-page="orders">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>Bestellingen</span>
+        </a>
         <a href="/cms/products.html" class="nav-item" data-page="products">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -128,28 +146,47 @@
             <div class="stat-header">
               <div class="stat-icon stat-icon-primary">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
                 </svg>
               </div>
-              <span class="stat-trend stat-trend-up">+12%</span>
+              <span class="stat-trend stat-trend-up">+5</span>
             </div>
             <div class="stat-info">
-              <span class="stat-value" id="stat-products">-</span>
-              <span class="stat-label">Totaal Producten</span>
+              <span class="stat-value" id="stat-quotes">-</span>
+              <span class="stat-label">Nieuwe Offertes</span>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon stat-icon-success">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+              </div>
+              <span class="stat-trend stat-trend-up">+2</span>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value" id="stat-orders">-</span>
+              <span class="stat-label">Bestellingen</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon stat-icon-info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                 </svg>
               </div>
               <span class="stat-trend stat-trend-neutral">—</span>
             </div>
             <div class="stat-info">
-              <span class="stat-value" id="stat-categories">-</span>
-              <span class="stat-label">Categorieën</span>
+              <span class="stat-value" id="stat-products">-</span>
+              <span class="stat-label">Totaal Producten</span>
             </div>
           </div>
           <div class="stat-card">
@@ -160,25 +197,11 @@
                   <circle cx="9" cy="7" r="4"></circle>
                 </svg>
               </div>
-              <span class="stat-trend stat-trend-up">+3</span>
+              <span class="stat-trend stat-trend-up">+12%</span>
             </div>
             <div class="stat-info">
               <span class="stat-value" id="stat-users">-</span>
-              <span class="stat-label">Gebruikers</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-header">
-              <div class="stat-icon stat-icon-info">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                </svg>
-              </div>
-              <span class="stat-trend stat-trend-neutral">—</span>
-            </div>
-            <div class="stat-info">
-              <span class="stat-value" id="stat-brands">-</span>
-              <span class="stat-label">Merken</span>
+              <span class="stat-label">Totaal Klanten</span>
             </div>
           </div>
         </div>
@@ -241,11 +264,11 @@
           </div>
         </section>
 
-        <!-- Recent Products -->
+        <!-- Recent Quote Requests -->
         <section class="admin-section">
           <div class="section-header">
-            <h3 class="section-title">Recente Producten</h3>
-            <a href="/cms/products.html" class="btn-link">
+            <h3 class="section-title">Recente Offerte Aanvragen</h3>
+            <a href="/cms/quotes.html" class="btn-link">
               Alles bekijken
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -254,22 +277,21 @@
             </a>
           </div>
           <div class="table-container">
-            <table class="admin-table" id="recent-products">
+            <table class="admin-table" id="recent-quotes">
               <thead>
                 <tr>
+                  <th>Datum</th>
+                  <th>Klant</th>
                   <th>Product</th>
-                  <th>Categorie</th>
-                  <th>Voorraad</th>
-                  <th>Prijs</th>
                   <th>Status</th>
                   <th class="text-right">Acties</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="6" class="loading-cell">
+                  <td colspan="5" class="loading-cell">
                     <div class="loading-spinner"></div>
-                    <span>Producten laden...</span>
+                    <span>Aanvragen laden...</span>
                   </td>
                 </tr>
               </tbody>

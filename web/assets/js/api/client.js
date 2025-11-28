@@ -3,6 +3,8 @@
  * Handles all communication with the CMS API
  */
 
+import { DEMO_PRODUCTS, DEMO_CATEGORIES, DEMO_BRANDS } from './demo-data.js';
+
 // API Base URL - automatically detects environment
 const getApiBaseUrl = () => {
   const hostname = window.location.hostname;
@@ -22,7 +24,50 @@ const API_BASE = getApiBaseUrl();
 export const API_BASE_URL = API_BASE;
 
 /**
- * Make API request with error handling
+ * Helper: Get demo data based on endpoint
+ */
+function getDemoDataForEndpoint(endpoint) {
+  console.log(`⚠️ Using DEMO DATA for: ${endpoint}`);
+  
+  // Products
+  if (endpoint.includes('/products/featured')) {
+    return DEMO_PRODUCTS.slice(0, 6);
+  }
+  if (endpoint.includes('/products/') && !endpoint.includes('filters')) {
+    // Single product by ID or Slug
+    const idOrSlug = endpoint.split('/products/')[1].split('?')[0];
+    const product = DEMO_PRODUCTS.find(p => p.id == idOrSlug || p.slug == idOrSlug);
+    return product || DEMO_PRODUCTS[0];
+  }
+  if (endpoint.includes('/products')) {
+    return DEMO_PRODUCTS;
+  }
+
+  // Categories
+  if (endpoint.includes('/categories')) {
+    return DEMO_CATEGORIES;
+  }
+
+  // Brands
+  if (endpoint.includes('/brands')) {
+    return DEMO_BRANDS;
+  }
+  
+  // Navigation (fallback menu)
+  if (endpoint.includes('/navigation/menu-structure')) {
+    return DEMO_CATEGORIES.map(c => ({
+      title: c.title,
+      slug: c.slug,
+      type: 'category',
+      children: []
+    }));
+  }
+
+  return null;
+}
+
+/**
+ * Make API request with error handling and fallback
  */
 async function request(endpoint, options = {}) {
   const url = `${API_BASE}${endpoint}`;
@@ -37,16 +82,35 @@ async function request(endpoint, options = {}) {
   };
 
   try {
-    const response = await fetch(url, config);
+    // Attempt fetch with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout for quick fallback
+    
+    const response = await fetch(url, { ...config, signal: controller.signal });
+    clearTimeout(timeoutId);
+
     const data = await response.json();
 
     if (!response.ok) {
       throw new Error(data.error || `HTTP error ${response.status}`);
     }
+    
+    // If empty array returned, also use demo data (assuming DB is empty)
+    if (Array.isArray(data) && data.length === 0) {
+      const demo = getDemoDataForEndpoint(endpoint);
+      if (demo) return demo;
+    }
 
     return data;
   } catch (error) {
-    console.error(`API Error [${endpoint}]:`, error.message);
+    console.warn(`API Error [${endpoint}]:`, error.message);
+    
+    // Fallback to DEMO DATA
+    const demoData = getDemoDataForEndpoint(endpoint);
+    if (demoData) {
+      return demoData;
+    }
+
     throw error;
   }
 }

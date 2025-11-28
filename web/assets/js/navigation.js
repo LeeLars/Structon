@@ -4,22 +4,92 @@
 
 import { API_BASE_URL } from './api/client.js';
 
-// Custom menu structure definition
+// Custom menu structure definition with tonnages
 const CUSTOM_MENU_STRUCTURE = {
   'graafbakken': [
-    { title: 'Slotenbakken', slug: 'slotenbakken', description: 'Voor het uitgraven van sloten en taluds' },
-    { title: 'Dieplepelbakken', slug: 'dieplepelbakken', description: 'De standaard bak voor graafwerk' },
-    { title: 'Sleuvenbakken', slug: 'sleuvenbakken', description: 'Smal graven voor kabels en leidingen' },
-    { title: 'Kantelbakken', slug: 'kantelbakken', description: 'Hydraulisch kantelbaar voor precisiewerk' }
+    { 
+      title: 'Slotenbakken', 
+      slug: 'slotenbakken', 
+      tonnages: [
+        { label: '1t - 2.5t', id: '1t-2-5t' },
+        { label: '2.5t - 5t', id: '2-5t-5t' },
+        { label: '5t - 10t', id: '5t-10t' },
+        { label: '10t - 15t', id: '10t-15t' },
+        { label: '15t - 25t', id: '15t-25t' }
+      ]
+    },
+    { 
+      title: 'Dieplepelbakken', 
+      slug: 'dieplepelbakken',
+      tonnages: [
+        { label: '1t - 2.5t', id: '1t-2-5t' },
+        { label: '2.5t - 5t', id: '2-5t-5t' },
+        { label: '5t - 10t', id: '5t-10t' },
+        { label: '10t - 15t', id: '10t-15t' },
+        { label: '15t - 25t', id: '15t-25t' },
+        { label: '25t+', id: '25t-plus' }
+      ]
+    },
+    { 
+      title: 'Sleuvenbakken', 
+      slug: 'sleuvenbakken',
+      tonnages: [
+         { label: '1t - 2.5t', id: '1t-2-5t' },
+         { label: '2.5t - 5t', id: '2-5t-5t' },
+         { label: '5t - 10t', id: '5t-10t' }
+      ]
+    },
+    { 
+      title: 'Kantelbakken', 
+      slug: 'kantelbakken',
+      tonnages: [
+        { label: '1t - 2.5t', id: '1t-2-5t' },
+        { label: '2.5t - 5t', id: '2-5t-5t' },
+        { label: '5t - 10t', id: '5t-10t' }
+      ]
+    }
   ],
   'sloop-sorteergrijpers': [
-    { title: 'Breekhamers', slug: 'sloophamers', description: 'Krachtig sloopwerk voor beton en steen' },
-    { title: 'Rippers', slug: 'rippers', description: 'Losmaken van harde ondergrond en wortels' },
-    { title: 'Sorteergrijpers', slug: 'sorteergrijpers', description: 'Sorteren en verplaatsen van puin' },
-    { title: 'Roterende sorteergrijpers', slug: 'roterende-sorteergrijpers', description: '360° rotatie voor maximale flexibiliteit' }
+    { 
+      title: 'Sloophamers', 
+      slug: 'sloophamers',
+      tonnages: [
+        { label: '1t - 2.5t', id: '1t-2-5t' },
+        { label: '2.5t - 5t', id: '2-5t-5t' },
+        { label: '5t - 10t', id: '5t-10t' },
+        { label: '10t - 15t', id: '10t-15t' },
+        { label: '15t - 25t', id: '15t-25t' }
+      ]
+    },
+    { 
+      title: 'Rippers', 
+      slug: 'rippers',
+      tonnages: [
+        { label: '1t - 2.5t', id: '1t-2-5t' },
+        { label: '2.5t - 5t', id: '2-5t-5t' }
+      ]
+    },
+    { 
+      title: 'Sorteergrijpers', 
+      slug: 'sorteergrijpers',
+      tonnages: [
+        { label: '2.5t - 5t', id: '2-5t-5t' },
+        { label: '5t - 10t', id: '5t-10t' },
+        { label: '10t - 15t', id: '10t-15t' },
+        { label: '15t - 25t', id: '15t-25t' }
+      ]
+    },
+    { 
+      title: 'Roterende grijpers', 
+      slug: 'roterende-sorteergrijpers',
+      tonnages: [
+        { label: '5t - 10t', id: '5t-10t' },
+        { label: '10t - 15t', id: '10t-15t' }
+      ]
+    }
   ],
-  'adapters': [], // Empty as requested
-  'overige': []   // Empty as requested
+  'adapters': [], 
+  'overige': []   
 };
 
 /**
@@ -53,15 +123,11 @@ function getCategorySlugFromMenuItem(menuItem) {
   return match ? match[1] : null;
 }
 
-// Oude API functie niet meer nodig voor hoofdmenu, maar misschien wel voor data later
+// Oude API functie niet meer nodig
 // ...
 
-const CATEGORY_IMAGES = {
-  // ...
-};
-
 /**
- * Create mega menu with subcategories
+ * Create mega menu with categories and tonnages
  */
 function createDropdownMenu(menuItem, categorySlug, items) {
   const categoryName = menuItem.textContent.trim().replace('▼', '').trim();
@@ -74,62 +140,65 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   const container = document.createElement('div');
   container.className = 'menu-dropdown-container';
   
-  // --- LEFT SIDE: CONTENT ---
+  // --- MAIN CONTENT ---
   const contentCol = document.createElement('div');
   contentCol.className = 'menu-dropdown-content';
+  contentCol.style.width = '100%'; // Take full width
 
-  // Header
-  const header = document.createElement('div');
-  header.className = 'menu-dropdown-header';
-  
-  const title = document.createElement('h3');
-  title.className = 'menu-dropdown-title';
-  title.textContent = categoryName; // Just the name
-  
-  const viewAllLink = document.createElement('a');
-  viewAllLink.href = `/${categorySlug}/`;
-  viewAllLink.className = 'menu-dropdown-view-all';
-  viewAllLink.innerHTML = `Bekijk alles <span>→</span>`;
-  
-  header.appendChild(title);
-  header.appendChild(viewAllLink);
-  contentCol.appendChild(header);
-  
-  // Grid of links
+  // Grid of categories (Columns)
   const grid = document.createElement('div');
   grid.className = 'menu-dropdown-grid';
+  // Override default grid to support columns per category
+  grid.style.gridTemplateColumns = `repeat(${items.length}, 1fr)`;
+  grid.style.alignItems = 'start';
 
   items.forEach((item) => {
-    const link = document.createElement('a');
-    // Direct link to the category page (e.g. /slotenbakken/)
-    link.href = `/${item.slug}/`; 
-    link.className = 'menu-dropdown-item';
-    link.innerHTML = `
-      <span style="display:block; font-weight:bold; margin-bottom:4px; color:#2C5F6F;">${item.title}</span>
-      <span style="font-size:0.85em; opacity:0.8; color:#555;">${item.description || ''}</span>
-    `;
-    grid.appendChild(link);
+    const column = document.createElement('div');
+    column.className = 'menu-column';
+    
+    // Category Title
+    const titleLink = document.createElement('a');
+    titleLink.href = `/${item.slug}/`;
+    titleLink.className = 'menu-column-title';
+    titleLink.style.cssText = 'display:block; font-weight:700; font-size:18px; color:#2C5F6F; margin-bottom:12px; text-decoration:none;';
+    titleLink.textContent = item.title;
+    column.appendChild(titleLink);
+    
+    // Tonnages List
+    if (item.tonnages && item.tonnages.length > 0) {
+      const list = document.createElement('div');
+      list.className = 'menu-tonnage-list';
+      list.style.display = 'flex';
+      list.style.flexDirection = 'column';
+      list.style.gap = '8px';
+      
+      item.tonnages.forEach(t => {
+        const tLink = document.createElement('a');
+        tLink.href = `/${item.slug}/${t.id}/`;
+        tLink.className = 'menu-tonnage-link';
+        tLink.style.cssText = 'color:#555; text-decoration:none; font-size:14px; transition:color 0.2s; display:flex; align-items:center; gap:6px;';
+        tLink.innerHTML = `<span style="color:#2C5F6F; font-size:10px;">›</span> ${t.label}`;
+        
+        tLink.onmouseover = () => tLink.style.color = '#2C5F6F';
+        tLink.onmouseout = () => tLink.style.color = '#555';
+        
+        list.appendChild(tLink);
+      });
+      column.appendChild(list);
+    }
+    
+    grid.appendChild(column);
   });
   
   contentCol.appendChild(grid);
   container.appendChild(contentCol);
-
-  // --- RIGHT SIDE: ADVICE BOX ---
-  const adviceCol = document.createElement('div');
-  adviceCol.className = 'menu-dropdown-advice';
   
-  adviceCol.innerHTML = `
-    <h4>Hulp nodig?</h4>
-    <p>Weet u niet zeker welke ${categoryName.toLowerCase()} u nodig heeft? Onze experts helpen u graag.</p>
-    <a href="/pages/contact.html" class="btn-advice">Advies vragen <span>→</span></a>
-  `;
-  
-  container.appendChild(adviceCol);
+  // Advice box removed to give full space to the grid
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);
   
-  // Prevent default click on menu item if it has a dropdown
+  // Prevent default click
   if (items.length > 0) {
     menuItem.addEventListener('click', (e) => {
       e.preventDefault();

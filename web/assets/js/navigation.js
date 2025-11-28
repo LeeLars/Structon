@@ -107,6 +107,15 @@ async function fetchSubcategories(categorySlug) {
   }
 }
 
+const CATEGORY_IMAGES = {
+  'kraanbakken': 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&h=800&fit=crop',
+  'slotenbakken': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=800&fit=crop',
+  'dieplepelbakken': 'https://images.unsplash.com/photo-1535732820275-991332747cba?w=600&h=800&fit=crop',
+  'sorteergrijpers': 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&h=800&fit=crop',
+  'sloophamers': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&h=800&fit=crop',
+  'adapters': 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&h=800&fit=crop'
+};
+
 /**
  * Create mega menu with subcategories
  */
@@ -121,7 +130,11 @@ function createDropdownMenu(menuItem, categorySlug, subcategories) {
   const container = document.createElement('div');
   container.className = 'menu-dropdown-container';
   
-  // Create header with title and "View All" button
+  // --- LEFT SIDE: CONTENT ---
+  const contentCol = document.createElement('div');
+  contentCol.className = 'menu-dropdown-content';
+
+  // Header
   const header = document.createElement('div');
   header.className = 'menu-dropdown-header';
   
@@ -136,16 +149,37 @@ function createDropdownMenu(menuItem, categorySlug, subcategories) {
   
   header.appendChild(title);
   header.appendChild(viewAllLink);
-  container.appendChild(header);
+  contentCol.appendChild(header);
   
-  // Add subcategory links in grid
+  // Grid of links
+  const grid = document.createElement('div');
+  grid.className = 'menu-dropdown-grid';
+
   subcategories.forEach((subcat) => {
     const link = document.createElement('a');
     link.href = `/${categorySlug}/${subcat.slug}/`;
     link.className = 'menu-dropdown-item';
-    link.textContent = subcat.title;
-    container.appendChild(link);
+    link.innerHTML = `
+      <span style="display:block; font-weight:bold; margin-bottom:4px;">${subcat.title.split('voor')[0]}</span>
+      <span style="font-size:0.9em; opacity:0.7;">${subcat.title.split('voor')[1] || ''}</span>
+    `;
+    grid.appendChild(link);
   });
+  
+  contentCol.appendChild(grid);
+  container.appendChild(contentCol);
+
+  // --- RIGHT SIDE: IMAGE ---
+  const imageCol = document.createElement('div');
+  imageCol.className = 'menu-dropdown-image';
+  
+  const imageUrl = CATEGORY_IMAGES[categorySlug] || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=800&fit=crop';
+  
+  imageCol.innerHTML = `
+    <img src="${imageUrl}" alt="${categoryName}" loading="lazy">
+  `;
+  
+  container.appendChild(imageCol);
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);

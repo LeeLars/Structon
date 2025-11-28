@@ -501,10 +501,9 @@ p {
   background: white;
   
   /* Invisible hover bridge - use padding trick */
-  padding-top: 20px;
-  margin-top: -20px;
+  padding-top: 85px;
+  margin-top: -23px;
   
-  border-top: 1px solid #e0e0e0;
   border-bottom: 4px solid #2C5F6F;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   
@@ -526,7 +525,7 @@ p {
     transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s,
     visibility 0s 0.35s;
   
-  z-index: 1000;
+  z-index: 11;
 }
 
 /* Remove pseudo-element bridge as it doesn't work reliably */

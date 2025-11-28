@@ -498,21 +498,18 @@ p {
   top: 100%; 
   left: 0;
   width: 100%; 
-  background: white;
+  background: white; /* Match nav background */
   
-  /* Replace border-top line with box-shadow to allow transparent bridge */
+  /* Stronger invisible bridge */
   border-top: none; 
-  /* Create invisible bridge */
-  padding-top: 20px; /* Visual padding inside */
-  margin-top: -10px; /* Move up slightly to overlap/connect */
-  /* Ensure the hit area extends up */
-  clip-path: inset(-20px -100vw -100vh -100vw); /* Allow hover area to extend upwards */
+  padding-top: 40px; /* Larger visual padding */
+  margin-top: -50px; /* Overlap significantly to create seamless bridge */
   
   border-bottom: 4px solid #2C5F6F;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   
   /* Full height logic */
-  height: auto; /* Let content decide height, but min-height for stability */
+  height: auto;
   min-height: 300px;
   max-height: calc(100vh - 80px);
   overflow-y: auto;
@@ -521,14 +518,14 @@ p {
   opacity: 0;
   visibility: hidden;
   transform-origin: top center;
-  transform: rotateX(-5deg); /* Subtler rotation */
+  transform: rotateX(-5deg);
   perspective: 1000px;
   
-  /* Robust Transition Delay */
+  /* Longer delay on exit for better navigation */
   transition: 
-    opacity 0.2s ease 0.15s,
-    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s,
-    visibility 0s 0.15s;
+    opacity 0.2s ease 0.3s,
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s,
+    visibility 0s 0.5s;
   
   z-index: 1000;
   pointer-events: none;
@@ -542,8 +539,8 @@ p {
   
   /* Instant Entry */
   transition: 
-    opacity 0.1s ease 0s,
-    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0s,
+    opacity 0.15s ease 0s,
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) 0s,
     visibility 0s 0s;
   
   pointer-events: auto;

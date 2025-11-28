@@ -143,14 +143,35 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   // --- MAIN CONTENT ---
   const contentCol = document.createElement('div');
   contentCol.className = 'menu-dropdown-content';
-  contentCol.style.width = '100%'; // Take full width
+  contentCol.style.width = '100%';
+
+  // Add header with category name
+  const header = document.createElement('div');
+  header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding-bottom:20px; border-bottom:2px solid #f0f0f0;';
+  
+  const mainTitle = document.createElement('h3');
+  mainTitle.style.cssText = 'font-size:24px; font-weight:700; color:#2C5F6F; margin:0;';
+  mainTitle.textContent = categoryName;
+  
+  const viewAllBtn = document.createElement('a');
+  viewAllBtn.href = `/${categorySlug}/`;
+  viewAllBtn.style.cssText = 'padding:12px 28px; background:#2C5F6F; color:white; border-radius:25px; text-decoration:none; font-weight:600; transition:background 0.3s;';
+  viewAllBtn.textContent = 'Bekijk alles →';
+  viewAllBtn.onmouseover = () => viewAllBtn.style.background = '#3a7a8c';
+  viewAllBtn.onmouseout = () => viewAllBtn.style.background = '#2C5F6F';
+  
+  header.appendChild(mainTitle);
+  header.appendChild(viewAllBtn);
+  contentCol.appendChild(header);
+
+  // Wrapper for columns + help box
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'display:grid; grid-template-columns:1fr 300px; gap:40px;';
 
   // Grid of categories (Columns)
   const grid = document.createElement('div');
   grid.className = 'menu-dropdown-grid';
-  // Override default grid to support columns per category
-  grid.style.gridTemplateColumns = `repeat(${items.length}, 1fr)`;
-  grid.style.alignItems = 'start';
+  grid.style.cssText = `display:grid; grid-template-columns:repeat(${items.length}, 1fr); gap:30px; align-items:start;`;
 
   items.forEach((item) => {
     const column = document.createElement('div');
@@ -160,27 +181,35 @@ function createDropdownMenu(menuItem, categorySlug, items) {
     const titleLink = document.createElement('a');
     titleLink.href = `/${item.slug}/`;
     titleLink.className = 'menu-column-title';
-    titleLink.style.cssText = 'display:block; font-weight:700; font-size:18px; color:#2C5F6F; margin-bottom:12px; text-decoration:none;';
+    titleLink.style.cssText = 'display:block; font-weight:700; font-size:18px; color:#2C5F6F; margin-bottom:16px; text-decoration:none; transition:color 0.2s;';
     titleLink.textContent = item.title;
+    titleLink.onmouseover = () => titleLink.style.color = '#3a7a8c';
+    titleLink.onmouseout = () => titleLink.style.color = '#2C5F6F';
     column.appendChild(titleLink);
     
     // Tonnages List
     if (item.tonnages && item.tonnages.length > 0) {
       const list = document.createElement('div');
       list.className = 'menu-tonnage-list';
-      list.style.display = 'flex';
-      list.style.flexDirection = 'column';
-      list.style.gap = '8px';
+      list.style.cssText = 'display:flex; flex-direction:column; gap:10px;';
       
       item.tonnages.forEach(t => {
         const tLink = document.createElement('a');
         tLink.href = `/${item.slug}/${t.id}/`;
         tLink.className = 'menu-tonnage-link';
-        tLink.style.cssText = 'color:#555; text-decoration:none; font-size:14px; transition:color 0.2s; display:flex; align-items:center; gap:6px;';
-        tLink.innerHTML = `<span style="color:#2C5F6F; font-size:10px;">›</span> ${t.label}`;
+        tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; transition:all 0.2s; display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:6px;';
+        tLink.innerHTML = `<span style="color:#2C5F6F; font-size:12px; font-weight:bold;">›</span> ${t.label}`;
         
-        tLink.onmouseover = () => tLink.style.color = '#2C5F6F';
-        tLink.onmouseout = () => tLink.style.color = '#555';
+        tLink.onmouseover = () => {
+          tLink.style.color = '#2C5F6F';
+          tLink.style.background = '#f8f9fa';
+          tLink.style.paddingLeft = '14px';
+        };
+        tLink.onmouseout = () => {
+          tLink.style.color = '#666';
+          tLink.style.background = 'transparent';
+          tLink.style.paddingLeft = '10px';
+        };
         
         list.appendChild(tLink);
       });
@@ -190,10 +219,25 @@ function createDropdownMenu(menuItem, categorySlug, items) {
     grid.appendChild(column);
   });
   
-  contentCol.appendChild(grid);
-  container.appendChild(contentCol);
+  wrapper.appendChild(grid);
+
+  // --- HELP BOX ---
+  const helpBox = document.createElement('div');
+  helpBox.style.cssText = 'background:#2C5F6F; color:white; padding:30px; border-radius:12px; height:fit-content;';
+  helpBox.innerHTML = `
+    <h4 style="font-size:20px; margin:0 0 15px 0; font-weight:700;">Hulp nodig?</h4>
+    <p style="font-size:14px; line-height:1.6; opacity:0.95; margin:0 0 20px 0;">
+      Weet u niet zeker welke ${categoryName.toLowerCase()} geschikt zijn voor uw machine? 
+      Onze specialisten helpen u graag met persoonlijk advies.
+    </p>
+    <a href="/pages/contact.html" style="display:inline-block; padding:12px 24px; background:white; color:#2C5F6F; border-radius:20px; text-decoration:none; font-weight:600; font-size:14px; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+      Neem contact op →
+    </a>
+  `;
   
-  // Advice box removed to give full space to the grid
+  wrapper.appendChild(helpBox);
+  contentCol.appendChild(wrapper);
+  container.appendChild(contentCol);
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);

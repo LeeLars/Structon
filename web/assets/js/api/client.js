@@ -13,7 +13,7 @@ const getApiBaseUrl = () => {
   }
   
   // Production (GitHub Pages or custom domain)
-  return 'https://structon-cms.up.railway.app/api';
+  return 'https://structon-production.up.railway.app/api';
 };
 
 const API_BASE = getApiBaseUrl();

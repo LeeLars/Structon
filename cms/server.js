@@ -2,9 +2,11 @@ import express from 'express';
 import compression from 'compression';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import cookieParser from 'cookie-parser';
 import { fileURLToPath } from 'url';
 import { env } from './config/env.js';
+import { pool } from './config/database.js';
 import { requestLogger } from './middleware/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimit.js';
@@ -12,6 +14,37 @@ import apiRoutes from './routes/api/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+/**
+ * Run database migrations automatically on startup
+ */
+async function runMigrations() {
+  console.log('🔄 Checking database migrations...');
+  
+  const migrationsDir = path.join(__dirname, 'database', 'migrations');
+  const files = fs.readdirSync(migrationsDir)
+    .filter(f => f.endsWith('.sql'))
+    .sort();
+
+  for (const file of files) {
+    const sql = fs.readFileSync(path.join(migrationsDir, file), 'utf8');
+    
+    try {
+      await pool.query(sql);
+      console.log(`   ✅ ${file}`);
+    } catch (error) {
+      // Ignore "already exists" errors
+      if (error.message.includes('already exists')) {
+        console.log(`   ⏭️  ${file} (already applied)`);
+      } else {
+        console.error(`   ❌ Error in ${file}:`, error.message);
+        throw error;
+      }
+    }
+  }
+
+  console.log('✅ Database migrations complete\n');
+}
 
 const app = express();
 
@@ -100,6 +133,20 @@ app.get('/', (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(env.port, () => {
-  console.log(`🚀 Structon CMS draait op poort ${env.port}`);
-});
+// Start server with migrations
+async function startServer() {
+  try {
+    // Run migrations first
+    await runMigrations();
+    
+    // Then start the server
+    app.listen(env.port, () => {
+      console.log(`🚀 Structon CMS draait op poort ${env.port}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+startServer();

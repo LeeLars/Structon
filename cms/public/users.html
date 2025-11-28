@@ -10,23 +10,22 @@
   <div class="admin-layout">
     <aside class="admin-sidebar">
       <div class="sidebar-header">
-        <div class="logo-box">S</div>
         <div class="sidebar-brand">
-          <h1 class="sidebar-logo">STRUCTON</h1>
-          <span class="sidebar-subtitle">Content Management</span>
+          <div class="logo-box">S</div>
+          <span>STRUCTON</span>
         </div>
       </div>
-      
       <nav class="sidebar-nav">
         <a href="/cms/" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Dashboard</span></a>
+        <a href="/cms/quotes.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Offertes</span></a>
+        <a href="/cms/orders.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span>Bestellingen</span></a>
         <a href="/cms/products.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg><span>Producten</span></a>
         <a href="/cms/categories.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span>Categorieën</span></a>
-        <a href="/cms/brands.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg><span>Merken</span></a>
+        <a href="/cms/brands.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Merken</span></a>
         <a href="/cms/sectors.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg><span>Sectoren</span></a>
         <a href="/cms/prices.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Prijzen</span></a>
         <a href="/cms/users.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Gebruikers</span></a>
       </nav>
-      
       <div class="sidebar-footer">
         <div class="user-profile">
           <div class="user-avatar">A</div>
@@ -99,31 +98,28 @@
     </main>
   </div>
 
+  <!-- User Modal -->
   <div class="modal" id="user-modal" style="display: none;">
     <div class="modal-content">
       <div class="modal-header">
         <h2 id="modal-title">Nieuwe Gebruiker</h2>
         <button class="btn-close" id="close-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
       </div>
-      
       <form id="user-form">
         <div class="modal-body">
           <div class="form-group">
             <label for="user-email">Email *</label>
             <input type="email" id="user-email" name="email" required placeholder="gebruiker@bedrijf.nl">
           </div>
-          
           <div class="form-group">
             <label for="user-password">Wachtwoord *</label>
             <input type="password" id="user-password" name="password" required placeholder="Min. 8 karakters">
             <span class="form-hint">Minimaal 8 karakters</span>
           </div>
-          
           <div class="form-group">
             <label for="user-company">Bedrijfsnaam</label>
             <input type="text" id="user-company" name="company_name" placeholder="Bedrijf B.V.">
           </div>
-          
           <div class="form-group">
             <label for="user-role">Rol *</label>
             <select id="user-role" name="role" required>
@@ -132,7 +128,6 @@
             </select>
             <span class="form-hint">Klanten kunnen prijzen zien, admins hebben volledige toegang</span>
           </div>
-          
           <div class="form-group">
             <label class="checkbox-label">
               <input type="checkbox" id="user-active" name="is_active" checked>
@@ -140,10 +135,9 @@
             </label>
           </div>
         </div>
-        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="cancel-user">Annuleren</button>
-          <button type="submit" class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path></svg>Gebruiker Opslaan</button>
+          <button type="submit" class="btn btn-primary">Gebruiker Opslaan</button>
         </div>
       </form>
     </div>

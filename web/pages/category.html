@@ -6,46 +6,63 @@
   <meta name="description" content="Bekijk ons assortiment kraanbakken en graafmachine aanbouwdelen.">
   <title>Producten | Structon</title>
   
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts - Custom Arthouse -->
+  <link rel="preload" href="../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/global.css?v=6">
   <link rel="stylesheet" href="../assets/css/pages/category.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
+  <!-- Top bar -->
+  <div class="top-bar">
     <div class="container">
-      <div class="header-inner">
-        <a href="../index.html" class="logo">
-          <span class="logo-text">STRUCTON</span>
-        </a>
-        
-        <nav class="nav-main">
-          <a href="../index.html" class="nav-link">Home</a>
-          <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
-          <a href="category.html?cat=dieplepelbakken" class="nav-link">Dieplepelbakken</a>
-          <a href="category.html?cat=sloopgereedschap" class="nav-link">Sloopgereedschap</a>
-          <a href="about.html" class="nav-link">Over Ons</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        
-        <div class="header-actions">
-          <a href="login.html" class="btn btn-primary btn-sm" id="login-btn">
-            <span>Inloggen</span>
-          </a>
-          <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
+      <nav class="top-nav">
+        <a href="login.html" id="login-btn">Inloggen</a>
+        <a href="/over-ons/">Over</a>
+        <a href="/kennisbank/">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
-  </header>
+  </div>
+
+  <!-- Main navigation -->
+  <nav class="main-nav">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+      </a>
+      
+      <div class="menu">
+        <a href="category.html?cat=graafbakken" class="menu-item">
+          Graafbakken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">
+          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=adapters" class="menu-item">
+          Adapterstukken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=overige" class="menu-item">
+          Overige <span class="dropdown-arrow">▼</span>
+        </a>
+      </div>
+      
+      <div class="nav-actions">
+        <a href="category.html" class="cta-button">Bekijk alles</a>
+      </div>
+      
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
 
   <!-- Mobile Navigation -->
   <nav class="nav-mobile" id="nav-mobile">

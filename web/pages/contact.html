@@ -1,32 +1,90 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact – Grafix Starter</title>
-    <link rel="stylesheet" href="../assets/css/main.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Neem contact op met Structon voor vragen over kraanbakken en aanbouwdelen.">
+  <title>Contact | Structon</title>
+  
+  <!-- Fonts - Custom Arthouse -->
+  <link rel="preload" href="../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/global.css?v=6">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
 </head>
 <body>
-    <header class="site-header">
-        <nav class="nav">
-            <a href="index.html" class="logo">Grafix Starter</a>
-            <ul class="nav-links">
-                <li><a href="opvang.html">Opvang</a></li>
-                <li><a href="locaties.html">Locaties</a></li>
-                <li><a href="team.html">Team</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="container">
+      <nav class="top-nav">
+        <a href="login.html" id="login-btn">Inloggen</a>
+        <a href="/over-ons/">Over</a>
+        <a href="/kennisbank/">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
 
-    <main>
-        <section class="page-section">
-            <h1>Contact</h1>
-            <p>Dit is een voorbeeldpagina. Pas de inhoud aan voor het project.</p>
-        </section>
-    </main>
+  <!-- Main navigation -->
+  <nav class="main-nav">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+      </a>
+      
+      <div class="menu">
+        <a href="category.html?cat=graafbakken" class="menu-item">
+          Graafbakken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">
+          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=adapters" class="menu-item">
+          Adapterstukken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=overige" class="menu-item">
+          Overige <span class="dropdown-arrow">▼</span>
+        </a>
+      </div>
+      
+      <div class="nav-actions">
+        <a href="category.html" class="cta-button">Bekijk alles</a>
+      </div>
+      
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
 
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/pages/contact.js"></script>
+  <main style="min-height: 60vh; padding: 80px 0;">
+    <div class="container">
+      <h1 style="font-size: 3rem; margin-bottom: 20px; color: #2C5F6F;">Contact</h1>
+      <p style="font-size: 1.2rem; margin-bottom: 40px;">Neem contact met ons op voor vragen of offertes.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
+        <div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Contactgegevens</h3>
+          <p><strong>Adres:</strong> Industrieweg 123, 1234 AB Plaats</p>
+          <p><strong>Telefoon:</strong> +31 (0)12 345 6789</p>
+          <p><strong>Email:</strong> info@structon.nl</p>
+        </div>
+        <div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Openingstijden</h3>
+          <p>Maandag - Vrijdag: 08:00 - 17:00</p>
+          <p>Zaterdag: Op afspraak</p>
+          <p>Zondag: Gesloten</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="../assets/js/main.js"></script>
 </body>
 </html>

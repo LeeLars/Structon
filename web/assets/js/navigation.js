@@ -5,11 +5,12 @@
 import { API_BASE_URL } from './api/client.js';
 
 // Custom menu structure definition with tonnages
+// URL Structure: /category/subcategory/?tonnage=weight-range
 const CUSTOM_MENU_STRUCTURE = {
   'graafbakken': [
     { 
       title: 'Slotenbakken', 
-      slug: 'slotenbakken', 
+      slug: 'graafbakken/slotenbakken', 
       tonnages: [
         { label: 'Slotenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Slotenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -20,7 +21,7 @@ const CUSTOM_MENU_STRUCTURE = {
     },
     { 
       title: 'Dieplepelbakken', 
-      slug: 'dieplepelbakken',
+      slug: 'graafbakken/dieplepelbakken',
       tonnages: [
         { label: 'Dieplepelbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Dieplepelbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -32,7 +33,7 @@ const CUSTOM_MENU_STRUCTURE = {
     },
     { 
       title: 'Sleuvenbakken', 
-      slug: 'sleuvenbakken',
+      slug: 'graafbakken/sleuvenbakken',
       tonnages: [
          { label: 'Sleuvenbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
          { label: 'Sleuvenbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -41,7 +42,7 @@ const CUSTOM_MENU_STRUCTURE = {
     },
     { 
       title: 'Kantelbakken', 
-      slug: 'kantelbakken',
+      slug: 'graafbakken/kantelbakken',
       tonnages: [
         { label: 'Kantelbakken voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Kantelbakken voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -52,7 +53,7 @@ const CUSTOM_MENU_STRUCTURE = {
   'sloop-sorteergrijpers': [
     { 
       title: 'Sloophamers', 
-      slug: 'sloophamers',
+      slug: 'sloop-sorteergrijpers/sloophamers',
       tonnages: [
         { label: 'Sloophamers voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Sloophamers voor kranen van 2,5t - 5t', id: '2-5t-5t' },
@@ -63,7 +64,7 @@ const CUSTOM_MENU_STRUCTURE = {
     },
     { 
       title: 'Rippers', 
-      slug: 'rippers',
+      slug: 'sloop-sorteergrijpers/rippers',
       tonnages: [
         { label: 'Rippers voor kranen van 1t - 2,5t', id: '1t-2-5t' },
         { label: 'Rippers voor kranen van 2,5t - 5t', id: '2-5t-5t' }
@@ -71,7 +72,7 @@ const CUSTOM_MENU_STRUCTURE = {
     },
     { 
       title: 'Sorteergrijpers', 
-      slug: 'sorteergrijpers',
+      slug: 'sloop-sorteergrijpers/sorteergrijpers',
       tonnages: [
         { label: 'Sorteergrijpers voor kranen van 2,5t - 5t', id: '2-5t-5t' },
         { label: 'Sorteergrijpers voor kranen van 5t - 10t', id: '5t-10t' },
@@ -81,7 +82,7 @@ const CUSTOM_MENU_STRUCTURE = {
     },
     { 
       title: 'Roterende grijpers', 
-      slug: 'roterende-sorteergrijpers',
+      slug: 'sloop-sorteergrijpers/roterende-grijpers',
       tonnages: [
         { label: 'Roterende grijpers voor kranen van 5t - 10t', id: '5t-10t' },
         { label: 'Roterende grijpers voor kranen van 10t - 15t', id: '10t-15t' }
@@ -203,7 +204,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
       
       item.tonnages.forEach(t => {
         const tLink = document.createElement('a');
-        tLink.href = `/${item.slug}/${t.id}/`;
+        tLink.href = `/${item.slug}/?tonnage=${t.id}`;
         tLink.className = 'menu-tonnage-link';
         tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; line-height:1.4; transition:all 0.2s; display:flex; align-items:start; gap:8px; padding:8px 12px; border-radius:6px;';
         tLink.innerHTML = `<span style="color:#2C5F6F; font-size:18px; line-height:1; margin-top:-2px;">•</span> <span>${t.label}</span>`;

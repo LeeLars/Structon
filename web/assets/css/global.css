@@ -438,8 +438,8 @@ p {
   align-items: center;
   justify-content: center;
   background-color: #2C5F6F; /* Match Top Bar */
-  height: 140px; /* Slightly reduced to fit better */
-  width: 120px;
+  height: 165px; /* Slightly reduced to fit better */
+  width: 135px;
   position: absolute;
   top: -40px; /* Adjust overlap */
   left: max(var(--container-padding), calc((100vw - var(--container-max)) / 2 + var(--container-padding))); /* Stay within container */

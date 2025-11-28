@@ -137,6 +137,11 @@ body {
   overflow-y: auto;
 }
 
+.sidebar-nav svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
 .nav-item {
   display: flex;
   align-items: center;
@@ -162,8 +167,12 @@ body {
 }
 
 .nav-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  max-width: 18px;
+  max-height: 18px;
   flex-shrink: 0;
 }
 

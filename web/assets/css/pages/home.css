@@ -5,7 +5,7 @@
 /* Hero Section Enhancement */
 .hero {
   background-color: var(--color-white);
-  padding: var(--space-16) 0 var(--space-8);
+  padding: var(--space-10) 0 var(--space-8);
   text-align: center; /* Gecentreerd */
 }
 
@@ -20,7 +20,7 @@
   margin-bottom: 0;
   color: var(--color-primary-dark);
   line-height: 1.2;
-  text-align: center;
+  text-align: left;
 }
 
 .hero-subtitle {

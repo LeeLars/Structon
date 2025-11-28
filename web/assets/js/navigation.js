@@ -155,14 +155,22 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   
   const viewAllBtn = document.createElement('a');
   viewAllBtn.href = `/${categorySlug}/`;
-  viewAllBtn.className = 'btn-split'; // Use global button class
-  viewAllBtn.style.cssText = 'margin-left: auto;'; // Push to right if needed
+  viewAllBtn.style.cssText = 'color:#2C5F6F; text-decoration:none; font-size:15px; font-weight:600; display:flex; align-items:center; gap:6px; transition:all 0.2s; opacity:0.8;';
   viewAllBtn.innerHTML = `
-    <span class="btn-split-text">Bekijk alles</span>
-    <span class="btn-split-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-    </span>
+    <span>Bekijk alles</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px; height:18px;">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
   `;
+  viewAllBtn.onmouseover = () => {
+    viewAllBtn.style.opacity = '1';
+    viewAllBtn.style.transform = 'translateX(3px)';
+  };
+  viewAllBtn.onmouseout = () => {
+    viewAllBtn.style.opacity = '0.8';
+    viewAllBtn.style.transform = 'translateX(0)';
+  };
   
   header.appendChild(mainTitle);
   header.appendChild(viewAllBtn);

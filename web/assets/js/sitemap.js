@@ -18,10 +18,11 @@ export async function initSitemap() {
     // Ideally we would have an endpoint that returns the full tree for sitemap.
     // For now, we will use the navigation data logic.
     
-    const response = await fetch(`${API_BASE_URL}/categories?include_subcategories=true`);
+    const response = await fetch(`${API_BASE_URL}/categories`);
     if (!response.ok) throw new Error('Failed to load sitemap data');
     
-    const categories = await response.json();
+    const data = await response.json();
+    const categories = data.categories || data || [];
     
     // Build HTML
     let sitemapHtml = '';

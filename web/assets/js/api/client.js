@@ -18,6 +18,9 @@ const getApiBaseUrl = () => {
 
 const API_BASE = getApiBaseUrl();
 
+// Export for use in other modules
+export const API_BASE_URL = API_BASE;
+
 /**
  * Make API request with error handling
  */

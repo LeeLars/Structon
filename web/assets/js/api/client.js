@@ -159,11 +159,25 @@ export const sectors = {
   }
 };
 
+/**
+ * Navigation/Menu API
+ */
+export const navigation = {
+  async getMenuStructure() {
+    return request('/navigation/menu-structure');
+  },
+
+  async getMenuByCategory(categorySlug) {
+    return request(`/navigation/menu/${categorySlug}`);
+  }
+};
+
 // Default export with all APIs
 export default {
   auth,
   products,
   categories,
   brands,
-  sectors
+  sectors,
+  navigation
 };

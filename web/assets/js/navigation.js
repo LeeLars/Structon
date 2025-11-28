@@ -2,11 +2,11 @@
  * Navigation with Dynamic Subcategories
  */
 
-import { API_BASE_URL } from './api/client.js';
+import { API_BASE_URL, navigation as navigationAPI } from './api/client.js';
 
-// Custom menu structure definition with tonnages
+// Fallback menu structure (used if CMS is unavailable)
 // URL Structure: /category/subcategory/?tonnage=weight-range
-const CUSTOM_MENU_STRUCTURE = {
+const FALLBACK_MENU_STRUCTURE = {
   'graafbakken': [
     { 
       title: 'Slotenbakken', 
@@ -94,18 +94,33 @@ const CUSTOM_MENU_STRUCTURE = {
 };
 
 /**
+ * Fetch menu structure from CMS
+ */
+async function fetchMenuStructure() {
+  try {
+    const response = await navigationAPI.getMenuStructure();
+    return response.data || response;
+  } catch (error) {
+    console.warn('Failed to fetch menu structure from CMS, using fallback:', error.message);
+    return FALLBACK_MENU_STRUCTURE;
+  }
+}
+
+/**
  * Initialize navigation with subcategories
  */
 export async function initNavigation() {
   const menuItems = document.querySelectorAll('.menu-item');
   
+  // Fetch menu structure from CMS
+  const menuStructure = await fetchMenuStructure();
+  
   for (const menuItem of menuItems) {
     const categorySlug = getCategorySlugFromMenuItem(menuItem);
     
-    if (categorySlug && CUSTOM_MENU_STRUCTURE[categorySlug]) {
-      const items = CUSTOM_MENU_STRUCTURE[categorySlug];
-      
-      if (items.length > 0) {
+    if (categorySlug && menuStructure[categorySlug]) {
+      const items = menuStructure[categorySlug];
+      if (items && items.length > 0) {
         createDropdownMenu(menuItem, categorySlug, items);
       }
     }

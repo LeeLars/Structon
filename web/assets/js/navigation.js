@@ -247,6 +247,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   
   wrapper.appendChild(helpBox);
   contentCol.appendChild(wrapper);
+  container.appendChild(contentCol); // THIS WAS MISSING!
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);

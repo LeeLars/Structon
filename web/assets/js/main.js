@@ -30,7 +30,7 @@ function initCmsLink() {
   // Determine CMS URL based on environment
   const cmsUrl = (hostname === 'localhost' || hostname === '127.0.0.1')
     ? 'http://localhost:4000/cms/'
-    : 'https://structon-cms.up.railway.app/cms/';
+    : 'https://structon-cms.up.railway.app/cms/index.html';
   
   cmsLinks.forEach(link => {
     link.href = cmsUrl;

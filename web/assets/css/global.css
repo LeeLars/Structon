@@ -474,6 +474,7 @@ p {
   }
 }
 
+/* Menu Item - Essential for hover bridge */
 .menu-item {
   color: #2C5F6F;
   text-decoration: none;
@@ -481,57 +482,53 @@ p {
   font-size: 16px;
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between text and arrow */
-  position: static; /* Changed to static to allow mega menu to position relative to nav container */
+  gap: 8px;
+  position: static; /* Keep static for full-width dropdown */
   cursor: pointer;
-  padding: 8px 0;
-  height: 100%; /* Full height for hover area */
+  padding: 0 15px; /* Horizontal padding only */
+  height: 100%; /* Full height of nav bar */
 }
 
-.dropdown-arrow {
-  font-size: 10px;
-  opacity: 0.7;
-  margin-top: 2px;
-  transition: transform 0.3s ease;
-}
+/* Invisible Hover Bridge using pseudo-element on the container or dropdown itself */
+/* Since menu-item is static, we can't easily position a pseudo-element relative to it without affecting layout.
+   Instead, we'll use a transparent border-top on the dropdown to extend the hover area upwards. */
 
-.menu-item:hover {
-  color: #3a7a8c;
-}
-
-.menu-item:hover .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-/* Mega Menu - Full Width Dropdown */
 .menu-dropdown {
   position: absolute;
-  top: 100%; /* Directly below nav */
+  top: 100%; 
   left: 0;
-  width: 100%; /* Full width of the main-nav parent */
+  width: 100%; 
   background: white;
-  border-top: 1px solid #e0e0e0;
+  
+  /* Replace border-top line with box-shadow to allow transparent bridge */
+  border-top: none; 
+  /* Create invisible bridge */
+  padding-top: 20px; /* Visual padding inside */
+  margin-top: -10px; /* Move up slightly to overlap/connect */
+  /* Ensure the hit area extends up */
+  clip-path: inset(-20px -100vw -100vh -100vw); /* Allow hover area to extend upwards */
+  
   border-bottom: 4px solid #2C5F6F;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  padding: 40px 0;
   
   /* Full height logic */
-  height: calc(100vh - 90px); /* Viewport minus header height */
-  max-height: 700px; /* Optional cap */
-  overflow-y: auto; /* Allow scrolling if content is too long */
+  height: auto; /* Let content decide height, but min-height for stability */
+  min-height: 300px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
   
-  /* Animation initial state */
+  /* Animation */
   opacity: 0;
   visibility: hidden;
   transform-origin: top center;
-  transform: rotateX(-10deg);
+  transform: rotateX(-5deg); /* Subtler rotation */
   perspective: 1000px;
   
-  /* Transition with delay on exit to allow mouse movement */
+  /* Robust Transition Delay */
   transition: 
-    opacity 0.2s ease 0.1s,
-    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s,
-    visibility 0s 0.3s; /* Keep visible slightly longer */
+    opacity 0.2s ease 0.15s,
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s,
+    visibility 0s 0.15s;
   
   z-index: 1000;
   pointer-events: none;
@@ -543,22 +540,23 @@ p {
   visibility: visible;
   transform: rotateX(0);
   
-  /* Instant entry */
+  /* Instant Entry */
   transition: 
-    opacity 0.2s ease 0s,
-    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0s,
+    opacity 0.1s ease 0s,
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0s,
     visibility 0s 0s;
   
   pointer-events: auto;
 }
 
+/* Text-Focused Layout */
 .menu-dropdown-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 20px 24px 40px; /* Top padding accounts for the bridge visual offset */
   display: grid;
-  grid-template-columns: 3fr 1fr; /* Content vs Image */
-  gap: 40px;
+  grid-template-columns: 1fr 300px; /* Content | Advice Column */
+  gap: 60px;
 }
 
 .menu-dropdown-content {
@@ -568,44 +566,80 @@ p {
 
 .menu-dropdown-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
 }
 
-.menu-dropdown-image {
-  display: none;
+/* Textual Item Styling */
+.menu-dropdown-item {
+  display: block;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.menu-dropdown-item:hover {
+  background-color: white;
+  border-color: #2C5F6F;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
+}
+
+/* Advice Column Styling */
+.menu-dropdown-advice {
+  background-color: #2C5F6F;
+  color: white;
+  padding: 30px;
   border-radius: 12px;
-  overflow: hidden;
-  height: 300px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  height: fit-content;
 }
 
-@media (min-width: 1024px) {
-  .menu-dropdown-image {
-    display: block;
-  }
+.menu-dropdown-advice h4 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: white;
 }
 
-.menu-dropdown-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+.menu-dropdown-advice p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 20px;
 }
 
-.menu-dropdown-image:hover img {
-  transform: scale(1.05);
+.btn-advice {
+  display: inline-block;
+  padding: 10px 20px;
+  background: white;
+  color: #2C5F6F;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: opacity 0.2s;
 }
 
+.btn-advice:hover {
+  opacity: 0.9;
+}
+
+/* Header styling */
 .menu-dropdown-header {
-  /* Removed grid-column since we have new structure */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-dropdown-image {
+  display: none; /* Hide image as requested */
 }
 
 .menu-dropdown-title {

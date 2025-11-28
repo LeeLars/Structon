@@ -169,17 +169,17 @@ function createDropdownMenu(menuItem, categorySlug, subcategories) {
   contentCol.appendChild(grid);
   container.appendChild(contentCol);
 
-  // --- RIGHT SIDE: IMAGE ---
-  const imageCol = document.createElement('div');
-  imageCol.className = 'menu-dropdown-image';
+  // --- RIGHT SIDE: ADVICE BOX ---
+  const adviceCol = document.createElement('div');
+  adviceCol.className = 'menu-dropdown-advice';
   
-  const imageUrl = CATEGORY_IMAGES[categorySlug] || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=800&fit=crop';
-  
-  imageCol.innerHTML = `
-    <img src="${imageUrl}" alt="${categoryName}" loading="lazy">
+  adviceCol.innerHTML = `
+    <h4>Hulp nodig?</h4>
+    <p>Weet u niet zeker welke bak u nodig heeft voor uw machine? Onze experts helpen u graag verder met professioneel advies op maat.</p>
+    <a href="/pages/contact.html" class="btn-advice">Advies vragen <span>→</span></a>
   `;
   
-  container.appendChild(imageCol);
+  container.appendChild(adviceCol);
   
   dropdown.appendChild(container);
   menuItem.appendChild(dropdown);

@@ -412,7 +412,9 @@ p {
 .main-nav {
   background-color: white;
   border-bottom: 2px solid #2C5F6F; /* Border in Petrol color */
-  padding: 15px 0 45px 0; /* Increased bottom padding for button space */
+  height: 90px; /* Fixed height for better alignment */
+  display: flex;
+  align-items: center;
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
@@ -426,6 +428,8 @@ p {
   padding: 0 var(--container-padding);
   gap: 30px;
   position: static; /* Changed from relative to allow full-width dropdowns */
+  height: 100%; /* Full height to match parent */
+  width: 100%;
 }
 
 /* Logo */
@@ -435,15 +439,15 @@ p {
   align-items: center;
   justify-content: center;
   background-color: #2C5F6F; /* Match Top Bar */
-  height: 170px; /* Tall enough to hang from top */
-  width: 140px;
+  height: 140px; /* Slightly reduced to fit better */
+  width: 120px;
   position: absolute;
-  top: -55px; /* Pull up to cover top bar area */
+  top: -40px; /* Adjust overlap */
   left: var(--container-padding); /* Align with content start */
   border-radius: 0 0 20px 20px;
   z-index: 20;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding-top: 2rem;
+  padding-top: 1.5rem;
 }
 
 .logo-image {
@@ -510,13 +514,17 @@ p {
   border-bottom: 4px solid #2C5F6F;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   padding: 40px 0;
-  min-height: 200px;
+  
+  /* Full height logic */
+  height: calc(100vh - 90px); /* Viewport minus header height */
+  max-height: 700px; /* Optional cap */
+  overflow-y: auto; /* Allow scrolling if content is too long */
   
   /* Animation initial state */
   opacity: 0;
   visibility: hidden;
   transform-origin: top center;
-  transform: rotateX(-10deg) translateY(10px);
+  transform: rotateX(-10deg);
   perspective: 1000px;
   transition: 
     opacity 0.2s ease,
@@ -531,7 +539,7 @@ p {
 .menu-dropdown:hover {
   opacity: 1;
   visibility: visible;
-  transform: rotateX(0) translateY(0);
+  transform: rotateX(0);
   transition: 
     opacity 0.2s ease,
     transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),

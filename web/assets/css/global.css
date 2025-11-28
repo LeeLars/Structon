@@ -277,7 +277,7 @@ p {
 
 /* Blok 1: Tekst */
 .btn-split-text {
-  background-color: #2a7d8a;
+  background-color: #3a8d9c;
   color: white;
   padding: 14px 24px;
   font-family: Arial, sans-serif;
@@ -291,7 +291,7 @@ p {
 
 /* Blok 2: Pijl */
 .btn-split-icon {
-  background-color: #2a7d8a;
+  background-color: #3a8d9c;
   color: white;
   width: 52px;
   display: flex;
@@ -309,7 +309,7 @@ p {
 /* Hover: beide blokken tegelijk */
 .btn-split:hover .btn-split-text,
 .btn-split:hover .btn-split-icon {
-  background-color: #3a8d9c;
+  background-color: #4a9dac;
 }
 
 /* Small variant (voor product cards) */

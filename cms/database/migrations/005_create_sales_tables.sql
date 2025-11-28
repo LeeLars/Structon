@@ -1,7 +1,11 @@
+-- Drop existing tables if they exist (for clean re-run)
+DROP TABLE IF EXISTS quotes CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+
 -- Create Quotes table
 CREATE TABLE IF NOT EXISTS quotes (
     id SERIAL PRIMARY KEY,
-    product_id INTEGER REFERENCES products(id) ON DELETE SET NULL,
+    product_id UUID REFERENCES products(id) ON DELETE SET NULL,
     product_name VARCHAR(255), -- Fallback if product deleted
     customer_name VARCHAR(255) NOT NULL,
     customer_email VARCHAR(255) NOT NULL,

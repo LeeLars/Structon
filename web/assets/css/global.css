@@ -881,30 +881,19 @@ p {
 }
 
 /* ============================================
-   PRODUCT CARDS
+   PRODUCT CARDS - Base (overridden by clean-card)
    ============================================ */
 .product-card {
-  background-color: var(--color-white);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base), transform var(--transition-base);
   display: flex;
   flex-direction: column;
 }
 
-.product-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
-}
+/* Hover effects handled by specific card variants (e.g. clean-card in home.css) */
 
 .product-card-image {
-  aspect-ratio: 1;
-  background-color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-8);
 }
 
 .product-card-image img {
@@ -914,7 +903,6 @@ p {
 }
 
 .product-card-content {
-  padding: var(--space-6);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -922,32 +910,11 @@ p {
 
 .product-card-category {
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-medium);
   color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: var(--space-2);
-}
-
-.product-card-title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
-  margin-bottom: var(--space-2);
-  color: var(--color-gray-900);
-}
-
-.product-card-specs {
-  font-size: var(--text-sm);
-  color: var(--color-gray-500);
-  margin-bottom: var(--space-4);
-}
-
-.product-card-footer {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
 }
 
 /* Price Display */
@@ -962,30 +929,6 @@ p {
   font-size: var(--text-sm);
   color: var(--color-gray-500);
   font-style: italic;
-}
-
-/* Stock Status */
-.stock-status {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-}
-
-.stock-status::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-}
-
-.stock-status.in-stock::before {
-  background-color: var(--color-success);
-}
-
-.stock-status.out-of-stock::before {
-  background-color: var(--color-error);
 }
 
 /* ============================================

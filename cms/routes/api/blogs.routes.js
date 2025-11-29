@@ -4,65 +4,12 @@ import { authenticateToken, requireAdmin } from '../../middleware/auth.js';
 
 const router = Router();
 
-/**
- * GET /api/blogs - Get all published blogs (public)
- */
-router.get('/', async (req, res) => {
-  try {
-    const { limit = 10, offset = 0 } = req.query;
-    
-    const result = await pool.query(`
-      SELECT b.*, u.email as author_email
-      FROM blogs b
-      LEFT JOIN users u ON b.author_id = u.id
-      WHERE b.status = 'published'
-      ORDER BY b.published_at DESC
-      LIMIT $1 OFFSET $2
-    `, [limit, offset]);
-
-    const countResult = await pool.query(`
-      SELECT COUNT(*) FROM blogs WHERE status = 'published'
-    `);
-
-    res.json({
-      blogs: result.rows,
-      total: parseInt(countResult.rows[0].count),
-      limit: parseInt(limit),
-      offset: parseInt(offset)
-    });
-  } catch (error) {
-    console.error('Error fetching blogs:', error);
-    res.status(500).json({ error: 'Failed to fetch blogs' });
-  }
-});
+// =============================================
+// ADMIN ROUTES (must be defined BEFORE :slug)
+// =============================================
 
 /**
- * GET /api/blogs/:slug - Get single blog by slug (public)
- */
-router.get('/:slug', async (req, res) => {
-  try {
-    const { slug } = req.params;
-    
-    const result = await pool.query(`
-      SELECT b.*, u.email as author_email
-      FROM blogs b
-      LEFT JOIN users u ON b.author_id = u.id
-      WHERE b.slug = $1 AND b.status = 'published'
-    `, [slug]);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Blog not found' });
-    }
-
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Error fetching blog:', error);
-    res.status(500).json({ error: 'Failed to fetch blog' });
-  }
-});
-
-/**
- * GET /api/admin/blogs - Get all blogs for admin (includes drafts)
+ * GET /api/blogs/admin/all - Get all blogs for admin (includes drafts)
  */
 router.get('/admin/all', authenticateToken, requireAdmin, async (req, res) => {
   try {
@@ -81,7 +28,7 @@ router.get('/admin/all', authenticateToken, requireAdmin, async (req, res) => {
 });
 
 /**
- * GET /api/admin/blogs/:id - Get single blog by ID for admin
+ * GET /api/blogs/admin/:id - Get single blog by ID for admin
  */
 router.get('/admin/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
@@ -103,7 +50,7 @@ router.get('/admin/:id', authenticateToken, requireAdmin, async (req, res) => {
 });
 
 /**
- * POST /api/admin/blogs - Create new blog
+ * POST /api/blogs/admin - Create new blog
  */
 router.post('/admin', authenticateToken, requireAdmin, async (req, res) => {
   try {
@@ -188,7 +135,7 @@ router.put('/admin/:id', authenticateToken, requireAdmin, async (req, res) => {
 });
 
 /**
- * DELETE /api/admin/blogs/:id - Delete blog
+ * DELETE /api/blogs/admin/:id - Delete blog
  */
 router.delete('/admin/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
@@ -204,6 +151,67 @@ router.delete('/admin/:id', authenticateToken, requireAdmin, async (req, res) =>
   } catch (error) {
     console.error('Error deleting blog:', error);
     res.status(500).json({ error: 'Failed to delete blog' });
+  }
+});
+
+// =============================================
+// PUBLIC ROUTES (must be defined AFTER admin routes)
+// =============================================
+
+/**
+ * GET /api/blogs - Get all published blogs (public)
+ */
+router.get('/', async (req, res) => {
+  try {
+    const { limit = 10, offset = 0 } = req.query;
+    
+    const result = await pool.query(`
+      SELECT b.*, u.email as author_email
+      FROM blogs b
+      LEFT JOIN users u ON b.author_id = u.id
+      WHERE b.status = 'published'
+      ORDER BY b.published_at DESC
+      LIMIT $1 OFFSET $2
+    `, [limit, offset]);
+
+    const countResult = await pool.query(`
+      SELECT COUNT(*) FROM blogs WHERE status = 'published'
+    `);
+
+    res.json({
+      blogs: result.rows,
+      total: parseInt(countResult.rows[0].count),
+      limit: parseInt(limit),
+      offset: parseInt(offset)
+    });
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    res.status(500).json({ error: 'Failed to fetch blogs' });
+  }
+});
+
+/**
+ * GET /api/blogs/:slug - Get single blog by slug (public)
+ */
+router.get('/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params;
+    
+    const result = await pool.query(`
+      SELECT b.*, u.email as author_email
+      FROM blogs b
+      LEFT JOIN users u ON b.author_id = u.id
+      WHERE b.slug = $1 AND b.status = 'published'
+    `, [slug]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching blog:', error);
+    res.status(500).json({ error: 'Failed to fetch blog' });
   }
 });
 

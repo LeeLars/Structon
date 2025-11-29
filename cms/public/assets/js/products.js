@@ -157,14 +157,23 @@ document.addEventListener('DOMContentLoaded', () => {
  * Initialize with demo data immediately, then try API
  */
 async function initializeData() {
+  console.log('📦 [PRODUCTS] initializeData starting...');
+  console.log('   DEMO_PRODUCTS available:', DEMO_PRODUCTS.length);
+  console.log('   DEMO_CATEGORIES available:', DEMO_CATEGORIES.length);
+  console.log('   DEMO_BRANDS available:', DEMO_BRANDS.length);
+  
   // Load demo data immediately for fast display
   products = [...DEMO_PRODUCTS];
   categories = [...DEMO_CATEGORIES];
   brands = [...DEMO_BRANDS];
   filteredProducts = [...products];
   
+  console.log('   Demo data loaded, rendering...');
+  
   renderProducts();
   populateFilters();
+  
+  console.log('   Initial render complete');
   
   // Try to load from API in background
   try {
@@ -353,10 +362,20 @@ function applyFilters(searchQuery = null) {
  * Render products table
  */
 function renderProducts() {
+  console.log('📊 [PRODUCTS] renderProducts called');
+  console.log('   products array length:', products.length);
+  console.log('   filteredProducts length:', filteredProducts.length);
+  
   const tbody = document.getElementById('products-tbody');
-  if (!tbody) return;
+  console.log('   products-tbody found:', !!tbody);
+  
+  if (!tbody) {
+    console.error('❌ [PRODUCTS] products-tbody element not found!');
+    return;
+  }
   
   if (filteredProducts.length === 0) {
+    console.log('   No products to display');
     tbody.innerHTML = '<tr><td colspan="10" class="loading-cell">Geen producten gevonden</td></tr>';
     return;
   }

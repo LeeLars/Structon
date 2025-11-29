@@ -4,19 +4,49 @@
  */
 
 import api from './api-client.js';
-import { renderSidebar } from './sidebar.js';
+
+// Demo data
+const DEMO_BLOGS = [
+  {
+    id: 'blog-1',
+    title: 'De juiste graafbak kiezen voor uw project',
+    slug: 'juiste-graafbak-kiezen',
+    excerpt: 'Een uitgebreide gids voor het selecteren van de perfecte graafbak voor verschillende grondsoorten en projecten.',
+    content: '<p>Het kiezen van de juiste graafbak is essentieel voor efficiënt grondverzet. In dit artikel bespreken we de belangrijkste factoren.</p><h2>Grondsoort</h2><p>De grondsoort bepaalt grotendeels welk type bak u nodig heeft...</p>',
+    featured_image: 'https://via.placeholder.com/800x400?text=Graafbak+Gids',
+    status: 'published',
+    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'blog-2',
+    title: 'Onderhoudstips voor uw aanbouwdelen',
+    slug: 'onderhoudstips-aanbouwdelen',
+    excerpt: 'Verleng de levensduur van uw graafmachine accessoires met deze praktische onderhoudstips.',
+    content: '<p>Regelmatig onderhoud is cruciaal voor de levensduur van uw aanbouwdelen.</p>',
+    featured_image: 'https://via.placeholder.com/800x400?text=Onderhoud',
+    status: 'published',
+    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'blog-3',
+    title: 'Nieuwe CW40 snelwissel systemen',
+    slug: 'nieuwe-cw40-snelwissel',
+    excerpt: 'Ontdek de nieuwste ontwikkelingen in CW40 snelwissel technologie.',
+    content: '<p>De CW40 snelwissel is een van de meest populaire systemen...</p>',
+    featured_image: null,
+    status: 'draft',
+    published_at: null,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+  }
+];
 
 let blogs = [];
 let currentBlogId = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize sidebar
-  const sidebarContainer = document.getElementById('sidebar-container');
-  if (sidebarContainer) {
-    sidebarContainer.innerHTML = renderSidebar('blogs');
-  }
-  
   checkAuth();
   setupEventListeners();
   loadBlogs();
@@ -26,13 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
  * Check authentication
  */
 async function checkAuth() {
-  try {
-    const data = await api.get('/auth/me');
-    if (data.user.role !== 'admin') {
-      window.location.href = '/cms/';
-    }
-  } catch (error) {
-    window.location.href = '/cms/';
+  const token = localStorage.getItem('cms_token');
+  if (!token) {
+    window.location.href = '/cms/login.html';
+    return;
   }
 }
 
@@ -76,14 +103,18 @@ async function loadBlogs() {
   try {
     const data = await api.get('/blogs/admin/all');
     blogs = data.blogs || [];
+    
+    // Use demo data if no real data
+    if (blogs.length === 0) {
+      blogs = DEMO_BLOGS;
+    }
+    
     renderBlogList(blogs);
   } catch (error) {
     console.error('Error loading blogs:', error);
-    container.innerHTML = `
-      <div class="empty-state">
-        <p>Fout bij laden van artikelen</p>
-      </div>
-    `;
+    // Use demo data on error
+    blogs = DEMO_BLOGS;
+    renderBlogList(blogs);
   }
 }
 

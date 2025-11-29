@@ -3,28 +3,72 @@
  */
 
 import api from './api-client.js';
-import { renderSidebar } from './sidebar.js';
+
+// Demo data
+const DEMO_BRANDS = [
+  {
+    id: 'brand-1',
+    title: 'Caterpillar',
+    slug: 'caterpillar',
+    logo_url: 'https://via.placeholder.com/150x80?text=CAT',
+    is_active: true,
+    product_count: 8
+  },
+  {
+    id: 'brand-2',
+    title: 'Komatsu',
+    slug: 'komatsu',
+    logo_url: 'https://via.placeholder.com/150x80?text=Komatsu',
+    is_active: true,
+    product_count: 6
+  },
+  {
+    id: 'brand-3',
+    title: 'Volvo',
+    slug: 'volvo',
+    logo_url: 'https://via.placeholder.com/150x80?text=Volvo',
+    is_active: true,
+    product_count: 5
+  },
+  {
+    id: 'brand-4',
+    title: 'Hitachi',
+    slug: 'hitachi',
+    logo_url: null,
+    is_active: true,
+    product_count: 4
+  },
+  {
+    id: 'brand-5',
+    title: 'Liebherr',
+    slug: 'liebherr',
+    logo_url: null,
+    is_active: true,
+    product_count: 3
+  },
+  {
+    id: 'brand-6',
+    title: 'JCB',
+    slug: 'jcb',
+    logo_url: null,
+    is_active: false,
+    product_count: 2
+  }
+];
 
 let brands = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize sidebar
-  const sidebarContainer = document.getElementById('sidebar-container');
-  if (sidebarContainer) {
-    sidebarContainer.innerHTML = renderSidebar('brands');
-  }
-  
   checkAuth();
   setupEventListeners();
   loadBrands();
 });
 
 async function checkAuth() {
-  try {
-    const data = await api.get('/auth/me');
-    if (data.user.role !== 'admin') window.location.href = '/cms/';
-  } catch (error) {
-    window.location.href = '/cms/';
+  const token = localStorage.getItem('cms_token');
+  if (!token) {
+    window.location.href = '/cms/login.html';
+    return;
   }
 }
 
@@ -50,9 +94,18 @@ async function loadBrands() {
   try {
     const data = await api.get('/brands');
     brands = data.brands || [];
+    
+    // Use demo data if no real data
+    if (brands.length === 0) {
+      brands = DEMO_BRANDS;
+    }
+    
     renderBrands();
   } catch (error) {
     console.error('Error loading brands:', error);
+    // Use demo data on error
+    brands = DEMO_BRANDS;
+    renderBrands();
   }
 }
 

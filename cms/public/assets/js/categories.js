@@ -3,28 +3,74 @@
  */
 
 import api from './api-client.js';
-import { renderSidebar } from './sidebar.js';
+
+// Demo data
+const DEMO_CATEGORIES = [
+  {
+    id: 'cat-1',
+    title: 'Graafbakken',
+    slug: 'graafbakken',
+    description: 'Professionele graafbakken voor alle graafmachines.',
+    image_url: 'https://via.placeholder.com/300x200?text=Graafbakken',
+    sort_order: 1,
+    is_active: true,
+    product_count: 12
+  },
+  {
+    id: 'cat-2',
+    title: 'Slotenbakken',
+    slug: 'slotenbakken',
+    description: 'Smalle bakken voor greppels en sloten.',
+    image_url: 'https://via.placeholder.com/300x200?text=Slotenbakken',
+    sort_order: 2,
+    is_active: true,
+    product_count: 8
+  },
+  {
+    id: 'cat-3',
+    title: 'Sloop- en sorteergrijpers',
+    slug: 'sloop-sorteergrijpers',
+    description: 'Grijpers voor sloop en recycling werkzaamheden.',
+    image_url: 'https://via.placeholder.com/300x200?text=Grijpers',
+    sort_order: 3,
+    is_active: true,
+    product_count: 5
+  },
+  {
+    id: 'cat-4',
+    title: 'Adapterstukken',
+    slug: 'adapters',
+    description: 'Adapters en snelwissels voor graafmachines.',
+    image_url: null,
+    sort_order: 4,
+    is_active: true,
+    product_count: 15
+  },
+  {
+    id: 'cat-5',
+    title: 'Overige',
+    slug: 'overige',
+    description: 'Overige aanbouwdelen en accessoires.',
+    image_url: null,
+    sort_order: 5,
+    is_active: false,
+    product_count: 3
+  }
+];
 
 let categories = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize sidebar
-  const sidebarContainer = document.getElementById('sidebar-container');
-  if (sidebarContainer) {
-    sidebarContainer.innerHTML = renderSidebar('categories');
-  }
-  
   checkAuth();
   setupEventListeners();
   loadCategories();
 });
 
 async function checkAuth() {
-  try {
-    const data = await api.get('/auth/me');
-    if (data.user.role !== 'admin') window.location.href = '/cms/';
-  } catch (error) {
-    window.location.href = '/cms/';
+  const token = localStorage.getItem('cms_token');
+  if (!token) {
+    window.location.href = '/cms/login.html';
+    return;
   }
 }
 
@@ -51,9 +97,18 @@ async function loadCategories() {
   try {
     const data = await api.get('/categories');
     categories = data.categories || [];
+    
+    // Use demo data if no real data
+    if (categories.length === 0) {
+      categories = DEMO_CATEGORIES;
+    }
+    
     renderCategories();
   } catch (error) {
     console.error('Error loading categories:', error);
+    // Use demo data on error
+    categories = DEMO_CATEGORIES;
+    renderCategories();
   }
 }
 

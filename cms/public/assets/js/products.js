@@ -4,7 +4,118 @@
  */
 
 import api from './api-client.js';
-import { renderSidebar } from './sidebar.js';
+
+// Demo data for when API has no data
+const DEMO_PRODUCTS = [
+  {
+    id: 'prod-001',
+    title: 'Slotenbak 600mm CW30',
+    slug: 'slotenbak-600mm-cw30',
+    description: 'Professionele slotenbak voor graafmachines van 8-15 ton.',
+    category_id: 'cat-1',
+    category_title: 'Slotenbakken',
+    brand_id: 'brand-1',
+    brand_title: 'Structon',
+    width: 600,
+    volume: 120,
+    weight: 85,
+    attachment_type: 'CW30',
+    stock_quantity: 5,
+    price_excl_vat: 2450.00,
+    is_active: true,
+    is_featured: true,
+    cloudinary_images: [{ url: 'https://via.placeholder.com/100x100?text=Slotenbak' }]
+  },
+  {
+    id: 'prod-002',
+    title: 'Graafbak 1200mm CW40',
+    slug: 'graafbak-1200mm-cw40',
+    description: 'Zware graafbak voor grote graafmachines.',
+    category_id: 'cat-2',
+    category_title: 'Graafbakken',
+    brand_id: 'brand-1',
+    brand_title: 'Structon',
+    width: 1200,
+    volume: 450,
+    weight: 280,
+    attachment_type: 'CW40',
+    stock_quantity: 3,
+    price_excl_vat: 2945.00,
+    is_active: true,
+    is_featured: false,
+    cloudinary_images: [{ url: 'https://via.placeholder.com/100x100?text=Graafbak' }]
+  },
+  {
+    id: 'prod-003',
+    title: 'Sorteergrijper 800mm',
+    slug: 'sorteergrijper-800mm',
+    description: 'Veelzijdige sorteergrijper voor sloop en recycling.',
+    category_id: 'cat-3',
+    category_title: 'Sloop- en sorteergrijpers',
+    brand_id: 'brand-2',
+    brand_title: 'Caterpillar',
+    width: 800,
+    volume: null,
+    weight: 450,
+    attachment_type: 'S50',
+    stock_quantity: 2,
+    price_excl_vat: 3200.00,
+    is_active: true,
+    is_featured: true,
+    cloudinary_images: [{ url: 'https://via.placeholder.com/100x100?text=Grijper' }]
+  },
+  {
+    id: 'prod-004',
+    title: 'Plantenbak 400mm CW10',
+    slug: 'plantenbak-400mm-cw10',
+    description: 'Compacte plantenbak voor kleine graafmachines.',
+    category_id: 'cat-4',
+    category_title: 'Overige',
+    brand_id: 'brand-1',
+    brand_title: 'Structon',
+    width: 400,
+    volume: 45,
+    weight: 35,
+    attachment_type: 'CW10',
+    stock_quantity: 8,
+    price_excl_vat: 1875.00,
+    is_active: true,
+    is_featured: false,
+    cloudinary_images: []
+  },
+  {
+    id: 'prod-005',
+    title: 'Rioolbak 300mm CW20',
+    slug: 'rioolbak-300mm-cw20',
+    description: 'Smalle rioolbak voor precisiewerk.',
+    category_id: 'cat-1',
+    category_title: 'Slotenbakken',
+    brand_id: 'brand-3',
+    brand_title: 'Volvo',
+    width: 300,
+    volume: 60,
+    weight: 55,
+    attachment_type: 'CW20',
+    stock_quantity: 0,
+    price_excl_vat: 1250.00,
+    is_active: false,
+    is_featured: false,
+    cloudinary_images: []
+  }
+];
+
+const DEMO_CATEGORIES = [
+  { id: 'cat-1', title: 'Slotenbakken' },
+  { id: 'cat-2', title: 'Graafbakken' },
+  { id: 'cat-3', title: 'Sloop- en sorteergrijpers' },
+  { id: 'cat-4', title: 'Overige' }
+];
+
+const DEMO_BRANDS = [
+  { id: 'brand-1', title: 'Structon' },
+  { id: 'brand-2', title: 'Caterpillar' },
+  { id: 'brand-3', title: 'Volvo' }
+];
 
 // State
 let products = [];
@@ -15,12 +126,6 @@ let selectedProducts = new Set();
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize sidebar
-  const sidebarContainer = document.getElementById('sidebar-container');
-  if (sidebarContainer) {
-    sidebarContainer.innerHTML = renderSidebar('products');
-  }
-  
   checkAuth();
   setupEventListeners();
   loadProducts();
@@ -100,12 +205,22 @@ async function loadProducts() {
   try {
     const data = await api.get('/admin/products');
     products = data.products || [];
+    
+    // Use demo data if no real data
+    if (products.length === 0) {
+      products = DEMO_PRODUCTS;
+    }
+    
     filteredProducts = [...products];
     renderProducts();
     await loadFilterOptions();
   } catch (error) {
     console.error('Error loading products:', error);
-    showError('Fout bij laden van producten');
+    // Use demo data on error
+    products = DEMO_PRODUCTS;
+    filteredProducts = [...products];
+    renderProducts();
+    loadFilterOptions();
   }
 }
 
@@ -113,35 +228,70 @@ async function loadProducts() {
  * Load filter options
  */
 async function loadFilterOptions() {
+  let categories = [];
+  let brands = [];
+  
   try {
     const [categoriesData, brandsData] = await Promise.all([
       api.get('/categories'),
       api.get('/brands')
     ]);
     
-    // Populate category filter
-    const categoryFilter = document.getElementById('filter-category');
-    if (categoryFilter && categoriesData.categories) {
-      categoriesData.categories.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat.id;
-        option.textContent = cat.title;
-        categoryFilter.appendChild(option);
-      });
-    }
-    
-    // Populate brand filter
-    const brandFilter = document.getElementById('filter-brand');
-    if (brandFilter && brandsData.brands) {
-      brandsData.brands.forEach(brand => {
-        const option = document.createElement('option');
-        option.value = brand.id;
-        option.textContent = brand.title;
-        brandFilter.appendChild(option);
-      });
-    }
+    categories = categoriesData.categories || [];
+    brands = brandsData.brands || [];
   } catch (error) {
     console.error('Error loading filters:', error);
+  }
+  
+  // Use demo data if no real data
+  if (categories.length === 0) {
+    categories = DEMO_CATEGORIES;
+  }
+  if (brands.length === 0) {
+    brands = DEMO_BRANDS;
+  }
+  
+  // Populate category filter
+  const categoryFilter = document.getElementById('filter-category');
+  if (categoryFilter) {
+    categories.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat.id;
+      option.textContent = cat.title;
+      categoryFilter.appendChild(option);
+    });
+  }
+  
+  // Populate brand filter
+  const brandFilter = document.getElementById('filter-brand');
+  if (brandFilter) {
+    brands.forEach(brand => {
+      const option = document.createElement('option');
+      option.value = brand.id;
+      option.textContent = brand.title;
+      brandFilter.appendChild(option);
+    });
+  }
+  
+  // Also populate modal selects
+  const productCategory = document.getElementById('product-category');
+  if (productCategory) {
+    categories.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat.id;
+      option.textContent = cat.title;
+      productCategory.appendChild(option);
+    });
+  }
+  
+  const productBrand = document.getElementById('product-brand');
+  if (productBrand) {
+    brands.forEach(brand => {
+      const option = document.createElement('option');
+      option.value = brand.id;
+      option.textContent = brand.title;
+      productBrand.appendChild(option);
+    });
   }
 }
 

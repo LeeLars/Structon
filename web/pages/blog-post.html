@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Bekijk ons volledige assortiment kraanbakken en graafmachine aanbouwdelen.">
-  <title>Alle Producten | Structon</title>
+  <meta name="description" content="" id="meta-description">
+  <title id="page-title">Blog | Structon</title>
   
   <!-- Fonts - Custom Arthouse -->
   <link rel="preload" href="../assets/css/fonts.css" as="style">
@@ -12,7 +12,7 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="../assets/css/global.css?v=6">
-  <link rel="stylesheet" href="../assets/css/pages/category.css">
+  <link rel="stylesheet" href="../assets/css/pages/blog.css">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
@@ -48,9 +48,6 @@
         <a href="category.html?cat=adapters" class="menu-item">
           Adapterstukken <span class="dropdown-arrow">▼</span>
         </a>
-        <a href="category.html?cat=overige" class="menu-item">
-          Overige <span class="dropdown-arrow">▼</span>
-        </a>
         <a href="blog.html" class="menu-item">
           Blog
         </a>
@@ -75,8 +72,6 @@
     <a href="all-products.html" class="nav-link">Alle Producten</a>
     <a href="category.html?cat=graafbakken" class="nav-link">Graafbakken</a>
     <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
-    <a href="category.html?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
-    <a href="category.html?cat=adapters" class="nav-link">Adapterstukken</a>
     <a href="blog.html" class="nav-link">Blog</a>
     <hr>
     <a href="contact.html" class="nav-link">Over ons</a>
@@ -84,68 +79,88 @@
     <a href="login.html" class="btn btn-primary">Inloggen</a>
   </nav>
 
-  <main>
-    <!-- Page Header -->
-    <section class="page-header">
-      <div class="container">
-        <h1>ALLE PRODUCTEN</h1>
-        <p class="page-subtitle">Bekijk ons complete assortiment kraanbakken en aanbouwdelen</p>
-      </div>
-    </section>
+  <!-- Blog Post Content -->
+  <article class="blog-post-page">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <a href="blog.html">Blog</a>
+        <span>/</span>
+        <span id="breadcrumb-title">Artikel</span>
+      </nav>
 
-    <!-- Products Grid -->
-    <section class="products-section">
-      <div class="container">
-        <div class="products-grid" id="all-products-grid">
-          <div class="loading">Producten laden...</div>
+      <!-- Post Header -->
+      <header class="post-header" id="post-header">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <p>Artikel laden...</p>
         </div>
+      </header>
+
+      <!-- Post Content -->
+      <div class="post-content" id="post-content">
+        <!-- Content loaded via JS -->
       </div>
-    </section>
-  </main>
+
+      <!-- Back to Blog -->
+      <div class="post-footer">
+        <a href="blog.html" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Terug naar blog
+        </a>
+      </div>
+    </div>
+  </article>
 
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-col">
-          <h4 class="footer-col-title">Structon</h4>
-          <p>Specialist in kraanbakken en graafmachine aanbouwdelen.</p>
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <a href="../index.html" class="footer-logo">
+            <img src="../assets/images/static/logo.svg" alt="Structon" width="120">
+          </a>
+          <p class="footer-tagline">
+            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
+          </p>
         </div>
-        <div class="footer-col">
-          <h4 class="footer-col-title">Producten</h4>
-          <ul class="footer-links">
+        <div class="footer-links-col">
+          <h4>Producten</h4>
+          <ul>
+            <li><a href="category.html?cat=graafbakken">Graafbakken</a></li>
             <li><a href="category.html?cat=slotenbakken">Slotenbakken</a></li>
-            <li><a href="category.html?cat=dieplepelbakken">Dieplepelbakken</a></li>
-            <li><a href="category.html?cat=sorteergrijpers">Sorteergrijpers</a></li>
+            <li><a href="category.html?cat=sloop-sorteergrijpers">Sloop- en sorteergrijpers</a></li>
+            <li><a href="all-products.html">Alle producten</a></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4 class="footer-col-title">Contact</h4>
-          <div class="footer-contact">
-            <p>📍 Industrieweg 123, 1234 AB Plaats</p>
-            <p>📞 +31 (0)12 345 6789</p>
-            <p>✉️ info@structon.nl</p>
-          </div>
+        <div class="footer-links-col">
+          <h4>Informatie</h4>
+          <ul>
+            <li><a href="contact.html">Over ons</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact-col">
+          <h4>Contact</h4>
+          <p>
+            <strong>Structon</strong><br>
+            België<br>
+            <a href="mailto:info@structon.be">info@structon.be</a>
+          </p>
         </div>
       </div>
-      
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2024 Structon. Alle rechten voorbehouden.</p>
-        <a href="#" class="footer-link cms-admin-icon" target="_blank" rel="noopener" title="Admin CMS">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-        </a>
-        <div class="footer-branding">
-          Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a>
-        </div>
+        <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script type="module" src="../assets/js/main.js"></script>
-  <script type="module" src="../assets/js/pages/all-products.js"></script>
+  <script type="module" src="../assets/js/pages/blog-post.js"></script>
 </body>
 </html>

@@ -3,12 +3,15 @@
  */
 
 import { products, categories } from '../api/client.js';
-import { createProductCard, showLoading, showError, showNoResults } from '../main.js';
+import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
 
 let allProducts = [];
 let currentCategory = null;
+
+// Check if user is logged in
+const isLoggedIn = localStorage.getItem('authToken') !== null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initPage();
@@ -85,7 +88,7 @@ async function loadProducts() {
 }
 
 /**
- * Render products to grid
+ * Render products with horizontal cards
  */
 function renderProducts(productList) {
   const container = document.getElementById('products-grid');
@@ -96,7 +99,11 @@ function renderProducts(productList) {
     return;
   }
 
-  container.innerHTML = productList.map(createProductCard).join('');
+  // Use horizontal card layout
+  container.className = 'products-list';
+  container.innerHTML = productList.map(product => 
+    createProductCardHorizontal(product, isLoggedIn)
+  ).join('');
 }
 
 /**

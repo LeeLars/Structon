@@ -136,4 +136,57 @@ class APIClient {
 // Create singleton instance
 const api = new APIClient();
 
+/**
+ * Keep-alive mechanism to prevent Railway cold starts
+ * Pings the server every 4 minutes to keep it warm
+ */
+class KeepAlive {
+  constructor() {
+    this.interval = null;
+    this.pingInterval = 4 * 60 * 1000; // 4 minutes
+  }
+
+  start() {
+    if (this.interval) return;
+    
+    // Initial ping
+    this.ping();
+    
+    // Set up interval
+    this.interval = setInterval(() => this.ping(), this.pingInterval);
+    
+    // Also ping when page becomes visible again
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        this.ping();
+      }
+    });
+  }
+
+  stop() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+  }
+
+  async ping() {
+    try {
+      await fetch(`${API_BASE_URL.replace('/api', '')}/api/ping`, {
+        method: 'GET',
+        cache: 'no-store'
+      });
+    } catch (error) {
+      // Silent fail - just trying to keep server warm
+    }
+  }
+}
+
+// Start keep-alive when in CMS
+const keepAlive = new KeepAlive();
+if (window.location.pathname.startsWith('/cms')) {
+  keepAlive.start();
+}
+
 export default api;
+export { keepAlive };

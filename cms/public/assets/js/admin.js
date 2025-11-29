@@ -3,7 +3,7 @@
  * Dashboard functionality with new design
  */
 
-import api from './api-client.js';
+import api, { keepAlive } from './api-client.js';
 
 const API_BASE = '/api';
 
@@ -12,10 +12,75 @@ let currentUser = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
-  setupEventListeners();
-  updateSidebarUser();
+  // Start keep-alive immediately
+  keepAlive.start();
+  
+  // Show loading state
+  showPageLoading('Verbinden met server...');
+  
+  // Warm up the server with a ping first
+  warmupServer().then(() => {
+    checkAuth();
+    setupEventListeners();
+    updateSidebarUser();
+  });
 });
+
+/**
+ * Warm up the server before making authenticated requests
+ */
+async function warmupServer() {
+  try {
+    const start = Date.now();
+    await fetch(`${API_BASE}/ping`, { cache: 'no-store' });
+    const elapsed = Date.now() - start;
+    console.log(`Server warm-up: ${elapsed}ms`);
+    
+    // If it took more than 2 seconds, server was likely cold
+    if (elapsed > 2000) {
+      updateLoadingMessage('Server opgestart, data laden...');
+    }
+  } catch (error) {
+    console.warn('Server warmup failed:', error);
+  }
+}
+
+/**
+ * Show page loading overlay
+ */
+function showPageLoading(message = 'Laden...') {
+  // Check if loading overlay already exists
+  let overlay = document.getElementById('page-loading-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'page-loading-overlay';
+    overlay.className = 'page-loading';
+    overlay.innerHTML = `
+      <div class="loading-spinner"></div>
+      <p id="loading-message">${message}</p>
+    `;
+    document.body.appendChild(overlay);
+  }
+}
+
+/**
+ * Update loading message
+ */
+function updateLoadingMessage(message) {
+  const el = document.getElementById('loading-message');
+  if (el) el.textContent = message;
+}
+
+/**
+ * Hide page loading overlay
+ */
+function hidePageLoading() {
+  const overlay = document.getElementById('page-loading-overlay');
+  if (overlay) {
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 300);
+  }
+}
 
 /**
  * Check authentication
@@ -27,6 +92,7 @@ async function checkAuth() {
     });
 
     if (!response.ok) {
+      hidePageLoading();
       showLoginModal();
       return;
     }
@@ -52,6 +118,7 @@ async function checkAuth() {
 
   } catch (error) {
     console.error('Auth check failed:', error);
+    hidePageLoading();
     showLoginModal();
   }
 }
@@ -157,6 +224,8 @@ function hideLoginModal() {
  * Load all dashboard data
  */
 async function loadDashboardData() {
+  updateLoadingMessage('Dashboard laden...');
+  
   try {
     await Promise.all([
       loadDashboardStats(),
@@ -164,6 +233,9 @@ async function loadDashboardData() {
     ]);
   } catch (error) {
     console.error('Error loading dashboard data:', error);
+  } finally {
+    // Always hide loading overlay when done
+    hidePageLoading();
   }
 }
 

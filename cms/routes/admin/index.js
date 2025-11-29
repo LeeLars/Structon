@@ -6,7 +6,7 @@ import categoriesRoutes from './categories.routes.js';
 import subcategoriesRoutes from './subcategories.routes.js';
 import brandsRoutes from './brands.routes.js';
 import sectorsRoutes from './sectors.routes.js';
-import seedRoutes from '../api/admin/seed.js';
+import seedRoutes from './seed.routes.js';
 
 const router = Router();
 

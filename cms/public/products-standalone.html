@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Producten - Structon CMS</title>
+  <link rel="stylesheet" href="/cms/assets/css/admin.css">
+  <style>
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
+    .product-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .product-card h3 { margin: 0 0 10px; color: #1a202c; }
+    .product-card p { color: #718096; margin: 5px 0; font-size: 14px; }
+    .product-card .price { color: #38a169; font-weight: bold; font-size: 18px; }
+    .product-card .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    .badge-active { background: #c6f6d5; color: #22543d; }
+    .badge-inactive { background: #fed7d7; color: #742a2a; }
+    .header { padding: 20px; background: #1a365d; color: white; }
+    .header h1 { margin: 0; }
+    .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: #4299e1; color: white; }
+    .btn-primary:hover { background: #3182ce; }
+    .loading { text-align: center; padding: 40px; color: #718096; }
+    .actions { display: flex; gap: 10px; margin-top: 15px; }
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+    .btn-edit { background: #edf2f7; color: #4a5568; }
+    .btn-delete { background: #fed7d7; color: #c53030; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Producten</h1>
+    <p>Standalone versie - geen externe imports</p>
+  </div>
+  
+  <div style="padding: 20px;">
+    <button class="btn btn-primary" onclick="showAddModal()">+ Nieuw Product</button>
+    <button class="btn" onclick="loadProducts()" style="margin-left: 10px;">Refresh</button>
+  </div>
+  
+  <div id="products-container" class="product-grid">
+    <div class="loading">Producten laden...</div>
+  </div>
+  
+  <!-- Add/Edit Modal -->
+  <div id="modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div style="background:white; max-width:500px; margin:50px auto; padding:30px; border-radius:12px;">
+      <h2 id="modal-title">Nieuw Product</h2>
+      <form id="product-form">
+        <div style="margin-bottom:15px;">
+          <label>Titel:</label>
+          <input type="text" id="product-title" required style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px;">
+        </div>
+        <div style="margin-bottom:15px;">
+          <label>Beschrijving:</label>
+          <textarea id="product-description" rows="3" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px;"></textarea>
+        </div>
+        <div style="margin-bottom:15px;">
+          <label>Prijs (excl. BTW):</label>
+          <input type="number" id="product-price" step="0.01" style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:6px;">
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="submit" class="btn btn-primary">Opslaan</button>
+          <button type="button" class="btn" onclick="hideModal()">Annuleren</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    const API_BASE = 'https://structon-production.up.railway.app/api';
+    let products = [];
+    let editingId = null;
+    
+    // Demo data fallback
+    const DEMO_PRODUCTS = [
+      { id: 'demo-1', title: 'Slotenbak 600mm CW30', description: 'Professionele slotenbak', price_excl_vat: 2450, is_active: true, category_title: 'Slotenbakken', brand_title: 'Structon' },
+      { id: 'demo-2', title: 'Graafbak 1200mm CW40', description: 'Zware graafbak', price_excl_vat: 2945, is_active: true, category_title: 'Graafbakken', brand_title: 'Structon' },
+      { id: 'demo-3', title: 'Sorteergrijper 800mm', description: 'Veelzijdige sorteergrijper', price_excl_vat: 3200, is_active: true, category_title: 'Grijpers', brand_title: 'Caterpillar' },
+      { id: 'demo-4', title: 'Plantenbak 400mm CW10', description: 'Compacte plantenbak', price_excl_vat: 1450, is_active: false, category_title: 'Overige', brand_title: 'Structon' },
+    ];
+    
+    async function loadProducts() {
+      const container = document.getElementById('products-container');
+      container.innerHTML = '<div class="loading">Producten laden...</div>';
+      
+      // Show demo data immediately
+      products = [...DEMO_PRODUCTS];
+      renderProducts();
+      
+      // Try API in background
+      try {
+        const response = await fetch(`${API_BASE}/products`);
+        const data = await response.json();
+        
+        if (data.products && data.products.length > 0) {
+          products = data.products;
+          renderProducts();
+          console.log('✅ Loaded', products.length, 'products from API');
+        }
+      } catch (error) {
+        console.log('Using demo data (API unavailable):', error.message);
+      }
+    }
+    
+    function renderProducts() {
+      const container = document.getElementById('products-container');
+      
+      if (products.length === 0) {
+        container.innerHTML = '<div class="loading">Geen producten gevonden</div>';
+        return;
+      }
+      
+      container.innerHTML = products.map(p => `
+        <div class="product-card">
+          <h3>${escapeHtml(p.title)}</h3>
+          <p>${escapeHtml(p.description || 'Geen beschrijving')}</p>
+          <p><strong>Categorie:</strong> ${escapeHtml(p.category_title || '-')}</p>
+          <p><strong>Merk:</strong> ${escapeHtml(p.brand_title || '-')}</p>
+          <p class="price">€${(p.price_excl_vat || 0).toLocaleString('nl-NL', {minimumFractionDigits: 2})}</p>
+          <span class="badge ${p.is_active ? 'badge-active' : 'badge-inactive'}">
+            ${p.is_active ? 'Actief' : 'Inactief'}
+          </span>
+          <div class="actions">
+            <button class="btn btn-sm btn-edit" onclick="editProduct('${p.id}')">Bewerken</button>
+            <button class="btn btn-sm btn-delete" onclick="deleteProduct('${p.id}')">Verwijderen</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function showAddModal() {
+      editingId = null;
+      document.getElementById('modal-title').textContent = 'Nieuw Product';
+      document.getElementById('product-form').reset();
+      document.getElementById('modal').style.display = 'block';
+    }
+    
+    function hideModal() {
+      document.getElementById('modal').style.display = 'none';
+      editingId = null;
+    }
+    
+    function editProduct(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      
+      editingId = id;
+      document.getElementById('modal-title').textContent = 'Product Bewerken';
+      document.getElementById('product-title').value = product.title || '';
+      document.getElementById('product-description').value = product.description || '';
+      document.getElementById('product-price').value = product.price_excl_vat || '';
+      document.getElementById('modal').style.display = 'block';
+    }
+    
+    async function deleteProduct(id) {
+      if (!confirm('Weet je zeker dat je dit product wilt verwijderen?')) return;
+      
+      // Remove from local array
+      products = products.filter(p => p.id !== id);
+      renderProducts();
+      
+      // Try API
+      try {
+        await fetch(`${API_BASE}/admin/products/${id}`, { method: 'DELETE' });
+        console.log('Product deleted via API');
+      } catch (error) {
+        console.log('Product deleted locally (API unavailable)');
+      }
+    }
+    
+    document.getElementById('product-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const productData = {
+        id: editingId || 'local-' + Date.now(),
+        title: document.getElementById('product-title').value,
+        description: document.getElementById('product-description').value,
+        price_excl_vat: parseFloat(document.getElementById('product-price').value) || 0,
+        is_active: true,
+        category_title: 'Nieuw',
+        brand_title: 'Structon'
+      };
+      
+      if (editingId) {
+        // Update existing
+        const index = products.findIndex(p => p.id === editingId);
+        if (index >= 0) products[index] = { ...products[index], ...productData };
+      } else {
+        // Add new
+        products.unshift(productData);
+      }
+      
+      renderProducts();
+      hideModal();
+      
+      // Try API
+      try {
+        const method = editingId ? 'PUT' : 'POST';
+        const url = editingId ? `${API_BASE}/admin/products/${editingId}` : `${API_BASE}/admin/products`;
+        await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(productData)
+        });
+        console.log('Product saved via API');
+      } catch (error) {
+        console.log('Product saved locally (API unavailable)');
+      }
+    });
+    
+    // Load on page load
+    loadProducts();
+  </script>
+</body>
+</html>

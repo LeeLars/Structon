@@ -1,10 +1,10 @@
 /**
  * All Products Page
- * Displays all available products in a grid
+ * Displays all available products in horizontal card layout
  */
 
 import { products as productsAPI } from '../api/client.js';
-import { createProductCard, showLoading, showError } from '../main.js';
+import { createProductCardHorizontal, showLoading, showError } from '../main.js';
 
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
@@ -13,11 +13,17 @@ const isLoggedIn = localStorage.getItem('authToken') !== null;
  * Load and display all products
  */
 async function loadAllProducts() {
-  const grid = document.getElementById('all-products-grid');
+  const container = document.getElementById('all-products-grid');
   
-  if (!grid) return;
+  if (!container) return;
   
-  showLoading(grid);
+  // Show loading state
+  container.innerHTML = `
+    <div class="products-loading">
+      <div class="spinner"></div>
+      <p>Producten laden...</p>
+    </div>
+  `;
   
   try {
     // Fetch all products (no filters)
@@ -30,18 +36,39 @@ async function loadAllProducts() {
     console.log('📦 Products array:', allProducts.length, 'items');
     
     if (!allProducts || allProducts.length === 0) {
-      grid.innerHTML = '<div class="no-results"><h3>Geen producten gevonden</h3><p>Er zijn momenteel geen producten beschikbaar.</p></div>';
+      container.innerHTML = `
+        <div class="products-empty">
+          <h3>Geen producten gevonden</h3>
+          <p>Er zijn momenteel geen producten beschikbaar.</p>
+        </div>
+      `;
       return;
     }
     
-    // Render products
-    grid.innerHTML = allProducts.map(product => createProductCard(product, isLoggedIn)).join('');
+    // Update product count if element exists
+    const countEl = document.getElementById('products-count');
+    if (countEl) {
+      countEl.textContent = `${allProducts.length} producten`;
+    }
+    
+    // Change container to products-list for horizontal layout
+    container.className = 'products-list';
+    
+    // Render products with horizontal cards
+    container.innerHTML = allProducts.map(product => 
+      createProductCardHorizontal(product, isLoggedIn)
+    ).join('');
     
     console.log(`✅ Loaded ${allProducts.length} products`);
     
   } catch (error) {
     console.error('Error loading products:', error);
-    showError(grid, 'Kon producten niet laden. Probeer het later opnieuw.');
+    container.innerHTML = `
+      <div class="products-empty">
+        <h3>Oeps!</h3>
+        <p>Kon producten niet laden. Probeer het later opnieuw.</p>
+      </div>
+    `;
   }
 }
 

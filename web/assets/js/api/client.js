@@ -1,10 +1,9 @@
 /**
  * Structon API Client
  * Handles all communication with the CMS API
+ * ONLY uses data from CMS - NO demo data fallback
  * Optimized with caching and request deduplication
  */
-
-import { DEMO_PRODUCTS, DEMO_CATEGORIES, DEMO_BRANDS } from './demo-data.js';
 
 // API Base URL - automatically detects environment
 const getApiBaseUrl = () => {
@@ -20,6 +19,9 @@ const getApiBaseUrl = () => {
 };
 
 const API_BASE = getApiBaseUrl();
+
+console.log('🔗 API Client initialized');
+console.log('📍 API Base URL:', API_BASE);
 
 // Export for use in other modules
 export const API_BASE_URL = API_BASE;
@@ -73,74 +75,43 @@ export function clearApiCache(pattern = null) {
 }
 
 /**
- * Helper: Get demo data based on endpoint
+ * Show user-friendly error message
  */
-function getDemoDataForEndpoint(endpoint) {
-  console.log(`⚠️ Using DEMO DATA for: ${endpoint}`);
+function showApiError(endpoint, error) {
+  console.error(`❌ API Error [${endpoint}]:`, error.message);
   
-  // Products - Featured
-  if (endpoint.includes('/products/featured')) {
-    return DEMO_PRODUCTS.slice(0, 6);
-  }
+  // Show user-friendly message (only once per session)
+  if (sessionStorage.getItem('api-error-shown')) return;
+  sessionStorage.setItem('api-error-shown', 'true');
   
-  // Products - Single product by ID or Slug
-  if (endpoint.includes('/products/') && !endpoint.includes('filters') && !endpoint.includes('?')) {
-    const idOrSlug = endpoint.split('/products/')[1].split('?')[0];
-    const product = DEMO_PRODUCTS.find(p => p.id == idOrSlug || p.slug == idOrSlug);
-    return product || DEMO_PRODUCTS[0];
-  }
+  const message = document.createElement('div');
+  message.className = 'api-error-toast';
+  message.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ef4444;
+    color: white;
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 400px;
+  `;
+  message.innerHTML = `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span>Kan geen verbinding maken met CMS. Probeer later opnieuw.</span>
+  `;
   
-  // Products - List (with filters)
-  if (endpoint.includes('/products')) {
-    // Parse query params to filter
-    let filteredProducts = [...DEMO_PRODUCTS];
-    
-    // Extract category filter from URL
-    const urlParams = new URLSearchParams(endpoint.split('?')[1] || '');
-    const categoryFilter = urlParams.get('category');
-    
-    if (categoryFilter) {
-      filteredProducts = filteredProducts.filter(p => 
-        p.category_slug === categoryFilter || 
-        p.category_slug?.includes(categoryFilter)
-      );
-    }
-    
-    // Return in expected format: { products: [...], total: N }
-    return {
-      products: filteredProducts,
-      total: filteredProducts.length
-    };
-  }
-
-  // Categories - Single
-  if (endpoint.includes('/categories/') && !endpoint.includes('?')) {
-    const slug = endpoint.split('/categories/')[1];
-    const category = DEMO_CATEGORIES.find(c => c.slug === slug);
-    return category ? { category } : { category: DEMO_CATEGORIES[0] };
-  }
-  
-  // Categories - List
-  if (endpoint.includes('/categories')) {
-    return DEMO_CATEGORIES;
-  }
-
-  // Brands
-  if (endpoint.includes('/brands')) {
-    return DEMO_BRANDS;
-  }
-  
-  // Navigation (fallback menu)
-  if (endpoint.includes('/navigation/menu-structure')) {
-    return DEMO_CATEGORIES.map(c => ({
-      title: c.title,
-      slug: c.slug,
-      type: 'category',
-      children: []
-    }));
-  }
-
-  return null;
+  document.body.appendChild(message);
+  setTimeout(() => message.remove(), 5000);
 }
 
 /**
@@ -176,27 +147,21 @@ async function request(endpoint, options = {}) {
   // Create the request promise
   const requestPromise = (async () => {
     try {
+      console.log(`🌐 API Request: ${endpoint}`);
+      
       // Attempt fetch with timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
       
       const response = await fetch(url, { ...config, signal: controller.signal });
       clearTimeout(timeoutId);
+
+      console.log(`✅ API Response [${endpoint}]:`, response.status);
 
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || `HTTP error ${response.status}`);
-      }
-      
-      // If empty array returned, also use demo data (assuming DB is empty)
-      if (Array.isArray(data) && data.length === 0) {
-        const demo = getDemoDataForEndpoint(endpoint);
-        if (demo) {
-          // Cache demo data too
-          if (isGetRequest) setCacheResponse(cacheKey, demo);
-          return demo;
-        }
       }
 
       // Cache successful GET responses
@@ -204,18 +169,23 @@ async function request(endpoint, options = {}) {
         setCacheResponse(cacheKey, data);
       }
 
+      console.log(`📦 Data received [${endpoint}]:`, Array.isArray(data) ? `${data.length} items` : 'object');
       return data;
-    } catch (error) {
-      console.warn(`API Error [${endpoint}]:`, error.message);
       
-      // Fallback to DEMO DATA
-      const demoData = getDemoDataForEndpoint(endpoint);
-      if (demoData) {
-        // Cache demo data for faster subsequent loads
-        if (isGetRequest) setCacheResponse(cacheKey, demoData, 60000); // 1 min for demo
-        return demoData;
+    } catch (error) {
+      console.error(`❌ API Request failed [${endpoint}]:`, error.message);
+      
+      // Show error to user
+      showApiError(endpoint, error);
+      
+      // Return empty data structure based on endpoint
+      if (endpoint.includes('/products')) {
+        return { products: [], total: 0 };
       }
-
+      if (endpoint.includes('/categories') || endpoint.includes('/brands')) {
+        return [];
+      }
+      
       throw error;
     } finally {
       // Remove from pending requests

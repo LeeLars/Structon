@@ -6,7 +6,7 @@
 
 console.log('🚀 [PRODUCTS] Script loading...');
 
-import api from './api-client.js';
+import api from './api-client.js?v=3';
 
 console.log('✅ [PRODUCTS] API client imported successfully');
 

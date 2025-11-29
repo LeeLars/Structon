@@ -2,7 +2,7 @@
  * Prices Page JavaScript
  */
 
-import api from './api-client.js';
+import api from './api-client.js?v=3';
 
 let prices = [];
 let products = [];

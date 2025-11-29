@@ -3,8 +3,8 @@
  * Dashboard functionality with new design
  */
 
-import api, { keepAlive } from './api-client.js';
-import { renderSidebar } from './sidebar.js';
+import api, { keepAlive } from './api-client.js?v=3';
+import { renderSidebar } from './sidebar.js?v=3';
 
 const API_BASE = '/api';
 

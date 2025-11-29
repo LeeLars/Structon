@@ -5,7 +5,7 @@
 
 console.log('[QUOTES] Script loaded');
 
-import api from './api-client.js';
+import api from './api-client.js?v=3';
 
 console.log('[QUOTES] API client imported');
 

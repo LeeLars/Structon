@@ -21,11 +21,13 @@ router.post('/', async (req, res) => {
   try {
     console.log('🌱 Seeding database via API...');
     
+    // Path: /cms/routes/api/admin/seed.js -> /cms/database/migrations/
+    // Go up 3 levels: admin -> api -> routes -> cms, then into database/migrations
+    const seedPath = path.join(__dirname, '../../../database/migrations/007_seed_demo_data.sql');
+    console.log('Seed file path:', seedPath);
+    
     // Read seed SQL
-    const seedSQL = fs.readFileSync(
-      path.join(__dirname, '../../../database/migrations/007_seed_demo_data.sql'),
-      'utf8'
-    );
+    const seedSQL = fs.readFileSync(seedPath, 'utf8');
     
     // Execute seed
     await pool.query(seedSQL);

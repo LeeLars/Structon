@@ -21,7 +21,13 @@ async function loadAllProducts() {
   
   try {
     // Fetch all products (no filters)
-    const allProducts = await productsAPI.getAll();
+    const response = await productsAPI.getAll();
+    
+    // Handle both array and object response formats
+    const allProducts = Array.isArray(response) ? response : (response?.products || []);
+    
+    console.log('📦 Products response:', response);
+    console.log('📦 Products array:', allProducts.length, 'items');
     
     if (!allProducts || allProducts.length === 0) {
       grid.innerHTML = '<div class="no-results"><h3>Geen producten gevonden</h3><p>Er zijn momenteel geen producten beschikbaar.</p></div>';

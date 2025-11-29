@@ -150,14 +150,14 @@ app.use((req, res, next) => {
       res.set('Cache-Control', 'no-store');
     }
   }
-  // Static CMS files - long cache with versioning
+  // Static CMS files - shorter cache during development
   else if (req.path.startsWith('/cms/')) {
     if (req.path.match(/\.(js|css)$/)) {
-      res.set('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year for versioned assets
+      res.set('Cache-Control', 'no-cache, must-revalidate'); // No cache for JS/CSS during development
     } else if (req.path.match(/\.(png|jpg|jpeg|gif|svg|ico|woff|woff2)$/)) {
-      res.set('Cache-Control', 'public, max-age=2592000'); // 30 days for images/fonts
+      res.set('Cache-Control', 'public, max-age=86400'); // 1 day for images/fonts
     } else {
-      res.set('Cache-Control', 'public, max-age=3600'); // 1 hour for HTML
+      res.set('Cache-Control', 'no-cache'); // No cache for HTML
     }
   }
   next();

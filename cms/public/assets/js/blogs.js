@@ -46,10 +46,24 @@ let blogs = [];
 let currentBlogId = null;
 
 // Initialize
+console.log('🚀 [BLOGS] Script loading...');
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Blogs page initializing...');
-  initializeData();
-  setupEventListeners();
+  console.log('🎯 [BLOGS] DOM loaded, starting initialization...');
+  
+  try {
+    initializeData();
+    console.log('✅ [BLOGS] initializeData() completed');
+  } catch (error) {
+    console.error('❌ [BLOGS] Error in initializeData():', error);
+  }
+  
+  try {
+    setupEventListeners();
+    console.log('✅ [BLOGS] setupEventListeners() completed');
+  } catch (error) {
+    console.error('❌ [BLOGS] Error in setupEventListeners():', error);
+  }
 });
 
 /**
@@ -76,11 +90,23 @@ async function initializeData() {
  * Setup event listeners
  */
 function setupEventListeners() {
+  console.log('🔧 [BLOGS] Setting up event listeners...');
+  
   // New blog button
-  document.getElementById('btn-new-blog')?.addEventListener('click', () => showEditor());
+  const newBlogBtn = document.getElementById('btn-new-blog');
+  console.log('   btn-new-blog found:', !!newBlogBtn);
+  
+  if (newBlogBtn) {
+    newBlogBtn.addEventListener('click', () => {
+      console.log('🆕 [BLOGS] New blog button clicked!');
+      showEditor();
+    });
+  }
   
   // Cancel button
-  document.getElementById('btn-cancel')?.addEventListener('click', hideEditor);
+  const cancelBtn = document.getElementById('btn-cancel');
+  console.log('   btn-cancel found:', !!cancelBtn);
+  cancelBtn?.addEventListener('click', hideEditor);
   
   // Form submit
   document.getElementById('blog-form')?.addEventListener('submit', handleSubmit);
@@ -169,8 +195,22 @@ function filterBlogs() {
  * Show editor view
  */
 function showEditor(blog = null) {
-  document.getElementById('blog-list-view').style.display = 'none';
-  document.getElementById('blog-editor-view').style.display = 'block';
+  console.log('📝 [BLOGS] showEditor called, blog:', blog ? blog.title : 'NEW');
+  
+  const listView = document.getElementById('blog-list-view');
+  const editorView = document.getElementById('blog-editor-view');
+  
+  console.log('   blog-list-view found:', !!listView);
+  console.log('   blog-editor-view found:', !!editorView);
+  
+  if (!listView || !editorView) {
+    console.error('❌ [BLOGS] Views not found!');
+    return;
+  }
+  
+  listView.style.display = 'none';
+  editorView.style.display = 'block';
+  console.log('✅ [BLOGS] Editor opened');
   
   if (blog) {
     currentBlogId = blog.id;

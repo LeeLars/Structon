@@ -4,7 +4,11 @@
  * With full demo data support
  */
 
+console.log('🚀 [PRODUCTS] Script loading...');
+
 import api from './api-client.js';
+
+console.log('✅ [PRODUCTS] API client imported successfully');
 
 // Demo data - always available
 const DEMO_PRODUCTS = [
@@ -129,10 +133,24 @@ let selectedProducts = new Set();
 let editingProductId = null;
 
 // Initialize
+console.log('📌 [PRODUCTS] Setting up DOMContentLoaded listener...');
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Products page initializing...');
-  initializeData();
-  setupEventListeners();
+  console.log('🎯 [PRODUCTS] DOM loaded, starting initialization...');
+  
+  try {
+    initializeData();
+    console.log('✅ [PRODUCTS] initializeData() completed');
+  } catch (error) {
+    console.error('❌ [PRODUCTS] Error in initializeData():', error);
+  }
+  
+  try {
+    setupEventListeners();
+    console.log('✅ [PRODUCTS] setupEventListeners() completed');
+  } catch (error) {
+    console.error('❌ [PRODUCTS] Error in setupEventListeners():', error);
+  }
 });
 
 /**
@@ -180,8 +198,18 @@ async function initializeData() {
  * Setup event listeners
  */
 function setupEventListeners() {
+  console.log('🔧 [PRODUCTS] Setting up event listeners...');
+  
   // New product button
-  document.getElementById('btn-new-product')?.addEventListener('click', () => openProductModal());
+  const newProductBtn = document.getElementById('btn-new-product');
+  console.log('   btn-new-product found:', !!newProductBtn);
+  
+  if (newProductBtn) {
+    newProductBtn.addEventListener('click', () => {
+      console.log('🆕 [PRODUCTS] New product button clicked!');
+      openProductModal();
+    });
+  }
   
   // Search
   document.getElementById('search-products')?.addEventListener('input', handleSearch);
@@ -519,19 +547,33 @@ function changePage(delta) {
  * Open product modal
  */
 function openProductModal(product = null) {
+  console.log('📝 [PRODUCTS] openProductModal called, product:', product ? product.title : 'NEW');
+  
   const modal = document.getElementById('product-modal');
   const form = document.getElementById('product-form');
   const title = document.getElementById('modal-title');
   
+  console.log('   modal found:', !!modal);
+  console.log('   form found:', !!form);
+  console.log('   title found:', !!title);
+  
+  if (!modal) {
+    console.error('❌ [PRODUCTS] Modal element not found!');
+    return;
+  }
+  
   if (product) {
     title.textContent = 'Product Bewerken';
     populateForm(product);
+    editingProductId = product.id;
   } else {
     title.textContent = 'Nieuw Product';
     form.reset();
+    editingProductId = null;
   }
   
   modal.style.display = 'flex';
+  console.log('✅ [PRODUCTS] Modal opened');
 }
 
 /**

@@ -33,17 +33,58 @@ async function runMigrations() {
       await pool.query(sql);
       console.log(`   ✅ ${file}`);
     } catch (error) {
-      // Ignore "already exists" errors
-      if (error.message.includes('already exists')) {
+      // Ignore "already exists" errors and duplicate key errors
+      if (error.message.includes('already exists') || 
+          error.message.includes('duplicate key')) {
         console.log(`   ⏭️  ${file} (already applied)`);
       } else {
         console.error(`   ❌ Error in ${file}:`, error.message);
-        throw error;
+        // Don't throw - continue with other migrations
       }
     }
   }
 
   console.log('✅ Database migrations complete\n');
+  
+  // Check if database is empty and seed if needed
+  await checkAndSeedDatabase();
+}
+
+/**
+ * Check if database is empty and seed with demo data
+ */
+async function checkAndSeedDatabase() {
+  try {
+    const result = await pool.query('SELECT COUNT(*) FROM products');
+    const productCount = parseInt(result.rows[0].count);
+    
+    if (productCount === 0) {
+      console.log('📦 Database is empty, seeding with demo data...');
+      
+      const seedSQL = fs.readFileSync(
+        path.join(__dirname, 'database', 'migrations', '007_seed_demo_data.sql'),
+        'utf8'
+      );
+      
+      await pool.query(seedSQL);
+      
+      // Verify
+      const [cats, brands, prods] = await Promise.all([
+        pool.query('SELECT COUNT(*) FROM categories'),
+        pool.query('SELECT COUNT(*) FROM brands'),
+        pool.query('SELECT COUNT(*) FROM products')
+      ]);
+      
+      console.log('✅ Demo data seeded successfully!');
+      console.log(`   📁 Categories: ${cats.rows[0].count}`);
+      console.log(`   🏷️  Brands: ${brands.rows[0].count}`);
+      console.log(`   📦 Products: ${prods.rows[0].count}\n`);
+    } else {
+      console.log(`✅ Database already has ${productCount} products\n`);
+    }
+  } catch (error) {
+    console.error('⚠️  Could not check/seed database:', error.message);
+  }
 }
 
 const app = express();

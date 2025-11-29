@@ -134,7 +134,7 @@ BEGIN
       6, 1450.00, true, false
     ),
     (
-      'prod-kantelb ak-600',
+      'prod-kantelbak-600',
       'Kantelbak 600mm CW30',
       'kantelbak-600mm-cw30',
       'Hydraulisch kantelbare bak voor talud- en greppelwerk. 45° kanteling voor optimale werkhoek.',

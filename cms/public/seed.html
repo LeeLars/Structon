@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Database Seeder - Structon CMS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    h1 {
+      color: #1a202c;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    
+    .subtitle {
+      color: #718096;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    .status {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .status-item:last-child {
+      border-bottom: none;
+    }
+    
+    .status-label {
+      color: #4a5568;
+      font-weight: 500;
+    }
+    
+    .status-value {
+      color: #2d3748;
+      font-weight: 600;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+    
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #4a5568;
+    }
+    
+    .btn-secondary:hover {
+      background: #cbd5e0;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .message {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .message.show {
+      display: block;
+    }
+    
+    .message.success {
+      background: #c6f6d5;
+      color: #22543d;
+      border: 1px solid #9ae6b4;
+    }
+    
+    .message.error {
+      background: #fed7d7;
+      color: #742a2a;
+      border: 1px solid #fc8181;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .info-box {
+      background: #bee3f8;
+      border: 1px solid #90cdf4;
+      color: #2c5282;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌱 Database Seeder</h1>
+    <p class="subtitle">Vul de database met demo data</p>
+    
+    <div class="info-box">
+      <strong>Let op:</strong> Dit voegt 4 categorieën, 6 merken en 10 producten toe aan de database. 
+      Als er al data bestaat, wordt deze niet overschreven.
+    </div>
+    
+    <div id="message" class="message"></div>
+    
+    <div class="status" id="status">
+      <div class="status-item">
+        <span class="status-label">Categorieën:</span>
+        <span class="status-value" id="categories-count">-</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Merken:</span>
+        <span class="status-value" id="brands-count">-</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Producten:</span>
+        <span class="status-value" id="products-count">-</span>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" id="seed-btn" onclick="seedDatabase()">
+      Seed Database
+    </button>
+    
+    <button class="btn btn-secondary" onclick="checkStatus()">
+      Ververs Status
+    </button>
+    
+    <button class="btn btn-secondary" onclick="window.location.href='/cms/'">
+      Terug naar CMS
+    </button>
+  </div>
+  
+  <script>
+    const API_BASE = window.location.origin + '/api/admin';
+    
+    // Check status on load
+    checkStatus();
+    
+    async function checkStatus() {
+      try {
+        const response = await fetch(`${API_BASE}/seed/status`);
+        const data = await response.json();
+        
+        document.getElementById('categories-count').textContent = data.categories;
+        document.getElementById('brands-count').textContent = data.brands;
+        document.getElementById('products-count').textContent = data.products;
+        
+      } catch (error) {
+        console.error('Error checking status:', error);
+      }
+    }
+    
+    async function seedDatabase() {
+      const btn = document.getElementById('seed-btn');
+      const message = document.getElementById('message');
+      
+      // Disable button
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading"></span>Seeding...';
+      
+      // Hide previous message
+      message.classList.remove('show', 'success', 'error');
+      
+      try {
+        const response = await fetch(`${API_BASE}/seed`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Show success message
+          message.className = 'message success show';
+          message.textContent = `✅ ${data.message}! Categorieën: ${data.counts.categories}, Merken: ${data.counts.brands}, Producten: ${data.counts.products}`;
+          
+          // Update status
+          await checkStatus();
+          
+        } else {
+          throw new Error(data.error || 'Seed failed');
+        }
+        
+      } catch (error) {
+        message.className = 'message error show';
+        message.textContent = `❌ Error: ${error.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Seed Database';
+      }
+    }
+  </script>
+</body>
+</html>

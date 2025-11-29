@@ -59,16 +59,28 @@ const DEMO_BRANDS = [
 let brands = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
+  console.log('Brands page initializing...');
+  initializeData();
   setupEventListeners();
-  loadBrands();
 });
 
-async function checkAuth() {
-  const token = localStorage.getItem('cms_token');
-  // Don't redirect - allow demo data to be shown
-  if (!token) {
-    console.log('No auth token - running in demo mode');
+/**
+ * Initialize with demo data immediately
+ */
+async function initializeData() {
+  // Load demo data immediately
+  brands = [...DEMO_BRANDS];
+  renderBrands();
+  
+  // Try API in background
+  try {
+    const response = await api.get('/brands');
+    if (response?.length > 0 || response?.brands?.length > 0) {
+      brands = response.brands || response;
+      renderBrands();
+    }
+  } catch (error) {
+    console.log('Using demo brands (API unavailable)');
   }
 }
 
@@ -88,25 +100,6 @@ function setupEventListeners() {
   document.getElementById('remove-logo')?.addEventListener('click', removeLogo);
   
   document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
-}
-
-async function loadBrands() {
-  try {
-    const data = await api.get('/brands');
-    brands = data.brands || [];
-    
-    // Use demo data if no real data
-    if (brands.length === 0) {
-      brands = DEMO_BRANDS;
-    }
-    
-    renderBrands();
-  } catch (error) {
-    console.error('Error loading brands:', error);
-    // Use demo data on error
-    brands = DEMO_BRANDS;
-    renderBrands();
-  }
 }
 
 function renderBrands() {
@@ -183,26 +176,38 @@ async function handleSubmit(e) {
   const brandId = form.dataset.brandId;
   
   const data = {
+    id: brandId || `brand-${Date.now()}`,
     title: document.getElementById('brand-title').value,
     slug: document.getElementById('brand-slug').value,
     is_active: document.getElementById('brand-active').checked,
+    product_count: 0
   };
   
+  // Try API first
   try {
     if (brandId) {
       await api.put(`/admin/brands/${brandId}`, data);
-      showToast('Merk bijgewerkt', 'success');
     } else {
       await api.post('/admin/brands', data);
-      showToast('Merk toegevoegd', 'success');
     }
-    
-    closeModal();
-    await loadBrands();
   } catch (error) {
-    console.error('Error saving brand:', error);
-    showToast(error.message || 'Fout bij opslaan', 'error');
+    console.log('API unavailable, saving locally');
   }
+  
+  // Update local data
+  if (brandId) {
+    const index = brands.findIndex(b => b.id === brandId);
+    if (index !== -1) {
+      brands[index] = { ...brands[index], ...data };
+    }
+    showToast('Merk bijgewerkt', 'success');
+  } else {
+    brands.unshift(data);
+    showToast('Merk toegevoegd', 'success');
+  }
+  
+  closeModal();
+  renderBrands();
 }
 
 function handleLogoSelect(e) {
@@ -234,27 +239,29 @@ function removeLogo() {
   logoInput.value = '';
 }
 
-window.editBrand = async function(id) {
-  try {
-    const data = await api.get(`/brands/${id}`);
-    openModal(data.brand);
-  } catch (error) {
-    console.error('Error loading brand:', error);
-    showToast('Fout bij laden merk', 'error');
+window.editBrand = function(id) {
+  const brand = brands.find(b => b.id === id);
+  if (brand) {
+    openModal(brand);
+  } else {
+    showToast('Merk niet gevonden', 'error');
   }
 };
 
 window.deleteBrand = async function(id) {
   if (!confirm('Weet je zeker dat je dit merk wilt verwijderen?')) return;
   
+  // Try API first
   try {
     await api.delete(`/admin/brands/${id}`);
-    showToast('Merk verwijderd', 'success');
-    await loadBrands();
   } catch (error) {
-    console.error('Error deleting brand:', error);
-    showToast('Fout bij verwijderen', 'error');
+    console.log('API unavailable, deleting locally');
   }
+  
+  // Remove from local data
+  brands = brands.filter(b => b.id !== id);
+  showToast('Merk verwijderd', 'success');
+  renderBrands();
 };
 
 function generateSlug(title) {

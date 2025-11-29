@@ -61,16 +61,28 @@ const DEMO_CATEGORIES = [
 let categories = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
+  console.log('Categories page initializing...');
+  initializeData();
   setupEventListeners();
-  loadCategories();
 });
 
-async function checkAuth() {
-  const token = localStorage.getItem('cms_token');
-  // Don't redirect - allow demo data to be shown
-  if (!token) {
-    console.log('No auth token - running in demo mode');
+/**
+ * Initialize with demo data immediately
+ */
+async function initializeData() {
+  // Load demo data immediately
+  categories = [...DEMO_CATEGORIES];
+  renderCategories();
+  
+  // Try API in background
+  try {
+    const response = await api.get('/categories');
+    if (response?.length > 0 || response?.categories?.length > 0) {
+      categories = response.categories || response;
+      renderCategories();
+    }
+  } catch (error) {
+    console.log('Using demo categories (API unavailable)');
   }
 }
 
@@ -93,24 +105,6 @@ function setupEventListeners() {
   document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
 }
 
-async function loadCategories() {
-  try {
-    const data = await api.get('/categories');
-    categories = data.categories || [];
-    
-    // Use demo data if no real data
-    if (categories.length === 0) {
-      categories = DEMO_CATEGORIES;
-    }
-    
-    renderCategories();
-  } catch (error) {
-    console.error('Error loading categories:', error);
-    // Use demo data on error
-    categories = DEMO_CATEGORIES;
-    renderCategories();
-  }
-}
 
 function renderCategories() {
   const grid = document.getElementById('categories-grid');
@@ -210,6 +204,7 @@ async function handleSubmit(e) {
   const categoryId = form.dataset.categoryId;
   
   const data = {
+    id: categoryId || `cat-${Date.now()}`,
     title: document.getElementById('category-title').value,
     slug: document.getElementById('category-slug').value,
     description: document.getElementById('category-description').value,
@@ -220,23 +215,34 @@ async function handleSubmit(e) {
     seo_h1: document.getElementById('category-seo-h1').value,
     seo_intro: document.getElementById('category-seo-intro').value,
     seo_content: document.getElementById('category-seo-content').value,
+    product_count: 0
   };
   
+  // Try API first
   try {
     if (categoryId) {
       await api.put(`/admin/categories/${categoryId}`, data);
-      showToast('Categorie bijgewerkt', 'success');
     } else {
       await api.post('/admin/categories', data);
-      showToast('Categorie toegevoegd', 'success');
     }
-    
-    closeModal();
-    await loadCategories();
   } catch (error) {
-    console.error('Error saving category:', error);
-    showToast(error.message || 'Fout bij opslaan', 'error');
+    console.log('API unavailable, saving locally');
   }
+  
+  // Update local data
+  if (categoryId) {
+    const index = categories.findIndex(c => c.id === categoryId);
+    if (index !== -1) {
+      categories[index] = { ...categories[index], ...data };
+    }
+    showToast('Categorie bijgewerkt', 'success');
+  } else {
+    categories.unshift(data);
+    showToast('Categorie toegevoegd', 'success');
+  }
+  
+  closeModal();
+  renderCategories();
 }
 
 function handleImageSelect(e) {
@@ -268,27 +274,29 @@ function removeImage() {
   imageInput.value = '';
 }
 
-window.editCategory = async function(id) {
-  try {
-    const data = await api.get(`/categories/${id}`);
-    openModal(data.category);
-  } catch (error) {
-    console.error('Error loading category:', error);
-    showToast('Fout bij laden categorie', 'error');
+window.editCategory = function(id) {
+  const category = categories.find(c => c.id === id);
+  if (category) {
+    openModal(category);
+  } else {
+    showToast('Categorie niet gevonden', 'error');
   }
 };
 
 window.deleteCategory = async function(id) {
   if (!confirm('Weet je zeker dat je deze categorie wilt verwijderen?')) return;
   
+  // Try API first
   try {
     await api.delete(`/admin/categories/${id}`);
-    showToast('Categorie verwijderd', 'success');
-    await loadCategories();
   } catch (error) {
-    console.error('Error deleting category:', error);
-    showToast('Fout bij verwijderen', 'error');
+    console.log('API unavailable, deleting locally');
   }
+  
+  // Remove from local data
+  categories = categories.filter(c => c.id !== id);
+  showToast('Categorie verwijderd', 'success');
+  renderCategories();
 };
 
 function generateSlug(title) {

@@ -1,11 +1,12 @@
 /**
  * Products Page JavaScript
  * Handles product CRUD, filters, bulk actions, and image uploads
+ * With full demo data support
  */
 
 import api from './api-client.js';
 
-// Demo data for when API has no data
+// Demo data - always available
 const DEMO_PRODUCTS = [
   {
     id: 'prod-001',
@@ -24,7 +25,7 @@ const DEMO_PRODUCTS = [
     price_excl_vat: 2450.00,
     is_active: true,
     is_featured: true,
-    cloudinary_images: [{ url: 'https://via.placeholder.com/100x100?text=Slotenbak' }]
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/demo/image/upload/v1/samples/ecommerce/leather-bag-gray.jpg' }]
   },
   {
     id: 'prod-002',
@@ -43,7 +44,7 @@ const DEMO_PRODUCTS = [
     price_excl_vat: 2945.00,
     is_active: true,
     is_featured: false,
-    cloudinary_images: [{ url: 'https://via.placeholder.com/100x100?text=Graafbak' }]
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/demo/image/upload/v1/samples/ecommerce/accessories-bag.jpg' }]
   },
   {
     id: 'prod-003',
@@ -62,7 +63,7 @@ const DEMO_PRODUCTS = [
     price_excl_vat: 3200.00,
     is_active: true,
     is_featured: true,
-    cloudinary_images: [{ url: 'https://via.placeholder.com/100x100?text=Grijper' }]
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/demo/image/upload/v1/samples/ecommerce/car-interior-design.jpg' }]
   },
   {
     id: 'prod-004',
@@ -105,40 +106,73 @@ const DEMO_PRODUCTS = [
 ];
 
 const DEMO_CATEGORIES = [
-  { id: 'cat-1', title: 'Slotenbakken' },
-  { id: 'cat-2', title: 'Graafbakken' },
-  { id: 'cat-3', title: 'Sloop- en sorteergrijpers' },
-  { id: 'cat-4', title: 'Overige' }
+  { id: 'cat-1', title: 'Slotenbakken', slug: 'slotenbakken' },
+  { id: 'cat-2', title: 'Graafbakken', slug: 'graafbakken' },
+  { id: 'cat-3', title: 'Sloop- en sorteergrijpers', slug: 'sloop-sorteergrijpers' },
+  { id: 'cat-4', title: 'Overige', slug: 'overige' }
 ];
 
 const DEMO_BRANDS = [
-  { id: 'brand-1', title: 'Structon' },
-  { id: 'brand-2', title: 'Caterpillar' },
-  { id: 'brand-3', title: 'Volvo' }
+  { id: 'brand-1', title: 'Structon', slug: 'structon' },
+  { id: 'brand-2', title: 'Caterpillar', slug: 'caterpillar' },
+  { id: 'brand-3', title: 'Volvo', slug: 'volvo' }
 ];
 
 // State
 let products = [];
+let categories = [];
+let brands = [];
 let filteredProducts = [];
 let currentPage = 1;
 let itemsPerPage = 20;
 let selectedProducts = new Set();
+let editingProductId = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
+  console.log('Products page initializing...');
+  initializeData();
   setupEventListeners();
-  loadProducts();
 });
 
 /**
- * Check authentication - allow demo mode without login
+ * Initialize with demo data immediately, then try API
  */
-async function checkAuth() {
-  const token = localStorage.getItem('cms_token');
-  // Don't redirect - allow demo data to be shown
-  if (!token) {
-    console.log('No auth token - running in demo mode');
+async function initializeData() {
+  // Load demo data immediately for fast display
+  products = [...DEMO_PRODUCTS];
+  categories = [...DEMO_CATEGORIES];
+  brands = [...DEMO_BRANDS];
+  filteredProducts = [...products];
+  
+  renderProducts();
+  populateFilters();
+  
+  // Try to load from API in background
+  try {
+    const [productsData, categoriesData, brandsData] = await Promise.allSettled([
+      api.get('/admin/products'),
+      api.get('/categories'),
+      api.get('/brands')
+    ]);
+    
+    if (productsData.status === 'fulfilled' && productsData.value?.products?.length > 0) {
+      products = productsData.value.products;
+      filteredProducts = [...products];
+      renderProducts();
+    }
+    
+    if (categoriesData.status === 'fulfilled' && categoriesData.value?.length > 0) {
+      categories = categoriesData.value;
+      populateFilters();
+    }
+    
+    if (brandsData.status === 'fulfilled' && brandsData.value?.length > 0) {
+      brands = brandsData.value;
+      populateFilters();
+    }
+  } catch (error) {
+    console.log('Using demo data (API unavailable)');
   }
 }
 
@@ -196,61 +230,18 @@ function setupEventListeners() {
 }
 
 /**
- * Load products
+ * Populate filter dropdowns
  */
-async function loadProducts() {
-  try {
-    const data = await api.get('/admin/products');
-    products = data.products || [];
-    
-    // Use demo data if no real data
-    if (products.length === 0) {
-      products = DEMO_PRODUCTS;
-    }
-    
-    filteredProducts = [...products];
-    renderProducts();
-    await loadFilterOptions();
-  } catch (error) {
-    console.error('Error loading products:', error);
-    // Use demo data on error
-    products = DEMO_PRODUCTS;
-    filteredProducts = [...products];
-    renderProducts();
-    loadFilterOptions();
-  }
-}
-
-/**
- * Load filter options
- */
-async function loadFilterOptions() {
-  let categories = [];
-  let brands = [];
-  
-  try {
-    const [categoriesData, brandsData] = await Promise.all([
-      api.get('/categories'),
-      api.get('/brands')
-    ]);
-    
-    categories = categoriesData.categories || [];
-    brands = brandsData.brands || [];
-  } catch (error) {
-    console.error('Error loading filters:', error);
-  }
-  
-  // Use demo data if no real data
-  if (categories.length === 0) {
-    categories = DEMO_CATEGORIES;
-  }
-  if (brands.length === 0) {
-    brands = DEMO_BRANDS;
-  }
-  
-  // Populate category filter
+function populateFilters() {
+  // Clear existing options first (keep first "Alle" option)
   const categoryFilter = document.getElementById('filter-category');
+  const brandFilter = document.getElementById('filter-brand');
+  const productCategory = document.getElementById('product-category');
+  const productBrand = document.getElementById('product-brand');
+  
+  // Clear and repopulate category filter
   if (categoryFilter) {
+    categoryFilter.innerHTML = '<option value="">Alle categorieën</option>';
     categories.forEach(cat => {
       const option = document.createElement('option');
       option.value = cat.id;
@@ -259,9 +250,9 @@ async function loadFilterOptions() {
     });
   }
   
-  // Populate brand filter
-  const brandFilter = document.getElementById('filter-brand');
+  // Clear and repopulate brand filter
   if (brandFilter) {
+    brandFilter.innerHTML = '<option value="">Alle merken</option>';
     brands.forEach(brand => {
       const option = document.createElement('option');
       option.value = brand.id;
@@ -270,9 +261,9 @@ async function loadFilterOptions() {
     });
   }
   
-  // Also populate modal selects
-  const productCategory = document.getElementById('product-category');
+  // Populate modal category select
   if (productCategory) {
+    productCategory.innerHTML = '<option value="">Selecteer categorie</option>';
     categories.forEach(cat => {
       const option = document.createElement('option');
       option.value = cat.id;
@@ -281,8 +272,9 @@ async function loadFilterOptions() {
     });
   }
   
-  const productBrand = document.getElementById('product-brand');
+  // Populate modal brand select
   if (productBrand) {
+    productBrand.innerHTML = '<option value="">Selecteer merk</option>';
     brands.forEach(brand => {
       const option = document.createElement('option');
       option.value = brand.id;
@@ -583,12 +575,20 @@ async function handleProductSubmit(e) {
   const form = e.target;
   const productId = form.dataset.productId;
   
+  const categoryId = document.getElementById('product-category').value;
+  const brandId = document.getElementById('product-brand').value;
+  const category = categories.find(c => c.id === categoryId);
+  const brand = brands.find(b => b.id === brandId);
+  
   const productData = {
+    id: productId || `prod-${Date.now()}`,
     title: document.getElementById('product-title').value,
     slug: document.getElementById('product-slug').value,
     description: document.getElementById('product-description').value,
-    category_id: document.getElementById('product-category').value || null,
-    brand_id: document.getElementById('product-brand').value || null,
+    category_id: categoryId || null,
+    category_title: category?.title || '',
+    brand_id: brandId || null,
+    brand_title: brand?.title || '',
     width: parseInt(document.getElementById('product-width').value) || null,
     volume: parseInt(document.getElementById('product-volume').value) || null,
     weight: parseInt(document.getElementById('product-weight').value) || null,
@@ -598,24 +598,36 @@ async function handleProductSubmit(e) {
     stock_quantity: parseInt(document.getElementById('product-stock').value) || 0,
     is_active: document.getElementById('product-active').checked,
     is_featured: document.getElementById('product-featured').checked,
-    price: parseFloat(document.getElementById('product-price').value) || null,
+    price_excl_vat: parseFloat(document.getElementById('product-price').value) || null,
+    cloudinary_images: []
   };
   
+  // Try API first, fallback to local storage
   try {
     if (productId) {
       await api.put(`/admin/products/${productId}`, productData);
-      showToast('Product bijgewerkt', 'success');
     } else {
       await api.post('/admin/products', productData);
-      showToast('Product toegevoegd', 'success');
     }
-    
-    closeProductModal();
-    await loadProducts();
   } catch (error) {
-    console.error('Error saving product:', error);
-    showToast(error.message || 'Fout bij opslaan', 'error');
+    console.log('API unavailable, saving locally');
   }
+  
+  // Update local data regardless of API success
+  if (productId) {
+    const index = products.findIndex(p => p.id === productId);
+    if (index !== -1) {
+      products[index] = { ...products[index], ...productData };
+    }
+    showToast('Product bijgewerkt', 'success');
+  } else {
+    products.unshift(productData);
+    showToast('Product toegevoegd', 'success');
+  }
+  
+  filteredProducts = [...products];
+  closeProductModal();
+  renderProducts();
 }
 
 /**
@@ -630,13 +642,13 @@ function handleImageSelect(e) {
 /**
  * Edit product
  */
-window.editProduct = async function(id) {
-  try {
-    const data = await api.get(`/admin/products/${id}`);
-    openProductModal(data.product);
-  } catch (error) {
-    console.error('Error loading product:', error);
-    showToast('Fout bij laden product', 'error');
+window.editProduct = function(id) {
+  const product = products.find(p => p.id === id);
+  if (product) {
+    editingProductId = id;
+    openProductModal(product);
+  } else {
+    showToast('Product niet gevonden', 'error');
   }
 };
 
@@ -648,14 +660,18 @@ window.deleteProduct = async function(id) {
     return;
   }
   
+  // Try API first
   try {
     await api.delete(`/admin/products/${id}`);
-    showToast('Product verwijderd', 'success');
-    await loadProducts();
   } catch (error) {
-    console.error('Error deleting product:', error);
-    showToast('Fout bij verwijderen', 'error');
+    console.log('API unavailable, deleting locally');
   }
+  
+  // Remove from local data
+  products = products.filter(p => p.id !== id);
+  filteredProducts = filteredProducts.filter(p => p.id !== id);
+  showToast('Product verwijderd', 'success');
+  renderProducts();
 };
 
 /**

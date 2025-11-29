@@ -76,19 +76,28 @@ let searchTerm = '';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
+  console.log('Orders page initializing...');
+  initializeData();
   initEventListeners();
-  loadOrders();
 });
 
 /**
- * Check authentication - allow demo mode without login
+ * Initialize with demo data immediately
  */
-function checkAuth() {
-  const token = localStorage.getItem('cms_token');
-  // Don't redirect - allow demo data to be shown
-  if (!token) {
-    console.log('No auth token - running in demo mode');
+async function initializeData() {
+  // Load demo data immediately
+  allOrders = [...DEMO_ORDERS];
+  renderOrders();
+  
+  // Try API in background
+  try {
+    const response = await apiClient.get('/sales/orders');
+    if (response?.orders?.length > 0 || (Array.isArray(response) && response.length > 0)) {
+      allOrders = response.orders || response;
+      renderOrders();
+    }
+  } catch (error) {
+    console.log('Using demo orders (API unavailable)');
   }
 }
 
@@ -117,44 +126,6 @@ function initEventListeners() {
       renderOrders();
     });
   });
-}
-
-/**
- * Load orders from API or use demo data
- */
-async function loadOrders() {
-  const tbody = document.querySelector('#orders-table tbody');
-  
-  // Show loading state
-  if (tbody) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6" class="loading-cell">
-          <div class="loading-spinner"></div>
-          <span>Bestellingen laden...</span>
-        </td>
-      </tr>
-    `;
-  }
-  
-  try {
-    const response = await apiClient.get('/sales/orders');
-    allOrders = response.orders || response || [];
-    
-    // Use demo data if no real data
-    if (!allOrders || allOrders.length === 0) {
-      console.log('No orders from API, using demo data');
-      allOrders = DEMO_ORDERS;
-    }
-    
-    renderOrders();
-  } catch (error) {
-    console.error('Error loading orders:', error);
-    // Use demo data on error
-    console.log('API error, using demo data');
-    allOrders = DEMO_ORDERS;
-    renderOrders();
-  }
 }
 
 /**

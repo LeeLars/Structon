@@ -52,16 +52,30 @@ let users = [];
 let filteredUsers = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
+  console.log('Users page initializing...');
+  initializeData();
   setupEventListeners();
-  loadUsers();
 });
 
-async function checkAuth() {
-  const token = localStorage.getItem('cms_token');
-  // Don't redirect - allow demo data to be shown
-  if (!token) {
-    console.log('No auth token - running in demo mode');
+/**
+ * Initialize with demo data immediately
+ */
+async function initializeData() {
+  // Load demo data immediately
+  users = [...DEMO_USERS];
+  filteredUsers = [...users];
+  renderUsers();
+  
+  // Try API in background
+  try {
+    const response = await api.get('/admin/users');
+    if (response?.users?.length > 0 || (Array.isArray(response) && response.length > 0)) {
+      users = response.users || response;
+      filteredUsers = [...users];
+      renderUsers();
+    }
+  } catch (error) {
+    console.log('Using demo users (API unavailable)');
   }
 }
 
@@ -74,27 +88,6 @@ function setupEventListeners() {
   document.getElementById('filter-role')?.addEventListener('change', applyFilters);
   document.getElementById('filter-status')?.addEventListener('change', applyFilters);
   document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
-}
-
-async function loadUsers() {
-  try {
-    const data = await api.get('/admin/users');
-    users = data.users || [];
-    
-    // Use demo data if no real data
-    if (users.length === 0) {
-      users = DEMO_USERS;
-    }
-    
-    filteredUsers = [...users];
-    renderUsers();
-  } catch (error) {
-    console.error('Error loading users:', error);
-    // Use demo data on error
-    users = DEMO_USERS;
-    filteredUsers = [...users];
-    renderUsers();
-  }
 }
 
 function handleSearch(e) {

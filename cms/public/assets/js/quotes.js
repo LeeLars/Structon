@@ -70,19 +70,28 @@ let searchTerm = '';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  checkAuth();
+  console.log('Quotes page initializing...');
+  initializeData();
   initEventListeners();
-  loadQuotes();
 });
 
 /**
- * Check authentication - allow demo mode without login
+ * Initialize with demo data immediately
  */
-function checkAuth() {
-  const token = localStorage.getItem('cms_token');
-  // Don't redirect - allow demo data to be shown
-  if (!token) {
-    console.log('No auth token - running in demo mode');
+async function initializeData() {
+  // Load demo data immediately
+  allQuotes = [...DEMO_QUOTES];
+  renderQuotes();
+  
+  // Try API in background
+  try {
+    const response = await api.get('/sales/quotes');
+    if (response?.quotes?.length > 0 || (Array.isArray(response) && response.length > 0)) {
+      allQuotes = response.quotes || response;
+      renderQuotes();
+    }
+  } catch (error) {
+    console.log('Using demo quotes (API unavailable)');
   }
 }
 
@@ -113,43 +122,6 @@ function initEventListeners() {
   });
 }
 
-/**
- * Load quotes from API or use demo data
- */
-async function loadQuotes() {
-  const tableBody = document.querySelector('#quotes-table tbody');
-  
-  // Show loading state
-  if (tableBody) {
-    tableBody.innerHTML = `
-      <tr>
-        <td colspan="5" class="loading-cell">
-          <div class="loading-spinner"></div>
-          <span>Aanvragen laden...</span>
-        </td>
-      </tr>
-    `;
-  }
-  
-  try {
-    const response = await api.get('/sales/quotes');
-    allQuotes = response.quotes || response || [];
-    
-    // Use demo data if no real data
-    if (!allQuotes || allQuotes.length === 0) {
-      console.log('No quotes from API, using demo data');
-      allQuotes = DEMO_QUOTES;
-    }
-    
-    renderQuotes();
-  } catch (error) {
-    console.error('Error loading quotes:', error);
-    // Use demo data on error - don't redirect
-    console.log('API error, using demo data');
-    allQuotes = DEMO_QUOTES;
-    renderQuotes();
-  }
-}
 
 /**
  * Render quotes table

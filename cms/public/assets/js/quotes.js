@@ -3,7 +3,11 @@
  * Handles quote requests with demo data fallback
  */
 
+console.log('[QUOTES] Script loaded');
+
 import api from './api-client.js';
+
+console.log('[QUOTES] API client imported');
 
 // Demo data for when API has no data
 const DEMO_QUOTES = [
@@ -69,8 +73,11 @@ let currentFilter = 'all';
 let searchTerm = '';
 
 // Initialize
+console.log('[QUOTES] Setting up DOMContentLoaded listener');
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Quotes page initializing...');
+  console.log('[QUOTES] DOM loaded, initializing...');
+  console.log('[QUOTES] Demo quotes count:', DEMO_QUOTES.length);
   initializeData();
   initEventListeners();
 });
@@ -79,19 +86,28 @@ document.addEventListener('DOMContentLoaded', () => {
  * Initialize with demo data immediately
  */
 async function initializeData() {
+  console.log('[QUOTES] initializeData called');
+  
   // Load demo data immediately
   allQuotes = [...DEMO_QUOTES];
+  console.log('[QUOTES] Demo data loaded:', allQuotes.length, 'quotes');
+  
   renderQuotes();
+  console.log('[QUOTES] Initial render complete');
   
   // Try API in background
   try {
+    console.log('[QUOTES] Attempting API call...');
     const response = await api.get('/sales/quotes');
+    console.log('[QUOTES] API response:', response);
+    
     if (response?.quotes?.length > 0 || (Array.isArray(response) && response.length > 0)) {
       allQuotes = response.quotes || response;
+      console.log('[QUOTES] Using API data:', allQuotes.length, 'quotes');
       renderQuotes();
     }
   } catch (error) {
-    console.log('Using demo quotes (API unavailable)');
+    console.log('[QUOTES] API unavailable, using demo data:', error.message);
   }
 }
 
@@ -127,8 +143,15 @@ function initEventListeners() {
  * Render quotes table
  */
 function renderQuotes() {
+  console.log('[QUOTES] renderQuotes called');
   const tableBody = document.querySelector('#quotes-table tbody');
-  if (!tableBody) return;
+  
+  if (!tableBody) {
+    console.error('[QUOTES] Table body not found!');
+    return;
+  }
+  
+  console.log('[QUOTES] Table body found, rendering', allQuotes.length, 'quotes');
 
   let filtered = allQuotes;
   

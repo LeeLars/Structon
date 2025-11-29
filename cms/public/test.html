@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CMS Test</title>
+</head>
+<body>
+  <h1>CMS Test Page</h1>
+  <div id="output">Loading...</div>
+  
+  <script type="module">
+    document.getElementById('output').innerHTML = '<p>✅ JavaScript modules work!</p>';
+    
+    try {
+      const { default: api } = await import('./assets/js/api-client.js');
+      document.getElementById('output').innerHTML += '<p>✅ API client loaded! Base URL: ' + api.baseURL + '</p>';
+      
+      // Test API
+      const response = await fetch(api.baseURL + '/products');
+      const data = await response.json();
+      document.getElementById('output').innerHTML += '<p>✅ API response: ' + JSON.stringify(data).substring(0, 200) + '...</p>';
+      
+    } catch (error) {
+      document.getElementById('output').innerHTML += '<p>❌ Error: ' + error.message + '</p>';
+      console.error(error);
+    }
+  </script>
+</body>
+</html>

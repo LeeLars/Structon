@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Debug - Structon</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
+    h1 { color: #1a202c; }
+    .test { padding: 16px; margin: 10px 0; border-radius: 8px; }
+    .success { background: #c6f6d5; color: #22543d; }
+    .error { background: #fed7d7; color: #742a2a; }
+    .pending { background: #fef3c7; color: #92400e; }
+    pre { background: #f7fafc; padding: 16px; border-radius: 8px; overflow-x: auto; }
+    button { padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; margin: 5px; }
+    button:hover { background: #5568d3; }
+    #api-result { background: #f7fafc; padding: 16px; border-radius: 8px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🔧 CMS Debug Pagina</h1>
+  
+  <div id="js-test" class="test pending">⏳ JavaScript test...</div>
+  <div id="module-test" class="test pending">⏳ Module import test...</div>
+  <div id="api-test" class="test pending">⏳ API connection test...</div>
+  <div id="db-test" class="test pending">⏳ Database status test...</div>
+  
+  <h2>API Tests</h2>
+  <button onclick="testProducts()">Test /api/products</button>
+  <button onclick="testCategories()">Test /api/categories</button>
+  <button onclick="testBrands()">Test /api/brands</button>
+  <button onclick="testSeed()">Seed Database</button>
+  
+  <div id="api-result">Click a test button above</div>
+  
+  <h2>Console Output</h2>
+  <pre id="console-output"></pre>
+  
+  <script>
+    // Override console.log to also show in page
+    const consoleOutput = document.getElementById('console-output');
+    const originalLog = console.log;
+    const originalError = console.error;
+    
+    console.log = function(...args) {
+      originalLog.apply(console, args);
+      consoleOutput.textContent += args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : a).join(' ') + '\n';
+    };
+    
+    console.error = function(...args) {
+      originalError.apply(console, args);
+      consoleOutput.textContent += '❌ ERROR: ' + args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : a).join(' ') + '\n';
+    };
+  </script>
+  
+  <script>
+    // Test 1: Basic JavaScript
+    document.getElementById('js-test').className = 'test success';
+    document.getElementById('js-test').textContent = '✅ JavaScript werkt!';
+    console.log('Test 1: JavaScript OK');
+  </script>
+  
+  <script type="module">
+    // Test 2: Module import
+    const moduleTest = document.getElementById('module-test');
+    
+    try {
+      console.log('Test 2: Trying to import api-client...');
+      const { default: api } = await import('./assets/js/api-client.js');
+      
+      moduleTest.className = 'test success';
+      moduleTest.textContent = '✅ Module import werkt! API client geladen.';
+      console.log('Test 2: Module import OK');
+      console.log('API Base URL:', api.baseURL);
+      
+      // Test 3: API connection
+      const apiTest = document.getElementById('api-test');
+      console.log('Test 3: Testing API connection...');
+      
+      try {
+        const response = await fetch(api.baseURL.replace('/api', '') + '/api/ping');
+        if (response.ok) {
+          apiTest.className = 'test success';
+          apiTest.textContent = '✅ API bereikbaar! Server is online.';
+          console.log('Test 3: API connection OK');
+        } else {
+          throw new Error('HTTP ' + response.status);
+        }
+      } catch (e) {
+        apiTest.className = 'test error';
+        apiTest.textContent = '❌ API niet bereikbaar: ' + e.message;
+        console.error('Test 3: API connection failed:', e.message);
+      }
+      
+      // Test 4: Database status
+      const dbTest = document.getElementById('db-test');
+      console.log('Test 4: Checking database status...');
+      
+      try {
+        const response = await fetch(api.baseURL + '/admin/seed/status');
+        const data = await response.json();
+        
+        dbTest.className = 'test success';
+        dbTest.innerHTML = `✅ Database status:<br>
+          📁 Categories: ${data.categories}<br>
+          🏷️ Brands: ${data.brands}<br>
+          📦 Products: ${data.products}`;
+        console.log('Test 4: Database status:', data);
+        
+        if (data.products === 0) {
+          dbTest.className = 'test error';
+          dbTest.innerHTML += '<br><br>⚠️ Database is LEEG! Klik op "Seed Database" om demo data toe te voegen.';
+        }
+      } catch (e) {
+        dbTest.className = 'test error';
+        dbTest.textContent = '❌ Database check failed: ' + e.message;
+        console.error('Test 4: Database check failed:', e.message);
+      }
+      
+      // Make api available globally for tests
+      window.api = api;
+      
+    } catch (e) {
+      moduleTest.className = 'test error';
+      moduleTest.textContent = '❌ Module import failed: ' + e.message;
+      console.error('Test 2: Module import failed:', e.message);
+    }
+    
+    // API test functions
+    window.testProducts = async function() {
+      const result = document.getElementById('api-result');
+      result.textContent = '⏳ Loading...';
+      try {
+        const response = await fetch(window.api.baseURL + '/products');
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+        console.log('/api/products response:', data);
+      } catch (e) {
+        result.textContent = 'Error: ' + e.message;
+        console.error('/api/products error:', e);
+      }
+    };
+    
+    window.testCategories = async function() {
+      const result = document.getElementById('api-result');
+      result.textContent = '⏳ Loading...';
+      try {
+        const response = await fetch(window.api.baseURL + '/categories');
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+        console.log('/api/categories response:', data);
+      } catch (e) {
+        result.textContent = 'Error: ' + e.message;
+        console.error('/api/categories error:', e);
+      }
+    };
+    
+    window.testBrands = async function() {
+      const result = document.getElementById('api-result');
+      result.textContent = '⏳ Loading...';
+      try {
+        const response = await fetch(window.api.baseURL + '/brands');
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+        console.log('/api/brands response:', data);
+      } catch (e) {
+        result.textContent = 'Error: ' + e.message;
+        console.error('/api/brands error:', e);
+      }
+    };
+    
+    window.testSeed = async function() {
+      const result = document.getElementById('api-result');
+      result.textContent = '⏳ Seeding database...';
+      try {
+        const response = await fetch(window.api.baseURL + '/admin/seed', {
+          method: 'POST'
+        });
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+        console.log('Seed result:', data);
+        
+        // Refresh page to update status
+        if (data.success) {
+          setTimeout(() => location.reload(), 1000);
+        }
+      } catch (e) {
+        result.textContent = 'Error: ' + e.message;
+        console.error('Seed error:', e);
+      }
+    };
+  </script>
+</body>
+</html>

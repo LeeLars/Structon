@@ -3,12 +3,19 @@
  */
 
 import apiClient from './api-client.js';
+import { renderSidebar } from './sidebar.js';
 
 let allOrders = [];
 let currentFilter = 'all';
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize sidebar
+  const sidebarContainer = document.getElementById('sidebar-container');
+  if (sidebarContainer) {
+    sidebarContainer.innerHTML = renderSidebar('orders');
+  }
+  
   checkAuth();
   initEventListeners();
   loadOrders();

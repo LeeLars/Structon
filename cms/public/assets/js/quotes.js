@@ -1,6 +1,13 @@
 import api from './api-client.js';
+import { renderSidebar } from './sidebar.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize sidebar
+  const sidebarContainer = document.getElementById('sidebar-container');
+  if (sidebarContainer) {
+    sidebarContainer.innerHTML = renderSidebar('quotes');
+  }
+  
   loadQuotes();
 });
 

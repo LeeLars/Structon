@@ -4,6 +4,7 @@
  */
 
 import api, { keepAlive } from './api-client.js';
+import { renderSidebar } from './sidebar.js';
 
 const API_BASE = '/api';
 
@@ -12,6 +13,9 @@ let currentUser = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize sidebar first
+  initializeSidebar('dashboard');
+  
   // Start keep-alive immediately
   keepAlive.start();
   
@@ -25,6 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSidebarUser();
   });
 });
+
+/**
+ * Initialize the sidebar
+ */
+function initializeSidebar(activePage) {
+  const container = document.getElementById('sidebar-container');
+  if (container) {
+    container.innerHTML = renderSidebar(activePage);
+  }
+}
 
 /**
  * Warm up the server before making authenticated requests

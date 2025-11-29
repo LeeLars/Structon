@@ -3,11 +3,18 @@
  */
 
 import api from './api-client.js';
+import { renderSidebar } from './sidebar.js';
 
 let users = [];
 let filteredUsers = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize sidebar
+  const sidebarContainer = document.getElementById('sidebar-container');
+  if (sidebarContainer) {
+    sidebarContainer.innerHTML = renderSidebar('users');
+  }
+  
   checkAuth();
   setupEventListeners();
   loadUsers();

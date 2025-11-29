@@ -3,10 +3,17 @@
  */
 
 import api from './api-client.js';
+import { renderSidebar } from './sidebar.js';
 
 let categories = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize sidebar
+  const sidebarContainer = document.getElementById('sidebar-container');
+  if (sidebarContainer) {
+    sidebarContainer.innerHTML = renderSidebar('categories');
+  }
+  
   checkAuth();
   setupEventListeners();
   loadCategories();

@@ -82,13 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Check authentication
+ * Check authentication - allow demo mode without login
  */
 function checkAuth() {
   const token = localStorage.getItem('cms_token');
+  // Don't redirect - allow demo data to be shown
   if (!token) {
-    window.location.href = '/cms/login.html';
-    return;
+    console.log('No auth token - running in demo mode');
   }
 }
 
@@ -123,12 +123,27 @@ function initEventListeners() {
  * Load orders from API or use demo data
  */
 async function loadOrders() {
+  const tbody = document.querySelector('#orders-table tbody');
+  
+  // Show loading state
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" class="loading-cell">
+          <div class="loading-spinner"></div>
+          <span>Bestellingen laden...</span>
+        </td>
+      </tr>
+    `;
+  }
+  
   try {
-    const response = await apiClient.get('/api/sales/orders');
-    allOrders = response.orders || [];
+    const response = await apiClient.get('/sales/orders');
+    allOrders = response.orders || response || [];
     
     // Use demo data if no real data
-    if (allOrders.length === 0) {
+    if (!allOrders || allOrders.length === 0) {
+      console.log('No orders from API, using demo data');
       allOrders = DEMO_ORDERS;
     }
     
@@ -136,6 +151,7 @@ async function loadOrders() {
   } catch (error) {
     console.error('Error loading orders:', error);
     // Use demo data on error
+    console.log('API error, using demo data');
     allOrders = DEMO_ORDERS;
     renderOrders();
   }

@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function checkAuth() {
   const token = localStorage.getItem('cms_token');
+  // Don't redirect - allow demo data to be shown
   if (!token) {
-    window.location.href = '/cms/login.html';
-    return;
+    console.log('No auth token - running in demo mode');
   }
 }
 

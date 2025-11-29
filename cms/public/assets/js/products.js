@@ -132,16 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Check authentication
+ * Check authentication - allow demo mode without login
  */
 async function checkAuth() {
-  try {
-    const data = await api.get('/auth/me');
-    if (data.user.role !== 'admin') {
-      window.location.href = '/cms/';
-    }
-  } catch (error) {
-    window.location.href = '/cms/';
+  const token = localStorage.getItem('cms_token');
+  // Don't redirect - allow demo data to be shown
+  if (!token) {
+    console.log('No auth token - running in demo mode');
   }
 }
 

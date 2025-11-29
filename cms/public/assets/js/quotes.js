@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Check authentication
+ * Check authentication - allow demo mode without login
  */
 function checkAuth() {
   const token = localStorage.getItem('cms_token');
+  // Don't redirect - allow demo data to be shown
   if (!token) {
-    window.location.href = '/cms/login.html';
-    return;
+    console.log('No auth token - running in demo mode');
   }
 }
 
@@ -119,19 +119,33 @@ function initEventListeners() {
 async function loadQuotes() {
   const tableBody = document.querySelector('#quotes-table tbody');
   
+  // Show loading state
+  if (tableBody) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="5" class="loading-cell">
+          <div class="loading-spinner"></div>
+          <span>Aanvragen laden...</span>
+        </td>
+      </tr>
+    `;
+  }
+  
   try {
     const response = await api.get('/sales/quotes');
     allQuotes = response.quotes || response || [];
     
     // Use demo data if no real data
-    if (allQuotes.length === 0) {
+    if (!allQuotes || allQuotes.length === 0) {
+      console.log('No quotes from API, using demo data');
       allQuotes = DEMO_QUOTES;
     }
     
     renderQuotes();
   } catch (error) {
     console.error('Error loading quotes:', error);
-    // Use demo data on error
+    // Use demo data on error - don't redirect
+    console.log('API error, using demo data');
     allQuotes = DEMO_QUOTES;
     renderQuotes();
   }

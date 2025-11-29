@@ -39,11 +39,16 @@ class APIClient {
     };
 
     try {
-      const response = await fetch(url, config);
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
       
-      // Handle 401 Unauthorized
+      const response = await fetch(url, { ...config, signal: controller.signal });
+      clearTimeout(timeoutId);
+      
+      // Handle 401 Unauthorized - only redirect for auth endpoints
       if (response.status === 401) {
-        window.location.href = '/cms/';
+        // Don't redirect, just throw error so fallback data can be used
         throw new Error('Unauthorized');
       }
 

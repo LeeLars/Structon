@@ -1,12 +1,35 @@
 /**
  * Structon - Home Page JavaScript
+ * Optimized for fast loading with intersection observer
  */
 
 import { products } from '../api/client.js';
 import { createProductCard, showLoading } from '../main.js';
 
+// Use requestIdleCallback for non-critical initialization
+const scheduleTask = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+
 document.addEventListener('DOMContentLoaded', () => {
-  loadFeaturedProducts();
+  // Load featured products with intersection observer for lazy loading
+  const container = document.getElementById('featured-products-wrapper');
+  if (container) {
+    // Check if section is in viewport
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadFeaturedProducts();
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' }); // Start loading 200px before visible
+      
+      observer.observe(container);
+    } else {
+      // Fallback for older browsers
+      loadFeaturedProducts();
+    }
+  }
 });
 
 /**

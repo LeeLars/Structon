@@ -72,7 +72,7 @@ app.use(cors({
   credentials: true
 }));
 
-// Compression middleware - compress all responses
+// Compression middleware - compress all responses (optimized)
 app.use(compression({
   filter: (req, res) => {
     if (req.headers['x-no-compression']) {
@@ -80,7 +80,9 @@ app.use(compression({
     }
     return compression.filter(req, res);
   },
-  level: 6 // Balance between speed and compression ratio
+  level: 6, // Balance between speed and compression ratio
+  threshold: 1024, // Only compress responses > 1KB
+  memLevel: 8 // Use more memory for better compression
 }));
 
 // Middleware
@@ -88,20 +90,34 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
 
-// Cache control middleware
+// Cache control middleware (optimized)
 app.use((req, res, next) => {
-  // API responses - short cache for dynamic content
+  // API responses - tiered caching strategy
   if (req.path.startsWith('/api/')) {
-    // Public API endpoints can be cached briefly
-    if (req.path.includes('/products') || req.path.includes('/categories') || req.path.includes('/subcategories')) {
-      res.set('Cache-Control', 'public, max-age=300, s-maxage=600'); // 5min client, 10min CDN
+    // Public read-only endpoints - aggressive caching
+    if (req.method === 'GET') {
+      if (req.path.includes('/products') || req.path.includes('/categories') || req.path.includes('/brands') || req.path.includes('/subcategories')) {
+        res.set('Cache-Control', 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400'); // 5min client, 10min CDN, 24h stale
+        res.set('Vary', 'Accept-Encoding');
+      } else if (req.path.includes('/navigation')) {
+        res.set('Cache-Control', 'public, max-age=600, s-maxage=1800'); // 10min client, 30min CDN
+      } else {
+        res.set('Cache-Control', 'private, no-cache');
+      }
     } else {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      // POST/PUT/DELETE - no cache
+      res.set('Cache-Control', 'no-store');
     }
   }
-  // Static files - long cache
+  // Static CMS files - long cache with versioning
   else if (req.path.startsWith('/cms/')) {
-    res.set('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
+    if (req.path.match(/\.(js|css)$/)) {
+      res.set('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year for versioned assets
+    } else if (req.path.match(/\.(png|jpg|jpeg|gif|svg|ico|woff|woff2)$/)) {
+      res.set('Cache-Control', 'public, max-age=2592000'); // 30 days for images/fonts
+    } else {
+      res.set('Cache-Control', 'public, max-age=3600'); // 1 hour for HTML
+    }
   }
   next();
 });

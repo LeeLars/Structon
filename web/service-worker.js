@@ -1,18 +1,21 @@
 /**
  * Service Worker for Structon Website
  * Provides offline caching and performance improvements
+ * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v1';
+const CACHE_VERSION = 'structon-v2';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;
+const IMAGE_CACHE = `${CACHE_VERSION}-images`;
 
-// Static assets to cache immediately
+// Static assets to cache immediately (critical path)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/assets/css/global.css',
+  '/assets/css/fonts.css',
   '/assets/js/main.js',
   '/assets/images/static/logo.svg',
   '/assets/images/static/favicon.svg'
@@ -21,8 +24,12 @@ const STATIC_ASSETS = [
 // Cache size limits
 const CACHE_LIMITS = {
   [DYNAMIC_CACHE]: 50,
-  [API_CACHE]: 30
+  [API_CACHE]: 50,
+  [IMAGE_CACHE]: 100
 };
+
+// API endpoints that should be cached longer
+const LONG_CACHE_API = ['/products', '/categories', '/brands', '/navigation'];
 
 /**
  * Install event - cache static assets
@@ -64,6 +71,7 @@ self.addEventListener('activate', (event) => {
 
 /**
  * Fetch event - serve from cache, fallback to network
+ * Optimized with stale-while-revalidate for better UX
  */
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -74,13 +82,24 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // API requests - network first, cache fallback
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(networkFirstStrategy(request, API_CACHE));
+  // Skip chrome-extension and other non-http(s) requests
+  if (!url.protocol.startsWith('http')) {
     return;
   }
 
-  // Static assets - cache first
+  // API requests - stale-while-revalidate for better UX
+  if (url.pathname.startsWith('/api/')) {
+    // Check if it's a cacheable API endpoint
+    const isLongCache = LONG_CACHE_API.some(ep => url.pathname.includes(ep));
+    if (isLongCache) {
+      event.respondWith(staleWhileRevalidate(request, API_CACHE));
+    } else {
+      event.respondWith(networkFirstStrategy(request, API_CACHE));
+    }
+    return;
+  }
+
+  // Static assets - cache first (fastest)
   if (
     request.destination === 'style' ||
     request.destination === 'script' ||
@@ -91,15 +110,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Images - cache first with dynamic cache
+  // Images - cache first with dedicated image cache
   if (request.destination === 'image') {
-    event.respondWith(cacheFirstStrategy(request, DYNAMIC_CACHE));
+    event.respondWith(cacheFirstStrategy(request, IMAGE_CACHE));
     return;
   }
 
-  // HTML pages - network first
+  // HTML pages - stale-while-revalidate for fast loads
   if (request.destination === 'document') {
-    event.respondWith(networkFirstStrategy(request, DYNAMIC_CACHE));
+    event.respondWith(staleWhileRevalidate(request, DYNAMIC_CACHE));
     return;
   }
 
@@ -171,6 +190,47 @@ async function networkFirstStrategy(request, cacheName) {
 
     throw error;
   }
+}
+
+/**
+ * Stale-while-revalidate strategy
+ * Returns cached response immediately, then updates cache in background
+ */
+async function staleWhileRevalidate(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cachedResponse = await cache.match(request);
+  
+  // Fetch in background to update cache
+  const fetchPromise = fetch(request)
+    .then(async (networkResponse) => {
+      if (networkResponse.ok) {
+        await cache.put(request, networkResponse.clone());
+        await limitCacheSize(cacheName);
+      }
+      return networkResponse;
+    })
+    .catch((error) => {
+      console.log('[SW] Background fetch failed:', error.message);
+      return null;
+    });
+
+  // Return cached response immediately if available
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
+  // Otherwise wait for network
+  const networkResponse = await fetchPromise;
+  if (networkResponse) {
+    return networkResponse;
+  }
+
+  // Fallback for HTML
+  if (request.destination === 'document') {
+    return new Response('Offline', { status: 503 });
+  }
+
+  throw new Error('No cached response and network failed');
 }
 
 /**

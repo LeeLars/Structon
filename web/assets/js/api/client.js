@@ -1,6 +1,7 @@
 /**
  * Structon API Client
  * Handles all communication with the CMS API
+ * Optimized with caching and request deduplication
  */
 
 import { DEMO_PRODUCTS, DEMO_CATEGORIES, DEMO_BRANDS } from './demo-data.js';
@@ -22,6 +23,54 @@ const API_BASE = getApiBaseUrl();
 
 // Export for use in other modules
 export const API_BASE_URL = API_BASE;
+
+// ============================================
+// REQUEST CACHING & DEDUPLICATION
+// ============================================
+
+// In-memory cache for API responses
+const responseCache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Pending requests map for deduplication
+const pendingRequests = new Map();
+
+/**
+ * Get cached response if valid
+ */
+function getCachedResponse(key) {
+  const cached = responseCache.get(key);
+  if (cached && Date.now() < cached.expiresAt) {
+    return cached.data;
+  }
+  responseCache.delete(key);
+  return null;
+}
+
+/**
+ * Set cache response
+ */
+function setCacheResponse(key, data, duration = CACHE_DURATION) {
+  responseCache.set(key, {
+    data,
+    expiresAt: Date.now() + duration
+  });
+}
+
+/**
+ * Clear cache (useful after mutations)
+ */
+export function clearApiCache(pattern = null) {
+  if (pattern) {
+    for (const key of responseCache.keys()) {
+      if (key.includes(pattern)) {
+        responseCache.delete(key);
+      }
+    }
+  } else {
+    responseCache.clear();
+  }
+}
 
 /**
  * Helper: Get demo data based on endpoint
@@ -95,10 +144,25 @@ function getDemoDataForEndpoint(endpoint) {
 }
 
 /**
- * Make API request with error handling and fallback
+ * Make API request with error handling, caching, and fallback
  */
 async function request(endpoint, options = {}) {
   const url = `${API_BASE}${endpoint}`;
+  const cacheKey = `${options.method || 'GET'}:${endpoint}`;
+  const isGetRequest = !options.method || options.method === 'GET';
+  
+  // Check cache for GET requests
+  if (isGetRequest) {
+    const cached = getCachedResponse(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    
+    // Check for pending request (deduplication)
+    if (pendingRequests.has(cacheKey)) {
+      return pendingRequests.get(cacheKey);
+    }
+  }
   
   const config = {
     headers: {
@@ -109,38 +173,62 @@ async function request(endpoint, options = {}) {
     ...options
   };
 
-  try {
-    // Attempt fetch with timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout for quick fallback
-    
-    const response = await fetch(url, { ...config, signal: controller.signal });
-    clearTimeout(timeoutId);
+  // Create the request promise
+  const requestPromise = (async () => {
+    try {
+      // Attempt fetch with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+      
+      const response = await fetch(url, { ...config, signal: controller.signal });
+      clearTimeout(timeoutId);
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.error || `HTTP error ${response.status}`);
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP error ${response.status}`);
+      }
+      
+      // If empty array returned, also use demo data (assuming DB is empty)
+      if (Array.isArray(data) && data.length === 0) {
+        const demo = getDemoDataForEndpoint(endpoint);
+        if (demo) {
+          // Cache demo data too
+          if (isGetRequest) setCacheResponse(cacheKey, demo);
+          return demo;
+        }
+      }
+
+      // Cache successful GET responses
+      if (isGetRequest) {
+        setCacheResponse(cacheKey, data);
+      }
+
+      return data;
+    } catch (error) {
+      console.warn(`API Error [${endpoint}]:`, error.message);
+      
+      // Fallback to DEMO DATA
+      const demoData = getDemoDataForEndpoint(endpoint);
+      if (demoData) {
+        // Cache demo data for faster subsequent loads
+        if (isGetRequest) setCacheResponse(cacheKey, demoData, 60000); // 1 min for demo
+        return demoData;
+      }
+
+      throw error;
+    } finally {
+      // Remove from pending requests
+      pendingRequests.delete(cacheKey);
     }
-    
-    // If empty array returned, also use demo data (assuming DB is empty)
-    if (Array.isArray(data) && data.length === 0) {
-      const demo = getDemoDataForEndpoint(endpoint);
-      if (demo) return demo;
-    }
+  })();
 
-    return data;
-  } catch (error) {
-    console.warn(`API Error [${endpoint}]:`, error.message);
-    
-    // Fallback to DEMO DATA
-    const demoData = getDemoDataForEndpoint(endpoint);
-    if (demoData) {
-      return demoData;
-    }
-
-    throw error;
+  // Store pending request for deduplication
+  if (isGetRequest) {
+    pendingRequests.set(cacheKey, requestPromise);
   }
+
+  return requestPromise;
 }
 
 /**

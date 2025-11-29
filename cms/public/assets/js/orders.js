@@ -3,7 +3,11 @@
  * Handles orders with demo data fallback
  */
 
-import apiClient from './api-client.js';
+console.log('[ORDERS] Script loaded');
+
+import api from './api-client.js';
+
+console.log('[ORDERS] API client imported');
 
 // Demo data for when API has no data
 const DEMO_ORDERS = [
@@ -75,10 +79,24 @@ let currentFilter = 'all';
 let searchTerm = '';
 
 // Initialize
+console.log('[ORDERS] Setting up DOMContentLoaded listener...');
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Orders page initializing...');
-  initializeData();
-  initEventListeners();
+  console.log('[ORDERS] DOM loaded, initializing...');
+  
+  try {
+    initializeData();
+    console.log('[ORDERS] initializeData completed');
+  } catch (error) {
+    console.error('[ORDERS] Error in initializeData:', error);
+  }
+  
+  try {
+    initEventListeners();
+    console.log('[ORDERS] initEventListeners completed');
+  } catch (error) {
+    console.error('[ORDERS] Error in initEventListeners:', error);
+  }
 });
 
 /**
@@ -91,13 +109,15 @@ async function initializeData() {
   
   // Try API in background
   try {
-    const response = await apiClient.get('/sales/orders');
+    console.log('[ORDERS] Trying API...');
+    const response = await api.get('/sales/orders');
+    console.log('[ORDERS] API response:', response);
     if (response?.orders?.length > 0 || (Array.isArray(response) && response.length > 0)) {
       allOrders = response.orders || response;
       renderOrders();
     }
   } catch (error) {
-    console.log('Using demo orders (API unavailable)');
+    console.log('[ORDERS] Using demo orders (API unavailable):', error.message);
   }
 }
 

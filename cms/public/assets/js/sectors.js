@@ -2,7 +2,10 @@
  * Sectors Management Page
  */
 
-import apiClient from './api-client.js';
+import api from './api-client.js';
+
+// Alias for backwards compatibility
+const apiClient = api;
 
 let allSectors = [];
 

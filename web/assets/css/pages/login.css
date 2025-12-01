@@ -26,12 +26,18 @@
 }
 
 .login-header .logo {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: var(--space-6);
+  background-color: #2C5F6F;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
-.login-header .logo-text {
-  font-size: var(--text-3xl);
+.login-header .logo-image {
+  height: auto;
+  width: 60px;
 }
 
 .login-title {

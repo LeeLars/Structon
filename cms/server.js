@@ -89,6 +89,9 @@ async function checkAndSeedDatabase() {
 
 const app = express();
 
+// Trust proxy for Railway (needed for rate limiting behind reverse proxy)
+app.set('trust proxy', 1);
+
 // CORS configuration - Allow multiple origins
 const allowedOrigins = [
   'http://localhost:3000',

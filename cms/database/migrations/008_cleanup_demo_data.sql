@@ -6,13 +6,14 @@
 -- ============================================
 
 -- Delete demo products (those with 'prod-' prefix IDs)
-DELETE FROM products WHERE id LIKE 'prod-%';
+-- Cast UUID to text for LIKE operator
+DELETE FROM products WHERE id::text LIKE 'prod-%';
 
 -- Delete demo brands (those with 'brand-' prefix IDs)
-DELETE FROM brands WHERE id LIKE 'brand-%';
+DELETE FROM brands WHERE id::text LIKE 'brand-%';
 
 -- Delete demo categories (those with 'cat-' prefix IDs)
-DELETE FROM categories WHERE id LIKE 'cat-%';
+DELETE FROM categories WHERE id::text LIKE 'cat-%';
 
 -- Log cleanup
 DO $$

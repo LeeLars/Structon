@@ -8,9 +8,10 @@
  */
 let activeFilters = {
   category: null,
+  subcategory: null,
   volume_min: null,
   volume_max: null,
-  excavator_weight: [],
+  excavator_weight: null, // Changed from array to single value for tonnage
   width: [],
   attachment_type: [],
   search: null,
@@ -41,15 +42,72 @@ export function initFilters(callback) {
 function parseUrlParams() {
   const params = new URLSearchParams(window.location.search);
   
+  // Category filter
   if (params.has('cat')) {
     activeFilters.category = params.get('cat');
   }
+  
+  // Subcategory filter (from navigation menu)
+  if (params.has('subcat')) {
+    activeFilters.subcategory = params.get('subcat');
+  }
+  
+  // Tonnage filter (from navigation menu) - convert to excavator_weight
+  if (params.has('tonnage')) {
+    const tonnage = params.get('tonnage');
+    activeFilters.excavator_weight = parseTonnageToWeight(tonnage);
+  }
+  
+  // Search filter
   if (params.has('search')) {
     activeFilters.search = params.get('search');
   }
+  
+  // Sort filter
   if (params.has('sort')) {
     activeFilters.sort = params.get('sort');
   }
+}
+
+/**
+ * Convert tonnage ID to excavator weight value
+ * Examples: '1t-2-5t' -> 1500, '5t-10t' -> 7500
+ */
+function parseTonnageToWeight(tonnageId) {
+  // Extract numbers from tonnage ID
+  // Format: '1t-2-5t' means 1 to 2.5 ton
+  // Format: '5t-10t' means 5 to 10 ton
+  // Format: '25t-plus' means 25+ ton
+  
+  if (tonnageId === '25t-plus') {
+    return 25000; // 25 ton and up
+  }
+  
+  // Extract first number (minimum weight)
+  const match = tonnageId.match(/^(\d+)t/);
+  if (match) {
+    const minTon = parseInt(match[1]);
+    
+    // Check if there's a decimal part (e.g., '2-5' means 2.5)
+    const decimalMatch = tonnageId.match(/(\d+)t-(\d+)-(\d+)t/);
+    if (decimalMatch) {
+      // e.g., '1t-2-5t' -> use middle value 1.75 ton
+      const maxTon = parseFloat(`${decimalMatch[2]}.${decimalMatch[3]}`);
+      return Math.round((minTon + maxTon) / 2 * 1000); // Convert to kg
+    }
+    
+    // Check for range (e.g., '5t-10t')
+    const rangeMatch = tonnageId.match(/(\d+)t-(\d+)t/);
+    if (rangeMatch) {
+      const maxTon = parseInt(rangeMatch[2]);
+      return Math.round((minTon + maxTon) / 2 * 1000); // Use middle value in kg
+    }
+    
+    // Single value
+    return minTon * 1000; // Convert to kg
+  }
+  
+  return null;
 }
 
 /**
@@ -180,24 +238,45 @@ function applyFilters() {
 export function getActiveFilters() {
   const filters = {};
   
+  // Category filter (main category slug)
   if (activeFilters.category) {
-    filters.category = activeFilters.category;
+    filters.category_slug = activeFilters.category;
   }
+  
+  // Subcategory filter (e.g., 'slotenbakken')
+  if (activeFilters.subcategory) {
+    filters.subcategory_slug = activeFilters.subcategory;
+  }
+  
+  // Excavator weight filter (tonnage in kg)
+  if (activeFilters.excavator_weight) {
+    filters.excavator_weight = activeFilters.excavator_weight;
+  }
+  
+  // Volume range filters
   if (activeFilters.volume_min) {
     filters.volume_min = activeFilters.volume_min;
   }
   if (activeFilters.volume_max && activeFilters.volume_max < 5000) {
     filters.volume_max = activeFilters.volume_max;
   }
+  
+  // Width filter
   if (activeFilters.width.length > 0) {
     filters.width = activeFilters.width[0]; // API accepts single value
   }
+  
+  // Attachment type filter
   if (activeFilters.attachment_type.length > 0) {
     filters.attachment_type = activeFilters.attachment_type[0];
   }
+  
+  // Search filter
   if (activeFilters.search) {
     filters.search = activeFilters.search;
   }
+  
+  // Sort filter
   if (activeFilters.sort) {
     filters.sort = activeFilters.sort;
   }
@@ -211,9 +290,10 @@ export function getActiveFilters() {
 export function clearFilters() {
   activeFilters = {
     category: activeFilters.category, // Keep category
+    subcategory: activeFilters.subcategory, // Keep subcategory
     volume_min: null,
     volume_max: null,
-    excavator_weight: [],
+    excavator_weight: null, // Keep as null (single value)
     width: [],
     attachment_type: [],
     search: null,

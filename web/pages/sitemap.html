@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sitemap van Structon - Overzicht van alle pagina's op onze website.">
+  <title>Sitemap | Structon</title>
+  
+  <!-- Fonts -->
+  <link rel="preload" href="../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/global.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
+  
+  <style>
+    .sitemap-page {
+      padding: 80px 0 120px;
+      min-height: 60vh;
+    }
+    
+    .sitemap-header {
+      margin-bottom: 60px;
+    }
+    
+    .sitemap-title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #2C5F6F;
+      margin-bottom: 16px;
+    }
+    
+    .sitemap-subtitle {
+      font-size: 1.1rem;
+      color: #6b7280;
+      max-width: 600px;
+    }
+    
+    .sitemap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+    }
+    
+    .sitemap-section {
+      background: #f9fafb;
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .sitemap-section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2C5F6F;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #236773;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .sitemap-section-title svg {
+      width: 24px;
+      height: 24px;
+      color: #236773;
+    }
+    
+    .sitemap-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sitemap-item {
+      margin-bottom: 8px;
+    }
+    
+    .sitemap-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      color: #374151;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+    
+    .sitemap-link:hover {
+      background: #236773;
+      color: white;
+      transform: translateX(4px);
+    }
+    
+    .sitemap-link svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.6;
+    }
+    
+    .sitemap-link:hover svg {
+      opacity: 1;
+    }
+    
+    /* Child pages (subcategories) */
+    .sitemap-children {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0 24px;
+      border-left: 2px solid #e5e7eb;
+    }
+    
+    .sitemap-children .sitemap-item {
+      margin-bottom: 4px;
+    }
+    
+    .sitemap-children .sitemap-link {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+    
+    .sitemap-children .sitemap-link:hover {
+      background: #3a8d9c;
+      color: white;
+    }
+    
+    /* Parent indicator */
+    .has-children > .sitemap-link::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: auto;
+      opacity: 0.5;
+    }
+    
+    @media (max-width: 768px) {
+      .sitemap-title {
+        font-size: 2rem;
+      }
+      
+      .sitemap-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      
+      .sitemap-section {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="container">
+      <nav class="top-nav">
+        <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
+        <a href="contact.html">Over</a>
+        <a href="dealer.html">Dealer worden</a>
+        <a href="blog.html">Blog</a>
+        <a href="faq.html">FAQ</a>
+        <a href="configurator.html">Configurator</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main navigation -->
+  <nav class="main-nav">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+      </a>
+      
+      <div class="menu">
+        <a href="category.html?cat=graafbakken" class="menu-item">
+          Graafbakken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">
+          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=adapters" class="menu-item">
+          Adapterstukken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="category.html?cat=overige" class="menu-item">
+          Overige <span class="dropdown-arrow">▼</span>
+        </a>
+      </div>
+      
+      <div class="nav-actions">
+        <a href="all-products.html" class="cta-button">Bekijk alles</a>
+      </div>
+      
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="sitemap-page">
+    <div class="container">
+      <header class="sitemap-header">
+        <h1 class="sitemap-title">Sitemap</h1>
+        <p class="sitemap-subtitle">
+          Een volledig overzicht van alle pagina's op de Structon website. 
+          Vind snel wat je zoekt.
+        </p>
+      </header>
+      
+      <div class="sitemap-grid">
+        <!-- Hoofdpagina's -->
+        <section class="sitemap-section">
+          <h2 class="sitemap-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Hoofdpagina's
+          </h2>
+          <ul class="sitemap-list">
+            <li class="sitemap-item">
+              <a href="../index.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Home
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="contact.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Over Ons
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="contact.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Contact
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="blog.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Blog
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="faq.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Veelgestelde Vragen (FAQ)
+              </a>
+            </li>
+          </ul>
+        </section>
+        
+        <!-- Producten -->
+        <section class="sitemap-section">
+          <h2 class="sitemap-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            </svg>
+            Producten
+          </h2>
+          <ul class="sitemap-list">
+            <li class="sitemap-item">
+              <a href="all-products.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Alle Producten
+              </a>
+            </li>
+            <li class="sitemap-item has-children">
+              <a href="category.html?cat=graafbakken" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Graafbakken
+              </a>
+              <ul class="sitemap-children">
+                <li class="sitemap-item">
+                  <a href="category.html?cat=graafbakken&subcat=dieplepelbakken" class="sitemap-link">Dieplepelbakken</a>
+                </li>
+                <li class="sitemap-item">
+                  <a href="category.html?cat=graafbakken&subcat=slotenbakken" class="sitemap-link">Slotenbakken</a>
+                </li>
+                <li class="sitemap-item">
+                  <a href="category.html?cat=graafbakken&subcat=rioolbakken" class="sitemap-link">Rioolbakken</a>
+                </li>
+              </ul>
+            </li>
+            <li class="sitemap-item has-children">
+              <a href="category.html?cat=sloop-sorteergrijpers" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Sloop- en Sorteergrijpers
+              </a>
+              <ul class="sitemap-children">
+                <li class="sitemap-item">
+                  <a href="category.html?cat=sloop-sorteergrijpers&subcat=sorteergrijpers" class="sitemap-link">Sorteergrijpers</a>
+                </li>
+                <li class="sitemap-item">
+                  <a href="category.html?cat=sloop-sorteergrijpers&subcat=puinbakken" class="sitemap-link">Puinbakken</a>
+                </li>
+              </ul>
+            </li>
+            <li class="sitemap-item">
+              <a href="category.html?cat=adapters" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Adapterstukken
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="category.html?cat=overige" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Overige
+              </a>
+            </li>
+          </ul>
+        </section>
+        
+        <!-- Diensten -->
+        <section class="sitemap-section">
+          <h2 class="sitemap-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+            Diensten & Tools
+          </h2>
+          <ul class="sitemap-list">
+            <li class="sitemap-item">
+              <a href="configurator.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Product Configurator
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="dealer.html" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Dealer Worden
+              </a>
+            </li>
+          </ul>
+        </section>
+        
+        <!-- Klantportaal -->
+        <section class="sitemap-section">
+          <h2 class="sitemap-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Klantportaal
+          </h2>
+          <ul class="sitemap-list">
+            <li class="sitemap-item">
+              <a href="#" class="sitemap-link login-trigger">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Inloggen
+              </a>
+            </li>
+          </ul>
+        </section>
+        
+        <!-- Juridisch -->
+        <section class="sitemap-section">
+          <h2 class="sitemap-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            Juridisch
+          </h2>
+          <ul class="sitemap-list">
+            <li class="sitemap-item">
+              <a href="#" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Privacybeleid
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="#" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Algemene Voorwaarden
+              </a>
+            </li>
+            <li class="sitemap-item">
+              <a href="#" class="sitemap-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Cookiebeleid
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Structon</h4>
+          <p>Specialist in kraanbakken en graafmachine aanbouwdelen voor de professionele markt.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>Industrieweg 123<br>1234 AB Plaats</p>
+          <p>info@structon.nl</p>
+        </div>
+        <div class="footer-col">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="all-products.html">Producten</a></li>
+            <li><a href="dealer.html">Dealer worden</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom-bar">
+        <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
+        <div class="footer-branding">
+          Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="../assets/js/main.js"></script>
+  <script src="../assets/js/components/login-modal.js"></script>
+</body>
+</html>

@@ -96,81 +96,55 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
     ? `product.html?id=${product.slug || product.id}`
     : `pages/product.html?id=${product.slug || product.id}`;
 
-  // Build specs list
+  // Build specs list (Matching screenshot: Label | Value)
   const specsHtml = `
     <dl class="product-specs">
       ${product.weight ? `<dt>Gewicht</dt><dd>${product.weight} kg</dd>` : ''}
       ${product.volume ? `<dt>Inhoud</dt><dd>${product.volume} liter</dd>` : ''}
-      ${product.width ? `<dt>Breedte</dt><dd>${product.width}mm</dd>` : ''}
+      ${product.width ? `<dt>Breedte</dt><dd>${product.width} mm</dd>` : ''}
       ${product.excavator_weight_min && product.excavator_weight_max ? 
-        `<dt>Graafmachine Klasse</dt><dd>${product.excavator_weight_min} - ${product.excavator_weight_max} ton</dd>` : ''}
+        `<dt>Graafmachine klasse</dt><dd>${(product.excavator_weight_min/1000).toFixed(1).replace('.',',')} - ${(product.excavator_weight_max/1000).toFixed(1).replace('.',',')} ton</dd>` : ''}
       ${product.attachment_type ? `<dt>Ophanging</dt><dd>${product.attachment_type}</dd>` : ''}
     </dl>
   `;
 
-  // Price display - only for logged in users
+  // Price display
   const priceHtml = isLoggedIn 
     ? `<div class="product-price-display">
          <div class="product-price-amount">€${formatPrice(product.price_excl_vat)},-</div>
-         <div class="product-price-vat">excl. BTW</div>
        </div>`
     : `<div class="product-price-display">
-         <div class="product-price-hidden">Prijs op aanvraag</div>
+         <!-- Price hidden for non-logged in users, or show 'Prijs op aanvraag' if desired -->
        </div>`;
 
-  // Buttons - different based on login state
-  let buttonsHtml;
-  if (isLoggedIn) {
-    buttonsHtml = `
-      <div class="product-buttons">
-        <button class="btn-product-primary" onclick="addToCart('${product.id}', '${escapeHtml(product.title)}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          Voeg toe aan winkelmandje
-        </button>
-        <a href="${productUrl}" class="btn-product-secondary">
-          Meer info
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-      </div>
-    `;
-  } else {
-    buttonsHtml = `
-      <div class="product-buttons">
-        <a href="${productUrl}?quote=true" class="btn-product-primary">
-          Vraag offerte aan
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </a>
-        <a href="${productUrl}" class="btn-more-info">
-          Meer info
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-      </div>
-    `;
-  }
-
-  // Tags for category and brand
-  const tagsHtml = `
-    <div class="product-tags">
-      ${product.category_title ? `<span class="product-tag">${escapeHtml(product.category_title)}</span>` : ''}
-      ${product.brand_title ? `<span class="product-tag">${escapeHtml(product.brand_title)}</span>` : ''}
+  // Buttons - "Meer info" style from screenshot
+  const buttonsHtml = `
+    <div class="product-buttons">
+      <a href="${productUrl}" class="btn-more-info-outline">
+        Meer info
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
     </div>
   `;
 
+  // New Structure: Grid 300px | 1fr
   return `
     <article class="product-card-horizontal" data-product-id="${product.id}">
       <a href="${productUrl}" class="product-image">
         <img src="${imageUrl}" alt="${escapeHtml(product.title)}" loading="lazy">
       </a>
+      
       <div class="product-info">
         <h3 class="product-title">
           <a href="${productUrl}">${escapeHtml(product.title)}</a>
         </h3>
+        
         ${specsHtml}
-        ${tagsHtml}
-      </div>
-      <div class="product-actions">
-        ${priceHtml}
-        ${buttonsHtml}
+        
+        <div class="product-actions-wrapper">
+          ${priceHtml}
+          ${buttonsHtml}
+        </div>
       </div>
     </article>
   `;

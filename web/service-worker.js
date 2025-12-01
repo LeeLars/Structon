@@ -4,7 +4,7 @@
  * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v5';
+const CACHE_VERSION = 'structon-v6';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -99,14 +99,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Static assets - cache first (fastest)
+  // Fonts - cache first (they rarely change)
+  if (request.destination === 'font') {
+    event.respondWith(cacheFirstStrategy(request, STATIC_CACHE));
+    return;
+  }
+
+  // CSS and JS - network first (to ensure updates are visible)
   if (
     request.destination === 'style' ||
     request.destination === 'script' ||
-    request.destination === 'font' ||
-    url.pathname.includes('/assets/')
+    url.pathname.includes('/assets/css/') ||
+    url.pathname.includes('/assets/js/')
   ) {
-    event.respondWith(cacheFirstStrategy(request, STATIC_CACHE));
+    event.respondWith(networkFirstStrategy(request, STATIC_CACHE));
     return;
   }
 

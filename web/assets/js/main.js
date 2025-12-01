@@ -117,9 +117,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
          <!-- Price hidden for non-logged in users, or show 'Prijs op aanvraag' if desired -->
        </div>`;
 
-  // Buttons - Structon Style (btn-split for More info, btn-primary for Quote)
-  let buttonsHtml;
-  
+  // Buttons - Structon Style (Alleen 'Meer info')
   // Common More Info button (Structon Standard)
   const moreInfoBtn = `
     <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
@@ -130,9 +128,12 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
     </a>
   `;
 
+  // Als ingelogd: In winkelmandje + Meer info
+  // Als niet ingelogd: ALLEEN Meer info (zoals gevraagd)
+  let buttonsHtml;
   if (isLoggedIn) {
     buttonsHtml = `
-      <div class="product-buttons">
+      <div class="product-buttons" style="margin-top: 16px;">
         <button class="btn btn-primary" onclick="addToCart('${product.id}', '${escapeHtml(product.title)}')" style="width: 100%; justify-content: center;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="margin-right: 8px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           In winkelmandje
@@ -142,11 +143,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
     `;
   } else {
     buttonsHtml = `
-      <div class="product-buttons">
-        <a href="${productUrl}?quote=true" class="btn btn-primary" style="width: 100%; justify-content: center; text-decoration: none;">
-          Vraag offerte aan
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="margin-left: 8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </a>
+      <div class="product-buttons" style="margin-top: 16px;">
         ${moreInfoBtn}
       </div>
     `;

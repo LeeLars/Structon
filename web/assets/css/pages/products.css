@@ -38,19 +38,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc; /* Lichte achtergrond zoals in voorbeeld */
+  background: transparent; /* Geen grijs kader meer */
   border-radius: 8px;
   overflow: hidden;
   margin: 0;
-  box-shadow: none; /* Vlak houden */
+  box-shadow: none;
 }
 
 .product-card-horizontal .product-image img {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Of 'cover' als je de hele box wilt vullen met de foto */
   transition: transform 0.3s ease;
-  filter: none; /* Geen drop-shadow standaard */
+  filter: none;
 }
 
 .product-card-horizontal:hover .product-image img {
@@ -112,11 +112,11 @@
 
 /* Price & Actions Container */
 .product-actions-wrapper {
-  margin-top: 24px;
+  margin-top: 0; /* Weg met margin */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  gap: 0; /* Weg met gap */
 }
 
 /* Price */

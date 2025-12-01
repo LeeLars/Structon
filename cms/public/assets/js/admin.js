@@ -254,19 +254,67 @@ async function loadDashboardData() {
 }
 
 /**
- * Load dashboard statistics
+ * Load dashboard statistics from actual data
  */
 async function loadDashboardStats() {
   try {
-    const response = await api.get('/sales/stats');
-    const stats = response; // api client returns data directly
+    // Load all data in parallel
+    const [quotesRes, ordersRes, productsRes, usersRes] = await Promise.allSettled([
+      api.get('/sales/quotes'),
+      api.get('/sales/orders'),
+      api.get('/admin/products'),
+      api.get('/admin/users')
+    ]);
     
-    updateStat('stat-quotes', stats.quotes);
-    updateStat('stat-orders', stats.orders);
-    updateStat('stat-products', stats.products);
-    updateStat('stat-users', stats.customers);
+    // Count quotes
+    let quotesCount = 0;
+    let newQuotesCount = 0;
+    if (quotesRes.status === 'fulfilled') {
+      const quotes = quotesRes.value?.quotes || quotesRes.value || [];
+      quotesCount = quotes.length;
+      newQuotesCount = quotes.filter(q => q.status === 'new').length;
+    }
+    updateStat('stat-quotes', quotesCount);
+    updateStat('stat-quotes-badge', newQuotesCount > 0 ? `+${newQuotesCount}` : '');
+    updateStat('stat-quotes-change', `${newQuotesCount} nieuw`);
+    
+    // Count orders
+    let ordersCount = 0;
+    let pendingOrdersCount = 0;
+    if (ordersRes.status === 'fulfilled') {
+      const orders = ordersRes.value?.orders || ordersRes.value || [];
+      ordersCount = orders.length;
+      pendingOrdersCount = orders.filter(o => o.status === 'pending' || o.status === 'paid').length;
+    }
+    updateStat('stat-orders', ordersCount);
+    updateStat('stat-orders-badge', pendingOrdersCount > 0 ? `+${pendingOrdersCount}` : '');
+    updateStat('stat-orders-change', `${pendingOrdersCount} in behandeling`);
+    
+    // Count products
+    let productsCount = 0;
+    if (productsRes.status === 'fulfilled') {
+      const products = productsRes.value?.products || productsRes.value || [];
+      productsCount = products.length;
+    }
+    updateStat('stat-products', productsCount);
+    
+    // Count users/customers
+    let usersCount = 0;
+    if (usersRes.status === 'fulfilled') {
+      const users = usersRes.value?.users || usersRes.value || [];
+      usersCount = users.length;
+    }
+    updateStat('stat-users', usersCount);
+    updateStat('stat-users-badge', '');
+    updateStat('stat-users-change', 'Geregistreerd');
+    
   } catch (error) {
     console.error('Failed to load stats:', error);
+    // Set fallback values
+    updateStat('stat-quotes', '0');
+    updateStat('stat-orders', '0');
+    updateStat('stat-products', '0');
+    updateStat('stat-users', '0');
   }
 }
 

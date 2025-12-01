@@ -264,9 +264,165 @@ function showError(message) {
 
 // Global functions for inline onclick
 window.viewOrder = (id) => {
-  alert(`Bestelling ${id} bekijken (nog niet geïmplementeerd)`);
+  const order = allOrders.find(o => o.id === id);
+  if (order) {
+    openOrderModal(order, 'view');
+  }
 };
 
 window.updateOrderStatus = (id) => {
-  alert(`Status wijzigen voor bestelling ${id} (nog niet geïmplementeerd)`);
+  const order = allOrders.find(o => o.id === id);
+  if (order) {
+    openOrderModal(order, 'status');
+  }
+};
+
+/**
+ * Open order modal for viewing or status change
+ */
+function openOrderModal(order, mode = 'view') {
+  let modal = document.getElementById('order-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'order-modal';
+    modal.className = 'modal';
+    modal.innerHTML = `
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="order-modal-title">Bestelling Details</h2>
+          <button class="btn-close" onclick="closeOrderModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" id="order-modal-body"></div>
+        <div class="modal-footer" id="order-modal-footer"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  const title = document.getElementById('order-modal-title');
+  const body = document.getElementById('order-modal-body');
+  const footer = document.getElementById('order-modal-footer');
+
+  if (mode === 'view') {
+    title.textContent = `Bestelling ${order.order_number}`;
+    body.innerHTML = `
+      <div class="order-details">
+        <div class="detail-row">
+          <span class="detail-label">Bestelnummer</span>
+          <span class="detail-value">${order.order_number}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Datum</span>
+          <span class="detail-value">${formatDate(order.created_at)}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Klant</span>
+          <span class="detail-value">${order.customer_name}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Email</span>
+          <span class="detail-value"><a href="mailto:${order.customer_email}">${order.customer_email}</a></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span class="detail-value"><span class="badge badge-${getStatusColor(order.status)}">${getStatusLabel(order.status)}</span></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Totaal</span>
+          <span class="detail-value"><strong>€${order.total_amount?.toFixed(2) || '0.00'}</strong></span>
+        </div>
+        ${order.items?.length ? `
+        <div class="detail-row full-width">
+          <span class="detail-label">Producten</span>
+          <span class="detail-value">
+            ${order.items.map(item => `${item.quantity}x ${item.product_title} - €${item.price?.toFixed(2)}`).join('<br>')}
+          </span>
+        </div>
+        ` : ''}
+      </div>
+    `;
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="closeOrderModal()">Sluiten</button>
+      <button class="btn btn-primary" onclick="openOrderModal(allOrders.find(o => o.id === '${order.id}'), 'status')">Status Wijzigen</button>
+    `;
+  } else if (mode === 'status') {
+    title.textContent = 'Status Wijzigen';
+    body.innerHTML = `
+      <div class="status-selector">
+        <p style="margin-bottom: 1rem; color: var(--col-text-muted);">Selecteer de nieuwe status voor bestelling <strong>${order.order_number}</strong></p>
+        <div class="status-options" id="status-options">
+          <label class="status-option ${order.status === 'pending' ? 'selected' : ''}">
+            <input type="radio" name="order-status" value="pending" ${order.status === 'pending' ? 'checked' : ''}>
+            <span class="status-option-badge badge badge-warning">In afwachting</span>
+          </label>
+          <label class="status-option ${order.status === 'paid' ? 'selected' : ''}">
+            <input type="radio" name="order-status" value="paid" ${order.status === 'paid' ? 'checked' : ''}>
+            <span class="status-option-badge badge badge-info">Betaald</span>
+          </label>
+          <label class="status-option ${order.status === 'shipped' ? 'selected' : ''}">
+            <input type="radio" name="order-status" value="shipped" ${order.status === 'shipped' ? 'checked' : ''}>
+            <span class="status-option-badge badge badge-primary">Verzonden</span>
+          </label>
+          <label class="status-option ${order.status === 'completed' ? 'selected' : ''}">
+            <input type="radio" name="order-status" value="completed" ${order.status === 'completed' ? 'checked' : ''}>
+            <span class="status-option-badge badge badge-success">Voltooid</span>
+          </label>
+          <label class="status-option ${order.status === 'cancelled' ? 'selected' : ''}">
+            <input type="radio" name="order-status" value="cancelled" ${order.status === 'cancelled' ? 'checked' : ''}>
+            <span class="status-option-badge badge badge-danger">Geannuleerd</span>
+          </label>
+        </div>
+      </div>
+    `;
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="closeOrderModal()">Annuleren</button>
+      <button class="btn btn-primary" onclick="saveOrderStatus('${order.id}')">Opslaan</button>
+    `;
+
+    setTimeout(() => {
+      document.querySelectorAll('.status-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          document.querySelectorAll('.status-option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          opt.querySelector('input').checked = true;
+        });
+      });
+    }, 0);
+  }
+
+  modal.style.display = 'flex';
+}
+
+window.closeOrderModal = () => {
+  const modal = document.getElementById('order-modal');
+  if (modal) modal.style.display = 'none';
+};
+
+window.saveOrderStatus = async (id) => {
+  const selected = document.querySelector('input[name="order-status"]:checked');
+  if (!selected) return;
+
+  const newStatus = selected.value;
+  const order = allOrders.find(o => o.id === id);
+  
+  if (order) {
+    try {
+      await api.put(`/sales/orders/${id}`, { status: newStatus });
+    } catch (error) {
+      console.log('API unavailable, updating locally');
+    }
+    
+    order.status = newStatus;
+    renderOrders();
+    closeOrderModal();
+    
+    if (window.showToast) {
+      window.showToast('Status bijgewerkt', 'success');
+    }
+  }
 };

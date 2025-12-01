@@ -19,8 +19,7 @@ const DEMO_PRODUCTS = [
     description: 'Professionele slotenbak voor graafmachines van 8-15 ton.',
     category_id: 'cat-1',
     category_title: 'Slotenbakken',
-    brand_id: 'brand-1',
-    brand_title: 'Structon',
+    tonnage: ['8-15'],
     width: 600,
     volume: 120,
     weight: 85,
@@ -38,8 +37,7 @@ const DEMO_PRODUCTS = [
     description: 'Zware graafbak voor grote graafmachines.',
     category_id: 'cat-2',
     category_title: 'Graafbakken',
-    brand_id: 'brand-1',
-    brand_title: 'Structon',
+    tonnage: ['15-25', '25-40'],
     width: 1200,
     volume: 450,
     weight: 280,
@@ -57,8 +55,7 @@ const DEMO_PRODUCTS = [
     description: 'Veelzijdige sorteergrijper voor sloop en recycling.',
     category_id: 'cat-3',
     category_title: 'Sloop- en sorteergrijpers',
-    brand_id: 'brand-2',
-    brand_title: 'Caterpillar',
+    tonnage: ['8-15', '15-25'],
     width: 800,
     volume: null,
     weight: 450,
@@ -76,8 +73,7 @@ const DEMO_PRODUCTS = [
     description: 'Compacte plantenbak voor kleine graafmachines.',
     category_id: 'cat-4',
     category_title: 'Overige',
-    brand_id: 'brand-1',
-    brand_title: 'Structon',
+    tonnage: ['1.5-3', '3-8'],
     width: 400,
     volume: 45,
     weight: 35,
@@ -95,8 +91,7 @@ const DEMO_PRODUCTS = [
     description: 'Smalle rioolbak voor precisiewerk.',
     category_id: 'cat-1',
     category_title: 'Slotenbakken',
-    brand_id: 'brand-3',
-    brand_title: 'Volvo',
+    tonnage: ['3-8'],
     width: 300,
     volume: 60,
     weight: 55,
@@ -116,16 +111,19 @@ const DEMO_CATEGORIES = [
   { id: 'cat-4', title: 'Overige', slug: 'overige' }
 ];
 
-const DEMO_BRANDS = [
-  { id: 'brand-1', title: 'Structon', slug: 'structon' },
-  { id: 'brand-2', title: 'Caterpillar', slug: 'caterpillar' },
-  { id: 'brand-3', title: 'Volvo', slug: 'volvo' }
+// Tonnage options
+const TONNAGE_OPTIONS = [
+  { value: '1.5-3', label: '1.5 - 3 ton' },
+  { value: '3-8', label: '3 - 8 ton' },
+  { value: '8-15', label: '8 - 15 ton' },
+  { value: '15-25', label: '15 - 25 ton' },
+  { value: '25-40', label: '25 - 40 ton' },
+  { value: '40+', label: '40+ ton' }
 ];
 
 // State
 let products = [];
 let categories = [];
-let brands = [];
 let filteredProducts = [];
 let currentPage = 1;
 let itemsPerPage = 20;
@@ -160,12 +158,11 @@ async function initializeData() {
   console.log('📦 [PRODUCTS] initializeData starting...');
   console.log('   DEMO_PRODUCTS available:', DEMO_PRODUCTS.length);
   console.log('   DEMO_CATEGORIES available:', DEMO_CATEGORIES.length);
-  console.log('   DEMO_BRANDS available:', DEMO_BRANDS.length);
+  console.log('   TONNAGE_OPTIONS available:', TONNAGE_OPTIONS.length);
   
   // Load demo data immediately for fast display
   products = [...DEMO_PRODUCTS];
   categories = [...DEMO_CATEGORIES];
-  brands = [...DEMO_BRANDS];
   filteredProducts = [...products];
   
   console.log('   Demo data loaded, rendering...');
@@ -177,10 +174,9 @@ async function initializeData() {
   
   // Try to load from API in background
   try {
-    const [productsData, categoriesData, brandsData] = await Promise.allSettled([
+    const [productsData, categoriesData] = await Promise.allSettled([
       api.get('/admin/products'),
-      api.get('/categories'),
-      api.get('/brands')
+      api.get('/categories')
     ]);
     
     if (productsData.status === 'fulfilled' && productsData.value?.products?.length > 0) {
@@ -189,13 +185,8 @@ async function initializeData() {
       renderProducts();
     }
     
-    if (categoriesData.status === 'fulfilled' && categoriesData.value?.length > 0) {
-      categories = categoriesData.value;
-      populateFilters();
-    }
-    
-    if (brandsData.status === 'fulfilled' && brandsData.value?.length > 0) {
-      brands = brandsData.value;
+    if (categoriesData.status === 'fulfilled' && categoriesData.value?.categories?.length > 0) {
+      categories = categoriesData.value.categories;
       populateFilters();
     }
   } catch (error) {
@@ -225,7 +216,6 @@ function setupEventListeners() {
   
   // Filters
   document.getElementById('filter-category')?.addEventListener('change', applyFilters);
-  document.getElementById('filter-brand')?.addEventListener('change', applyFilters);
   document.getElementById('filter-status')?.addEventListener('change', applyFilters);
   
   // View toggles
@@ -283,9 +273,7 @@ function setupEventListeners() {
 function populateFilters() {
   // Clear existing options first (keep first "Alle" option)
   const categoryFilter = document.getElementById('filter-category');
-  const brandFilter = document.getElementById('filter-brand');
   const productCategory = document.getElementById('product-category');
-  const productBrand = document.getElementById('product-brand');
   
   // Clear and repopulate category filter
   if (categoryFilter) {
@@ -298,17 +286,6 @@ function populateFilters() {
     });
   }
   
-  // Clear and repopulate brand filter
-  if (brandFilter) {
-    brandFilter.innerHTML = '<option value="">Alle merken</option>';
-    brands.forEach(brand => {
-      const option = document.createElement('option');
-      option.value = brand.id;
-      option.textContent = brand.title;
-      brandFilter.appendChild(option);
-    });
-  }
-  
   // Populate modal category select
   if (productCategory) {
     productCategory.innerHTML = '<option value="">Selecteer categorie</option>';
@@ -317,17 +294,6 @@ function populateFilters() {
       option.value = cat.id;
       option.textContent = cat.title;
       productCategory.appendChild(option);
-    });
-  }
-  
-  // Populate modal brand select
-  if (productBrand) {
-    productBrand.innerHTML = '<option value="">Selecteer merk</option>';
-    brands.forEach(brand => {
-      const option = document.createElement('option');
-      option.value = brand.id;
-      option.textContent = brand.title;
-      productBrand.appendChild(option);
     });
   }
 }
@@ -346,7 +312,6 @@ function handleSearch(e) {
 function applyFilters(searchQuery = null) {
   const search = searchQuery || document.getElementById('search-products')?.value.toLowerCase() || '';
   const categoryId = document.getElementById('filter-category')?.value || '';
-  const brandId = document.getElementById('filter-brand')?.value || '';
   const status = document.getElementById('filter-status')?.value || '';
   
   filteredProducts = products.filter(product => {
@@ -355,14 +320,13 @@ function applyFilters(searchQuery = null) {
       product.slug.toLowerCase().includes(search);
     
     const matchesCategory = !categoryId || product.category_id === categoryId;
-    const matchesBrand = !brandId || product.brand_id === brandId;
     
     let matchesStatus = true;
     if (status === 'active') matchesStatus = product.is_active;
     if (status === 'inactive') matchesStatus = !product.is_active;
     if (status === 'featured') matchesStatus = product.is_featured;
     
-    return matchesSearch && matchesCategory && matchesBrand && matchesStatus;
+    return matchesSearch && matchesCategory && matchesStatus;
   });
   
   currentPage = 1;
@@ -415,12 +379,9 @@ function renderProducts() {
         </div>
       </td>
       <td>${escapeHtml(product.category_title || '-')}</td>
-      <td>${escapeHtml(product.brand_title || '-')}</td>
       <td>
-        <div class="product-specs">
-          ${product.width ? `${product.width}mm` : ''}
-          ${product.volume ? `• ${product.volume}L` : ''}
-          ${product.attachment_type ? `• ${product.attachment_type}` : ''}
+        <div class="tonnage-badges">
+          ${(product.tonnage || []).map(t => `<span class="tonnage-badge">${t} ton</span>`).join('')}
         </div>
       </td>
       <td>
@@ -592,14 +553,22 @@ function openProductModal(product = null) {
     return;
   }
   
+  // Reset form first
+  form.reset();
+  delete form.dataset.productId;
+  
+  // Uncheck all tonnage checkboxes
+  document.querySelectorAll('input[name="tonnage"]').forEach(cb => cb.checked = false);
+  
   if (product) {
     title.textContent = 'Product Bewerken';
     populateForm(product);
     editingProductId = product.id;
   } else {
     title.textContent = 'Nieuw Product';
-    form.reset();
     editingProductId = null;
+    // Set default active state
+    document.getElementById('product-active').checked = true;
   }
   
   modal.style.display = 'flex';
@@ -622,17 +591,20 @@ function populateForm(product) {
   document.getElementById('product-slug').value = product.slug || '';
   document.getElementById('product-description').value = product.description || '';
   document.getElementById('product-category').value = product.category_id || '';
-  document.getElementById('product-brand').value = product.brand_id || '';
   document.getElementById('product-width').value = product.width || '';
   document.getElementById('product-volume').value = product.volume || '';
   document.getElementById('product-weight').value = product.weight || '';
   document.getElementById('product-attachment').value = product.attachment_type || '';
-  document.getElementById('product-min-weight').value = product.excavator_weight_min || '';
-  document.getElementById('product-max-weight').value = product.excavator_weight_max || '';
   document.getElementById('product-stock').value = product.stock_quantity || 0;
   document.getElementById('product-active').checked = product.is_active;
-  document.getElementById('product-featured').checked = product.is_featured;
-  document.getElementById('product-price').value = product.price_excl_vat || '';
+  const featuredCheckbox = document.getElementById('product-featured');
+  if (featuredCheckbox) featuredCheckbox.checked = product.is_featured;
+  
+  // Set tonnage checkboxes
+  const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]');
+  tonnageCheckboxes.forEach(cb => {
+    cb.checked = (product.tonnage || []).includes(cb.value);
+  });
   
   // Store product ID for update
   document.getElementById('product-form').dataset.productId = product.id;
@@ -648,9 +620,16 @@ async function handleProductSubmit(e) {
   const productId = form.dataset.productId;
   
   const categoryId = document.getElementById('product-category').value;
-  const brandId = document.getElementById('product-brand').value;
   const category = categories.find(c => c.id === categoryId);
-  const brand = brands.find(b => b.id === brandId);
+  
+  // Get selected tonnage values
+  const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]:checked');
+  const selectedTonnage = Array.from(tonnageCheckboxes).map(cb => cb.value);
+  
+  if (selectedTonnage.length === 0) {
+    showToast('Selecteer minimaal één tonnage', 'error');
+    return;
+  }
   
   const productData = {
     id: productId || `prod-${Date.now()}`,
@@ -659,18 +638,14 @@ async function handleProductSubmit(e) {
     description: document.getElementById('product-description').value,
     category_id: categoryId || null,
     category_title: category?.title || '',
-    brand_id: brandId || null,
-    brand_title: brand?.title || '',
+    tonnage: selectedTonnage,
     width: parseInt(document.getElementById('product-width').value) || null,
     volume: parseInt(document.getElementById('product-volume').value) || null,
     weight: parseInt(document.getElementById('product-weight').value) || null,
     attachment_type: document.getElementById('product-attachment').value || null,
-    excavator_weight_min: parseInt(document.getElementById('product-min-weight').value) || null,
-    excavator_weight_max: parseInt(document.getElementById('product-max-weight').value) || null,
     stock_quantity: parseInt(document.getElementById('product-stock').value) || 0,
     is_active: document.getElementById('product-active').checked,
-    is_featured: document.getElementById('product-featured').checked,
-    price_excl_vat: parseFloat(document.getElementById('product-price').value) || null,
+    is_featured: document.getElementById('product-featured')?.checked || false,
     cloudinary_images: []
   };
   

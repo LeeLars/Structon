@@ -92,7 +92,17 @@ class APIClient {
    */
   async put(endpoint, data) {
     return this.request(endpoint, {
-      method: 'PUT',
+      method: 'PATCH',  // Use PATCH for partial updates
+      body: JSON.stringify(data),
+    });
+  }
+
+  /**
+   * PATCH request
+   */
+  async patch(endpoint, data) {
+    return this.request(endpoint, {
+      method: 'PATCH',
       body: JSON.stringify(data),
     });
   }

@@ -70,9 +70,6 @@
             <select id="filter-category" class="filter-select">
               <option value="">Alle Categorieën</option>
             </select>
-            <select id="filter-brand" class="filter-select">
-              <option value="">Alle Merken</option>
-            </select>
             <select id="filter-status" class="filter-select">
               <option value="">Alle Status</option>
               <option value="active">Actief</option>
@@ -106,7 +103,7 @@
                 <th width="80">Afbeelding</th>
                 <th>Product</th>
                 <th>Categorie</th>
-                <th>Merk</th>
+                <th>Tonnage</th>
                 <th>Voorraad</th>
                 <th>Prijs</th>
                 <th>Status</th>
@@ -171,16 +168,21 @@
                     <option value="">Selecteer categorie</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="product-brand">Merk</label>
-                  <select id="product-brand" name="brand_id">
-                    <option value="">Geen merk</option>
-                  </select>
-                </div>
               </div>
             </div>
             <div class="form-section">
               <h3 class="form-section-title">Specificaties</h3>
+              <div class="form-group">
+                <label>Tonnage (graafmachine klasse) *</label>
+                <div class="checkbox-grid" id="tonnage-checkboxes">
+                  <label class="checkbox-label"><input type="checkbox" name="tonnage" value="1.5-3"> 1.5 - 3 ton</label>
+                  <label class="checkbox-label"><input type="checkbox" name="tonnage" value="3-8"> 3 - 8 ton</label>
+                  <label class="checkbox-label"><input type="checkbox" name="tonnage" value="8-15"> 8 - 15 ton</label>
+                  <label class="checkbox-label"><input type="checkbox" name="tonnage" value="15-25"> 15 - 25 ton</label>
+                  <label class="checkbox-label"><input type="checkbox" name="tonnage" value="25-40"> 25 - 40 ton</label>
+                  <label class="checkbox-label"><input type="checkbox" name="tonnage" value="40+"> 40+ ton</label>
+                </div>
+              </div>
               <div class="form-row">
                 <div class="form-group">
                   <label for="product-width">Breedte (mm)</label>
@@ -205,9 +207,12 @@
                     <option value="CW20">CW20</option>
                     <option value="CW30">CW30</option>
                     <option value="CW40">CW40</option>
+                    <option value="CW45">CW45</option>
                     <option value="S40">S40</option>
                     <option value="S50">S50</option>
                     <option value="S60">S60</option>
+                    <option value="S70">S70</option>
+                    <option value="S80">S80</option>
                   </select>
                 </div>
               </div>
@@ -215,11 +220,19 @@
                 <label for="product-stock">Voorraad</label>
                 <input type="number" id="product-stock" name="stock_quantity" value="0" min="0">
               </div>
-              <div class="form-group">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="product-active" name="is_active" checked>
-                  <span>Product is actief</span>
-                </label>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="product-active" name="is_active" checked>
+                    <span>Product is actief</span>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="product-featured" name="is_featured">
+                    <span>Uitgelicht product</span>
+                  </label>
+                </div>
               </div>
             </div>
             <div class="form-section full-width">

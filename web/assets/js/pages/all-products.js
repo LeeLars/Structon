@@ -1,78 +1,95 @@
 /**
  * All Products Page
- * Displays all available products in horizontal card layout
+ * Displays all available products with filters
  */
 
-import { products as productsAPI } from '../api/client.js';
-import { createProductCardHorizontal, showLoading, showError } from '../main.js';
+import { products } from '../api/client.js';
+import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
+import { initFilters, getActiveFilters } from '../filters.js';
+import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
+
+let allProducts = [];
 
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
 
+document.addEventListener('DOMContentLoaded', () => {
+  initPage();
+});
+
 /**
- * Load and display all products
+ * Initialize page
  */
-async function loadAllProducts() {
-  const container = document.getElementById('all-products-grid');
+async function initPage() {
+  // Initialize filters with callback
+  initFilters(handleFilterChange);
   
+  // Load initial products
+  await loadProducts();
+}
+
+/**
+ * Load products
+ */
+async function loadProducts() {
+  const container = document.getElementById('products-grid');
   if (!container) return;
-  
-  // Show loading state
-  container.innerHTML = `
-    <div class="products-loading">
-      <div class="spinner"></div>
-      <p>Producten laden...</p>
-    </div>
-  `;
-  
+
+  showLoading(container);
+
   try {
-    // Fetch all products (no filters)
-    const response = await productsAPI.getAll();
+    const filters = getActiveFilters();
+    filters.limit = getItemsPerPage();
+    filters.offset = getOffset();
+
+    const data = await products.getAll(filters);
     
-    // Handle both array and object response formats
-    const allProducts = Array.isArray(response) ? response : (response?.products || []);
-    
-    console.log('📦 Products response:', response);
-    console.log('📦 Products array:', allProducts.length, 'items');
-    
-    if (!allProducts || allProducts.length === 0) {
-      container.innerHTML = `
-        <div class="products-empty">
-          <h3>Geen producten gevonden</h3>
-          <p>Er zijn momenteel geen producten beschikbaar.</p>
-        </div>
-      `;
-      return;
-    }
-    
-    // Update product count if element exists
-    const countEl = document.getElementById('products-count');
-    if (countEl) {
-      countEl.textContent = `${allProducts.length} producten`;
-    }
-    
-    // Change container to products-list for horizontal layout
-    container.className = 'products-list';
-    
-    // Render products with horizontal cards
-    container.innerHTML = allProducts.map(product => 
-      createProductCardHorizontal(product, isLoggedIn)
-    ).join('');
-    
-    console.log(`✅ Loaded ${allProducts.length} products`);
-    
+    allProducts = data.products || [];
+    const total = data.total || allProducts.length;
+
+    // Update count
+    document.getElementById('products-count').textContent = total;
+
+    // Initialize/update pagination
+    initPagination(total, handlePageChange);
+
+    // Render products
+    renderProducts(allProducts);
   } catch (error) {
     console.error('Error loading products:', error);
-    container.innerHTML = `
-      <div class="products-empty">
-        <h3>Oeps!</h3>
-        <p>Kon producten niet laden. Probeer het later opnieuw.</p>
-      </div>
-    `;
+    showError(container, 'Kon producten niet laden. Probeer het later opnieuw.');
   }
 }
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-  loadAllProducts();
-});
+/**
+ * Render products with horizontal cards
+ */
+function renderProducts(productList) {
+  const container = document.getElementById('products-grid');
+  if (!container) return;
+
+  if (productList.length === 0) {
+    showNoResults(container, 'Geen producten gevonden met de huidige filters.');
+    return;
+  }
+
+  // Use horizontal card layout
+  container.className = 'products-list';
+  container.innerHTML = productList.map(product => 
+    createProductCardHorizontal(product, isLoggedIn)
+  ).join('');
+}
+
+/**
+ * Handle filter change
+ */
+function handleFilterChange(filters) {
+  loadProducts();
+}
+
+/**
+ * Handle page change
+ */
+function handlePageChange(page, offset) {
+  loadProducts();
+}

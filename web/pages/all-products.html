@@ -86,16 +86,164 @@
     <!-- Page Header -->
     <section class="page-header">
       <div class="container">
-        <h1>ALLE PRODUCTEN</h1>
-        <p class="page-subtitle">Bekijk ons complete assortiment kraanbakken en aanbouwdelen</p>
+        <nav class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Alle Producten</span>
+        </nav>
+        <h1 class="page-title" id="page-title">ALLE PRODUCTEN</h1>
+        <p class="page-subtitle" id="page-subtitle">Bekijk ons complete assortiment kraanbakken en aanbouwdelen</p>
       </div>
     </section>
 
-    <!-- Products Grid -->
-    <section class="products-section">
+    <!-- Products with Filters -->
+    <section class="section category-section">
       <div class="container">
-        <div class="products-grid" id="all-products-grid">
-          <div class="loading">Producten laden...</div>
+        <div class="category-layout">
+          <!-- Sidebar Filters -->
+          <aside class="filters-sidebar" id="filters-sidebar">
+            <div class="filters-header">
+              <h3 class="filters-title">Filters</h3>
+              <button class="btn-text" id="clear-filters">Wissen</button>
+            </div>
+
+            <!-- Volume Range -->
+            <div class="filter-group">
+              <h4 class="filter-group-title">Inhoud (liter)</h4>
+              <div class="range-slider">
+                <input type="range" id="volume-min" min="0" max="5000" value="0" step="100">
+                <input type="range" id="volume-max" min="0" max="5000" value="5000" step="100">
+                <div class="range-values">
+                  <span id="volume-min-value">0L</span>
+                  <span id="volume-max-value">5000L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Excavator Class -->
+            <div class="filter-group">
+              <h4 class="filter-group-title">Graafmachine Klasse</h4>
+              <label class="checkbox-label">
+                <input type="checkbox" name="excavator" value="1500">
+                <span>1,5 - 3 ton</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="excavator" value="4000">
+                <span>3 - 8 ton</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="excavator" value="12000">
+                <span>8 - 15 ton</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="excavator" value="20000">
+                <span>15 - 25 ton</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="excavator" value="30000">
+                <span>25 - 50 ton</span>
+              </label>
+            </div>
+
+            <!-- Width -->
+            <div class="filter-group">
+              <h4 class="filter-group-title">Breedte (mm)</h4>
+              <label class="checkbox-label">
+                <input type="checkbox" name="width" value="300">
+                <span>300mm</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="width" value="600">
+                <span>600mm</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="width" value="800">
+                <span>800mm</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="width" value="1200">
+                <span>1200mm</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="width" value="1500">
+                <span>1500mm</span>
+              </label>
+            </div>
+
+            <!-- Attachment Type -->
+            <div class="filter-group">
+              <h4 class="filter-group-title">Ophanging</h4>
+              <label class="checkbox-label">
+                <input type="checkbox" name="attachment" value="CW05">
+                <span>CW05</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="attachment" value="CW10">
+                <span>CW10</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="attachment" value="CW20">
+                <span>CW20</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="attachment" value="CW30">
+                <span>CW30</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="attachment" value="CW40">
+                <span>CW40</span>
+              </label>
+            </div>
+
+            <!-- Mobile Apply Button -->
+            <button class="btn btn-primary btn-full" id="apply-filters" style="display: none;">
+              Filters Toepassen
+            </button>
+          </aside>
+
+          <!-- Main Content -->
+          <div class="category-content">
+            <!-- Toolbar -->
+            <div class="products-toolbar">
+              <div class="toolbar-left">
+                <button class="btn-filter-toggle" id="toggle-filters">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                  </svg>
+                  Filters
+                </button>
+                <span class="products-count-text">
+                  <strong id="products-count">0</strong> producten gevonden
+                </span>
+              </div>
+              <div class="toolbar-right">
+                <label for="sort-select" class="sort-label">Sorteren:</label>
+                <select id="sort-select" class="sort-select">
+                  <option value="newest">Nieuwste eerst</option>
+                  <option value="oldest">Oudste eerst</option>
+                  <option value="title_asc">Naam A-Z</option>
+                  <option value="title_desc">Naam Z-A</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Products List (vloeiend met borders) -->
+            <div class="products-list" id="products-grid">
+              <div class="loading">
+                <div class="spinner"></div>
+                <p>Producten laden...</p>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination" style="display: none;">
+              <button class="pagination-btn" id="prev-page" disabled>Vorige</button>
+              <span class="pagination-info" id="pagination-info">Pagina 1 van 1</span>
+              <button class="pagination-btn" id="next-page" disabled>Volgende</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

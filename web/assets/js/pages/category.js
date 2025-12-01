@@ -65,13 +65,25 @@ async function loadProducts() {
 
   try {
     const filters = getActiveFilters();
+    
+    // CRITICAL: Ensure category_slug is always set from URL
+    const params = new URLSearchParams(window.location.search);
+    const categorySlug = params.get('cat');
+    if (categorySlug) {
+      filters.category_slug = categorySlug;
+    }
+    
     filters.limit = getItemsPerPage();
     filters.offset = getOffset();
+
+    console.log('🔍 Loading products with filters:', filters);
 
     const data = await products.getAll(filters);
     
     allProducts = data.products || [];
     const total = data.total || allProducts.length;
+
+    console.log(`✅ Loaded ${allProducts.length} products for category: ${categorySlug}`);
 
     // Update count
     document.getElementById('products-count').textContent = total;

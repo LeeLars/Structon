@@ -4,7 +4,7 @@
  * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v2';
+const CACHE_VERSION = 'structon-v3';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;

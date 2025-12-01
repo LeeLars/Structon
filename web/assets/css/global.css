@@ -438,8 +438,8 @@ p {
   align-items: center;
   justify-content: center;
   background-color: #2C5F6F; /* Match Top Bar */
-  height: 165px; /* Slightly reduced to fit better */
-  width: 135px;
+  height: 180px; /* Groter gemaakt */
+  width: 155px; /* Groter gemaakt */
   position: absolute;
   top: -40px; /* Adjust overlap */
   left: max(var(--container-padding), calc((100vw - var(--container-max)) / 2 + var(--container-padding))); /* Stay within container */
@@ -451,7 +451,7 @@ p {
 
 .logo-image {
   height: auto;
-  width: 50px; /* Adjust size inside box */
+  width: 65px; /* Groter gemaakt van 50px naar 65px */
 }
   
 .logo-box {
@@ -538,10 +538,11 @@ p {
   visibility: visible;
   transform: scaleY(1);
   
+  /* Delay toegevoegd: 500ms wachten voordat menu verschijnt */
   transition: 
-    opacity 0.15s ease 0s,
-    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) 0s,
-    visibility 0s 0s;
+    opacity 0.15s ease 0.5s,
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s,
+    visibility 0s 0.5s;
 }
 
 /* Full Width Layout */

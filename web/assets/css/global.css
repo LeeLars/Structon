@@ -440,6 +440,7 @@ p {
   background-color: #2C5F6F; /* Match Top Bar */
   height: 165px; /* Originele grootte */
   width: 135px; /* Originele grootte */
+  min-width: 135px; /* Forceer breedte */
   position: absolute;
   top: -40px; /* Adjust overlap */
   left: max(var(--container-padding), calc((100vw - var(--container-max)) / 2 + var(--container-padding))); /* Stay within container */
@@ -447,11 +448,14 @@ p {
   z-index: 20;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   padding-top: 1.5rem;
+  flex-shrink: 0; /* Voorkom krimpen */
 }
 
 .logo-image {
   height: auto;
   width: 50px; /* Originele grootte */
+  min-width: 50px; /* Forceer breedte */
+  object-fit: contain;
 }
   
 .logo-box {

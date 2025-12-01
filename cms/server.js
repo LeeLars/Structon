@@ -51,39 +51,29 @@ async function runMigrations() {
 }
 
 /**
- * Check if database is empty and seed with demo data
+ * Check database status (no more auto-seeding)
+ * All data must come from CMS admin panel
  */
 async function checkAndSeedDatabase() {
   try {
-    const result = await pool.query('SELECT COUNT(*) FROM products');
-    const productCount = parseInt(result.rows[0].count);
+    const [cats, brands, prods] = await Promise.all([
+      pool.query('SELECT COUNT(*) FROM categories'),
+      pool.query('SELECT COUNT(*) FROM brands'),
+      pool.query('SELECT COUNT(*) FROM products')
+    ]);
     
-    if (productCount === 0) {
-      console.log('📦 Database is empty, seeding with demo data...');
-      
-      const seedSQL = fs.readFileSync(
-        path.join(__dirname, 'database', 'migrations', '007_seed_demo_data.sql'),
-        'utf8'
-      );
-      
-      await pool.query(seedSQL);
-      
-      // Verify
-      const [cats, brands, prods] = await Promise.all([
-        pool.query('SELECT COUNT(*) FROM categories'),
-        pool.query('SELECT COUNT(*) FROM brands'),
-        pool.query('SELECT COUNT(*) FROM products')
-      ]);
-      
-      console.log('✅ Demo data seeded successfully!');
-      console.log(`   📁 Categories: ${cats.rows[0].count}`);
-      console.log(`   🏷️  Brands: ${brands.rows[0].count}`);
-      console.log(`   📦 Products: ${prods.rows[0].count}\n`);
+    console.log('📊 Database Status:');
+    console.log(`   📁 Categories: ${cats.rows[0].count}`);
+    console.log(`   🏷️  Brands: ${brands.rows[0].count}`);
+    console.log(`   📦 Products: ${prods.rows[0].count}`);
+    
+    if (parseInt(prods.rows[0].count) === 0) {
+      console.log('\n⚠️  Database is empty! Add products via CMS admin panel.\n');
     } else {
-      console.log(`✅ Database already has ${productCount} products\n`);
+      console.log('');
     }
   } catch (error) {
-    console.error('⚠️  Could not check/seed database:', error.message);
+    console.error('⚠️  Could not check database:', error.message);
   }
 }
 

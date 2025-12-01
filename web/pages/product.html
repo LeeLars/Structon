@@ -110,8 +110,72 @@
       </div>
     </section>
 
+    <!-- Quote Request Section -->
+    <section class="section quote-section bg-gray" id="quote-section" style="display: none;">
+      <div class="container">
+        <div class="quote-grid">
+          <div class="quote-content">
+            <h2 class="quote-title">Offerte Aanvragen</h2>
+            <p class="quote-text">
+              Interesse in dit product? Vraag vrijblijvend een offerte aan en wij nemen 
+              zo snel mogelijk contact met u op.
+            </p>
+            <ul class="quote-features">
+              <li>✓ Vrijblijvende offerte</li>
+              <li>✓ Reactie binnen 24 uur</li>
+              <li>✓ Persoonlijk advies</li>
+              <li>✓ Scherpe prijzen</li>
+            </ul>
+          </div>
+          <div class="quote-form-container">
+            <form id="quote-form" class="quote-form">
+              <input type="hidden" id="quote-product-id" name="product_id">
+              <input type="hidden" id="quote-product-name" name="product_name">
+              
+              <div class="form-group">
+                <label for="quote-name">Naam *</label>
+                <input type="text" id="quote-name" name="customer_name" required placeholder="Uw naam">
+              </div>
+              
+              <div class="form-group">
+                <label for="quote-email">Email *</label>
+                <input type="email" id="quote-email" name="customer_email" required placeholder="uw@email.nl">
+              </div>
+              
+              <div class="form-group">
+                <label for="quote-phone">Telefoon</label>
+                <input type="tel" id="quote-phone" name="customer_phone" placeholder="+31 6 12345678">
+              </div>
+              
+              <div class="form-group">
+                <label for="quote-message">Bericht</label>
+                <textarea id="quote-message" name="message" rows="4" placeholder="Eventuele opmerkingen of vragen..."></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-full" id="quote-submit">
+                Offerte Aanvragen
+              </button>
+              
+              <div id="quote-success" class="quote-success" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <h3>Bedankt voor uw aanvraag!</h3>
+                <p>Wij nemen zo snel mogelijk contact met u op.</p>
+              </div>
+              
+              <div id="quote-error" class="quote-error" style="display: none;">
+                <p>Er is iets misgegaan. Probeer het later opnieuw.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Product Action Section (Large Work Photo) -->
-    <section class="section product-action-section bg-gray" id="product-action-section" style="display: none;">
+    <section class="section product-action-section bg-white" id="product-action-section" style="display: none;">
       <div class="container">
         <div class="product-action-grid">
           <div class="product-action-content">

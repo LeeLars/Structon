@@ -7,6 +7,7 @@ import subcategoriesRoutes from './subcategories.routes.js';
 import brandsRoutes from './brands.routes.js';
 import sectorsRoutes from './sectors.routes.js';
 import blogsRoutes from './blogs.routes.js';
+import quotesRoutes from './quotes.routes.js';
 import salesRoutes from './sales.js';
 import adminRoutes from '../admin/index.js';
 
@@ -23,6 +24,7 @@ router.use('/subcategories', subcategoriesRoutes);
 router.use('/brands', brandsRoutes);
 router.use('/sectors', sectorsRoutes);
 router.use('/blogs', blogsRoutes);
+router.use('/quotes', quotesRoutes);
 
 // Sales Stats (Protected)
 router.use('/sales', salesRoutes);

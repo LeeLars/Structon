@@ -322,6 +322,42 @@ export const navigation = {
   }
 };
 
+/**
+ * Quotes API - For submitting quote requests from website
+ */
+export const quotes = {
+  /**
+   * Submit a new quote request
+   * @param {Object} quoteData - Quote data
+   * @param {string} quoteData.customer_name - Customer name (required)
+   * @param {string} quoteData.customer_email - Customer email (required)
+   * @param {string} [quoteData.customer_phone] - Customer phone
+   * @param {string} [quoteData.product_id] - Product UUID
+   * @param {string} [quoteData.product_name] - Product name
+   * @param {string} [quoteData.message] - Additional message
+   */
+  async submit(quoteData) {
+    return request('/quotes', {
+      method: 'POST',
+      body: JSON.stringify(quoteData)
+    });
+  }
+};
+
+/**
+ * Blogs API
+ */
+export const blogs = {
+  async getAll(params = {}) {
+    const query = new URLSearchParams(params).toString();
+    return request(`/blogs${query ? `?${query}` : ''}`);
+  },
+
+  async getBySlug(slug) {
+    return request(`/blogs/${slug}`);
+  }
+};
+
 // Default export with all APIs
 export default {
   auth,
@@ -329,5 +365,7 @@ export default {
   categories,
   brands,
   sectors,
-  navigation
+  navigation,
+  quotes,
+  blogs
 };

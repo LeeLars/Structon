@@ -2,7 +2,7 @@
  * Structon - Product Detail Page JavaScript
  */
 
-import { products } from '../api/client.js';
+import { products, quotes } from '../api/client.js';
 import { createProductCard, showLoading, showError } from '../main.js';
 import { loadProductPrice } from '../pricing.js';
 import { isLoggedIn } from '../auth.js';
@@ -11,6 +11,7 @@ let currentProduct = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initPage();
+  setupQuoteForm();
 });
 
 /**
@@ -61,6 +62,9 @@ async function loadProduct(id) {
 
     // Show action section
     document.getElementById('product-action-section').style.display = 'block';
+
+    // Setup quote form with product info
+    updateQuoteForm(currentProduct);
 
     // Load related products
     loadRelatedProducts();
@@ -229,4 +233,71 @@ function showProductNotFound() {
       <a href="category.html" class="btn btn-primary">Bekijk alle producten</a>
     </div>
   `;
+}
+
+/**
+ * Setup quote form
+ */
+function setupQuoteForm() {
+  const form = document.getElementById('quote-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('quote-submit');
+    const successDiv = document.getElementById('quote-success');
+    const errorDiv = document.getElementById('quote-error');
+    
+    // Reset states
+    successDiv.style.display = 'none';
+    errorDiv.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Verzenden...';
+
+    try {
+      const formData = {
+        product_id: document.getElementById('quote-product-id').value || null,
+        product_name: document.getElementById('quote-product-name').value || null,
+        customer_name: document.getElementById('quote-name').value,
+        customer_email: document.getElementById('quote-email').value,
+        customer_phone: document.getElementById('quote-phone').value || null,
+        message: document.getElementById('quote-message').value || null
+      };
+
+      console.log('📧 Submitting quote request:', formData);
+      
+      const result = await quotes.submit(formData);
+      
+      console.log('✅ Quote submitted successfully:', result);
+      
+      // Show success
+      form.style.display = 'none';
+      successDiv.style.display = 'block';
+      
+    } catch (error) {
+      console.error('❌ Quote submission failed:', error);
+      errorDiv.style.display = 'block';
+      errorDiv.querySelector('p').textContent = error.message || 'Er is iets misgegaan. Probeer het later opnieuw.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Offerte Aanvragen';
+    }
+  });
+}
+
+/**
+ * Update quote form with product info
+ */
+function updateQuoteForm(product) {
+  const quoteSection = document.getElementById('quote-section');
+  const productIdInput = document.getElementById('quote-product-id');
+  const productNameInput = document.getElementById('quote-product-name');
+  
+  if (quoteSection && product) {
+    quoteSection.style.display = 'block';
+    
+    if (productIdInput) productIdInput.value = product.id;
+    if (productNameInput) productNameInput.value = product.title;
+  }
 }

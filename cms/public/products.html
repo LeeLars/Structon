@@ -49,6 +49,10 @@
           <p class="page-subtitle">Beheer je productcatalogus</p>
         </div>
         <div class="header-actions">
+          <button class="btn btn-secondary" id="btn-import-products">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            Importeren
+          </button>
           <button class="btn btn-primary" id="btn-new-product">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Nieuw Product
@@ -236,6 +240,35 @@
     </div>
   </div>
 
-  <script type="module" src="/cms/assets/js/products.js?v=3"></script>
+  <!-- Import Modal -->
+  <div class="modal" id="import-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Producten Importeren</h2>
+        <button class="btn-close" id="close-import-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 1rem; color: var(--col-text-muted);">Upload een CSV of Excel bestand met producten. Het bestand moet de volgende kolommen bevatten:</p>
+        <div style="background: var(--col-bg); padding: 1rem; border-radius: var(--radius); margin-bottom: 1rem; font-family: monospace; font-size: 0.85rem;">
+          titel, slug, categorie, merk, breedte, inhoud, gewicht, ophanging, voorraad, prijs, actief
+        </div>
+        <div class="image-upload-area" id="import-upload-area">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <p>Sleep een CSV/Excel bestand hierheen of <span class="link">klik om te uploaden</span></p>
+          <input type="file" id="import-file-input" accept=".csv,.xlsx,.xls" hidden>
+        </div>
+        <div id="import-preview" style="display: none; margin-top: 1rem;">
+          <h4 style="margin-bottom: 0.5rem;">Preview (<span id="import-count">0</span> producten)</h4>
+          <div id="import-preview-list" style="max-height: 200px; overflow-y: auto; background: var(--col-bg); border-radius: var(--radius); padding: 0.5rem;"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancel-import">Annuleren</button>
+        <button type="button" class="btn btn-primary" id="confirm-import" disabled>Importeren</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/cms/assets/js/products.js?v=4"></script>
 </body>
 </html>

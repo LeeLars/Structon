@@ -221,7 +221,7 @@ function getStatusColor(status) {
 }
 
 function getStatusLabel(status) {
-  const labels = { new: 'Nieuw', processing: 'In behandeling', quoted: 'Geoffreerd', won: 'Gewonnen', lost: 'Verloren' };
+  const labels = { new: 'Nieuw', processing: 'In behandeling', quoted: 'Offerte aangemaakt', won: 'Gewonnen', lost: 'Verloren' };
   return labels[status] || status;
 }
 
@@ -340,7 +340,7 @@ function openQuoteModal(quote, mode = 'view') {
           </label>
           <label class="status-option ${quote.status === 'quoted' ? 'selected' : ''}">
             <input type="radio" name="quote-status" value="quoted" ${quote.status === 'quoted' ? 'checked' : ''}>
-            <span class="status-option-badge badge badge-info">Geoffreerd</span>
+            <span class="status-option-badge badge badge-info">Offerte aangemaakt</span>
           </label>
           <label class="status-option ${quote.status === 'won' ? 'selected' : ''}">
             <input type="radio" name="quote-status" value="won" ${quote.status === 'won' ? 'checked' : ''}>

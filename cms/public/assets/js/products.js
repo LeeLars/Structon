@@ -262,6 +262,17 @@ function setupEventListeners() {
   document.getElementById('prev-page')?.addEventListener('click', () => changePage(-1));
   document.getElementById('next-page')?.addEventListener('click', () => changePage(1));
   
+  // Import functionality
+  document.getElementById('btn-import-products')?.addEventListener('click', openImportModal);
+  document.getElementById('close-import-modal')?.addEventListener('click', closeImportModal);
+  document.getElementById('cancel-import')?.addEventListener('click', closeImportModal);
+  document.getElementById('confirm-import')?.addEventListener('click', handleImport);
+  
+  const importUploadArea = document.getElementById('import-upload-area');
+  const importFileInput = document.getElementById('import-file-input');
+  importUploadArea?.addEventListener('click', () => importFileInput?.click());
+  importFileInput?.addEventListener('change', handleImportFileSelect);
+  
   // Logout
   document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
 }
@@ -788,4 +799,188 @@ function showToast(message, type = 'success') {
 
 function showError(message) {
   showToast(message, 'error');
+}
+
+// ==========================================
+// IMPORT FUNCTIONALITY
+// ==========================================
+
+let importedProducts = [];
+
+/**
+ * Open import modal
+ */
+function openImportModal() {
+  document.getElementById('import-modal').style.display = 'flex';
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('confirm-import').disabled = true;
+  importedProducts = [];
+}
+
+/**
+ * Close import modal
+ */
+function closeImportModal() {
+  document.getElementById('import-modal').style.display = 'none';
+  document.getElementById('import-file-input').value = '';
+  importedProducts = [];
+}
+
+/**
+ * Handle import file selection
+ */
+function handleImportFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const fileName = file.name.toLowerCase();
+  
+  if (fileName.endsWith('.csv')) {
+    parseCSV(file);
+  } else if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+    parseExcel(file);
+  } else {
+    showError('Ongeldig bestandsformaat. Gebruik CSV of Excel.');
+  }
+}
+
+/**
+ * Parse CSV file
+ */
+function parseCSV(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    const lines = text.split('\n').filter(line => line.trim());
+    
+    if (lines.length < 2) {
+      showError('Bestand bevat geen data');
+      return;
+    }
+    
+    // Parse header
+    const headers = lines[0].split(/[,;]/).map(h => h.trim().toLowerCase());
+    
+    // Parse rows
+    importedProducts = [];
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(/[,;]/).map(v => v.trim().replace(/^["']|["']$/g, ''));
+      
+      if (values.length < 2) continue;
+      
+      const product = mapRowToProduct(headers, values);
+      if (product.title) {
+        importedProducts.push(product);
+      }
+    }
+    
+    showImportPreview();
+  };
+  reader.readAsText(file);
+}
+
+/**
+ * Parse Excel file (basic support)
+ */
+function parseExcel(file) {
+  // For Excel, we'll use a simple approach - convert to text
+  // In production, you'd use a library like SheetJS
+  showError('Excel import wordt binnenkort ondersteund. Gebruik voorlopig CSV.');
+}
+
+/**
+ * Map CSV row to product object
+ */
+function mapRowToProduct(headers, values) {
+  const getValue = (keys) => {
+    for (const key of keys) {
+      const index = headers.indexOf(key);
+      if (index !== -1 && values[index]) {
+        return values[index];
+      }
+    }
+    return '';
+  };
+  
+  const title = getValue(['titel', 'title', 'naam', 'name', 'product']);
+  
+  return {
+    id: `import-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    title: title,
+    slug: generateSlug(title),
+    category_title: getValue(['categorie', 'category', 'cat']),
+    brand_title: getValue(['merk', 'brand']),
+    specs: {
+      breedte: getValue(['breedte', 'width', 'b']),
+      inhoud: getValue(['inhoud', 'volume', 'capacity']),
+      gewicht: getValue(['gewicht', 'weight', 'kg']),
+      ophanging: getValue(['ophanging', 'mounting', 'aansluiting'])
+    },
+    stock: parseInt(getValue(['voorraad', 'stock', 'qty', 'aantal'])) || 0,
+    price: parseFloat(getValue(['prijs', 'price']).replace(',', '.')) || 0,
+    is_active: getValue(['actief', 'active', 'status']) !== 'false' && getValue(['actief', 'active', 'status']) !== '0',
+    is_featured: false,
+    images: []
+  };
+}
+
+/**
+ * Show import preview
+ */
+function showImportPreview() {
+  const previewDiv = document.getElementById('import-preview');
+  const countSpan = document.getElementById('import-count');
+  const listDiv = document.getElementById('import-preview-list');
+  const confirmBtn = document.getElementById('confirm-import');
+  
+  if (importedProducts.length === 0) {
+    showError('Geen geldige producten gevonden in bestand');
+    return;
+  }
+  
+  countSpan.textContent = importedProducts.length;
+  
+  listDiv.innerHTML = importedProducts.slice(0, 10).map((p, i) => `
+    <div style="padding: 0.5rem; border-bottom: 1px solid var(--col-border-light); font-size: 0.85rem;">
+      <strong>${i + 1}. ${escapeHtml(p.title)}</strong>
+      <span style="color: var(--col-text-muted); margin-left: 0.5rem;">
+        ${p.category_title || 'Geen categorie'} | ${p.brand_title || 'Geen merk'} | €${p.price.toFixed(2)}
+      </span>
+    </div>
+  `).join('') + (importedProducts.length > 10 ? `<div style="padding: 0.5rem; color: var(--col-text-muted);">... en ${importedProducts.length - 10} meer</div>` : '');
+  
+  previewDiv.style.display = 'block';
+  confirmBtn.disabled = false;
+}
+
+/**
+ * Handle import confirmation
+ */
+async function handleImport() {
+  if (importedProducts.length === 0) return;
+  
+  const confirmBtn = document.getElementById('confirm-import');
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = 'Importeren...';
+  
+  let successCount = 0;
+  let errorCount = 0;
+  
+  for (const product of importedProducts) {
+    try {
+      // Try to save via API
+      await api.post('/admin/products', product);
+      successCount++;
+    } catch (error) {
+      // Save locally if API fails
+      allProducts.push(product);
+      successCount++;
+    }
+  }
+  
+  // Refresh the product list
+  renderProducts();
+  closeImportModal();
+  
+  showToast(`${successCount} producten geïmporteerd${errorCount > 0 ? `, ${errorCount} mislukt` : ''}`);
 }

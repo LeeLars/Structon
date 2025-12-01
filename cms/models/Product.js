@@ -169,21 +169,21 @@ export const Product = {
     const {
       title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
-      attachment_type, cloudinary_images, specs, stock_quantity, is_featured, sector_ids
+      attachment_type, cloudinary_images, specs, stock_quantity, is_featured, is_active, sector_ids
     } = data;
 
     const result = await pool.query(`
       INSERT INTO products (
         title, slug, description, category_id, subcategory_id, brand_id,
         excavator_weight_min, excavator_weight_max, width, volume, weight,
-        attachment_type, cloudinary_images, specs, stock_quantity, is_featured
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+        attachment_type, cloudinary_images, specs, stock_quantity, is_featured, is_active
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
       RETURNING *
     `, [
       title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
       attachment_type, JSON.stringify(cloudinary_images || []), JSON.stringify(specs || {}),
-      stock_quantity || 0, is_featured || false
+      stock_quantity || 0, is_featured || false, is_active !== false // Default to true
     ]);
 
     const product = result.rows[0];

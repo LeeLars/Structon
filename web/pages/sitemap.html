@@ -18,24 +18,15 @@
   
   <style>
     .sitemap-page {
-      padding: 80px 0 120px;
+      padding: 40px 0 80px;
       min-height: 60vh;
     }
     
-    .sitemap-header {
-      margin-bottom: 48px;
-    }
-    
-    .sitemap-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--color-primary);
-      margin-bottom: 12px;
-    }
-    
-    .sitemap-subtitle {
-      font-size: 1rem;
-      color: #6b7280;
+    .page-header {
+      background-color: var(--color-gray-100);
+      padding: var(--space-12) 0;
+      margin-bottom: var(--space-8);
+      text-align: center;
     }
     
     .sitemap-content {
@@ -90,61 +81,125 @@
   </style>
 </head>
 <body>
-  <!-- Top bar -->
-  <div class="top-bar">
-    <div class="container">
-      <nav class="top-nav">
-        <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
-        <a href="contact.html">Over</a>
-        <a href="dealer.html">Dealer worden</a>
-        <a href="blog.html">Blog</a>
-        <a href="faq.html">FAQ</a>
-        <a href="configurator.html">Configurator</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+  <!-- Header Wrapper (Sticky) -->
+  <div class="header-wrapper" id="header-wrapper">
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="container">
+        <nav class="top-nav">
+          <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
+          <a href="over-ons.html">Over</a>
+          <a href="dealer.html">Dealer worden</a>
+          <a href="blog.html">Blog</a>
+          <a href="faq.html">FAQ</a>
+          <a href="configurator.html">Configurator</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
     </div>
-  </div>
+  
+    <!-- Main navigation -->
+    <nav class="main-nav">
+      <div class="container">
+        <a href="../index.html" class="logo">
+          <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+        </a>
+        
+        <div class="menu">
+          <a href="category.html?cat=graafbakken" class="menu-item">
+            Graafbakken <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">
+            Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="category.html?cat=adapters" class="menu-item">
+            Adapterstukken <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="category.html?cat=overige" class="menu-item">
+            Overige <span class="dropdown-arrow">▼</span>
+          </a>
+        </div>
+        
+        <div class="nav-actions">
+          <a href="all-products.html" class="cta-button">Bekijk alles</a>
+        </div>
+        
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div><!-- End Header Wrapper -->
 
-  <!-- Main navigation -->
-  <nav class="main-nav">
-    <div class="container">
-      <a href="../index.html" class="logo">
-        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
-      </a>
-      
-      <div class="menu">
-        <a href="category.html?cat=graafbakken" class="menu-item">Graafbakken ▼</a>
-        <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">Sloop- en sorteergrijpers ▼</a>
-        <a href="category.html?cat=adapters" class="menu-item">Adapterstukken ▼</a>
-        <a href="category.html?cat=overige" class="menu-item">Overige ▼</a>
-      </div>
-      
-      <div class="nav-actions">
-        <a href="all-products.html" class="cta-button">Bekijk alles</a>
-      </div>
-      
-      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+  <!-- Mobile Navigation -->
+  <nav class="nav-mobile" id="nav-mobile">
+    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="all-products.html" class="nav-link">Alle Producten</a>
+    <a href="category.html?cat=graafbakken" class="nav-link">Graafbakken</a>
+    <a href="category.html?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
+    <a href="category.html?cat=adapters" class="nav-link">Adapterstukken</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <hr>
+    <a href="over-ons.html" class="nav-link">Over ons</a>
+    <a href="dealer.html" class="nav-link">Dealer worden</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <a href="login.html" class="btn btn-primary">Inloggen</a>
   </nav>
 
   <main class="sitemap-page">
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Kruimelpad">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span aria-current="page">Sitemap</span>
+        </nav>
+        <h1 class="page-title">Sitemap</h1>
+        <p class="page-subtitle">Overzicht van alle pagina's op structon.be</p>
+      </div>
+    </section>
+
     <div class="container">
-      <header class="sitemap-header">
-        <h1 class="sitemap-title">Sitemap</h1>
-        <p class="sitemap-subtitle">Overzicht van alle pagina's op structon.be</p>
-      </header>
-      
       <div class="sitemap-content" id="sitemap-content">
         <!-- Wordt dynamisch geladen -->
         <div class="sitemap-column">
           <h2>Hoofdpagina's</h2>
           <ul>
             <li><a href="../index.html">Home</a></li>
-            <li><a href="contact.html">Over Ons / Contact</a></li>
+            <li><a href="over-ons.html">Over Ons</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="faq.html">Veelgestelde Vragen</a></li>
+          </ul>
+        </div>
+        
+        <div class="sitemap-column">
+          <h2>Industrieën</h2>
+          <ul>
+            <li><a href="../industrieen/grondwerkers/">Grondwerkers</a></li>
+            <li><a href="../industrieen/afbraak-sloop/">Afbraak & Sloop</a></li>
+            <li><a href="../industrieen/tuinaanleggers/">Tuinaanleggers</a></li>
+            <li><a href="../industrieen/wegenbouw/">Wegenbouw</a></li>
+            <li><a href="../industrieen/recycling/">Recycling</a></li>
+            <li><a href="../industrieen/verhuur/">Verhuurbedrijven</a></li>
+            <li><a href="../industrieen/loonwerk-landbouw/">Loonwerk & Landbouw</a></li>
+            <li><a href="../industrieen/baggerwerken/">Baggerwerken</a></li>
+          </ul>
+        </div>
+
+        <div class="sitemap-column">
+          <h2>Merken</h2>
+          <ul>
+            <li><a href="../kraanbakken/caterpillar/">Caterpillar</a></li>
+            <li><a href="../kraanbakken/komatsu/">Komatsu</a></li>
+            <li><a href="../kraanbakken/volvo/">Volvo</a></li>
+            <li><a href="../kraanbakken/hitachi/">Hitachi</a></li>
+            <li><a href="../kraanbakken/liebherr/">Liebherr</a></li>
           </ul>
         </div>
         
@@ -168,8 +223,8 @@
           <h2>Overig</h2>
           <ul>
             <li><a href="#" class="login-trigger">Klant Login</a></li>
-            <li><a href="#">Privacybeleid</a></li>
-            <li><a href="#">Algemene Voorwaarden</a></li>
+            <li><a href="privacy.html">Privacybeleid</a></li>
+            <li><a href="voorwaarden.html">Algemene Voorwaarden</a></li>
           </ul>
         </div>
       </div>
@@ -235,18 +290,19 @@
 
   <!-- Scripts -->
   <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../assets/js/pages/home.js"></script> <!-- For sticky header -->
   <script src="../assets/js/components/login-modal.js"></script>
   <script type="module">
     // Laad categorieën dynamisch van de API
-    import { getCategories } from '../assets/js/api/client.js';
+    import { categories } from '../assets/js/api/client.js';
     
     async function loadCategories() {
       try {
-        const categories = await getCategories();
+        const cats = await categories.getAll();
         const container = document.getElementById('sitemap-products');
         
-        if (categories && categories.length > 0) {
-          categories.forEach(cat => {
+        if (cats && cats.length > 0) {
+          cats.forEach(cat => {
             const li = document.createElement('li');
             li.innerHTML = `<a href="category.html?cat=${cat.slug}">${cat.name}</a>`;
             container.appendChild(li);

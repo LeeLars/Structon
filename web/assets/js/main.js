@@ -173,6 +173,63 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
 }
 
 /**
+ * Create Industry Product Card (Grid Layout)
+ */
+export function createIndustryProductCard(product, isLoggedIn = false) {
+  const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
+  const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
+  
+  const productUrl = window.location.pathname.includes('/pages/')
+    ? `product.html?id=${product.slug || product.id}`
+    : `../../pages/product.html?id=${product.slug || product.id}`;
+
+  // Build quote URL with pre-filled data
+  const quoteParams = new URLSearchParams();
+  quoteParams.set('product_id', product.id);
+  quoteParams.set('product_name', product.title);
+  if (product.category_slug) quoteParams.set('category', product.category_slug);
+  
+  // Determine quote URL path
+  const quoteUrl = window.location.pathname.includes('/pages/')
+    ? `contact.html?${quoteParams.toString()}`
+    : `../../pages/contact.html?${quoteParams.toString()}`;
+
+  return `
+    <article class="industry-product-card" data-product-id="${product.id}">
+      <a href="${productUrl}" class="industry-product-image">
+        <img src="${imageUrl}" alt="${escapeHtml(product.title)}" loading="lazy">
+      </a>
+      
+      <div class="industry-product-content">
+        <span class="industry-product-category">${product.category_title || 'Product'}</span>
+        <h3 class="industry-product-title">
+          <a href="${productUrl}">${escapeHtml(product.title)}</a>
+        </h3>
+        
+        <p class="industry-product-description">
+          ${product.description ? escapeHtml(product.description.substring(0, 80)) + '...' : 'Hoogwaardig aanbouwdeel voor uw machine.'}
+        </p>
+        
+        <div class="industry-product-actions">
+          <a href="${quoteUrl}" class="btn-split btn-split-sm" style="flex: 1;">
+            <span class="btn-split-text">Offerte</span>
+            <span class="btn-split-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
+          </a>
+          <a href="${productUrl}" class="btn-split btn-split-sm" style="flex: 1; --color-primary: var(--color-gray-600);">
+            <span class="btn-split-text" style="background-color: var(--color-gray-200); color: var(--color-gray-800);">Info</span>
+            <span class="btn-split-icon" style="background-color: var(--color-gray-300);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+/**
  * Format price with Dutch formatting
  */
 function formatPrice(price) {

@@ -4,7 +4,7 @@
  */
 
 import { products } from '../api/client.js';
-import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
+import { createIndustryProductCard, showLoading, showError, showNoResults } from '../main.js';
 
 // Industry page state
 let currentIndustry = null;
@@ -88,6 +88,41 @@ export function initIndustryPage() {
   
   // Load initial products
   loadIndustryProducts();
+  
+  // Load popular products for sidebar
+  loadPopularProducts();
+}
+
+/**
+ * Load popular products for the content area
+ */
+async function loadPopularProducts() {
+  const container = document.getElementById('content-popular-products');
+  if (!container) return;
+  
+  try {
+    // Use industry config to find relevant categories
+    const config = INDUSTRY_CONFIG[currentIndustry];
+    const categories = config?.categories || ['graafbakken'];
+    
+    // Fetch a few products from these categories
+    const data = await products.getAll({
+      category_slug: categories[0], // Take first category as primary
+      limit: 3 // Show 3 cards
+    });
+    
+    const popularProducts = data.products || [];
+    
+    if (popularProducts.length > 0) {
+      container.innerHTML = popularProducts.map(product => createIndustryProductCard(product)).join('');
+    } else {
+      container.style.display = 'none'; // Hide container if no products
+    }
+    
+  } catch (error) {
+    console.error('Error loading popular products:', error);
+    container.innerHTML = '';
+  }
 }
 
 /**
@@ -377,9 +412,9 @@ function renderProducts() {
   const endIndex = startIndex + PRODUCTS_PER_PAGE;
   const pageProducts = filteredProducts.slice(startIndex, endIndex);
   
-  container.className = 'products-list industry-products-list';
+  container.className = 'industry-products-grid';
   container.innerHTML = pageProducts.map(product => 
-    createProductCardHorizontal(product, isLoggedIn)
+    createIndustryProductCard(product, isLoggedIn)
   ).join('');
   
   renderPagination(totalPages);

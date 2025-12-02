@@ -2316,3 +2316,92 @@ main:not(.no-padding) {
   color: #16a34a;
   border: 1px solid #bbf7d0;
 }
+
+/* ============================================
+   UNIVERSAL PAGE HERO
+   Voor: Merken, Industrieën, Blog, Dealer, Over, FAQ, Configurator
+   ============================================ */
+
+.page-hero {
+  background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-200) 100%);
+  padding: 0 0 var(--space-12) 0;
+  margin-top: 0; /* Hero tegen header */
+  position: relative;
+}
+
+.page-hero .container {
+  /* Zorgt voor lucht tussen tekst en sticky header */
+  padding-top: calc(var(--space-16) + 40px);
+  position: relative;
+  z-index: 1;
+}
+
+/* Layout Grid: Breadcrumb boven, Content eronder */
+.page-hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.page-hero-content {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Tekst links, Media rechts */
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.page-hero-text {
+  max-width: 800px;
+}
+
+/* Typography */
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, var(--text-5xl));
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+  margin-bottom: var(--space-4);
+  color: var(--color-gray-900);
+  text-transform: uppercase;
+}
+
+.page-subtitle {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--color-gray-600);
+  max-width: 650px;
+}
+
+/* Media / Image / Icon (Rechts) */
+.page-hero-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+}
+
+.page-hero-media img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-height: 300px;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .page-hero-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-hero-media {
+    display: none; /* Verberg media op tablet/mobiel */
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero .container {
+    padding-top: calc(var(--space-12) + 60px);
+  }
+}

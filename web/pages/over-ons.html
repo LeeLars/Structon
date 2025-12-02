@@ -18,12 +18,7 @@
       padding-bottom: 80px;
     }
     
-    .about-hero {
-      background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-200) 100%);
-      padding: var(--space-16) 0;
-      text-align: center;
-      margin-bottom: var(--space-12);
-    }
+    /* .about-hero removed - using global .page-hero */
     
     .about-grid {
       display: grid;
@@ -234,25 +229,30 @@
   </nav>
 
   <main class="about-page">
-    <!-- Hero -->
-    <section class="about-hero">
+    <!-- Page Hero (Universal) -->
+    <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
           <a href="../index.html">Home</a>
           <span>/</span>
           <span aria-current="page">Over Ons</span>
         </nav>
-        <h1 class="page-title">HET VERHAAL VAN STRUCTON</h1>
-        <p class="page-subtitle">Passie voor techniek, gedreven door kwaliteit</p>
+        
+        <div class="page-hero-content">
+          <div class="page-hero-text">
+            <h1 class="page-title">HET VERHAAL VAN STRUCTON</h1>
+            <p class="page-subtitle">Passie voor techniek, gedreven door kwaliteit</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="container">
+    <div class="container" style="margin-top: var(--space-16);">
       <!-- Ruben & Gilles Story -->
       <div class="about-grid">
         <div class="about-content">
           <h2>ONTMOET DE OPRICHTERS</h2>
-          <p>Structon is ontstaan uit de gedeelde passie van Ruben en Gilles voor zware machines en technische perfectie. Wat begon als een idee in een kleine werkplaats, is uitgegroeid tot een toonaangevende leverancier van kraanbakken en aanbouwdelen in België.</p>
+          <p>Structon is ontstaan uit de gedeelde passie van Ruben en Gilles voor zware machines en technische perfectie. Wat begon als een idee, is uitgegroeid tot een betrouwbare leverancier van kraanbakken en aanbouwdelen in België.</p>
           
           <div class="founders-card">
             <div class="founder-profile">

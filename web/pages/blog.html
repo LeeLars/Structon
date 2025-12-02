@@ -78,16 +78,26 @@
     <a href="login.html" class="btn btn-primary">Inloggen</a>
   </nav>
 
-  <!-- Page Header -->
-  <header class="page-header">
+  <!-- Page Hero -->
+  <section class="page-hero">
     <div class="container">
-      <h1>Blog</h1>
-      <p>Nieuws, tips en inzichten uit de wereld van kraanbakken en graafmachines</p>
+      <nav class="breadcrumb" aria-label="Kruimelpad">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">Blog</span>
+      </nav>
+      
+      <div class="page-hero-content">
+        <div class="page-hero-text">
+          <h1 class="page-title">Blog</h1>
+          <p class="page-subtitle">Nieuws, tips en inzichten uit de wereld van kraanbakken en graafmachines.</p>
+        </div>
+      </div>
     </div>
-  </header>
+  </section>
 
   <!-- Blog Grid -->
-  <main class="blog-section">
+  <main class="blog-section" style="padding: var(--space-12) 0;">
     <div class="container">
       <div class="blog-grid" id="blog-grid">
         <!-- Blog posts loaded via JS -->
@@ -95,6 +105,12 @@
           <div class="loading-spinner"></div>
           <p>Artikelen laden...</p>
         </div>
+      </div>
+      
+      <!-- Empty State (Hidden by default) -->
+      <div id="blog-empty-state" style="display: none; text-align: center; padding: 4rem 0;">
+        <h3>Nog geen artikelen</h3>
+        <p style="color: var(--color-gray-600); margin-top: 1rem;">Er zijn momenteel nog geen blogartikelen beschikbaar. Kom later terug voor updates!</p>
       </div>
     </div>
   </main>

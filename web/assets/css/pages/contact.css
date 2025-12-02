@@ -145,35 +145,62 @@
   min-height: 100px;
 }
 
-/* Radio Buttons */
+/* Radio Buttons - Verbeterde uitlijning */
 .form-radio-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .form-radio-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
 }
 
 .form-radio {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   cursor: pointer;
+  padding: var(--space-2) 0;
+  min-height: 40px; /* Consistente hoogte */
 }
 
 .form-radio input {
-  display: none;
+  /* Verberg native radio maar behoud toegankelijkheid */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .radio-custom {
-  width: 20px;
-  height: 20px;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
   border: 2px solid var(--color-gray-300);
   border-radius: 50%;
   position: relative;
   transition: all 0.2s ease;
+  background: white;
+}
+
+.form-radio:hover .radio-custom {
+  border-color: var(--color-primary);
+}
+
+.form-radio input:focus + .radio-custom {
+  box-shadow: 0 0 0 3px rgba(35, 103, 115, 0.2);
+  border-color: var(--color-primary);
 }
 
 .form-radio input:checked + .radio-custom {
   border-color: var(--color-primary);
+  background: white;
 }
 
 .form-radio input:checked + .radio-custom::after {
@@ -182,15 +209,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: var(--color-primary);
   border-radius: 50%;
 }
 
 .radio-label {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-gray-700);
+  line-height: 1.4;
+  user-select: none;
 }
 
 /* Checkbox */

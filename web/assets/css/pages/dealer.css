@@ -2,9 +2,41 @@
    DEALER PAGE STYLES
    ============================================ */
 
+/* Dealer Hero - consistent met andere pagina's */
+.dealer-hero {
+  background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-200) 100%);
+  padding: 0 0 var(--space-12) 0;
+}
+
+.dealer-hero .container {
+  padding-top: calc(var(--space-16) + 20px);
+}
+
+.dealer-hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, var(--text-5xl));
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+  margin-bottom: var(--space-4);
+  color: var(--color-gray-900);
+}
+
+.dealer-hero p {
+  font-size: var(--text-lg);
+  color: var(--color-gray-600);
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .dealer-hero .container {
+    padding-top: calc(var(--space-12) + 20px);
+  }
+}
+
 /* Dealer Info Section */
 .dealer-info-section {
   background-color: var(--color-gray-50);
+  padding: var(--space-16) 0;
 }
 
 .dealer-info-grid {

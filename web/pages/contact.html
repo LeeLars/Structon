@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl-BE">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Neem contact op met Structon voor vragen over kraanbakken en aanbouwdelen.">
-  <title>Contact | Structon</title>
+  <meta name="description" content="Vraag een offerte aan of neem contact op met Structon voor kraanbakken en aanbouwdelen. Binnen 24 uur antwoord.">
+  <title>Contact & Offerte Aanvragen | Structon</title>
   
   <!-- Fonts - Custom Arthouse -->
   <link rel="preload" href="../assets/css/fonts.css" as="style">
   <link rel="stylesheet" href="../assets/css/fonts.css">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/global.css?v=6">
+  <link rel="stylesheet" href="../assets/css/global.css?v=7">
+  <link rel="stylesheet" href="../assets/css/pages/contact.css">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
@@ -66,23 +67,273 @@
     </div>
   </nav>
 
-  <main style="min-height: 60vh; padding: 80px 0;">
+  <main class="contact-page">
     <div class="container">
-      <h1 style="font-size: 3rem; margin-bottom: 20px; color: #2C5F6F;">Contact</h1>
-      <p style="font-size: 1.2rem; margin-bottom: 40px;">Neem contact met ons op voor vragen of offertes.</p>
+      <!-- Page Header -->
+      <div class="contact-header">
+        <nav class="breadcrumb" aria-label="Kruimelpad">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span aria-current="page">Contact</span>
+        </nav>
+        <h1 class="contact-title">Contact & Offerte</h1>
+        <p class="contact-subtitle">Vraag een offerte aan of stel uw vraag. Binnen 24 uur ontvangt u antwoord.</p>
+      </div>
       
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
-        <div>
-          <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Contactgegevens</h3>
-          <p><strong>Adres:</strong> Industrieweg 123, 1234 AB Plaats</p>
-          <p><strong>Telefoon:</strong> +31 (0)12 345 6789</p>
-          <p><strong>Email:</strong> info@structon.nl</p>
+      <div class="contact-grid">
+        <!-- Left: Quote Form -->
+        <div class="contact-form-section">
+          <div class="form-card">
+            <h2 class="form-title">Offerte Aanvragen</h2>
+            <p class="form-subtitle">Vul het formulier in en ontvang binnen 24 uur een vrijblijvende offerte.</p>
+            
+            <!-- Quote Form -->
+            <form id="quote-form" class="quote-form" novalidate>
+              <!-- Hidden fields for tracking -->
+              <input type="hidden" name="source_page" id="source-page">
+              <input type="hidden" name="product_id" id="product-id">
+              <input type="hidden" name="product_slug" id="product-slug">
+              <input type="hidden" name="industry" id="industry">
+              <input type="hidden" name="brand" id="brand">
+              
+              <!-- Form Type Selection -->
+              <div class="form-group">
+                <label class="form-label">Type aanvraag *</label>
+                <div class="form-radio-group">
+                  <label class="form-radio">
+                    <input type="radio" name="request_type" value="offerte" checked>
+                    <span class="radio-custom"></span>
+                    <span class="radio-label">Offerte aanvragen</span>
+                  </label>
+                  <label class="form-radio">
+                    <input type="radio" name="request_type" value="vraag">
+                    <span class="radio-custom"></span>
+                    <span class="radio-label">Vraag stellen</span>
+                  </label>
+                  <label class="form-radio">
+                    <input type="radio" name="request_type" value="maatwerk">
+                    <span class="radio-custom"></span>
+                    <span class="radio-label">Maatwerk aanvraag</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Personal Info -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="customer_name" class="form-label">Naam *</label>
+                  <input type="text" id="customer_name" name="customer_name" class="form-input" required placeholder="Uw volledige naam">
+                  <span class="form-error">Vul uw naam in</span>
+                </div>
+                <div class="form-group">
+                  <label for="company_name" class="form-label">Bedrijfsnaam</label>
+                  <input type="text" id="company_name" name="company_name" class="form-input" placeholder="Uw bedrijfsnaam (optioneel)">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="customer_email" class="form-label">E-mailadres *</label>
+                  <input type="email" id="customer_email" name="customer_email" class="form-input" required placeholder="uw@email.be">
+                  <span class="form-error">Vul een geldig e-mailadres in</span>
+                </div>
+                <div class="form-group">
+                  <label for="customer_phone" class="form-label">Telefoonnummer</label>
+                  <input type="tel" id="customer_phone" name="customer_phone" class="form-input" placeholder="+32 XXX XX XX XX">
+                </div>
+              </div>
+              
+              <!-- Product Selection -->
+              <div class="form-group" id="product-selection-group">
+                <label for="product_name" class="form-label">Product / Baktype</label>
+                <select id="product_category" name="product_category" class="form-select">
+                  <option value="">Selecteer een categorie...</option>
+                  <option value="graafbakken">Graafbakken</option>
+                  <option value="slotenbakken">Slotenbakken</option>
+                  <option value="rioolbakken">Rioolbakken</option>
+                  <option value="sorteergrijpers">Sorteergrijpers</option>
+                  <option value="sloophamers">Sloophamers</option>
+                  <option value="adapters">Adapterstukken</option>
+                  <option value="overige">Overige</option>
+                </select>
+              </div>
+              
+              <!-- Pre-filled product info (shown when coming from product page) -->
+              <div class="form-group product-prefilled" id="product-prefilled" style="display: none;">
+                <label class="form-label">Geselecteerd product</label>
+                <div class="prefilled-product">
+                  <span id="prefilled-product-name"></span>
+                  <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()">×</button>
+                </div>
+              </div>
+              
+              <!-- Machine Info -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="machine_brand" class="form-label">Merk graafmachine</label>
+                  <select id="machine_brand" name="machine_brand" class="form-select">
+                    <option value="">Selecteer merk...</option>
+                    <option value="caterpillar">Caterpillar</option>
+                    <option value="komatsu">Komatsu</option>
+                    <option value="volvo">Volvo</option>
+                    <option value="hitachi">Hitachi</option>
+                    <option value="liebherr">Liebherr</option>
+                    <option value="jcb">JCB</option>
+                    <option value="takeuchi">Takeuchi</option>
+                    <option value="kubota">Kubota</option>
+                    <option value="case">Case</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="doosan">Doosan</option>
+                    <option value="anders">Anders</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="machine_model" class="form-label">Model / Tonnage</label>
+                  <input type="text" id="machine_model" name="machine_model" class="form-input" placeholder="bv. CAT 320 of 20 ton">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="attachment_type" class="form-label">CW-aansluiting</label>
+                <select id="attachment_type" name="attachment_type" class="form-select">
+                  <option value="">Selecteer aansluiting...</option>
+                  <option value="CW05">CW05 (0-2 ton)</option>
+                  <option value="CW10">CW10 (2-6 ton)</option>
+                  <option value="CW20">CW20 (6-15 ton)</option>
+                  <option value="CW30">CW30 (15-25 ton)</option>
+                  <option value="CW40">CW40 (25-40 ton)</option>
+                  <option value="CW45">CW45 (40+ ton)</option>
+                  <option value="S40">S40 (Steelwrist)</option>
+                  <option value="S60">S60 (Steelwrist)</option>
+                  <option value="S70">S70 (Steelwrist)</option>
+                  <option value="weet-niet">Weet ik niet</option>
+                </select>
+              </div>
+              
+              <!-- Message -->
+              <div class="form-group">
+                <label for="message" class="form-label">Uw vraag of opmerkingen</label>
+                <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="Beschrijf uw vraag, gewenste afmetingen, of andere specificaties..."></textarea>
+              </div>
+              
+              <!-- Privacy -->
+              <div class="form-group">
+                <label class="form-checkbox">
+                  <input type="checkbox" name="privacy_accepted" required>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">Ik ga akkoord met de <a href="privacy.html" target="_blank">privacyverklaring</a> *</span>
+                </label>
+                <span class="form-error">U moet akkoord gaan met de privacyverklaring</span>
+              </div>
+              
+              <!-- Submit -->
+              <button type="submit" class="btn-submit" id="submit-btn">
+                <span class="btn-text">Offerte Aanvragen</span>
+                <span class="btn-loading" style="display: none;">
+                  <svg class="spinner" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="30 70"></circle>
+                  </svg>
+                  Verzenden...
+                </span>
+              </button>
+            </form>
+            
+            <!-- Success Message -->
+            <div id="form-success" class="form-success" style="display: none;">
+              <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <h3>Bedankt voor uw aanvraag!</h3>
+              <p>Wij hebben uw offerte-aanvraag ontvangen. U ontvangt binnen 24 uur een bevestiging per e-mail.</p>
+              <p class="success-ref">Referentie: <span id="quote-reference"></span></p>
+              <a href="../index.html" class="btn-split usp-btn">
+                <span class="btn-split-text">Terug naar Home</span>
+                <span class="btn-split-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
-        <div>
-          <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Openingstijden</h3>
-          <p>Maandag - Vrijdag: 08:00 - 17:00</p>
-          <p>Zaterdag: Op afspraak</p>
-          <p>Zondag: Gesloten</p>
+        
+        <!-- Right: Contact Info -->
+        <div class="contact-info-section">
+          <!-- Contact Card -->
+          <div class="info-card">
+            <h3 class="info-title">Contactgegevens</h3>
+            <div class="info-item">
+              <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div>
+                <strong>Adres</strong>
+                <p>Industrieweg 123<br>8730 Beernem, België</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <div>
+                <strong>Telefoon</strong>
+                <p><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <div>
+                <strong>E-mail</strong>
+                <p><a href="mailto:info@structon.be">info@structon.be</a></p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Opening Hours -->
+          <div class="info-card">
+            <h3 class="info-title">Openingstijden</h3>
+            <div class="hours-list">
+              <div class="hours-row">
+                <span>Maandag - Vrijdag</span>
+                <span>08:00 - 17:00</span>
+              </div>
+              <div class="hours-row">
+                <span>Zaterdag</span>
+                <span>Op afspraak</span>
+              </div>
+              <div class="hours-row">
+                <span>Zondag</span>
+                <span>Gesloten</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Links -->
+          <div class="info-card">
+            <h3 class="info-title">Snelle Links</h3>
+            <div class="quick-links">
+              <a href="category.html?cat=graafbakken" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                Graafbakken bekijken
+              </a>
+              <a href="category.html?cat=slotenbakken" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                Slotenbakken bekijken
+              </a>
+              <a href="configurator.html" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                Configurator gebruiken
+              </a>
+              <a href="faq.html" class="quick-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                Veelgestelde vragen
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -146,6 +397,7 @@
   </footer>
 
   <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../assets/js/pages/contact.js"></script>
   <script src="../assets/js/components/login-modal.js"></script>
 </body>
 </html>

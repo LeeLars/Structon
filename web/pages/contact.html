@@ -86,6 +86,9 @@
           <div class="form-card">
             <h2 class="form-title">Offerte of vraag?</h2>
             <p class="form-subtitle">Vul het formulier in en wij zorgen dat u snel de juiste informatie ontvangt.</p>
+            <p class="form-notice" style="background: #f0f7f9; border-left: 3px solid var(--color-primary); padding: 12px 16px; margin: 16px 0; font-size: 0.9rem; color: #555;">
+              <strong>Let op:</strong> Structon levert uitsluitend aan zakelijke klanten (B2B). Betaling geschiedt via factuur.
+            </p>
             
             <!-- Quote Form -->
             <form id="quote-form" class="quote-form" novalidate>
@@ -126,21 +129,29 @@
                   <span class="form-error">Vul uw naam in</span>
                 </div>
                 <div class="form-group">
-                  <label for="company_name" class="form-label">Bedrijfsnaam</label>
-                  <input type="text" id="company_name" name="company_name" class="form-input" placeholder="Uw bedrijfsnaam (optioneel)">
+                  <label for="company_name" class="form-label">Bedrijfsnaam *</label>
+                  <input type="text" id="company_name" name="company_name" class="form-input" required placeholder="Uw bedrijfsnaam">
+                  <span class="form-error">Vul uw bedrijfsnaam in</span>
                 </div>
               </div>
               
               <div class="form-row">
                 <div class="form-group">
                   <label for="customer_email" class="form-label">E-mailadres *</label>
-                  <input type="email" id="customer_email" name="customer_email" class="form-input" required placeholder="uw@email.be">
+                  <input type="email" id="customer_email" name="customer_email" class="form-input" required placeholder="uw@bedrijf.be">
                   <span class="form-error">Vul een geldig e-mailadres in</span>
                 </div>
                 <div class="form-group">
                   <label for="customer_phone" class="form-label">Telefoonnummer</label>
                   <input type="tel" id="customer_phone" name="customer_phone" class="form-input" placeholder="+32 XXX XX XX XX">
                 </div>
+              </div>
+              
+              <!-- BTW nummer (B2B verplicht) -->
+              <div class="form-group">
+                <label for="vat_number" class="form-label">BTW-nummer *</label>
+                <input type="text" id="vat_number" name="vat_number" class="form-input" required placeholder="BE0123456789">
+                <span class="form-error">Vul een geldig BTW-nummer in</span>
               </div>
               
               <!-- Product Selection -->
@@ -161,10 +172,20 @@
               <!-- Pre-filled product info (shown when coming from product page) -->
               <div class="form-group product-prefilled" id="product-prefilled" style="display: none;">
                 <label class="form-label">Geselecteerd product</label>
-                <div class="prefilled-product">
-                  <span id="prefilled-product-name"></span>
-                  <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()">×</button>
+                <div class="prefilled-product-card" style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; position: relative;">
+                  <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999;">×</button>
+                  <div class="prefilled-details">
+                    <p style="margin: 0 0 8px 0;"><strong>Product:</strong> <span id="prefilled-product-name"></span></p>
+                    <p style="margin: 0 0 8px 0;" id="prefilled-category-row"><strong>Type:</strong> <span id="prefilled-product-category"></span></p>
+                    <p style="margin: 0 0 8px 0;" id="prefilled-brand-row"><strong>Merk:</strong> <span id="prefilled-product-brand"></span></p>
+                    <p style="margin: 0;" id="prefilled-tonnage-row"><strong>Tonnage:</strong> <span id="prefilled-product-tonnage"></span></p>
+                  </div>
                 </div>
+                <!-- Hidden fields for prefilled data -->
+                <input type="hidden" name="prefilled_product_name" id="prefilled-product-name-input">
+                <input type="hidden" name="prefilled_product_category" id="prefilled-product-category-input">
+                <input type="hidden" name="prefilled_product_brand" id="prefilled-product-brand-input">
+                <input type="hidden" name="prefilled_product_tonnage" id="prefilled-product-tonnage-input">
               </div>
               
               <!-- Machine Info -->
@@ -376,7 +397,7 @@
       <div class="footer-top">
         <div class="footer-brand-col">
           <a href="../index.html" class="footer-logo">
-            <img src="../assets/images/static/logo.svg" alt="Structon" width="120">
+            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" width="120">
           </a>
           <p class="footer-tagline">
             Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
@@ -394,7 +415,7 @@
           <address class="footer-address">
             <p><strong>Structon</strong></p>
             <p>Industrieweg 123</p>
-            <p>1234 AB Plaats</p>
+            <p>8730 Beernem, België</p>
             <p class="mt-2"><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
             <p><a href="mailto:info@structon.be">info@structon.be</a></p>
           </address>

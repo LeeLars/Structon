@@ -41,40 +41,72 @@
   </script>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container">
-      <div class="header-inner">
-        <a href="/" class="logo">
-          <span class="logo-text">STRUCTON</span>
-        </a>
-        
-        <nav class="nav-main" aria-label="Hoofdnavigatie">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/kraanbakken/" class="nav-link active">Kraanbakken</a>
-          <a href="/slotenbakken/" class="nav-link">Slotenbakken</a>
-          <a href="/sorteergrijpers/" class="nav-link">Sorteergrijpers</a>
-          <a href="/sloophamers/" class="nav-link">Sloophamers</a>
-          <a href="/over-ons/" class="nav-link">Over Ons</a>
-          <a href="/contact/" class="nav-link">Contact</a>
+  <!-- Header Wrapper (Sticky) -->
+  <div class="header-wrapper" id="header-wrapper">
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="container">
+        <nav class="top-nav">
+          <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
+          <a href="../../pages/over-ons.html">Over</a>
+          <a href="../../pages/dealer.html">Dealer worden</a>
+          <a href="../../pages/blog.html">Blog</a>
+          <a href="../../pages/faq.html">FAQ</a>
+          <a href="../../pages/configurator.html">Configurator</a>
+          <a href="../../pages/contact.html">Contact</a>
         </nav>
-        
-        <div class="header-actions">
-          <a href="/login/" class="btn btn-primary btn-sm" id="login-btn">
-            <span>Inloggen</span>
-          </a>
-          <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
       </div>
     </div>
-  </header>
+  
+    <!-- Main navigation -->
+    <nav class="main-nav">
+      <div class="container">
+        <a href="../../index.html" class="logo">
+          <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+        </a>
+        
+        <div class="menu">
+          <a href="../../pages/category.html?cat=graafbakken" class="menu-item">
+            Graafbakken <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="../../pages/category.html?cat=sloop-sorteergrijpers" class="menu-item">
+            Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="../../pages/category.html?cat=adapters" class="menu-item">
+            Adapterstukken <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="../../pages/category.html?cat=overige" class="menu-item">
+            Overige <span class="dropdown-arrow">▼</span>
+          </a>
+        </div>
+        
+        <div class="nav-actions">
+          <a href="../../pages/all-products.html" class="cta-button">Bekijk alles</a>
+        </div>
+        
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
 
-  <main data-brand="komatsu">
-    <!-- Brand Hero -->
+  <!-- Mobile Navigation -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobiele navigatie">
+    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
+    <a href="../../pages/all-products.html" class="nav-link">Alle Producten</a>
+    <a href="../../pages/category.html?cat=graafbakken" class="nav-link">Graafbakken</a>
+    <a href="../../pages/category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
+    <a href="../../pages/category.html?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
+    <a href="../../pages/category.html?cat=adapters" class="nav-link">Adapterstukken</a>
+    <hr>
+    <a href="../../pages/over-ons.html" class="nav-link">Over ons</a>
+    <a href="../../pages/contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <main    <!-- Brand Hero -->
     <section class="brand-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
@@ -353,23 +385,21 @@
     </section>
 
     <!-- CTA -->
-    <section class="section cta-section">
+    <section class="section cta-section" style="background: var(--color-primary); padding: 4rem 0;">
       <div class="container">
         <div class="cta-content text-center">
-          <h2 class="cta-title">Kraanbak voor Jouw Komatsu Nodig?</h2>
-          <p class="cta-text">
+          <h2 class="cta-title" style="color: white;">Kraanbak voor Jouw Komatsu Nodig?</h2>
+          <p class="cta-text" style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
             Neem contact op voor advies of een vrijblijvende offerte.
           </p>
-          <a href="/contact/" class="btn btn-white btn-lg btn-arrow">
-            Offerte Aanvragen
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-          </a>
+          <div style="display: flex; justify-content: center;">
+            <a href="../../pages/contact.html?brand=komatsu" class="btn-split usp-btn" style="background: white;">
+              <span class="btn-split-text" style="background: white; color: var(--color-primary);">Offerte Aanvragen</span>
+              <span class="btn-split-icon" style="background: white; color: var(--color-primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -378,32 +408,55 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4 class="footer-col-title">Structon</h4>
-          <p class="footer-about">Belgische producent van kraanbakken.</p>
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <a href="../../index.html" class="footer-logo">
+            <img src="../../assets/images/static/logo.svg" alt="Structon" width="120">
+          </a>
+          <p class="footer-tagline">
+            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
+          </p>
         </div>
-        <div class="footer-col">
-          <h4 class="footer-col-title">Producten</h4>
-          <nav class="footer-links">
-            <a href="/kraanbakken/" class="footer-link">Kraanbakken</a>
-            <a href="/slotenbakken/" class="footer-link">Slotenbakken</a>
-            <a href="/sorteergrijpers/" class="footer-link">Sorteergrijpers</a>
-          </nav>
+
+        <div class="footer-sitemap-col">
+          <ul id="footer-sitemap" class="sitemap-grid">
+            <li class="sitemap-loading">Navigatie laden...</li>
+          </ul>
         </div>
-        <div class="footer-col">
-          <h4 class="footer-col-title">Contact</h4>
-          <p>📞 +32 (0)50 12 34 56</p>
-          <p>✉️ info@structon.be</p>
+
+        <div class="footer-contact-col">
+          <h4 class="footer-heading">Contact</h4>
+          <address class="footer-address">
+            <p><strong>Structon</strong></p>
+            <p>Industrieweg 123</p>
+            <p>8730 Beernem, België</p>
+            <p class="mt-2"><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
+            <p><a href="mailto:info@structon.be">info@structon.be</a></p>
+          </address>
         </div>
       </div>
+      
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2024 Structon</p>
+        <div class="footer-legal">
+          <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
+          <div class="legal-links">
+            <a href="../../pages/sitemap.html">Sitemap</a>
+            <span class="separator">•</span>
+            <a href="#">Privacy</a>
+            <span class="separator">•</span>
+            <a href="#">Voorwaarden</a>
+          </div>
+        </div>
+        
+        <div class="footer-creator">
+          <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
+        </div>
       </div>
     </div>
   </footer>
-
   <script type="module" src="../../assets/js/main.js"></script>
+  <script type="module" src="../../assets/js/pages/home.js"></script>
   <script type="module" src="../../assets/js/pages/brand.js"></script>
+  <script src="../../assets/js/components/login-modal.js"></script>
 </body>
 </html>

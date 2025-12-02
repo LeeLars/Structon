@@ -41,18 +41,66 @@ function parseUrlParameters() {
   const productId = params.get('product_id');
   const productSlug = params.get('product');
   const productName = params.get('product_name');
+  const productCategory = params.get('product_category') || params.get('type');
+  const productBrand = params.get('product_brand');
+  const productTonnage = params.get('product_tonnage') || params.get('tonnage');
   
   if (productId || productSlug || productName) {
     document.getElementById('product-id').value = productId || '';
     document.getElementById('product-slug').value = productSlug || '';
     
-    // Show prefilled product
+    // Show prefilled product with all details
     const prefilledGroup = document.getElementById('product-prefilled');
     const prefilledName = document.getElementById('prefilled-product-name');
+    const prefilledCategorySpan = document.getElementById('prefilled-product-category');
+    const prefilledBrandSpan = document.getElementById('prefilled-product-brand');
+    const prefilledTonnageSpan = document.getElementById('prefilled-product-tonnage');
     const selectionGroup = document.getElementById('product-selection-group');
     
     if (productName && prefilledGroup && prefilledName) {
+      // Set display values
       prefilledName.textContent = decodeURIComponent(productName);
+      
+      // Set category
+      if (prefilledCategorySpan && productCategory) {
+        prefilledCategorySpan.textContent = decodeURIComponent(productCategory);
+        document.getElementById('prefilled-product-category-input').value = productCategory;
+      } else {
+        const categoryRow = document.getElementById('prefilled-category-row');
+        if (categoryRow) categoryRow.style.display = 'none';
+      }
+      
+      // Set brand
+      if (prefilledBrandSpan && productBrand) {
+        prefilledBrandSpan.textContent = decodeURIComponent(productBrand);
+        document.getElementById('prefilled-product-brand-input').value = productBrand;
+        // Also pre-select machine brand
+        const machineBrand = document.getElementById('machine_brand');
+        if (machineBrand) {
+          const brandOption = machineBrand.querySelector(`option[value="${productBrand.toLowerCase()}"]`);
+          if (brandOption) machineBrand.value = productBrand.toLowerCase();
+        }
+      } else {
+        const brandRow = document.getElementById('prefilled-brand-row');
+        if (brandRow) brandRow.style.display = 'none';
+      }
+      
+      // Set tonnage
+      if (prefilledTonnageSpan && productTonnage) {
+        prefilledTonnageSpan.textContent = decodeURIComponent(productTonnage);
+        document.getElementById('prefilled-product-tonnage-input').value = productTonnage;
+        // Also fill machine model field
+        const machineModel = document.getElementById('machine_model');
+        if (machineModel) machineModel.value = productTonnage + ' ton';
+      } else {
+        const tonnageRow = document.getElementById('prefilled-tonnage-row');
+        if (tonnageRow) tonnageRow.style.display = 'none';
+      }
+      
+      // Set hidden input for product name
+      const prefilledNameInput = document.getElementById('prefilled-product-name-input');
+      if (prefilledNameInput) prefilledNameInput.value = productName;
+      
       prefilledGroup.style.display = 'block';
       if (selectionGroup) selectionGroup.style.display = 'none';
     }
@@ -161,6 +209,14 @@ function validateField(field) {
     isValid = emailRegex.test(field.value);
   } else if (field.type === 'checkbox') {
     isValid = field.checked;
+  } else if (field.id === 'vat_number') {
+    // BTW-nummer validatie (BE, NL, of ander Europees formaat)
+    const vatValue = field.value.trim().toUpperCase().replace(/\s/g, '');
+    // Accepteer BE, NL, DE, FR, LU formaten of lege waarde als niet required
+    const vatRegex = /^(BE[0-9]{9,10}|NL[0-9]{9}B[0-9]{2}|DE[0-9]{9}|FR[A-Z0-9]{2}[0-9]{9}|LU[0-9]{8})$/;
+    isValid = vatRegex.test(vatValue) || (!field.required && vatValue === '');
+    // Update field value to uppercase
+    if (vatValue) field.value = vatValue;
   } else {
     isValid = field.value.trim() !== '';
   }
@@ -222,9 +278,12 @@ async function handleFormSubmit(e) {
     customer_name: formData.get('customer_name'),
     customer_email: formData.get('customer_email'),
     
+    // B2B required fields
+    company_name: formData.get('company_name'),
+    vat_number: formData.get('vat_number'),
+    
     // Optional fields
     customer_phone: formData.get('customer_phone') || null,
-    company_name: formData.get('company_name') || null,
     
     // Request details
     request_type: formData.get('request_type'),
@@ -239,6 +298,12 @@ async function handleFormSubmit(e) {
     
     // Message
     message: formData.get('message') || null,
+    
+    // Prefilled product details (auto-filled from product page)
+    prefilled_product_name: formData.get('prefilled_product_name') || null,
+    prefilled_product_category: formData.get('prefilled_product_category') || null,
+    prefilled_product_brand: formData.get('prefilled_product_brand') || null,
+    prefilled_product_tonnage: formData.get('prefilled_product_tonnage') || null,
     
     // Tracking
     source_page: formData.get('source_page') || window.location.href,

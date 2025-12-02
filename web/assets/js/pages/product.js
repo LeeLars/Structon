@@ -9,6 +9,31 @@ import { isLoggedIn } from '../auth.js';
 
 let currentProduct = null;
 
+/**
+ * Build URL for quote request with all product details
+ */
+function buildQuoteUrl(product) {
+  const params = new URLSearchParams();
+  
+  // Product identification
+  if (product.id) params.set('product_id', product.id);
+  if (product.slug) params.set('product', product.slug);
+  if (product.title) params.set('product_name', product.title);
+  
+  // Product details for auto-fill
+  if (product.category_title) params.set('product_category', product.category_title);
+  if (product.brand_title) params.set('product_brand', product.brand_title);
+  
+  // Tonnage from excavator weight range
+  if (product.excavator_weight_min && product.excavator_weight_max) {
+    const minTon = Math.round(product.excavator_weight_min / 1000);
+    const maxTon = Math.round(product.excavator_weight_max / 1000);
+    params.set('product_tonnage', `${minTon}-${maxTon}`);
+  }
+  
+  return `contact.html?${params.toString()}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initPage();
   setupQuoteForm();
@@ -129,6 +154,18 @@ function renderProduct(product) {
         <div class="product-price">Login voor prijs</div>
         <p class="login-prompt">
           <a href="login.html">Log in</a> om prijzen te bekijken en te bestellen.
+        </p>
+      </div>
+      
+      <div class="product-cta-section" style="margin-top: 24px;">
+        <a href="${buildQuoteUrl(product)}" class="btn-split usp-btn" style="width: 100%; justify-content: center;">
+          <span class="btn-split-text">Offerte Aanvragen</span>
+          <span class="btn-split-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 8px; text-align: center;">
+          Alleen voor zakelijke klanten (B2B) • Betaling via factuur
         </p>
       </div>
     </div>

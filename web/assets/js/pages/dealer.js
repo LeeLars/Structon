@@ -1,7 +1,12 @@
 /**
  * Dealer Application Page
- * Handles dealer registration form submission
+ * Handles dealer registration form submission to CMS with confirmation email
  */
+
+// API base URL
+const API_BASE = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3001/api'
+  : 'https://structon-production.up.railway.app/api';
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('dealer-form');
@@ -30,31 +35,102 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show loading state
     submitBtn.classList.add('btn-loading');
     submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner"></span> Verzenden...';
 
     try {
-      // Send email via mailto (fallback)
-      // In production, this should be an API call to send email via backend
-      const emailBody = formatEmailBody(data);
-      const subject = `Dealer Aanmelding: ${data.company_name}`;
+      // Submit to CMS API
+      const response = await fetch(`${API_BASE}/dealer-applications`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          // Company info
+          company_name: data.company_name,
+          kvk_number: data.kvk,
+          vat_number: data.btw,
+          website: data.website || null,
+          
+          // Contact person
+          contact_name: data.contact_name,
+          contact_function: data.contact_function,
+          email: data.email,
+          phone: data.phone,
+          
+          // Address
+          address: data.address,
+          postal_code: data.postal_code,
+          city: data.city,
+          country: data.country,
+          
+          // Business info
+          business_type: data.business_type,
+          annual_turnover: data.annual_turnover || null,
+          message: data.message || null,
+          
+          // Meta
+          submitted_at: new Date().toISOString(),
+          status: 'pending'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Submission failed');
+      }
+
+      const result = await response.json();
+      console.log('✅ Dealer application submitted:', result);
       
-      // For now, we'll show success and copy to clipboard
-      await copyToClipboard(emailBody);
-      
-      showAlert('success', 'Aanmelding succesvol! De gegevens zijn gekopieerd naar je klembord. Stuur deze naar info@structon.nl');
+      // Show success message
+      showSuccessMessage(data.email);
       
       // Reset form
       form.reset();
       
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
     } catch (error) {
       console.error('Error submitting form:', error);
-      showAlert('error', 'Er is iets misgegaan. Probeer het opnieuw of neem contact met ons op.');
+      
+      // Fallback: copy to clipboard and show instructions
+      const emailBody = formatEmailBody(data);
+      await copyToClipboard(emailBody);
+      
+      showAlert('warning', 'De aanmelding kon niet automatisch worden verzonden. De gegevens zijn gekopieerd naar je klembord. Stuur deze naar info@structon.be');
     } finally {
       submitBtn.classList.remove('btn-loading');
       submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Aanmelding Versturen';
     }
+  }
+
+  /**
+   * Show success message with confirmation
+   */
+  function showSuccessMessage(email) {
+    const formWrapper = document.querySelector('.dealer-form-wrapper');
+    formWrapper.innerHTML = `
+      <div class="success-message" style="text-align: center; padding: 60px 20px;">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" style="margin-bottom: 24px;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <h2 style="color: var(--color-primary); margin-bottom: 16px;">Bedankt voor je aanmelding!</h2>
+        <p style="font-size: 1.1rem; color: #555; margin-bottom: 24px;">
+          We hebben je dealer aanvraag ontvangen en nemen zo snel mogelijk contact met je op.
+        </p>
+        <p style="color: #666; margin-bottom: 32px;">
+          Een bevestiging is verzonden naar <strong>${email}</strong>
+        </p>
+        <a href="../index.html" class="btn-split usp-btn">
+          <span class="btn-split-text">Terug naar Home</span>
+          <span class="btn-split-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+      </div>
+    `;
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**

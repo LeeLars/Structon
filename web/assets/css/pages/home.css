@@ -772,3 +772,117 @@
     height: 300px;
   }
 }
+
+/* ============================================
+   FAQ SECTION
+   ============================================ */
+.section-faq {
+  padding: var(--space-20) 0;
+  background-color: var(--color-gray-50);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: white;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.faq-item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-5) var(--space-6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-gray-900);
+  transition: background-color 0.2s ease;
+}
+
+.faq-question:hover {
+  background-color: var(--color-gray-50);
+}
+
+.faq-question span {
+  flex: 1;
+  padding-right: var(--space-4);
+}
+
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer p {
+  padding: 0 var(--space-6) var(--space-5);
+  color: var(--color-gray-600);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.faq-answer a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.faq-answer a:hover {
+  color: var(--color-primary-dark);
+}
+
+.faq-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq-cta p {
+  color: var(--color-gray-600);
+  font-size: var(--text-lg);
+}
+
+@media (max-width: 768px) {
+  .faq-question {
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-base);
+  }
+  
+  .faq-answer p {
+    padding: 0 var(--space-5) var(--space-4);
+    font-size: var(--text-sm);
+  }
+}

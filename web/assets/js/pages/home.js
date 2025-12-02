@@ -10,6 +10,12 @@ import { createProductCard, showLoading } from '../main.js';
 const scheduleTask = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize header scroll behavior
+  initHeaderScroll();
+  
+  // Initialize FAQ accordion
+  initFaqAccordion();
+  
   // Load featured products with intersection observer for lazy loading
   const container = document.getElementById('featured-products-wrapper');
   if (container) {
@@ -31,6 +37,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+/**
+ * Initialize header scroll behavior
+ * Shows top-bar when scrolling up, hides when scrolling down
+ */
+function initHeaderScroll() {
+  const headerWrapper = document.getElementById('header-wrapper');
+  if (!headerWrapper) return;
+  
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  
+  function updateHeader() {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY < 50) {
+      // At top of page - show everything
+      headerWrapper.classList.remove('scrolled-down', 'scrolled-up');
+    } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Scrolling down - hide top bar
+      headerWrapper.classList.add('scrolled-down');
+      headerWrapper.classList.remove('scrolled-up');
+    } else if (currentScrollY < lastScrollY) {
+      // Scrolling up - show top bar
+      headerWrapper.classList.add('scrolled-up');
+      headerWrapper.classList.remove('scrolled-down');
+    }
+    
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+  
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateHeader();
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+/**
+ * Initialize FAQ accordion functionality
+ */
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    if (question) {
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            otherItem.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('active');
+        question.setAttribute('aria-expanded', !isActive);
+      });
+    }
+  });
+}
 
 /**
  * Load featured products (Random selection)

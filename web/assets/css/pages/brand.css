@@ -105,9 +105,15 @@
 
 .model-category-title {
   font-size: var(--text-lg);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-2);
   padding-bottom: var(--space-3);
   border-bottom: 2px solid var(--color-primary);
+}
+
+.model-category-desc {
+  font-size: var(--text-sm);
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-4);
 }
 
 .model-links {
@@ -132,6 +138,25 @@
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: white;
+}
+
+.model-link:hover .model-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Model Badge (for wheeled machines, mining, etc.) */
+.model-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--color-primary-light, #e0f2f1);
+  color: var(--color-primary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  margin-left: 4px;
+  vertical-align: middle;
 }
 
 /* Brand Links Small */

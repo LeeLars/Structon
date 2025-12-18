@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Kraanbakken per Merk | Alle Graafmachine Merken | Structon</title>
+  <meta name="description" content="Kraanbakken voor alle graafmachine merken. Caterpillar, Komatsu, Volvo, Hitachi, Liebherr en meer. ✓ Perfecte pasvorm ✓ Hardox staal ✓ Belgische kwaliteit">
+  <meta name="keywords" content="kraanbakken, graafbakken, slotenbakken, caterpillar, komatsu, volvo, hitachi, liebherr">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://structon.be/kraanbakken/">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kraanbakken per Merk | Structon">
+  <meta property="og:description" content="Kraanbakken voor alle grote graafmachine merken.">
+  <meta property="og:url" content="https://structon.be/kraanbakken/">
+  
+  <!-- Fonts -->
+  <link rel="preload" href="../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/global.css?v=7">
+  
+  <style>
+    .brands-page {
+      padding: var(--space-16) 0;
+      background: var(--color-gray-50);
+      min-height: 60vh;
+    }
+    
+    .brands-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+    
+    .brands-header h1 {
+      font-size: 2.5rem;
+      color: var(--color-gray-900);
+      margin-bottom: var(--space-4);
+    }
+    
+    .brands-header p {
+      font-size: 1.125rem;
+      color: var(--color-gray-600);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+    
+    .brand-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--color-gray-200);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    
+    .brand-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+    
+    .brand-card h2 {
+      font-size: 1.25rem;
+      color: var(--color-gray-900);
+      margin: 0;
+    }
+    
+    .brand-card p {
+      font-size: 0.9rem;
+      color: var(--color-gray-600);
+      margin: 0;
+      line-height: 1.5;
+    }
+    
+    .brand-card .brand-arrow {
+      color: var(--color-primary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: auto;
+    }
+    
+    .brand-card .brand-arrow svg {
+      transition: transform 0.2s ease;
+    }
+    
+    .brand-card:hover .brand-arrow svg {
+      transform: translateX(4px);
+    }
+    
+    @media (max-width: 768px) {
+      .brands-header h1 {
+        font-size: 2rem;
+      }
+      
+      .brands-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="container">
+      <nav class="top-nav">
+        <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
+        <a href="../pages/over-ons.html">Over</a>
+        <a href="../pages/dealer.html">Dealer worden</a>
+        <a href="../pages/blog.html">Blog</a>
+        <a href="../pages/faq.html">FAQ</a>
+        <a href="../pages/configurator.html">Configurator</a>
+        <a href="../pages/contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main navigation -->
+  <nav class="main-nav">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+      </a>
+      
+      <div class="menu">
+        <a href="../pages/category.html?cat=graafbakken" class="menu-item">
+          Graafbakken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="../pages/category.html?cat=sloop-sorteergrijpers" class="menu-item">
+          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="../pages/category.html?cat=adapters" class="menu-item">
+          Adapterstukken <span class="dropdown-arrow">▼</span>
+        </a>
+        <a href="../pages/category.html?cat=overige" class="menu-item">
+          Overige <span class="dropdown-arrow">▼</span>
+        </a>
+      </div>
+      
+      <div class="nav-actions">
+        <a href="../pages/all-products.html" class="cta-button">Bekijk alles</a>
+      </div>
+      
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <nav class="nav-mobile" id="nav-mobile">
+    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../pages/all-products.html" class="nav-link">Alle Producten</a>
+    <a href="../pages/category.html?cat=graafbakken" class="nav-link">Graafbakken</a>
+    <a href="../pages/category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
+    <a href="../pages/category.html?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
+    <a href="../pages/category.html?cat=adapters" class="nav-link">Adapterstukken</a>
+    <a href="../pages/blog.html" class="nav-link">Blog</a>
+    <hr>
+    <a href="../pages/over-ons.html" class="nav-link">Over ons</a>
+    <a href="../pages/contact.html" class="nav-link">Contact</a>
+  </nav>
+
+  <main class="brands-page">
+    <div class="container">
+      <div class="brands-header">
+        <h1>Kraanbakken per Merk</h1>
+        <p>Selecteer uw graafmachine merk om passende kraanbakken te vinden. Wij leveren voor alle grote merken.</p>
+      </div>
+      
+      <div class="brands-grid">
+        <a href="caterpillar/" class="brand-card">
+          <h2>Caterpillar</h2>
+          <p>Amerikaans icoon, 300-serie rupsgravers en M-serie mobiele kranen. Bekend om robuustheid en wereldwijd dealernetwerk.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="komatsu/" class="brand-card">
+          <h2>Komatsu</h2>
+          <p>Japanse precisie, PC-serie. Intelligent Machine Control (iMC) en KOMTRAX telematica. Sterk in grondverzet.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="volvo/" class="brand-card">
+          <h2>Volvo</h2>
+          <p>Zweeds comfort en veiligheid. EC-serie rupskranen, EW-serie wielgravers. Bekend om cabinecomfort en brandstofefficiëntie.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="hitachi/" class="brand-card">
+          <h2>Hitachi</h2>
+          <p>Japanse kwaliteit, Zaxis (ZX) serie. Betrouwbaar, sterk in zware toepassingen. Generaties -5, -6, -7.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="liebherr/" class="brand-card">
+          <h2>Liebherr</h2>
+          <p>Duitse ingenieurskunst sinds 1949. R-serie rupskranen, A-serie wielgravers. Let op: zwaardere stick-afmetingen.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="doosan/" class="brand-card">
+          <h2>Doosan / Develon</h2>
+          <p>Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="hyundai/" class="brand-card">
+          <h2>Hyundai</h2>
+          <p>HX/HW-serie, focus op onderhoud, comfort, veiligheid en productiviteit. Hi MATE telematica.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="jcb/" class="brand-card">
+          <h2>JCB</h2>
+          <p>Brits no-nonsense. JS-serie rupskranen, Hydradig 110W innovatief concept. Eenvoudig onderhoud.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="kobelco/" class="brand-card">
+          <h2>Kobelco</h2>
+          <p>Japanse specialist, SK-serie. Bekend om zuinigheid en reduced tail swing modellen. Sterk in stedelijke projecten.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="kubota/" class="brand-card">
+          <h2>Kubota</h2>
+          <p>Japanse mini-specialist, KX/U-serie. Compact, betrouwbaar, ideaal voor tuinaanleg en kleine werven.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="yanmar/" class="brand-card">
+          <h2>Yanmar</h2>
+          <p>Japanse dieselmotor-expertise. ViO-serie met zero tail swing. Populair bij verhuurders en tuinaanleggers.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="takeuchi/" class="brand-card">
+          <h2>Takeuchi</h2>
+          <p>Japanse compacte specialist, TB-serie. Robuust, eenvoudig, sterke restwaarde. Favoriet in verhuur.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="case/" class="brand-card">
+          <h2>Case</h2>
+          <p>Amerikaans merk (CNH Industrial). CX-serie rupskranen. Solide machines, goede prijs/prestatie.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="wacker-neuson/" class="brand-card">
+          <h2>Wacker Neuson</h2>
+          <p>Duits/Oostenrijks, compact materieel specialist. ET/EW-serie mini's. Dual View cabine, zero tail swing.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+        
+        <a href="sany/" class="brand-card">
+          <h2>Sany</h2>
+          <p>Chinese fabrikant, snelgroeiend in Europa. SY-serie. Competitieve prijs, moderne technologie.</p>
+          <span class="brand-arrow">
+            Bekijk kraanbakken
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <a href="../index.html" class="footer-logo">
+            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" width="140">
+          </a>
+          <p class="footer-tagline">
+            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
+          </p>
+        </div>
+
+        <div class="footer-sitemap-col">
+          <ul id="footer-sitemap" class="sitemap-grid">
+            <li class="sitemap-loading">Navigatie laden...</li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4 class="footer-heading">Contact</h4>
+          <address class="footer-address">
+            <p><strong>Structon</strong></p>
+            <p>Industrieweg 123</p>
+            <p>8730 Beernem, België</p>
+            <p class="mt-2"><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
+            <p><a href="mailto:info@structon.be">info@structon.be</a></p>
+          </address>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
+          <div class="legal-links">
+            <a href="../pages/sitemap.html">Sitemap</a>
+            <span class="separator">•</span>
+            <a href="../pages/privacy.html">Privacy</a>
+            <span class="separator">•</span>
+            <a href="../pages/voorwaarden.html">Voorwaarden</a>
+          </div>
+        </div>
+        
+        <div class="footer-creator">
+          <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="../assets/js/main.js"></script>
+  <script src="../assets/js/components/login-modal.js"></script>
+</body>
+</html>

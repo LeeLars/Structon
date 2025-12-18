@@ -106,8 +106,8 @@
     <a href="../../pages/contact.html" class="nav-link">Contact</a>
   </nav>
 
-  <main    <!-- Brand Hero -->
-        <!-- Page Hero (Universal) -->
+  <main data-brand="volvo">
+    <!-- Page Hero (Universal) -->
     <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
@@ -128,90 +128,46 @@
       </div>
     </section>
 
-    <!-- Tonnage Filter Section (Coolblue-style) -->
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
+        <h2 class="section-title text-center">Zoek op Volvo Model</h2>
+        <p class="section-subtitle text-center">EC = rupsgraafmachine, ECR = compact rups, EW = bandengraafmachine. Klik op jouw model.</p>
         
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2">
-            <label for="tonnage-0-2">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">0 - 2 ton</span>
-                <span class="tonnage-count">Minigravers</span>
-              </span>
-            </label>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (&lt; 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ECR18E" class="model-link" data-tonnage="1.8" data-cw="CW05">ECR18E</a>
+              <a href="?model=EC20D" class="model-link" data-tonnage="2.0" data-cw="CW05">EC20D</a>
+              <a href="?model=EC27D" class="model-link" data-tonnage="2.7" data-cw="CW05">EC27D</a>
+              <a href="?model=EC60E" class="model-link" data-tonnage="6.0" data-cw="CW10">EC60E</a>
+              <a href="?model=ECR88D" class="model-link" data-tonnage="9.5" data-cw="CW10">ECR88D</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5">
-            <label for="tonnage-2-5">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">2 - 5 ton</span>
-                <span class="tonnage-count">Compacte gravers</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-30 ton)</h3>
+            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=EC140E" class="model-link" data-tonnage="14" data-cw="CW20">EC140E</a>
+              <a href="?model=EC160E" class="model-link" data-tonnage="17" data-cw="CW30">EC160E</a>
+              <a href="?model=EC220E" class="model-link" data-tonnage="22" data-cw="CW40">EC220E</a>
+              <a href="?model=EW160E" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">EW160E</a>
+              <a href="?model=EW180E" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">EW180E</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
-            <label for="tonnage-5-10">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">5 - 10 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
-            <label for="tonnage-10-15">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">10 - 15 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
-            <label for="tonnage-15-25">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">15 - 25 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
-            <label for="tonnage-25-40">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">25 - 40 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+">
-            <label for="tonnage-40-plus">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">40+ ton</span>
-                <span class="tonnage-count">Extra zware klasse</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (&gt; 30 ton)</h3>
+            <p class="model-category-desc">CW40 - CW70 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=EC300E" class="model-link" data-tonnage="30" data-cw="CW40">EC300E</a>
+              <a href="?model=EC380E" class="model-link" data-tonnage="38" data-cw="CW45">EC380E</a>
+              <a href="?model=EC480E" class="model-link" data-tonnage="48" data-cw="CW55">EC480E</a>
+              <a href="?model=EC750E" class="model-link" data-tonnage="75" data-cw="CW70">EC750E</a>
+              <a href="?model=EC950F" class="model-link" data-tonnage="90" data-cw="CW70">EC950F</a>
+            </div>
           </div>
         </div>
       </div>
@@ -270,52 +226,6 @@
         
         <!-- Pagination -->
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <!-- Volvo Model Selector -->
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Volvo Model</h2>
-        <p class="section-subtitle text-center">EC = rupsgraafmachine, ECR = compact rups, EW = bandengraafmachine. Klik op jouw model.</p>
-        
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=volvo&model=ECR18E" class="model-link" data-tonnage="1.8" data-cw="CW05">ECR18E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC20D" class="model-link" data-tonnage="2.0" data-cw="CW05">EC20D</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC27D" class="model-link" data-tonnage="2.7" data-cw="CW05">EC27D</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC60E" class="model-link" data-tonnage="6.0" data-cw="CW10">EC60E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=ECR88D" class="model-link" data-tonnage="9.5" data-cw="CW10">ECR88D</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-30 ton)</h3>
-            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=volvo&model=EC140E" class="model-link" data-tonnage="14" data-cw="CW20">EC140E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC160E" class="model-link" data-tonnage="17" data-cw="CW30">EC160E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC220E" class="model-link" data-tonnage="22" data-cw="CW40">EC220E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EW160E" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">EW160E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EW180E" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">EW180E</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
-            <p class="model-category-desc">CW40 - CW70 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=volvo&model=EC300E" class="model-link" data-tonnage="30" data-cw="CW40">EC300E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC380E" class="model-link" data-tonnage="38" data-cw="CW45">EC380E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC480E" class="model-link" data-tonnage="48" data-cw="CW55">EC480E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC750E" class="model-link" data-tonnage="75" data-cw="CW70">EC750E</a>
-              <a href="../../pages/contact.html?brand=volvo&model=EC950F" class="model-link" data-tonnage="90" data-cw="CW70">EC950F</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

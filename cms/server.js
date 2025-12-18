@@ -15,10 +15,22 @@ import apiRoutes from './routes/api/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Log startup info
+console.log('🚀 Starting Structon CMS...');
+console.log(`📍 Environment: ${env.nodeEnv}`);
+console.log(`🔌 Port: ${env.port}`);
+console.log(`🗄️  Database URL: ${env.databaseUrl ? 'configured' : '❌ MISSING'}`);
+
 /**
  * Run database migrations automatically on startup
  */
 async function runMigrations() {
+  // Skip if no database pool
+  if (!pool) {
+    console.log('⏭️  Skipping migrations - no database configured');
+    return;
+  }
+
   console.log('🔄 Checking database migrations...');
   
   const migrationsDir = path.join(__dirname, 'database', 'migrations');
@@ -55,6 +67,12 @@ async function runMigrations() {
  * All data must come from CMS admin panel
  */
 async function checkAndSeedDatabase() {
+  // Skip if no database pool
+  if (!pool) {
+    console.log('⏭️  Skipping database check - no database configured');
+    return;
+  }
+
   try {
     const [cats, brands, prods] = await Promise.all([
       pool.query('SELECT COUNT(*) FROM categories'),
@@ -192,16 +210,48 @@ app.use(errorHandler);
 // Start server with migrations
 async function startServer() {
   try {
-    // Run migrations first
+    // Check if DATABASE_URL is configured
+    if (!env.databaseUrl) {
+      console.error('❌ DATABASE_URL is not configured!');
+      console.log('⚠️  Starting server without database connection...');
+      
+      // Start server anyway for health checks
+      app.listen(env.port, '0.0.0.0', () => {
+        console.log(`🚀 Structon CMS draait op poort ${env.port} (NO DATABASE)`);
+      });
+      return;
+    }
+
+    // Test database connection first
+    console.log('🔗 Testing database connection...');
+    try {
+      await pool.query('SELECT 1');
+      console.log('✅ Database connection successful');
+    } catch (dbError) {
+      console.error('❌ Database connection failed:', dbError.message);
+      console.log('⚠️  Starting server anyway - some features may not work');
+    }
+
+    // Run migrations
     await runMigrations();
     
-    // Then start the server
-    app.listen(env.port, () => {
+    // Start the server - bind to 0.0.0.0 for Railway
+    app.listen(env.port, '0.0.0.0', () => {
       console.log(`🚀 Structon CMS draait op poort ${env.port}`);
+      console.log(`📡 Server bound to 0.0.0.0:${env.port}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
-    process.exit(1);
+    
+    // Try to start server anyway for debugging
+    try {
+      app.listen(env.port, '0.0.0.0', () => {
+        console.log(`🚀 Server started on port ${env.port} (with errors)`);
+      });
+    } catch (listenError) {
+      console.error('❌ Could not start server:', listenError);
+      process.exit(1);
+    }
   }
 }
 

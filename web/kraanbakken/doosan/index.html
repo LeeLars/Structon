@@ -94,19 +94,40 @@
       </div>
     </section>
 
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Doosan Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2"><label for="tonnage-0-2"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">0 - 2 ton</span><span class="tonnage-count">Minigravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10"><label for="tonnage-5-10"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">5 - 10 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15"><label for="tonnage-10-15"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">10 - 15 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25"><label for="tonnage-15-25"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">15 - 25 ton</span><span class="tonnage-count">Zware klasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40"><label for="tonnage-25-40"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">25 - 40 ton</span><span class="tonnage-count">Zware klasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+"><label for="tonnage-40-plus"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">40+ ton</span><span class="tonnage-count">Extra zware klasse</span></span></label></div>
+        <h2 class="section-title text-center">Zoek op Doosan Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=DX19" class="model-link" data-tonnage="1.9" data-cw="CW05">Doosan DX19</a>
+              <a href="?model=DX85R-3" class="model-link" data-tonnage="8.6" data-cw="CW10">Doosan DX85R-3</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
+            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=DX140LC-5" class="model-link" data-tonnage="14.4" data-cw="CW20">Doosan DX140LC-5</a>
+              <a href="?model=DX160W-5" class="model-link" data-tonnage="16" data-cw="CW30" data-type="wielen">Doosan DX160W-5</a>
+              <a href="?model=DX180LC-5" class="model-link" data-tonnage="18.5" data-cw="CW30">Doosan DX180LC-5</a>
+              <a href="?model=DX225LC-5" class="model-link" data-tonnage="21.5" data-cw="CW40">Doosan DX225LC-5</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 24 ton)</h3>
+            <p class="model-category-desc">CW40 - CW45 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=DX235LCR-5" class="model-link" data-tonnage="24.3" data-cw="CW40">Doosan DX235LCR-5</a>
+              <a href="?model=DX255LC-5" class="model-link" data-tonnage="25.5" data-cw="CW40">Doosan DX255LC-5</a>
+              <a href="?model=DX300LC-5" class="model-link" data-tonnage="30.9" data-cw="CW45">Doosan DX300LC-5</a>
+              <a href="?model=DX380LC-5" class="model-link" data-tonnage="40.2" data-cw="CW45">Doosan DX380LC-5</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -135,43 +156,6 @@
         </div>
         <div class="products-list brand-products-list" id="products-grid"><div class="loading"><div class="spinner"></div></div></div>
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Doosan Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=doosan&model=DX19" class="model-link" data-tonnage="1.9" data-cw="CW05">Doosan DX19</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX85R-3" class="model-link" data-tonnage="8.6" data-cw="CW10">Doosan DX85R-3</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
-            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=doosan&model=DX140LC-5" class="model-link" data-tonnage="14.4" data-cw="CW20">Doosan DX140LC-5</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX160W-5" class="model-link" data-tonnage="16" data-cw="CW30" data-type="wielen">Doosan DX160W-5</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX180LC-5" class="model-link" data-tonnage="18.5" data-cw="CW30">Doosan DX180LC-5</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX225LC-5" class="model-link" data-tonnage="21.5" data-cw="CW40">Doosan DX225LC-5</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 24 ton)</h3>
-            <p class="model-category-desc">CW40 - CW45 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=doosan&model=DX235LCR-5" class="model-link" data-tonnage="24.3" data-cw="CW40">Doosan DX235LCR-5</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX255LC-5" class="model-link" data-tonnage="25.5" data-cw="CW40">Doosan DX255LC-5</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX300LC-5" class="model-link" data-tonnage="30.9" data-cw="CW45">Doosan DX300LC-5</a>
-              <a href="../../pages/contact.html?brand=doosan&model=DX380LC-5" class="model-link" data-tonnage="40.2" data-cw="CW45">Doosan DX380LC-5</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

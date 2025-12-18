@@ -134,90 +134,48 @@
       </div>
     </section>
 
-    <!-- Tonnage Filter Section (Coolblue-style) -->
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- CAT Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
+        <h2 class="section-title text-center">Zoek op CAT Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
         
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2">
-            <label for="tonnage-0-2">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">0 - 2 ton</span>
-                <span class="tonnage-count">Minigravers</span>
-              </span>
-            </label>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW00 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=300.9D" class="model-link" data-tonnage="0.9" data-cw="CW00">CAT 300.9D</a>
+              <a href="?model=301.5" class="model-link" data-tonnage="1.8" data-cw="CW05">CAT 301.5</a>
+              <a href="?model=302.7CR" class="model-link" data-tonnage="3.0" data-cw="CW05">CAT 302.7 CR</a>
+              <a href="?model=303.5CR" class="model-link" data-tonnage="4.2" data-cw="CW05">CAT 303.5 CR</a>
+              <a href="?model=305CR" class="model-link" data-tonnage="5.8" data-cw="CW10">CAT 305 CR</a>
+              <a href="?model=306CR" class="model-link" data-tonnage="7.2" data-cw="CW10">CAT 306 CR</a>
+              <a href="?model=308CR" class="model-link" data-tonnage="8.5" data-cw="CW10">CAT 308 CR</a>
+              <a href="?model=310" class="model-link" data-tonnage="10" data-cw="CW10">CAT 310</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5">
-            <label for="tonnage-2-5">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">2 - 5 ton</span>
-                <span class="tonnage-count">Compacte gravers</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
+            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=315" class="model-link" data-tonnage="15" data-cw="CW20">CAT 315</a>
+              <a href="?model=317" class="model-link" data-tonnage="18" data-cw="CW30">CAT 317</a>
+              <a href="?model=320" class="model-link" data-tonnage="22.6" data-cw="CW40">CAT 320</a>
+              <a href="?model=M314" class="model-link" data-tonnage="15" data-cw="CW30" data-type="wielen">CAT M314</a>
+              <a href="?model=M318" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">CAT M318</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
-            <label for="tonnage-5-10">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">5 - 10 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
-            <label for="tonnage-10-15">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">10 - 15 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
-            <label for="tonnage-15-25">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">15 - 25 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
-            <label for="tonnage-25-40">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">25 - 40 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+">
-            <label for="tonnage-40-plus">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">40+ ton</span>
-                <span class="tonnage-count">Extra zware klasse</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
+            <p class="model-category-desc">CW40 - CW70 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=336" class="model-link" data-tonnage="37" data-cw="CW45">CAT 336</a>
+              <a href="?model=349" class="model-link" data-tonnage="48" data-cw="CW55">CAT 349</a>
+              <a href="?model=395" class="model-link" data-tonnage="94" data-cw="CW70">CAT 395</a>
+            </div>
           </div>
         </div>
       </div>
@@ -276,53 +234,6 @@
         
         <!-- Pagination -->
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <!-- CAT Model Selector (Moved below products) -->
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op CAT Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW00 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=caterpillar&model=300.9D" class="model-link" data-tonnage="0.9" data-cw="CW00">CAT 300.9D</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=301.5" class="model-link" data-tonnage="1.8" data-cw="CW05">CAT 301.5</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=302.7CR" class="model-link" data-tonnage="3.0" data-cw="CW05">CAT 302.7 CR</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=303.5CR" class="model-link" data-tonnage="4.2" data-cw="CW05">CAT 303.5 CR</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=305CR" class="model-link" data-tonnage="5.8" data-cw="CW10">CAT 305 CR</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=306CR" class="model-link" data-tonnage="7.2" data-cw="CW10">CAT 306 CR</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=308CR" class="model-link" data-tonnage="8.5" data-cw="CW10">CAT 308 CR</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=310" class="model-link" data-tonnage="10" data-cw="CW10">CAT 310</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
-            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=caterpillar&model=315" class="model-link" data-tonnage="15" data-cw="CW20">CAT 315</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=317" class="model-link" data-tonnage="18" data-cw="CW30">CAT 317</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=320" class="model-link" data-tonnage="22.6" data-cw="CW40">CAT 320</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=M314" class="model-link" data-tonnage="15" data-cw="CW30" data-type="wielen">CAT M314</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=M318" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">CAT M318</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
-            <p class="model-category-desc">CW40 - CW70 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=caterpillar&model=336" class="model-link" data-tonnage="37" data-cw="CW45">CAT 336</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=349" class="model-link" data-tonnage="48" data-cw="CW55">CAT 349</a>
-              <a href="../../pages/contact.html?brand=caterpillar&model=395" class="model-link" data-tonnage="94" data-cw="CW70">CAT 395</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

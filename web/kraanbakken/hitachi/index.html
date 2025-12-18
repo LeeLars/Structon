@@ -106,8 +106,8 @@
     <a href="../../pages/contact.html" class="nav-link">Contact</a>
   </nav>
 
-  <main    <!-- Brand Hero -->
-        <!-- Page Hero (Universal) -->
+  <main data-brand="hitachi">
+    <!-- Page Hero (Universal) -->
     <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
@@ -128,90 +128,48 @@
       </div>
     </section>
 
-    <!-- Tonnage Filter Section (Coolblue-style) -->
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Hitachi Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
+        <h2 class="section-title text-center">Zoek op Hitachi Model</h2>
+        <p class="section-subtitle text-center">Zaxis (ZX) reeks. Suffix -5, -6 of -7 geeft de generatie aan. Klik op jouw model.</p>
         
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2">
-            <label for="tonnage-0-2">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">0 - 2 ton</span>
-                <span class="tonnage-count">Minigravers</span>
-              </span>
-            </label>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ZX19U-5" class="model-link" data-tonnage="1.9" data-cw="CW05">ZX19U-5</a>
+              <a href="?model=ZX26U-6" class="model-link" data-tonnage="2.7" data-cw="CW05">ZX26U-6</a>
+              <a href="?model=ZX48U-5" class="model-link" data-tonnage="4.8" data-cw="CW05">ZX48U-5</a>
+              <a href="?model=ZX55U-6" class="model-link" data-tonnage="5.5" data-cw="CW10">ZX55U-6</a>
+              <a href="?model=ZX85US-6" class="model-link" data-tonnage="8.5" data-cw="CW10">ZX85US-6</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5">
-            <label for="tonnage-2-5">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">2 - 5 ton</span>
-                <span class="tonnage-count">Compacte gravers</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-30 ton)</h3>
+            <p class="model-category-desc">CW30 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ZX135US-7" class="model-link" data-tonnage="15" data-cw="CW30">ZX135US-7</a>
+              <a href="?model=ZX160LC-6" class="model-link" data-tonnage="17" data-cw="CW30">ZX160LC-6</a>
+              <a href="?model=ZX210LC-6" class="model-link" data-tonnage="21" data-cw="CW40">ZX210LC-6</a>
+              <a href="?model=ZX250LC-6" class="model-link" data-tonnage="25" data-cw="CW40">ZX250LC-6</a>
+              <a href="?model=ZX170W-6" class="model-link" data-tonnage="17" data-cw="CW30" data-type="wielen">ZX170W-6</a>
+              <a href="?model=ZX190W-6" class="model-link" data-tonnage="19" data-cw="CW30" data-type="wielen">ZX190W-6</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
-            <label for="tonnage-5-10">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">5 - 10 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
-            <label for="tonnage-10-15">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">10 - 15 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
-            <label for="tonnage-15-25">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">15 - 25 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
-            <label for="tonnage-25-40">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">25 - 40 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+">
-            <label for="tonnage-40-plus">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">40+ ton</span>
-                <span class="tonnage-count">Extra zware klasse</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
+            <p class="model-category-desc">CW40 - CW70 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ZX300LC-6" class="model-link" data-tonnage="30" data-cw="CW40">ZX300LC-6</a>
+              <a href="?model=ZX350LC-7" class="model-link" data-tonnage="35" data-cw="CW45">ZX350LC-7</a>
+              <a href="?model=ZX490LCH-6" class="model-link" data-tonnage="49" data-cw="CW55">ZX490LCH-6</a>
+              <a href="?model=ZX690LCH-7" class="model-link" data-tonnage="69" data-cw="CW70">ZX690LCH-7</a>
+              <a href="?model=EX1200-7" class="model-link" data-tonnage="120" data-cw="CW70">EX1200-7</a>
+            </div>
           </div>
         </div>
       </div>
@@ -270,53 +228,6 @@
         
         <!-- Pagination -->
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <!-- Hitachi Model Selector -->
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Hitachi Model</h2>
-        <p class="section-subtitle text-center">Zaxis (ZX) reeks. Suffix -5, -6 of -7 geeft de generatie aan. Klik op jouw model.</p>
-        
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX19U-5" class="model-link" data-tonnage="1.9" data-cw="CW05">ZX19U-5</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX26U-6" class="model-link" data-tonnage="2.7" data-cw="CW05">ZX26U-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX48U-5" class="model-link" data-tonnage="4.8" data-cw="CW05">ZX48U-5</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX55U-6" class="model-link" data-tonnage="5.5" data-cw="CW10">ZX55U-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX85US-6" class="model-link" data-tonnage="8.5" data-cw="CW10">ZX85US-6</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-30 ton)</h3>
-            <p class="model-category-desc">CW30 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX135US-7" class="model-link" data-tonnage="15" data-cw="CW30">ZX135US-7</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX160LC-6" class="model-link" data-tonnage="17" data-cw="CW30">ZX160LC-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX210LC-6" class="model-link" data-tonnage="21" data-cw="CW40">ZX210LC-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX250LC-6" class="model-link" data-tonnage="25" data-cw="CW40">ZX250LC-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX170W-6" class="model-link" data-tonnage="17" data-cw="CW30" data-type="wielen">ZX170W-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX190W-6" class="model-link" data-tonnage="19" data-cw="CW30" data-type="wielen">ZX190W-6</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
-            <p class="model-category-desc">CW40 - CW70 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX300LC-6" class="model-link" data-tonnage="30" data-cw="CW40">ZX300LC-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX350LC-7" class="model-link" data-tonnage="35" data-cw="CW45">ZX350LC-7</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX490LCH-6" class="model-link" data-tonnage="49" data-cw="CW55">ZX490LCH-6</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=ZX690LCH-7" class="model-link" data-tonnage="69" data-cw="CW70">ZX690LCH-7</a>
-              <a href="../../pages/contact.html?brand=hitachi&model=EX1200-7" class="model-link" data-tonnage="120" data-cw="CW70">EX1200-7</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

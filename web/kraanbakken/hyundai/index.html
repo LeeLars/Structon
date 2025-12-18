@@ -47,16 +47,42 @@
       </div>
     </section>
 
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Hyundai Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header"><h2 class="tonnage-filter-title">Selecteer Tonnage</h2><button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button></div>
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2"><label for="tonnage-0-2"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">0 - 2 ton</span><span class="tonnage-count">Minigravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10"><label for="tonnage-5-10"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">5 - 10 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15"><label for="tonnage-10-15"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">10 - 15 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25"><label for="tonnage-15-25"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">15 - 25 ton</span><span class="tonnage-count">Zware klasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40"><label for="tonnage-25-40"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">25 - 40 ton</span><span class="tonnage-count">Zware klasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+"><label for="tonnage-40-plus"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">40+ ton</span><span class="tonnage-count">Extra zware klasse</span></span></label></div>
+        <h2 class="section-title text-center">Zoek op Hyundai Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=HX17AZ" class="model-link" data-tonnage="1.7" data-cw="CW05">Hyundai HX17AZ</a>
+              <a href="?model=HX85ACR" class="model-link" data-tonnage="8.5" data-cw="CW10">Hyundai HX85ACR</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
+            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=HX130ALR" class="model-link" data-tonnage="13.8" data-cw="CW20">Hyundai HX130ALR</a>
+              <a href="?model=HW140A" class="model-link" data-tonnage="14" data-cw="CW20" data-type="wielen">Hyundai HW140A</a>
+              <a href="?model=HX160AL" class="model-link" data-tonnage="16.5" data-cw="CW30">Hyundai HX160AL</a>
+              <a href="?model=HW180A" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">Hyundai HW180A</a>
+              <a href="?model=HX220AL" class="model-link" data-tonnage="22" data-cw="CW40">Hyundai HX220AL</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 25 ton)</h3>
+            <p class="model-category-desc">CW40 - CW55 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=HX260AL" class="model-link" data-tonnage="26" data-cw="CW40">Hyundai HX260AL</a>
+              <a href="?model=HX300AL" class="model-link" data-tonnage="30" data-cw="CW45">Hyundai HX300AL</a>
+              <a href="?model=HX330AL" class="model-link" data-tonnage="33" data-cw="CW45">Hyundai HX330AL</a>
+              <a href="?model=HX380AL" class="model-link" data-tonnage="38" data-cw="CW45">Hyundai HX380AL</a>
+              <a href="?model=HX520AL" class="model-link" data-tonnage="52" data-cw="CW55">Hyundai HX520AL</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -69,45 +95,6 @@
         <div class="brand-products-header"><h2 class="brand-products-title">Producten</h2><p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p><div id="filter-summary"></div></div>
         <div class="products-list brand-products-list" id="products-grid"><div class="loading"><div class="spinner"></div></div></div>
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Hyundai Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=hyundai&model=HX17AZ" class="model-link" data-tonnage="1.7" data-cw="CW05">Hyundai HX17AZ</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX85ACR" class="model-link" data-tonnage="8.5" data-cw="CW10">Hyundai HX85ACR</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
-            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=hyundai&model=HX130ALR" class="model-link" data-tonnage="13.8" data-cw="CW20">Hyundai HX130ALR</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HW140A" class="model-link" data-tonnage="14" data-cw="CW20" data-type="wielen">Hyundai HW140A</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX160AL" class="model-link" data-tonnage="16.5" data-cw="CW30">Hyundai HX160AL</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HW180A" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">Hyundai HW180A</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX220AL" class="model-link" data-tonnage="22" data-cw="CW40">Hyundai HX220AL</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 25 ton)</h3>
-            <p class="model-category-desc">CW40 - CW55 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=hyundai&model=HX260AL" class="model-link" data-tonnage="26" data-cw="CW40">Hyundai HX260AL</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX300AL" class="model-link" data-tonnage="30" data-cw="CW45">Hyundai HX300AL</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX330AL" class="model-link" data-tonnage="33" data-cw="CW45">Hyundai HX330AL</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX380AL" class="model-link" data-tonnage="38" data-cw="CW45">Hyundai HX380AL</a>
-              <a href="../../pages/contact.html?brand=hyundai&model=HX520AL" class="model-link" data-tonnage="52" data-cw="CW55">Hyundai HX520AL</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

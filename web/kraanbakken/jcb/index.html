@@ -126,79 +126,42 @@
       </div>
     </section>
 
-    <!-- Tonnage Filter Section -->
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- JCB Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
+        <h2 class="section-title text-center">Zoek op JCB Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
         
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2">
-            <label for="tonnage-0-2">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">0 - 2 ton</span>
-                <span class="tonnage-count">Minigravers</span>
-              </span>
-            </label>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=18Z-1" class="model-link" data-tonnage="1.8" data-cw="CW05">JCB 18Z-1</a>
+              <a href="?model=19C-1" class="model-link" data-tonnage="1.9" data-cw="CW05">JCB 19C-1</a>
+              <a href="?model=85Z-2" class="model-link" data-tonnage="8.5" data-cw="CW10">JCB 85Z-2</a>
+              <a href="?model=90Z-2" class="model-link" data-tonnage="9.0" data-cw="CW10">JCB 90Z-2</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5">
-            <label for="tonnage-2-5">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">2 - 5 ton</span>
-                <span class="tonnage-count">Compacte gravers</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
+            <p class="model-category-desc">CW10 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=100C-2" class="model-link" data-tonnage="10" data-cw="CW10">JCB 100C-2</a>
+              <a href="?model=131X" class="model-link" data-tonnage="13.5" data-cw="CW20">JCB 131X</a>
+              <a href="?model=150X" class="model-link" data-tonnage="15" data-cw="CW30">JCB 150X</a>
+              <a href="?model=Hydradig-110W" class="model-link" data-tonnage="11" data-cw="CW20" data-type="wielen">JCB Hydradig 110W</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
-            <label for="tonnage-5-10">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">5 - 10 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
-            <label for="tonnage-10-15">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">10 - 15 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
-            <label for="tonnage-15-25">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">15 - 25 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
-            <label for="tonnage-25-40">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">25 - 40 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 20 ton)</h3>
+            <p class="model-category-desc">CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=220X" class="model-link" data-tonnage="22" data-cw="CW40">JCB 220X</a>
+              <a href="?model=245XR" class="model-link" data-tonnage="25" data-cw="CW40">JCB 245XR</a>
+            </div>
           </div>
         </div>
       </div>
@@ -238,47 +201,6 @@
         </div>
         
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <!-- Model Selector -->
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op JCB Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=jcb&model=18Z-1" class="model-link" data-tonnage="1.8" data-cw="CW05">JCB 18Z-1</a>
-              <a href="../../pages/contact.html?brand=jcb&model=19C-1" class="model-link" data-tonnage="1.9" data-cw="CW05">JCB 19C-1</a>
-              <a href="../../pages/contact.html?brand=jcb&model=85Z-2" class="model-link" data-tonnage="8.5" data-cw="CW10">JCB 85Z-2</a>
-              <a href="../../pages/contact.html?brand=jcb&model=90Z-2" class="model-link" data-tonnage="9.0" data-cw="CW10">JCB 90Z-2</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
-            <p class="model-category-desc">CW10 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=jcb&model=100C-2" class="model-link" data-tonnage="10" data-cw="CW10">JCB 100C-2</a>
-              <a href="../../pages/contact.html?brand=jcb&model=131X" class="model-link" data-tonnage="13.5" data-cw="CW20">JCB 131X</a>
-              <a href="../../pages/contact.html?brand=jcb&model=150X" class="model-link" data-tonnage="15" data-cw="CW30">JCB 150X</a>
-              <a href="../../pages/contact.html?brand=jcb&model=Hydradig-110W" class="model-link" data-tonnage="11" data-cw="CW20" data-type="wielen">JCB Hydradig 110W</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 20 ton)</h3>
-            <p class="model-category-desc">CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=jcb&model=220X" class="model-link" data-tonnage="22" data-cw="CW40">JCB 220X</a>
-              <a href="../../pages/contact.html?brand=jcb&model=245XR" class="model-link" data-tonnage="25" data-cw="CW40">JCB 245XR</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

@@ -47,14 +47,38 @@
       </div>
     </section>
 
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Yanmar Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header"><h2 class="tonnage-filter-title">Selecteer Tonnage</h2><button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button></div>
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2"><label for="tonnage-0-2"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">0 - 2 ton</span><span class="tonnage-count">Minigravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5"><label for="tonnage-2-5"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">2 - 5 ton</span><span class="tonnage-count">Compacte gravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10"><label for="tonnage-5-10"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">5 - 10 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15"><label for="tonnage-10-15"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">10 - 15 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
+        <h2 class="section-title text-center">Zoek op Yanmar Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Micro & Mini (< 2 ton)</h3>
+            <p class="model-category-desc">CW00 - CW05 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=SV08-1" class="model-link" data-tonnage="0.8" data-cw="CW00">Yanmar SV08-1</a>
+              <a href="?model=ViO17" class="model-link" data-tonnage="1.7" data-cw="CW05">Yanmar ViO17</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Compacte gravers (2-6 ton)</h3>
+            <p class="model-category-desc">CW05 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ViO23-6" class="model-link" data-tonnage="2.3" data-cw="CW05">Yanmar ViO23-6</a>
+              <a href="?model=ViO33-6" class="model-link" data-tonnage="3.3" data-cw="CW05">Yanmar ViO33-6</a>
+              <a href="?model=ViO50-6" class="model-link" data-tonnage="5.0" data-cw="CW05">Yanmar ViO50-6</a>
+              <a href="?model=ViO57-6" class="model-link" data-tonnage="5.7" data-cw="CW05">Yanmar ViO57-6</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (8-10 ton)</h3>
+            <p class="model-category-desc">CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ViO80-6" class="model-link" data-tonnage="8.0" data-cw="CW10">Yanmar ViO80-6</a>
+              <a href="?model=SV100-2" class="model-link" data-tonnage="10" data-cw="CW10">Yanmar SV100-2</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -67,41 +91,6 @@
         <div class="brand-products-header"><h2 class="brand-products-title">Producten</h2><p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p><div id="filter-summary"></div></div>
         <div class="products-list brand-products-list" id="products-grid"><div class="loading"><div class="spinner"></div></div></div>
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Yanmar Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Micro & Mini (< 2 ton)</h3>
-            <p class="model-category-desc">CW00 - CW05 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=yanmar&model=SV08-1" class="model-link" data-tonnage="0.8" data-cw="CW00">Yanmar SV08-1</a>
-              <a href="../../pages/contact.html?brand=yanmar&model=ViO17" class="model-link" data-tonnage="1.7" data-cw="CW05">Yanmar ViO17</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Compacte gravers (2-6 ton)</h3>
-            <p class="model-category-desc">CW05 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=yanmar&model=ViO23-6" class="model-link" data-tonnage="2.3" data-cw="CW05">Yanmar ViO23-6</a>
-              <a href="../../pages/contact.html?brand=yanmar&model=ViO33-6" class="model-link" data-tonnage="3.3" data-cw="CW05">Yanmar ViO33-6</a>
-              <a href="../../pages/contact.html?brand=yanmar&model=ViO50-6" class="model-link" data-tonnage="5.0" data-cw="CW05">Yanmar ViO50-6</a>
-              <a href="../../pages/contact.html?brand=yanmar&model=ViO57-6" class="model-link" data-tonnage="5.7" data-cw="CW05">Yanmar ViO57-6</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (8-10 ton)</h3>
-            <p class="model-category-desc">CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=yanmar&model=ViO80-6" class="model-link" data-tonnage="8.0" data-cw="CW10">Yanmar ViO80-6</a>
-              <a href="../../pages/contact.html?brand=yanmar&model=SV100-2" class="model-link" data-tonnage="10" data-cw="CW10">Yanmar SV100-2</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

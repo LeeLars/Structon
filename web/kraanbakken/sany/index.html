@@ -47,16 +47,39 @@
       </div>
     </section>
 
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Sany Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header"><h2 class="tonnage-filter-title">Selecteer Tonnage</h2><button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button></div>
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2"><label for="tonnage-0-2"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">0 - 2 ton</span><span class="tonnage-count">Minigravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10"><label for="tonnage-5-10"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">5 - 10 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15"><label for="tonnage-10-15"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">10 - 15 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25"><label for="tonnage-15-25"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">15 - 25 ton</span><span class="tonnage-count">Zware klasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40"><label for="tonnage-25-40"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">25 - 40 ton</span><span class="tonnage-count">Zware klasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+"><label for="tonnage-40-plus"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">40+ ton</span><span class="tonnage-count">Extra zware klasse</span></span></label></div>
+        <h2 class="section-title text-center">Zoek op Sany Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=SY18C" class="model-link" data-tonnage="1.8" data-cw="CW05">Sany SY18C</a>
+              <a href="?model=SY80U" class="model-link" data-tonnage="8.0" data-cw="CW10">Sany SY80U</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (13-25 ton)</h3>
+            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=SY135C" class="model-link" data-tonnage="13.5" data-cw="CW20">Sany SY135C</a>
+              <a href="?model=SY155W" class="model-link" data-tonnage="15.5" data-cw="CW30" data-type="wielen">Sany SY155W</a>
+              <a href="?model=SY215C" class="model-link" data-tonnage="21.5" data-cw="CW40">Sany SY215C</a>
+              <a href="?model=SY245H" class="model-link" data-tonnage="24.5" data-cw="CW40">Sany SY245H</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 26 ton)</h3>
+            <p class="model-category-desc">CW40 - CW55 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=SY265C" class="model-link" data-tonnage="26.5" data-cw="CW40">Sany SY265C</a>
+              <a href="?model=SY365H" class="model-link" data-tonnage="36.5" data-cw="CW45">Sany SY365H</a>
+              <a href="?model=SY500H" class="model-link" data-tonnage="50" data-cw="CW55">Sany SY500H</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -69,42 +92,6 @@
         <div class="brand-products-header"><h2 class="brand-products-title">Producten</h2><p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p><div id="filter-summary"></div></div>
         <div class="products-list brand-products-list" id="products-grid"><div class="loading"><div class="spinner"></div></div></div>
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Sany Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=sany&model=SY18C" class="model-link" data-tonnage="1.8" data-cw="CW05">Sany SY18C</a>
-              <a href="../../pages/contact.html?brand=sany&model=SY80U" class="model-link" data-tonnage="8.0" data-cw="CW10">Sany SY80U</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (13-25 ton)</h3>
-            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=sany&model=SY135C" class="model-link" data-tonnage="13.5" data-cw="CW20">Sany SY135C</a>
-              <a href="../../pages/contact.html?brand=sany&model=SY155W" class="model-link" data-tonnage="15.5" data-cw="CW30" data-type="wielen">Sany SY155W</a>
-              <a href="../../pages/contact.html?brand=sany&model=SY215C" class="model-link" data-tonnage="21.5" data-cw="CW40">Sany SY215C</a>
-              <a href="../../pages/contact.html?brand=sany&model=SY245H" class="model-link" data-tonnage="24.5" data-cw="CW40">Sany SY245H</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 26 ton)</h3>
-            <p class="model-category-desc">CW40 - CW55 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=sany&model=SY265C" class="model-link" data-tonnage="26.5" data-cw="CW40">Sany SY265C</a>
-              <a href="../../pages/contact.html?brand=sany&model=SY365H" class="model-link" data-tonnage="36.5" data-cw="CW45">Sany SY365H</a>
-              <a href="../../pages/contact.html?brand=sany&model=SY500H" class="model-link" data-tonnage="50" data-cw="CW55">Sany SY500H</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

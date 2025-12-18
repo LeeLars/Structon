@@ -106,8 +106,8 @@
     <a href="../../pages/contact.html" class="nav-link">Contact</a>
   </nav>
 
-  <main    <!-- Brand Hero -->
-        <!-- Page Hero (Universal) -->
+  <main data-brand="liebherr">
+    <!-- Page Hero (Universal) -->
     <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
@@ -128,90 +128,45 @@
       </div>
     </section>
 
-    <!-- Tonnage Filter Section (Coolblue-style) -->
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Liebherr Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
+        <h2 class="section-title text-center">Zoek op Liebherr Model</h2>
+        <p class="section-subtitle text-center">R = rupsgraafmachine, A = bandengraafmachine. Liebherr start vanaf ~10 ton. Klik op jouw model.</p>
         
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2">
-            <label for="tonnage-0-2">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">0 - 2 ton</span>
-                <span class="tonnage-count">Minigravers</span>
-              </span>
-            </label>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Compacte Middenklasse (10-26 ton)</h3>
+            <p class="model-category-desc">R = rups, A = banden. CW10 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=A910" class="model-link" data-tonnage="10" data-cw="CW10" data-type="wielen">A910 Compact</a>
+              <a href="?model=A914" class="model-link" data-tonnage="16" data-cw="CW20" data-type="wielen">A914 Litronic</a>
+              <a href="?model=R914" class="model-link" data-tonnage="15" data-cw="CW20">R914 Compact</a>
+              <a href="?model=A918" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">A918 Compact</a>
+              <a href="?model=R922" class="model-link" data-tonnage="21.7" data-cw="CW40">R922 Litronic</a>
+              <a href="?model=R924" class="model-link" data-tonnage="24" data-cw="CW40">R924</a>
+              <a href="?model=R926" class="model-link" data-tonnage="26" data-cw="CW40">R926 Compact</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5">
-            <label for="tonnage-2-5">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">2 - 5 ton</span>
-                <span class="tonnage-count">Compacte gravers</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (40-100 ton)</h3>
+            <p class="model-category-desc">CW45 - CW70 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=R946" class="model-link" data-tonnage="45" data-cw="CW45">R946</a>
+              <a href="?model=R956" class="model-link" data-tonnage="55" data-cw="CW55">R956</a>
+              <a href="?model=R966" class="model-link" data-tonnage="70" data-cw="CW70">R966</a>
+              <a href="?model=R976" class="model-link" data-tonnage="90" data-cw="CW70">R976</a>
+              <a href="?model=R980" class="model-link" data-tonnage="100" data-cw="CW70">R980 SME</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
-            <label for="tonnage-5-10">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">5 - 10 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
-            <label for="tonnage-10-15">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">10 - 15 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
-            <label for="tonnage-15-25">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">15 - 25 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
-            <label for="tonnage-25-40">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">25 - 40 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+">
-            <label for="tonnage-40-plus">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">40+ ton</span>
-                <span class="tonnage-count">Extra zware klasse</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Mijnbouw Klasse (> 100 ton)</h3>
+            <p class="model-category-desc">Speciale toepassingen</p>
+            <div class="model-links">
+              <a href="?model=R9800" class="model-link" data-tonnage="800">R9800</a>
+            </div>
           </div>
         </div>
       </div>
@@ -270,50 +225,6 @@
         
         <!-- Pagination -->
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <!-- Liebherr Model Selector -->
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Liebherr Model</h2>
-        <p class="section-subtitle text-center">R = rupsgraafmachine, A = bandengraafmachine. Liebherr start vanaf ~10 ton. Klik op jouw model.</p>
-        
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Compacte Middenklasse (10-26 ton)</h3>
-            <p class="model-category-desc">R = rups, A = banden. CW10 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=liebherr&model=A910" class="model-link" data-tonnage="10" data-cw="CW10" data-type="wielen">A910 Compact</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=A914" class="model-link" data-tonnage="16" data-cw="CW20" data-type="wielen">A914 Litronic</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R914" class="model-link" data-tonnage="15" data-cw="CW20">R914 Compact</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=A918" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">A918 Compact</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R922" class="model-link" data-tonnage="21.7" data-cw="CW40">R922 Litronic</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R924" class="model-link" data-tonnage="24" data-cw="CW40">R924</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R926" class="model-link" data-tonnage="26" data-cw="CW40">R926 Compact</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (40-100 ton)</h3>
-            <p class="model-category-desc">CW45 - CW70 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=liebherr&model=R946" class="model-link" data-tonnage="45" data-cw="CW45">R946</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R956" class="model-link" data-tonnage="55" data-cw="CW55">R956</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R966" class="model-link" data-tonnage="70" data-cw="CW70">R966</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R976" class="model-link" data-tonnage="90" data-cw="CW70">R976</a>
-              <a href="../../pages/contact.html?brand=liebherr&model=R980" class="model-link" data-tonnage="100" data-cw="CW70">R980 SME</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Mijnbouw Klasse (> 100 ton)</h3>
-            <p class="model-category-desc">Speciale toepassingen</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=liebherr&model=R9800" class="model-link" data-tonnage="800">R9800</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

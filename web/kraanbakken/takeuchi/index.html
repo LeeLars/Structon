@@ -47,14 +47,41 @@
       </div>
     </section>
 
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Takeuchi Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header"><h2 class="tonnage-filter-title">Selecteer Tonnage</h2><button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button></div>
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2"><label for="tonnage-0-2"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">0 - 2 ton</span><span class="tonnage-count">Minigravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5"><label for="tonnage-2-5"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">2 - 5 ton</span><span class="tonnage-count">Compacte gravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10"><label for="tonnage-5-10"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">5 - 10 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15"><label for="tonnage-10-15"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">10 - 15 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
+        <h2 class="section-title text-center">Zoek op Takeuchi Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 2 ton)</h3>
+            <p class="model-category-desc">CW05 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=TB216" class="model-link" data-tonnage="1.6" data-cw="CW05">Takeuchi TB216</a>
+              <a href="?model=TB217R" class="model-link" data-tonnage="1.7" data-cw="CW05">Takeuchi TB217R</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Compacte gravers (2-6 ton)</h3>
+            <p class="model-category-desc">CW05 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=TB225" class="model-link" data-tonnage="2.5" data-cw="CW05">Takeuchi TB225</a>
+              <a href="?model=TB230" class="model-link" data-tonnage="3.0" data-cw="CW05">Takeuchi TB230</a>
+              <a href="?model=TB235-2" class="model-link" data-tonnage="3.5" data-cw="CW05">Takeuchi TB235-2</a>
+              <a href="?model=TB240" class="model-link" data-tonnage="4.0" data-cw="CW05">Takeuchi TB240</a>
+              <a href="?model=TB250-2" class="model-link" data-tonnage="5.0" data-cw="CW05">Takeuchi TB250-2</a>
+              <a href="?model=TB260" class="model-link" data-tonnage="6.0" data-cw="CW05">Takeuchi TB260</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (8-15 ton)</h3>
+            <p class="model-category-desc">CW10 - CW20 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=TB280FR" class="model-link" data-tonnage="8.0" data-cw="CW10">Takeuchi TB280FR</a>
+              <a href="?model=TB290" class="model-link" data-tonnage="9.0" data-cw="CW10">Takeuchi TB290</a>
+              <a href="?model=TB2150R" class="model-link" data-tonnage="15" data-cw="CW20">Takeuchi TB2150R</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -67,44 +94,6 @@
         <div class="brand-products-header"><h2 class="brand-products-title">Producten</h2><p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p><div id="filter-summary"></div></div>
         <div class="products-list brand-products-list" id="products-grid"><div class="loading"><div class="spinner"></div></div></div>
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Takeuchi Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 2 ton)</h3>
-            <p class="model-category-desc">CW05 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB216" class="model-link" data-tonnage="1.6" data-cw="CW05">Takeuchi TB216</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB217R" class="model-link" data-tonnage="1.7" data-cw="CW05">Takeuchi TB217R</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Compacte gravers (2-6 ton)</h3>
-            <p class="model-category-desc">CW05 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB225" class="model-link" data-tonnage="2.5" data-cw="CW05">Takeuchi TB225</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB230" class="model-link" data-tonnage="3.0" data-cw="CW05">Takeuchi TB230</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB235-2" class="model-link" data-tonnage="3.5" data-cw="CW05">Takeuchi TB235-2</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB240" class="model-link" data-tonnage="4.0" data-cw="CW05">Takeuchi TB240</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB250-2" class="model-link" data-tonnage="5.0" data-cw="CW05">Takeuchi TB250-2</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB260" class="model-link" data-tonnage="6.0" data-cw="CW05">Takeuchi TB260</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (8-15 ton)</h3>
-            <p class="model-category-desc">CW10 - CW20 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB280FR" class="model-link" data-tonnage="8.0" data-cw="CW10">Takeuchi TB280FR</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB290" class="model-link" data-tonnage="9.0" data-cw="CW10">Takeuchi TB290</a>
-              <a href="../../pages/contact.html?brand=takeuchi&model=TB2150R" class="model-link" data-tonnage="15" data-cw="CW20">Takeuchi TB2150R</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

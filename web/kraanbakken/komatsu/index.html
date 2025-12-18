@@ -106,8 +106,8 @@
     <a href="../../pages/contact.html" class="nav-link">Contact</a>
   </nav>
 
-  <main    <!-- Brand Hero -->
-        <!-- Page Hero (Universal) -->
+  <main data-brand="komatsu">
+    <!-- Page Hero (Universal) -->
     <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
@@ -121,97 +121,54 @@
         <div class="page-hero-content">
           <div class="page-hero-text">
             <h1 class="page-title">Kraanbak voor Komatsu</h1>
-            <p class="page-subtitle">Structon levert hoogwaardige kraanbakken passend voor alle Komatsu graafmachines. 
-              Van de compacte PC18 minigraver tot de zware PC490 rupskraan.</p>
+            <p class="page-subtitle">Komatsu bouwt al sinds 1968 hydraulische graafmachines en lanceerde in 2008 de eerste hybride graafmachine ter wereld. In Europa staat het merk bekend om betrouwbaarheid en lage onderhoudskosten. Structon levert kraanbakken passend voor Komatsu: geselecteerd op machinegewicht én de juiste CW-snelwissel.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Tonnage Filter Section (Coolblue-style) -->
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Komatsu Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header">
-          <h2 class="tonnage-filter-title">Selecteer Tonnage</h2>
-          <button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button>
-        </div>
+        <h2 class="section-title text-center">Zoek op Komatsu Model</h2>
+        <p class="section-subtitle text-center">PC = rupsgraafmachine, PW = bandengraafmachine. Klik op jouw model.</p>
         
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2">
-            <label for="tonnage-0-2">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">0 - 2 ton</span>
-                <span class="tonnage-count">Minigravers</span>
-              </span>
-            </label>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=PC16R-3" class="model-link" data-tonnage="1.7" data-cw="CW05">PC16R-3</a>
+              <a href="?model=PC18MR-3" class="model-link" data-tonnage="2.07" data-cw="CW05">PC18MR-3</a>
+              <a href="?model=PC26MR-3" class="model-link" data-tonnage="2.8" data-cw="CW05">PC26MR-3</a>
+              <a href="?model=PC55MR-3" class="model-link" data-tonnage="5.3" data-cw="CW10">PC55MR-3</a>
+              <a href="?model=PC78US-11" class="model-link" data-tonnage="7.8" data-cw="CW10">PC78US-11</a>
+              <a href="?model=PC88MR-11" class="model-link" data-tonnage="8.5" data-cw="CW10">PC88MR-11</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5">
-            <label for="tonnage-2-5">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">2 - 5 ton</span>
-                <span class="tonnage-count">Compacte gravers</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (10-30 ton)</h3>
+            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=PC138US-11" class="model-link" data-tonnage="13.5" data-cw="CW20">PC138US-11</a>
+              <a href="?model=PC170LC-11" class="model-link" data-tonnage="18" data-cw="CW30">PC170LC-11</a>
+              <a href="?model=PC210LC-11" class="model-link" data-tonnage="21" data-cw="CW40">PC210LC-11</a>
+              <a href="?model=PC240LC-11" class="model-link" data-tonnage="25.3" data-cw="CW40">PC240LC-11</a>
+              <a href="?model=PW160-11" class="model-link" data-tonnage="17" data-cw="CW30" data-type="wielen">PW160-11</a>
+              <a href="?model=PW180-11" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">PW180-11</a>
+            </div>
           </div>
           
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
-            <label for="tonnage-5-10">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">5 - 10 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
-            <label for="tonnage-10-15">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">10 - 15 ton</span>
-                <span class="tonnage-count">Middenklasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
-            <label for="tonnage-15-25">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">15 - 25 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
-            <label for="tonnage-25-40">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">25 - 40 ton</span>
-                <span class="tonnage-count">Zware klasse</span>
-              </span>
-            </label>
-          </div>
-          
-          <div class="tonnage-filter">
-            <input type="checkbox" id="tonnage-40-plus" name="tonnage" value="40+">
-            <label for="tonnage-40-plus">
-              <span class="tonnage-checkbox"></span>
-              <span class="tonnage-label">
-                <span class="tonnage-range">40+ ton</span>
-                <span class="tonnage-count">Extra zware klasse</span>
-              </span>
-            </label>
+          <div class="model-category">
+            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
+            <p class="model-category-desc">CW45 - CW70 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=PC360LC-11" class="model-link" data-tonnage="36" data-cw="CW45">PC360LC-11</a>
+              <a href="?model=PC490LC-11" class="model-link" data-tonnage="48" data-cw="CW55">PC490LC-11</a>
+              <a href="?model=PC800-8" class="model-link" data-tonnage="80" data-cw="CW70">PC800-8</a>
+              <a href="?model=PC1250-11" class="model-link" data-tonnage="118" data-cw="CW70">PC1250-11</a>
+            </div>
           </div>
         </div>
       </div>
@@ -273,63 +230,61 @@
       </div>
     </section>
 
-    <!-- Komatsu Model Selector -->
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Komatsu Model</h2>
-        <p class="section-subtitle text-center">PC = rupsgraafmachine, PW = bandengraafmachine. Klik op jouw model.</p>
-        
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=komatsu&model=PC16R-3" class="model-link" data-tonnage="1.7" data-cw="CW05">PC16R-3</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC18MR-3" class="model-link" data-tonnage="2.07" data-cw="CW05">PC18MR-3</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC26MR-3" class="model-link" data-tonnage="2.8" data-cw="CW05">PC26MR-3</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC55MR-3" class="model-link" data-tonnage="5.3" data-cw="CW10">PC55MR-3</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC78US-11" class="model-link" data-tonnage="7.8" data-cw="CW10">PC78US-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC88MR-11" class="model-link" data-tonnage="8.5" data-cw="CW10">PC88MR-11</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-30 ton)</h3>
-            <p class="model-category-desc">CW20 - CW40 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=komatsu&model=PC138US-11" class="model-link" data-tonnage="13.5" data-cw="CW20">PC138US-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC170LC-11" class="model-link" data-tonnage="18" data-cw="CW30">PC170LC-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC210LC-11" class="model-link" data-tonnage="21" data-cw="CW40">PC210LC-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC240LC-11" class="model-link" data-tonnage="25.3" data-cw="CW40">PC240LC-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PW160-11" class="model-link" data-tonnage="17" data-cw="CW30" data-type="wielen">PW160-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PW180-11" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">PW180-11</a>
-            </div>
-          </div>
-          
-          <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 30 ton)</h3>
-            <p class="model-category-desc">CW45 - CW70 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=komatsu&model=PC360LC-11" class="model-link" data-tonnage="36" data-cw="CW45">PC360LC-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC490LC-11" class="model-link" data-tonnage="48" data-cw="CW55">PC490LC-11</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC800-8" class="model-link" data-tonnage="80" data-cw="CW70">PC800-8</a>
-              <a href="../../pages/contact.html?brand=komatsu&model=PC1250-11" class="model-link" data-tonnage="118" data-cw="CW70">PC1250-11</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- SEO Content -->
     <section class="section seo-content">
       <div class="container">
         <div class="seo-content-grid">
           <article class="seo-article">
-            <h2>Welke CW-Aansluiting voor Komatsu?</h2>
-            <p>
-              Komatsu biedt graafmachines van ~1 ton minigravers tot mijnbouwmachines van >100 ton. 
-              PC = rupsgraafmachine, PW = bandengraafmachine. Hieronder de CW-snelwissels per model:
-            </p>
+            <h2>Het Komatsu assortiment: van mini tot monster</h2>
+            <p>Komatsu is wereldwijd een van de grootste bouwmachinebouwers. Voor de Benelux zie je vooral machines tussen circa 1 en 50 ton op de werf: van compacte MR/US-modellen voor stedelijk werk tot de klassiekers in de 20-30 ton klasse zoals de PC210 en PC240.</p>
+            <p>De kleinste is de PC01-1 (micro-graafmachine van 380 kg). De grootste is de PC8000-6 (777 ton) voor mijnbouw. In de praktijk draait het bij kraanbakken bijna altijd om de juiste match tussen machinegewicht, stick-afmetingen en het CW-snelwisselsysteem.</p>
+            <h3>Modelnamen uitgelegd</h3>
+            <ul>
+              <li><strong>PC:</strong> rupsgraafmachine</li>
+              <li><strong>PW:</strong> bandengraafmachine (wielgraafmachine)</li>
+              <li><strong>MR:</strong> Minimum Radius (korte/zero tailswing, ideaal in smalle straten)</li>
+              <li><strong>US:</strong> Ultra Short (extra compacte staart)</li>
+            </ul>
+          </article>
+
+          <article class="seo-article">
+            <h2>Hoe werkt het kraanbak-systeem (CW) bij Komatsu?</h2>
+            <p>In Nederland en België gebruiken we meestal het CW-snelwisselsysteem (Verachtert). De kraanbak (hijshaak) is geen los onderdeel: die zit geïntegreerd in de snelwissel. Je kiest dus in de praktijk: machine → juiste CW-klasse → passende bak.</p>
+            <p>Belangrijk bij Komatsu: in dezelfde gewichtsklasse kunnen pendiameters en stick-maten per generatie verschillen (bijv. PC210-6 vs PC210-11). Kijk daarom niet alleen naar tonnage, maar meet ook de stick: pen Ø, hart-op-hart en breedte tussen de oren.</p>
+            <h3>Indicatieve pendiameters (Komatsu)</h3>
+            <ul>
+              <li><strong>Mini (PC18–PC60):</strong> ongeveer 35–50 mm → meestal CW05/CW10</li>
+              <li><strong>Midi (PC75–PC130):</strong> ongeveer 50–60 mm → overgang CW10/CW20</li>
+              <li><strong>Middenklasse (PC138–PC210):</strong> ongeveer 60–75 mm → CW20/CW30 (soms CW40 afhankelijk van uitvoering)</li>
+              <li><strong>Zware klasse (PC220–PC490):</strong> ongeveer 80–100 mm → CW40/CW45/CW55</li>
+            </ul>
+          </article>
+
+          <article class="seo-article">
+            <h2>CW-klassen voor Komatsu (quick reference)</h2>
+            <table class="seo-table">
+              <thead>
+                <tr>
+                  <th>CW-klasse</th>
+                  <th>Machinegewicht (indicatief)</th>
+                  <th>Voorbeelden</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>CW05</td><td>1 – 3,5 ton</td><td>PC18MR, PC20E, PC26(MR/E), PC30MR, PC33E</td></tr>
+                <tr><td>CW10</td><td>3 – 10 ton</td><td>PC35MR, PC45MR, PC55MR, PC78MR/US, PC88MR</td></tr>
+                <tr><td>CW20</td><td>7,5 – 15 ton</td><td>PC88MR (generatie afhankelijk), PC130, PC138US, PW98MR</td></tr>
+                <tr><td>CW30</td><td>15 – 20 ton</td><td>PC160LC, PC170LC, PC200, PC210, PW118MR, PW138MR</td></tr>
+                <tr><td>CW40</td><td>20 – 27 ton</td><td>PC220, PC228US, PC240, PC290, PW160, PW180</td></tr>
+                <tr><td>CW45</td><td>25 – 45 ton</td><td>PC300, PC350, PC360, PC390, PC400</td></tr>
+                <tr><td>CW55</td><td>40 – 65 ton</td><td>PC450, PC490, PC650</td></tr>
+              </tbody>
+            </table>
+            <p><strong>Belangrijk:</strong> dit is indicatief. Komatsu generaties (-6, -7, -8, -10, -11, -12) en US/MR-uitvoeringen kunnen andere stick-afmetingen hebben.</p>
+          </article>
+
+          <article class="seo-article">
+            <h2>Komatsu modellen &amp; CW-aansluiting in één oogopslag</h2>
             <table class="seo-table">
               <thead>
                 <tr>
@@ -340,24 +295,32 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>PC16R-3</td><td>1,7 ton</td><td>CW05</td><td>Rups</td></tr>
-                <tr><td>PC18MR-3</td><td>2,07 ton</td><td>CW05</td><td>Rups</td></tr>
-                <tr><td>PC26MR-3</td><td>2,8 ton</td><td>CW05</td><td>Rups</td></tr>
-                <tr><td>PC55MR-3</td><td>5,3 ton</td><td>CW10</td><td>Rups</td></tr>
-                <tr><td>PC78US-11</td><td>7,8 ton</td><td>CW10</td><td>Rups</td></tr>
-                <tr><td>PC88MR-11</td><td>8,5 ton</td><td>CW10</td><td>Rups</td></tr>
-                <tr><td>PC138US-11</td><td>13,5 ton</td><td>CW20</td><td>Rups</td></tr>
-                <tr><td>PC170LC-11</td><td>18 ton</td><td>CW30</td><td>Rups</td></tr>
-                <tr><td>PW160-11</td><td>17 ton</td><td>CW30</td><td>Banden</td></tr>
-                <tr><td>PW180-11</td><td>18 ton</td><td>CW30</td><td>Banden</td></tr>
-                <tr><td>PC210LC-11</td><td>21 ton</td><td>CW40</td><td>Rups</td></tr>
-                <tr><td>PC240LC-11</td><td>25,3 ton</td><td>CW40</td><td>Rups</td></tr>
-                <tr><td>PC360LC-11</td><td>36 ton</td><td>CW45</td><td>Rups</td></tr>
-                <tr><td>PC490LC-11</td><td>48 ton</td><td>CW55</td><td>Rups</td></tr>
-                <tr><td>PC800-8</td><td>80 ton</td><td>CW70</td><td>Rups</td></tr>
-                <tr><td>PC1250-11</td><td>118 ton</td><td>CW70</td><td>Rups</td></tr>
+                <tr><td>PC18MR-3</td><td>1,8 – 2,1 ton</td><td>CW05</td><td>Rups</td></tr>
+                <tr><td>PC26MR-3</td><td>2,5 – 2,8 ton</td><td>CW05</td><td>Rups</td></tr>
+                <tr><td>PC55MR</td><td>5 – 6 ton</td><td>CW10</td><td>Rups</td></tr>
+                <tr><td>PC88MR</td><td>8 – 9 ton</td><td>CW10/CW20</td><td>Rups</td></tr>
+                <tr><td>PC138US-11</td><td>14 – 15 ton</td><td>CW20/CW30</td><td>Rups</td></tr>
+                <tr><td>PC160LC-11</td><td>16 – 17 ton</td><td>CW30</td><td>Rups</td></tr>
+                <tr><td>PC210LC-11</td><td>21 – 24 ton</td><td>CW30/CW40</td><td>Rups</td></tr>
+                <tr><td>PC240LC-11</td><td>24 – 26 ton</td><td>CW40</td><td>Rups</td></tr>
+                <tr><td>PC290LC-11</td><td>29 ton</td><td>CW40</td><td>Rups</td></tr>
+                <tr><td>PC360LC-11</td><td>35 – 36 ton</td><td>CW45</td><td>Rups</td></tr>
+                <tr><td>PC490LC-11</td><td>49 – 50 ton</td><td>CW55</td><td>Rups</td></tr>
+                <tr><td>PW118MR-11</td><td>12,8 – 13,9 ton</td><td>CW20/CW30</td><td>Banden</td></tr>
+                <tr><td>PW160-11</td><td>15 – 19 ton</td><td>CW30/CW40</td><td>Banden</td></tr>
+                <tr><td>PW180-11</td><td>17 – 19 ton</td><td>CW40</td><td>Banden</td></tr>
               </tbody>
             </table>
+          </article>
+
+          <article class="seo-article">
+            <h2>Praktische tips (Komatsu)</h2>
+            <ul>
+              <li><strong>Controleer de generatie:</strong> een PC210-6 kan andere stick-maten hebben dan een PC210-11.</li>
+              <li><strong>US/MR-modellen:</strong> compacte uitvoeringen hebben soms een andere geometrie; laat altijd nameten.</li>
+              <li><strong>Wielgraafmachines:</strong> bij PW-modellen is stabiliteit belangrijk; een correcte match van CW-klasse en bakgewicht helpt.</li>
+              <li><strong>Meet vóór je bestelt:</strong> pen Ø, hart-op-hart afstand en binnenbreedte tussen de oren bepalen de juiste aansluiting.</li>
+            </ul>
           </article>
           
           <article class="seo-article">

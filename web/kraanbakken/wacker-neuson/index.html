@@ -47,13 +47,40 @@
       </div>
     </section>
 
-    <section class="section tonnage-filter-section" style="padding-top: var(--space-16);">
+    <!-- Wacker Neuson Model Selector -->
+    <section class="section model-selector">
       <div class="container">
-        <div class="tonnage-filter-header"><h2 class="tonnage-filter-title">Selecteer Tonnage</h2><button class="tonnage-filter-clear" onclick="clearTonnageFilters()">Filters wissen</button></div>
-        <div class="tonnage-filter-grid">
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-0-2" name="tonnage" value="0-2"><label for="tonnage-0-2"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">0 - 2 ton</span><span class="tonnage-count">Minigravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-2-5" name="tonnage" value="2-5"><label for="tonnage-2-5"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">2 - 5 ton</span><span class="tonnage-count">Compacte gravers</span></span></label></div>
-          <div class="tonnage-filter"><input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10"><label for="tonnage-5-10"><span class="tonnage-checkbox"></span><span class="tonnage-label"><span class="tonnage-range">5 - 10 ton</span><span class="tonnage-count">Middenklasse</span></span></label></div>
+        <h2 class="section-title text-center">Zoek op Wacker Neuson Model</h2>
+        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="model-grid">
+          <div class="model-category">
+            <h3 class="model-category-title">Minigravers (< 2 ton)</h3>
+            <p class="model-category-desc">CW00 - CW05 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ET16" class="model-link" data-tonnage="1.6" data-cw="CW00">Wacker Neuson ET16</a>
+              <a href="?model=ET18" class="model-link" data-tonnage="1.8" data-cw="CW05">Wacker Neuson ET18</a>
+              <a href="?model=EZ17" class="model-link" data-tonnage="1.7" data-cw="CW05">Wacker Neuson EZ17</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Compacte gravers (2-5 ton)</h3>
+            <p class="model-category-desc">CW05 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=EZ26" class="model-link" data-tonnage="2.6" data-cw="CW05">Wacker Neuson EZ26</a>
+              <a href="?model=ET35" class="model-link" data-tonnage="3.5" data-cw="CW05">Wacker Neuson ET35</a>
+              <a href="?model=EZ36" class="model-link" data-tonnage="3.6" data-cw="CW05">Wacker Neuson EZ36</a>
+              <a href="?model=EZ50" class="model-link" data-tonnage="5.0" data-cw="CW05">Wacker Neuson EZ50</a>
+            </div>
+          </div>
+          <div class="model-category">
+            <h3 class="model-category-title">Middenklasse (6-10 ton)</h3>
+            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="model-links">
+              <a href="?model=ET65" class="model-link" data-tonnage="6.5" data-cw="CW05">Wacker Neuson ET65</a>
+              <a href="?model=EZ80" class="model-link" data-tonnage="8.0" data-cw="CW10">Wacker Neuson EZ80</a>
+              <a href="?model=ET90" class="model-link" data-tonnage="9.0" data-cw="CW10">Wacker Neuson ET90</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -66,43 +93,6 @@
         <div class="brand-products-header"><h2 class="brand-products-title">Producten</h2><p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p><div id="filter-summary"></div></div>
         <div class="products-list brand-products-list" id="products-grid"><div class="loading"><div class="spinner"></div></div></div>
         <div class="pagination" id="pagination"></div>
-      </div>
-    </section>
-
-    <section class="section model-selector">
-      <div class="container">
-        <h2 class="section-title text-center">Zoek op Wacker Neuson Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
-        <div class="model-grid">
-          <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 2 ton)</h3>
-            <p class="model-category-desc">CW00 - CW05 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=ET16" class="model-link" data-tonnage="1.6" data-cw="CW00">Wacker Neuson ET16</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=ET18" class="model-link" data-tonnage="1.8" data-cw="CW05">Wacker Neuson ET18</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=EZ17" class="model-link" data-tonnage="1.7" data-cw="CW05">Wacker Neuson EZ17</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Compacte gravers (2-5 ton)</h3>
-            <p class="model-category-desc">CW05 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=EZ26" class="model-link" data-tonnage="2.6" data-cw="CW05">Wacker Neuson EZ26</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=ET35" class="model-link" data-tonnage="3.5" data-cw="CW05">Wacker Neuson ET35</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=EZ36" class="model-link" data-tonnage="3.6" data-cw="CW05">Wacker Neuson EZ36</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=EZ50" class="model-link" data-tonnage="5.0" data-cw="CW05">Wacker Neuson EZ50</a>
-            </div>
-          </div>
-          <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (6-10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
-            <div class="model-links">
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=ET65" class="model-link" data-tonnage="6.5" data-cw="CW05">Wacker Neuson ET65</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=EZ80" class="model-link" data-tonnage="8.0" data-cw="CW10">Wacker Neuson EZ80</a>
-              <a href="../../pages/contact.html?brand=wacker-neuson&model=ET90" class="model-link" data-tonnage="9.0" data-cw="CW10">Wacker Neuson ET90</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

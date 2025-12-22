@@ -80,7 +80,7 @@ async function loadProducts() {
 
     const data = await products.getAll(filters);
     
-    allProducts = data.products || [];
+    allProducts = data.items || [];
     const total = data.total || allProducts.length;
 
     console.log(`✅ Loaded ${allProducts.length} products for category: ${categorySlug}`);

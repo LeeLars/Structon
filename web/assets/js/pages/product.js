@@ -247,7 +247,7 @@ async function loadRelatedProducts() {
     });
 
     // Filter out current product
-    const related = (data.products || []).filter(p => p.id !== currentProduct.id);
+    const related = (data.items || []).filter(p => p.id !== currentProduct.id);
 
     if (related.length > 0) {
       section.style.display = 'block';

@@ -111,7 +111,7 @@ async function loadPopularProducts() {
       limit: 3 // Show 3 cards
     });
     
-    const popularProducts = data.products || [];
+    const popularProducts = data.items || [];
     
     if (popularProducts.length > 0) {
       container.innerHTML = popularProducts.map(product => createIndustryProductCard(product)).join('');
@@ -305,7 +305,7 @@ async function loadIndustryProducts(categorySlug = null) {
     console.log('🔍 Loading industry products:', currentIndustry, filters);
     
     const data = await products.getAll(filters);
-    allProducts = data.products || [];
+    allProducts = data.items || [];
     
     console.log(`✅ Loaded ${allProducts.length} products for industry: ${currentIndustry}`);
     

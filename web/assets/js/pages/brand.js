@@ -298,7 +298,7 @@ async function loadBrandProducts(categorySlug = null) {
     console.log('🔍 Loading brand products:', filters);
     
     const data = await products.getAll(filters);
-    allProducts = data.products || [];
+    allProducts = data.items || [];
     
     console.log(`✅ Loaded ${allProducts.length} products for brand: ${currentBrand}`);
     

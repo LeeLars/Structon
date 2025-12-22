@@ -127,9 +127,9 @@ async function loadFeaturedProducts() {
     // Fetch featured products
     const data = await products.getFeatured(12); // Get more to shuffle
     
-    if (data.products && data.products.length > 0) {
-      // Shuffle array
-      const shuffled = data.products.sort(() => 0.5 - Math.random());
+    if (data.items && data.items.length > 0) {
+      // Shuffle products randomly
+      const shuffled = data.items.sort(() => 0.5 - Math.random());
       // Take first 8 for slider
       selected = shuffled.slice(0, 8);
     }

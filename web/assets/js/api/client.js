@@ -75,6 +75,25 @@ export function clearApiCache(pattern = null) {
 }
 
 /**
+ * Normalize API response to consistent format
+ */
+function normalizeProductsResponse(data) {
+  // Handle different response shapes from API
+  if (!data || typeof data !== 'object') {
+    return { items: [], total: 0, limit: 12, offset: 0 };
+  }
+
+  // API returns { products: [], total: X, limit: Y, offset: Z }
+  // Frontend expects { items: [], total: X, limit: Y, offset: Z }
+  return {
+    items: data.products || data.items || [],
+    total: data.total || 0,
+    limit: data.limit || 12,
+    offset: data.offset || 0
+  };
+}
+
+/**
  * Show user-friendly error message
  */
 function showApiError(endpoint, error) {
@@ -178,9 +197,9 @@ async function request(endpoint, options = {}) {
       // Show error to user
       showApiError(endpoint, error);
       
-      // Return empty data structure based on endpoint
+      // Return normalized empty data structure based on endpoint
       if (endpoint.includes('/products')) {
-        return { products: [], total: 0 };
+        return normalizeProductsResponse({ products: [], total: 0 });
       }
       if (endpoint.includes('/categories') || endpoint.includes('/brands')) {
         return [];
@@ -217,7 +236,16 @@ export const auth = {
   },
 
   async me() {
-    return request('/auth/me');
+    try {
+      return await request('/auth/me');
+    } catch (error) {
+      // 401 is expected when not logged in - return null without side effects
+      if (error.message.includes('401') || error.message.includes('Authentication required')) {
+        console.log('User not authenticated (this is normal)');
+        return null;
+      }
+      throw error;
+    }
   },
 
   async requestPasswordReset(email) {
@@ -242,7 +270,8 @@ export const products = {
     });
 
     const query = params.toString();
-    return request(`/products${query ? `?${query}` : ''}`);
+    const response = await request(`/products${query ? `?${query}` : ''}`);
+    return normalizeProductsResponse(response);
   },
 
   async getById(id) {
@@ -254,7 +283,9 @@ export const products = {
   },
 
   async getFeatured(limit = 6) {
-    return request(`/products/featured?limit=${limit}`);
+    const response = await request(`/products/featured?limit=${limit}`);
+    // Featured endpoint returns { products: [] } - normalize to items
+    return normalizeProductsResponse(response);
   },
 
   async getFilters() {

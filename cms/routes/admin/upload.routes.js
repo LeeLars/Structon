@@ -106,15 +106,15 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
       }
     });
     
-    // Send detailed error in development, generic in production
-    const isDev = process.env.NODE_ENV !== 'production';
+    // Temporarily show detailed errors to debug Cloudinary issue
     res.status(500).json({
-      error: isDev 
-        ? `Upload error: ${error.message}` 
-        : error.message.includes('Cloudinary') 
-          ? error.message 
-          : 'Fout bij uploaden van afbeeldingen. Probeer het opnieuw of neem contact op met de beheerder.',
-      ...(isDev && { details: error.message, code: error.code })
+      error: `Upload error: ${error.message}`,
+      details: {
+        name: error.name,
+        code: error.code,
+        http_code: error.http_code,
+        message: error.message
+      }
     });
   }
 });

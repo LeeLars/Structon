@@ -288,4 +288,18 @@ router.post('/debug/seed-products', async (req, res) => {
   }
 });
 
+// Debug auth endpoint
+router.get('/debug/auth', async (req, res) => {
+  const token = req.cookies?.auth_token;
+  
+  res.json({
+    hasCookie: !!token,
+    cookieValue: token ? `${token.substring(0, 20)}...` : null,
+    headers: {
+      authorization: req.headers.authorization || null,
+      cookie: req.headers.cookie ? 'present' : 'missing'
+    }
+  });
+});
+
 export default router;

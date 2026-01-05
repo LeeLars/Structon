@@ -130,14 +130,14 @@ class APIClient {
       });
 
       if (response.status === 401) {
-        window.location.href = '/cms/';
-        throw new Error('Unauthorized');
+        // Don't redirect immediately - throw error so caller can handle it
+        throw new Error('Unauthorized - Please log in again');
       }
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
+        throw new Error(data.error || data.message || 'Upload failed');
       }
 
       return data;

@@ -588,10 +588,30 @@ async function handleImageSelect(e) {
       // Store uploaded images for use when saving product
       window.uploadedImages = response.images;
       console.log('Uploaded images:', response.images);
+      
+      // Show preview of uploaded images
+      const previewArea = document.getElementById('image-preview-area');
+      if (previewArea) {
+        previewArea.innerHTML = response.images.map(img => 
+          `<div class="uploaded-image-preview">
+            <img src="${img.url}" alt="Uploaded">
+            <button type="button" onclick="removeUploadedImage('${img.public_id}')" class="btn-remove-image">×</button>
+          </div>`
+        ).join('');
+      }
     }
   } catch (error) {
     console.error('Upload error:', error);
-    showToast('Fout bij uploaden afbeeldingen', 'error');
+    
+    // Show specific error message
+    if (error.message.includes('Unauthorized')) {
+      showToast('Sessie verlopen - log opnieuw in', 'error');
+      setTimeout(() => window.location.href = '/cms/', 2000);
+    } else if (error.message.includes('Cloudinary not configured')) {
+      showToast('Image upload niet geconfigureerd - neem contact op met beheerder', 'error');
+    } else {
+      showToast(`Fout bij uploaden: ${error.message}`, 'error');
+    }
   }
 }
 

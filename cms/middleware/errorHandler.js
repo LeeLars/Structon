@@ -27,13 +27,5 @@ export function errorHandler(err, req, res, next) {
     errorResponse.stack = err.stack;
   }
   
-  // Temporarily add more debug info in production for debugging
-  if (isProduction && statusCode === 500) {
-    errorResponse.debug = {
-      message: err.message,
-      code: err.code
-    };
-  }
-  
   res.status(statusCode).json(errorResponse);
 }

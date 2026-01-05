@@ -314,4 +314,41 @@ router.get('/debug/cloudinary', async (req, res) => {
   });
 });
 
+// Debug product creation endpoint
+router.post('/debug/test-product', async (req, res) => {
+  try {
+    const { pool } = await import('../../config/database.js');
+    
+    // Test simple product insert
+    const result = await pool.query(`
+      INSERT INTO products (
+        title, slug, excavator_weight_min, excavator_weight_max, 
+        width, attachment_type, stock_quantity, is_active, is_featured
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING *
+    `, [
+      'Debug Test Product',
+      'debug-test-product-' + Date.now(),
+      1.5,
+      3,
+      200,
+      'CW05',
+      10,
+      true,
+      false
+    ]);
+    
+    res.json({
+      success: true,
+      product: result.rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      stack: error.stack,
+      code: error.code
+    });
+  }
+});
+
 export default router;

@@ -106,7 +106,6 @@ function setupEventListeners() {
   document.getElementById('search-products')?.addEventListener('input', handleSearch);
   
   // Filters
-  document.getElementById('filter-category')?.addEventListener('change', applyFilters);
   document.getElementById('filter-status')?.addEventListener('change', applyFilters);
   
   // View toggles
@@ -162,31 +161,8 @@ function setupEventListeners() {
  * Populate filter dropdowns
  */
 function populateFilters() {
-  // Clear existing options first (keep first "Alle" option)
-  const categoryFilter = document.getElementById('filter-category');
-  const productCategory = document.getElementById('product-category');
-  
-  // Clear and repopulate category filter
-  if (categoryFilter) {
-    categoryFilter.innerHTML = '<option value="">Alle categorieën</option>';
-    categories.forEach(cat => {
-      const option = document.createElement('option');
-      option.value = cat.id;
-      option.textContent = cat.title;
-      categoryFilter.appendChild(option);
-    });
-  }
-  
-  // Populate modal category select
-  if (productCategory) {
-    productCategory.innerHTML = '<option value="">Selecteer categorie</option>';
-    categories.forEach(cat => {
-      const option = document.createElement('option');
-      option.value = cat.id;
-      option.textContent = cat.title;
-      productCategory.appendChild(option);
-    });
-  }
+  // No category filters needed anymore
+  console.log('Filters initialized');
 }
 
 /**
@@ -202,7 +178,6 @@ function handleSearch(e) {
  */
 function applyFilters(searchQuery = null) {
   const search = searchQuery || document.getElementById('search-products')?.value.toLowerCase() || '';
-  const categoryId = document.getElementById('filter-category')?.value || '';
   const status = document.getElementById('filter-status')?.value || '';
   
   filteredProducts = products.filter(product => {
@@ -210,14 +185,12 @@ function applyFilters(searchQuery = null) {
       product.title.toLowerCase().includes(search) ||
       product.slug.toLowerCase().includes(search);
     
-    const matchesCategory = !categoryId || product.category_id === categoryId;
-    
     let matchesStatus = true;
     if (status === 'active') matchesStatus = product.is_active;
     if (status === 'inactive') matchesStatus = !product.is_active;
     if (status === 'featured') matchesStatus = product.is_featured;
     
-    return matchesSearch && matchesCategory && matchesStatus;
+    return matchesSearch && matchesStatus;
   });
   
   currentPage = 1;
@@ -269,7 +242,6 @@ function renderProducts() {
           <div class="product-slug">${product.slug}</div>
         </div>
       </td>
-      <td>${escapeHtml(product.category_title || '-')}</td>
       <td>
         <div class="tonnage-badges">
           ${(product.tonnage || []).map(t => `<span class="tonnage-badge">${t} ton</span>`).join('')}
@@ -481,7 +453,7 @@ function populateForm(product) {
   document.getElementById('product-title').value = product.title || '';
   document.getElementById('product-slug').value = product.slug || '';
   document.getElementById('product-description').value = product.description || '';
-  document.getElementById('product-category').value = product.category_id || '';
+  // Category removed from form
   document.getElementById('product-width').value = product.width || '';
   document.getElementById('product-volume').value = product.volume || '';
   document.getElementById('product-weight').value = product.weight || '';
@@ -510,9 +482,6 @@ async function handleProductSubmit(e) {
   const form = e.target;
   const productId = form.dataset.productId;
   
-  const categoryId = document.getElementById('product-category').value;
-  const category = categories.find(c => c.id === categoryId);
-  
   // Get selected tonnage values
   const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]:checked');
   const selectedTonnage = Array.from(tonnageCheckboxes).map(cb => cb.value);
@@ -522,13 +491,14 @@ async function handleProductSubmit(e) {
     return;
   }
   
+  // Use uploaded images if available
+  const uploadedImages = window.uploadedImages || [];
+  
   const productData = {
     id: productId || `prod-${Date.now()}`,
     title: document.getElementById('product-title').value,
     slug: document.getElementById('product-slug').value,
     description: document.getElementById('product-description').value,
-    category_id: categoryId || null,
-    category_title: category?.title || '',
     tonnage: selectedTonnage,
     width: parseInt(document.getElementById('product-width').value) || null,
     volume: parseInt(document.getElementById('product-volume').value) || null,
@@ -537,7 +507,7 @@ async function handleProductSubmit(e) {
     stock_quantity: parseInt(document.getElementById('product-stock').value) || 0,
     is_active: document.getElementById('product-active').checked,
     is_featured: document.getElementById('product-featured')?.checked || false,
-    cloudinary_images: []
+    cloudinary_images: uploadedImages
   };
   
   // Try API first, fallback to local storage

@@ -101,11 +101,17 @@ function hidePageLoading() {
  */
 async function checkAuth() {
   try {
+    // First check if we have a token in localStorage
+    const existingToken = localStorage.getItem('auth_token');
+    
     const response = await fetch(`${API_BASE}/auth/me`, {
-      credentials: 'include'
+      credentials: 'include',
+      headers: existingToken ? { 'Authorization': `Bearer ${existingToken}` } : {}
     });
 
     if (!response.ok) {
+      // Token might be expired, clear it and show login
+      localStorage.removeItem('auth_token');
       hidePageLoading();
       showLoginModal();
       return;
@@ -120,6 +126,12 @@ async function checkAuth() {
       return;
     }
 
+    // Store token if provided (happens when authenticated via cookie but no localStorage token)
+    if (data.token && !existingToken) {
+      localStorage.setItem('auth_token', data.token);
+      console.log('✅ Fresh auth token received and saved to localStorage');
+    }
+
     // Update UI
     updateSidebarUser();
     const userInfo = document.getElementById('user-info');
@@ -132,6 +144,7 @@ async function checkAuth() {
 
   } catch (error) {
     console.error('Auth check failed:', error);
+    localStorage.removeItem('auth_token');
     hidePageLoading();
     showLoginModal();
   }

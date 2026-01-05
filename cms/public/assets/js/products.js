@@ -600,8 +600,9 @@ async function handleProductSubmit(e) {
     console.error('❌ Failed to save product:', error);
     
     if (error.message.includes('Unauthorized')) {
-      showToast('Sessie verlopen - log opnieuw in', 'error');
-      setTimeout(() => window.location.href = '/cms/', 2000);
+      showToast('Authenticatie verlopen. Refresh de pagina om opnieuw in te loggen.', 'error');
+      // Don't auto-redirect, let user see the error and refresh manually
+      // This prevents the error from disappearing before they can read it
     } else if (error.message.includes('slug already exists')) {
       showToast('Een product met deze slug bestaat al. Kies een andere titel.', 'error');
     } else if (error.message.includes('Title is required')) {

@@ -70,12 +70,17 @@ router.post('/logout', (req, res) => {
  * Get current authenticated user
  */
 router.get('/me', authenticate, (req, res) => {
+  // Generate a fresh token for the user
+  // This helps when user is authenticated via cookie but localStorage was cleared
+  const token = generateToken(req.user.id);
+  
   res.json({
     user: {
       id: req.user.id,
       email: req.user.email,
       role: req.user.role
-    }
+    },
+    token // Include token so frontend can store it
   });
 });
 

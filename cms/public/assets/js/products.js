@@ -687,12 +687,19 @@ function generateSlug(title) {
  * Logout
  */
 async function handleLogout() {
+  console.log('🚪 Logging out...');
+  
   try {
     await api.post('/auth/logout');
-    window.location.href = '/cms/';
   } catch (error) {
-    window.location.href = '/cms/';
+    console.log('Logout API call failed, continuing anyway');
   }
+  
+  // Clear token from localStorage
+  localStorage.removeItem('auth_token');
+  
+  // Redirect to login
+  window.location.href = '/cms/';
 }
 
 // Utility functions

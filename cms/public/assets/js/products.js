@@ -1,7 +1,6 @@
 /**
  * Products Page JavaScript
  * Handles product CRUD, filters, bulk actions, and image uploads
- * With full demo data support
  */
 
 console.log('🚀 [PRODUCTS] Script loading...');
@@ -9,107 +8,6 @@ console.log('🚀 [PRODUCTS] Script loading...');
 import api from './api-client.js?v=3';
 
 console.log('✅ [PRODUCTS] API client imported successfully');
-
-// Demo data - always available
-const DEMO_PRODUCTS = [
-  {
-    id: 'prod-001',
-    title: 'Slotenbak 600mm CW30',
-    slug: 'slotenbak-600mm-cw30',
-    description: 'Professionele slotenbak voor graafmachines van 8-15 ton.',
-    category_id: 'cat-1',
-    category_title: 'Slotenbakken',
-    tonnage: ['8-15'],
-    width: 600,
-    volume: 120,
-    weight: 85,
-    attachment_type: 'CW30',
-    stock_quantity: 5,
-    price_excl_vat: 2450.00,
-    is_active: true,
-    is_featured: true,
-    cloudinary_images: [{ url: 'https://res.cloudinary.com/demo/image/upload/v1/samples/ecommerce/leather-bag-gray.jpg' }]
-  },
-  {
-    id: 'prod-002',
-    title: 'Graafbak 1200mm CW40',
-    slug: 'graafbak-1200mm-cw40',
-    description: 'Zware graafbak voor grote graafmachines.',
-    category_id: 'cat-2',
-    category_title: 'Graafbakken',
-    tonnage: ['15-25', '25-40'],
-    width: 1200,
-    volume: 450,
-    weight: 280,
-    attachment_type: 'CW40',
-    stock_quantity: 3,
-    price_excl_vat: 2945.00,
-    is_active: true,
-    is_featured: false,
-    cloudinary_images: [{ url: 'https://res.cloudinary.com/demo/image/upload/v1/samples/ecommerce/accessories-bag.jpg' }]
-  },
-  {
-    id: 'prod-003',
-    title: 'Sorteergrijper 800mm',
-    slug: 'sorteergrijper-800mm',
-    description: 'Veelzijdige sorteergrijper voor sloop en recycling.',
-    category_id: 'cat-3',
-    category_title: 'Sloop- en sorteergrijpers',
-    tonnage: ['8-15', '15-25'],
-    width: 800,
-    volume: null,
-    weight: 450,
-    attachment_type: 'S50',
-    stock_quantity: 2,
-    price_excl_vat: 3200.00,
-    is_active: true,
-    is_featured: true,
-    cloudinary_images: [{ url: 'https://res.cloudinary.com/demo/image/upload/v1/samples/ecommerce/car-interior-design.jpg' }]
-  },
-  {
-    id: 'prod-004',
-    title: 'Plantenbak 400mm CW10',
-    slug: 'plantenbak-400mm-cw10',
-    description: 'Compacte plantenbak voor kleine graafmachines.',
-    category_id: 'cat-4',
-    category_title: 'Overige',
-    tonnage: ['1.5-3', '3-8'],
-    width: 400,
-    volume: 45,
-    weight: 35,
-    attachment_type: 'CW10',
-    stock_quantity: 8,
-    price_excl_vat: 1875.00,
-    is_active: true,
-    is_featured: false,
-    cloudinary_images: []
-  },
-  {
-    id: 'prod-005',
-    title: 'Rioolbak 300mm CW20',
-    slug: 'rioolbak-300mm-cw20',
-    description: 'Smalle rioolbak voor precisiewerk.',
-    category_id: 'cat-1',
-    category_title: 'Slotenbakken',
-    tonnage: ['3-8'],
-    width: 300,
-    volume: 60,
-    weight: 55,
-    attachment_type: 'CW20',
-    stock_quantity: 0,
-    price_excl_vat: 1250.00,
-    is_active: false,
-    is_featured: false,
-    cloudinary_images: []
-  }
-];
-
-const DEMO_CATEGORIES = [
-  { id: 'cat-1', title: 'Slotenbakken', slug: 'slotenbakken' },
-  { id: 'cat-2', title: 'Graafbakken', slug: 'graafbakken' },
-  { id: 'cat-3', title: 'Sloop- en sorteergrijpers', slug: 'sloop-sorteergrijpers' },
-  { id: 'cat-4', title: 'Overige', slug: 'overige' }
-];
 
 // Tonnage options
 const TONNAGE_OPTIONS = [
@@ -152,46 +50,52 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialize with demo data immediately, then try API
+ * Initialize data from CMS API
  */
 async function initializeData() {
   console.log('📦 [PRODUCTS] initializeData starting...');
-  console.log('   DEMO_PRODUCTS available:', DEMO_PRODUCTS.length);
-  console.log('   DEMO_CATEGORIES available:', DEMO_CATEGORIES.length);
   console.log('   TONNAGE_OPTIONS available:', TONNAGE_OPTIONS.length);
   
-  // Load demo data immediately for fast display
-  products = [...DEMO_PRODUCTS];
-  categories = [...DEMO_CATEGORIES];
-  filteredProducts = [...products];
+  // Show loading state
+  const tbody = document.getElementById('products-tbody');
+  if (tbody) {
+    tbody.innerHTML = '<tr><td colspan="10" class="loading-cell">Producten laden...</td></tr>';
+  }
   
-  console.log('   Demo data loaded, rendering...');
-  
-  renderProducts();
-  populateFilters();
-  
-  console.log('   Initial render complete');
-  
-  // Try to load from API in background
+  // Load from API
   try {
     const [productsData, categoriesData] = await Promise.allSettled([
       api.get('/admin/products'),
       api.get('/categories')
     ]);
     
-    if (productsData.status === 'fulfilled' && productsData.value?.products?.length > 0) {
+    if (productsData.status === 'fulfilled' && productsData.value?.products) {
       products = productsData.value.products;
       filteredProducts = [...products];
-      renderProducts();
+      console.log(`✅ Loaded ${products.length} products from CMS`);
+    } else {
+      console.warn('⚠️ No products returned from API');
+      products = [];
+      filteredProducts = [];
     }
     
-    if (categoriesData.status === 'fulfilled' && categoriesData.value?.categories?.length > 0) {
+    if (categoriesData.status === 'fulfilled' && categoriesData.value?.categories) {
       categories = categoriesData.value.categories;
-      populateFilters();
+      console.log(`✅ Loaded ${categories.length} categories from CMS`);
+    } else {
+      console.warn('⚠️ No categories returned from API');
+      categories = [];
     }
   } catch (error) {
-    console.log('Using demo data (API unavailable)');
+    console.error('❌ Error loading data from CMS:', error);
+    products = [];
+    categories = [];
+    filteredProducts = [];
   }
+  
+  renderProducts();
+  populateFilters();
+  console.log('   Initial render complete');
 }
 
 /**

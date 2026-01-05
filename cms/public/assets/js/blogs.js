@@ -5,43 +5,6 @@
 
 import api from './api-client.js?v=3';
 
-// Demo data
-const DEMO_BLOGS = [
-  {
-    id: 'blog-1',
-    title: 'De juiste graafbak kiezen voor uw project',
-    slug: 'juiste-graafbak-kiezen',
-    excerpt: 'Een uitgebreide gids voor het selecteren van de perfecte graafbak voor verschillende grondsoorten en projecten.',
-    content: '<p>Het kiezen van de juiste graafbak is essentieel voor efficiënt grondverzet. In dit artikel bespreken we de belangrijkste factoren.</p><h2>Grondsoort</h2><p>De grondsoort bepaalt grotendeels welk type bak u nodig heeft...</p>',
-    featured_image: 'https://via.placeholder.com/800x400?text=Graafbak+Gids',
-    status: 'published',
-    published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'blog-2',
-    title: 'Onderhoudstips voor uw aanbouwdelen',
-    slug: 'onderhoudstips-aanbouwdelen',
-    excerpt: 'Verleng de levensduur van uw graafmachine accessoires met deze praktische onderhoudstips.',
-    content: '<p>Regelmatig onderhoud is cruciaal voor de levensduur van uw aanbouwdelen.</p>',
-    featured_image: 'https://via.placeholder.com/800x400?text=Onderhoud',
-    status: 'published',
-    published_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'blog-3',
-    title: 'Nieuwe CW40 snelwissel systemen',
-    slug: 'nieuwe-cw40-snelwissel',
-    excerpt: 'Ontdek de nieuwste ontwikkelingen in CW40 snelwissel technologie.',
-    content: '<p>De CW40 snelwissel is een van de meest populaire systemen...</p>',
-    featured_image: null,
-    status: 'draft',
-    published_at: null,
-    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-  }
-];
-
 let blogs = [];
 let currentBlogId = null;
 
@@ -67,23 +30,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialize with demo data immediately
+ * Initialize data from CMS API
  */
 async function initializeData() {
-  // Load demo data immediately
-  blogs = [...DEMO_BLOGS];
-  renderBlogList(blogs);
+  // Show loading state
+  const container = document.getElementById('blogs-container');
+  if (container) {
+    container.innerHTML = '<div class="loading-state">Artikelen laden...</div>';
+  }
   
-  // Try API in background
+  // Load from API
   try {
     const response = await api.get('/blogs/admin/all');
-    if (response?.blogs?.length > 0 || (Array.isArray(response) && response.length > 0)) {
-      blogs = response.blogs || response;
-      renderBlogList(blogs);
+    if (response?.blogs) {
+      blogs = response.blogs;
+    } else if (Array.isArray(response)) {
+      blogs = response;
+    } else {
+      blogs = [];
     }
+    console.log(`✅ Loaded ${blogs.length} blogs from CMS`);
   } catch (error) {
-    console.log('Using demo blogs (API unavailable)');
+    console.error('❌ Error loading blogs:', error);
+    blogs = [];
   }
+  
+  renderBlogList(blogs);
 }
 
 /**

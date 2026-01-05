@@ -4,50 +4,6 @@
 
 import api from './api-client.js?v=3';
 
-// Demo data
-const DEMO_USERS = [
-  {
-    id: 'user-1',
-    email: 'admin@structon.nl',
-    role: 'admin',
-    is_active: true,
-    company_name: 'Structon BV',
-    created_at: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'user-2',
-    email: 'info@jansengrondverzet.nl',
-    role: 'user',
-    is_active: true,
-    company_name: 'Jansen Grondverzet BV',
-    created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'user-3',
-    email: 'inkoop@devriesinfra.nl',
-    role: 'user',
-    is_active: true,
-    company_name: 'De Vries Infra',
-    created_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'user-4',
-    email: 'pietersen@bouwbedrijf.nl',
-    role: 'user',
-    is_active: true,
-    company_name: 'Bouwbedrijf Pietersen',
-    created_at: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString()
-  },
-  {
-    id: 'user-5',
-    email: 'info@groenwerk.nl',
-    role: 'user',
-    is_active: false,
-    company_name: 'Groenwerk Nederland',
-    created_at: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000).toISOString()
-  }
-];
-
 let users = [];
 let filteredUsers = [];
 
@@ -58,25 +14,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialize with demo data immediately
+ * Initialize data from CMS API
  */
 async function initializeData() {
-  // Load demo data immediately
-  users = [...DEMO_USERS];
-  filteredUsers = [...users];
-  renderUsers();
+  // Show loading state
+  const tbody = document.getElementById('users-tbody');
+  if (tbody) {
+    tbody.innerHTML = '<tr><td colspan="6" class="loading-cell">Gebruikers laden...</td></tr>';
+  }
   
-  // Try API in background
+  // Load from API
   try {
     const response = await api.get('/admin/users');
-    if (response?.users?.length > 0 || (Array.isArray(response) && response.length > 0)) {
-      users = response.users || response;
-      filteredUsers = [...users];
-      renderUsers();
+    if (response?.users) {
+      users = response.users;
+    } else if (Array.isArray(response)) {
+      users = response;
+    } else {
+      users = [];
     }
+    filteredUsers = [...users];
+    console.log(`✅ Loaded ${users.length} users from CMS`);
   } catch (error) {
-    console.log('Using demo users (API unavailable)');
+    console.error('❌ Error loading users:', error);
+    users = [];
+    filteredUsers = [];
   }
+  
+  renderUsers();
 }
 
 function setupEventListeners() {

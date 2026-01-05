@@ -4,58 +4,6 @@
 
 import api from './api-client.js?v=3';
 
-// Demo data
-const DEMO_BRANDS = [
-  {
-    id: 'brand-1',
-    title: 'Caterpillar',
-    slug: 'caterpillar',
-    logo_url: 'https://via.placeholder.com/150x80?text=CAT',
-    is_active: true,
-    product_count: 8
-  },
-  {
-    id: 'brand-2',
-    title: 'Komatsu',
-    slug: 'komatsu',
-    logo_url: 'https://via.placeholder.com/150x80?text=Komatsu',
-    is_active: true,
-    product_count: 6
-  },
-  {
-    id: 'brand-3',
-    title: 'Volvo',
-    slug: 'volvo',
-    logo_url: 'https://via.placeholder.com/150x80?text=Volvo',
-    is_active: true,
-    product_count: 5
-  },
-  {
-    id: 'brand-4',
-    title: 'Hitachi',
-    slug: 'hitachi',
-    logo_url: null,
-    is_active: true,
-    product_count: 4
-  },
-  {
-    id: 'brand-5',
-    title: 'Liebherr',
-    slug: 'liebherr',
-    logo_url: null,
-    is_active: true,
-    product_count: 3
-  },
-  {
-    id: 'brand-6',
-    title: 'JCB',
-    slug: 'jcb',
-    logo_url: null,
-    is_active: false,
-    product_count: 2
-  }
-];
-
 let brands = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -65,23 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialize with demo data immediately
+ * Initialize data from CMS API
  */
 async function initializeData() {
-  // Load demo data immediately
-  brands = [...DEMO_BRANDS];
-  renderBrands();
+  // Show loading state
+  const grid = document.getElementById('brands-grid');
+  if (grid) {
+    grid.innerHTML = '<div class="loading-state">Merken laden...</div>';
+  }
   
-  // Try API in background
+  // Load from API
   try {
     const response = await api.get('/brands');
-    if (response?.length > 0 || response?.brands?.length > 0) {
-      brands = response.brands || response;
-      renderBrands();
+    if (response?.brands) {
+      brands = response.brands;
+    } else if (Array.isArray(response)) {
+      brands = response;
+    } else {
+      brands = [];
     }
+    console.log(`✅ Loaded ${brands.length} brands from CMS`);
   } catch (error) {
-    console.log('Using demo brands (API unavailable)');
+    console.error('❌ Error loading brands:', error);
+    brands = [];
   }
+  
+  renderBrands();
 }
 
 function setupEventListeners() {

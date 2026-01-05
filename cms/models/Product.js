@@ -318,7 +318,14 @@ export const Product = {
    * Count products with filters
    */
   async count(filters = {}) {
-    let query = `SELECT COUNT(*)::int as count FROM products p WHERE p.is_active = true`;
+    let query = `
+      SELECT COUNT(*)::int as count
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN subcategories sc ON p.subcategory_id = sc.id
+      LEFT JOIN brands b ON p.brand_id = b.id
+      WHERE p.is_active = true
+    `;
     const values = [];
     let paramCount = 1;
 
@@ -326,9 +333,56 @@ export const Product = {
       query += ` AND p.category_id = $${paramCount++}`;
       values.push(filters.category_id);
     }
+    if (filters.category_slug) {
+      query += ` AND c.slug = $${paramCount++}`;
+      values.push(filters.category_slug);
+    }
+
+    if (filters.subcategory_id) {
+      query += ` AND p.subcategory_id = $${paramCount++}`;
+      values.push(filters.subcategory_id);
+    }
+    if (filters.subcategory_slug) {
+      query += ` AND sc.slug = $${paramCount++}`;
+      values.push(filters.subcategory_slug);
+    }
+
     if (filters.brand_id) {
       query += ` AND p.brand_id = $${paramCount++}`;
       values.push(filters.brand_id);
+    }
+
+    if (filters.attachment_type) {
+      query += ` AND p.attachment_type = $${paramCount++}`;
+      values.push(filters.attachment_type);
+    }
+
+    if (filters.excavator_weight) {
+      query += ` AND p.excavator_weight_min <= $${paramCount} AND p.excavator_weight_max >= $${paramCount++}`;
+      values.push(filters.excavator_weight);
+    }
+
+    if (filters.volume_min) {
+      query += ` AND p.volume >= $${paramCount++}`;
+      values.push(filters.volume_min);
+    }
+    if (filters.volume_max) {
+      query += ` AND p.volume <= $${paramCount++}`;
+      values.push(filters.volume_max);
+    }
+
+    if (filters.width) {
+      query += ` AND p.width = $${paramCount++}`;
+      values.push(filters.width);
+    }
+
+    if (filters.is_featured === true) {
+      query += ` AND p.is_featured = true`;
+    }
+
+    if (filters.search) {
+      query += ` AND (p.title ILIKE $${paramCount} OR p.description ILIKE $${paramCount++})`;
+      values.push(`%${filters.search}%`);
     }
 
     const result = await pool.query(query, values);

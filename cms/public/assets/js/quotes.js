@@ -1,6 +1,6 @@
 /**
  * Quotes Management Page
- * Handles quote requests with demo data fallback
+ * Handles quote requests from CMS API
  */
 
 console.log('[QUOTES] Script loaded');
@@ -8,65 +8,6 @@ console.log('[QUOTES] Script loaded');
 import api from './api-client.js?v=3';
 
 console.log('[QUOTES] API client imported');
-
-// Demo data for when API has no data
-const DEMO_QUOTES = [
-  {
-    id: 'Q-2024-001',
-    reference: 'Q-2024-001',
-    created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Jansen Grondverzet BV',
-    customer_email: 'info@jansengrondverzet.nl',
-    customer_phone: '+31 6 12345678',
-    product_title: 'Slotenbak 600mm CW30',
-    status: 'new',
-    message: 'Graag een offerte voor deze slotenbak met levering in regio Utrecht.'
-  },
-  {
-    id: 'Q-2024-002',
-    reference: 'Q-2024-002',
-    created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'De Vries Infra',
-    customer_email: 'inkoop@devriesinfra.nl',
-    customer_phone: '+31 6 98765432',
-    product_title: 'Graafbak 1200mm CW40',
-    status: 'processing',
-    message: 'Offerte aanvraag voor 2 stuks graafbakken.'
-  },
-  {
-    id: 'Q-2024-003',
-    reference: 'Q-2024-003',
-    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Bouwbedrijf Pietersen',
-    customer_email: 'pietersen@bouwbedrijf.nl',
-    customer_phone: '+31 6 55544433',
-    product_title: 'Sorteergrijper 800mm',
-    status: 'quoted',
-    message: 'Interesse in sorteergrijper voor Volvo EC220.'
-  },
-  {
-    id: 'Q-2024-004',
-    reference: 'Q-2024-004',
-    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Groenwerk Nederland',
-    customer_email: 'info@groenwerk.nl',
-    customer_phone: '+31 6 11122233',
-    product_title: 'Plantenbak 400mm CW10',
-    status: 'won',
-    message: 'Offerte voor plantenbak met snelwissel.'
-  },
-  {
-    id: 'Q-2024-005',
-    reference: 'Q-2024-005',
-    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Aannemingsbedrijf Smit',
-    customer_email: 'smit@aannemer.nl',
-    customer_phone: '+31 6 99988877',
-    product_title: 'Rioolbak 300mm',
-    status: 'lost',
-    message: 'Prijsopgave voor rioolbak.'
-  }
-];
 
 let allQuotes = [];
 let currentFilter = 'all';
@@ -77,38 +18,43 @@ console.log('[QUOTES] Setting up DOMContentLoaded listener');
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('[QUOTES] DOM loaded, initializing...');
-  console.log('[QUOTES] Demo quotes count:', DEMO_QUOTES.length);
   initializeData();
   initEventListeners();
 });
 
 /**
- * Initialize with demo data immediately
+ * Initialize data from CMS API
  */
 async function initializeData() {
   console.log('[QUOTES] initializeData called');
   
-  // Load demo data immediately
-  allQuotes = [...DEMO_QUOTES];
-  console.log('[QUOTES] Demo data loaded:', allQuotes.length, 'quotes');
+  // Show loading state
+  const tableBody = document.querySelector('#quotes-table tbody');
+  if (tableBody) {
+    tableBody.innerHTML = '<tr><td colspan="5" class="loading-state">Offertes laden...</td></tr>';
+  }
   
-  renderQuotes();
-  console.log('[QUOTES] Initial render complete');
-  
-  // Try API in background
+  // Load from API
   try {
     console.log('[QUOTES] Attempting API call...');
     const response = await api.get('/sales/quotes');
     console.log('[QUOTES] API response:', response);
     
-    if (response?.quotes?.length > 0 || (Array.isArray(response) && response.length > 0)) {
-      allQuotes = response.quotes || response;
-      console.log('[QUOTES] Using API data:', allQuotes.length, 'quotes');
-      renderQuotes();
+    if (response?.quotes) {
+      allQuotes = response.quotes;
+    } else if (Array.isArray(response)) {
+      allQuotes = response;
+    } else {
+      allQuotes = [];
     }
+    console.log(`✅ Loaded ${allQuotes.length} quotes from CMS`);
   } catch (error) {
-    console.log('[QUOTES] API unavailable, using demo data:', error.message);
+    console.error('❌ Error loading quotes:', error);
+    allQuotes = [];
   }
+  
+  renderQuotes();
+  console.log('[QUOTES] Initial render complete');
 }
 
 /**

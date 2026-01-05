@@ -254,19 +254,9 @@ async function loadDashboardData() {
 }
 
 /**
- * Load dashboard statistics from actual data
+ * Load dashboard statistics from CMS API
  */
 async function loadDashboardStats() {
-  // Demo fallback data
-  const demoStats = {
-    quotes: 8,
-    newQuotes: 3,
-    orders: 12,
-    pendingOrders: 2,
-    products: 24,
-    users: 5
-  };
-  
   try {
     // Load all data in parallel with timeout
     const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), ms));
@@ -279,11 +269,11 @@ async function loadDashboardStats() {
     ]);
     
     // Count quotes
-    let quotesCount = demoStats.quotes;
-    let newQuotesCount = demoStats.newQuotes;
+    let quotesCount = 0;
+    let newQuotesCount = 0;
     if (quotesRes.status === 'fulfilled' && quotesRes.value) {
       const quotes = quotesRes.value?.quotes || quotesRes.value || [];
-      if (Array.isArray(quotes) && quotes.length > 0) {
+      if (Array.isArray(quotes)) {
         quotesCount = quotes.length;
         newQuotesCount = quotes.filter(q => q.status === 'new').length;
       }
@@ -293,11 +283,11 @@ async function loadDashboardStats() {
     updateStat('stat-quotes-change', `${newQuotesCount} nieuw`);
     
     // Count orders
-    let ordersCount = demoStats.orders;
-    let pendingOrdersCount = demoStats.pendingOrders;
+    let ordersCount = 0;
+    let pendingOrdersCount = 0;
     if (ordersRes.status === 'fulfilled' && ordersRes.value) {
       const orders = ordersRes.value?.orders || ordersRes.value || [];
-      if (Array.isArray(orders) && orders.length > 0) {
+      if (Array.isArray(orders)) {
         ordersCount = orders.length;
         pendingOrdersCount = orders.filter(o => o.status === 'pending' || o.status === 'paid').length;
       }
@@ -307,20 +297,20 @@ async function loadDashboardStats() {
     updateStat('stat-orders-change', `${pendingOrdersCount} in behandeling`);
     
     // Count products
-    let productsCount = demoStats.products;
+    let productsCount = 0;
     if (productsRes.status === 'fulfilled' && productsRes.value) {
       const products = productsRes.value?.products || productsRes.value || [];
-      if (Array.isArray(products) && products.length > 0) {
+      if (Array.isArray(products)) {
         productsCount = products.length;
       }
     }
     updateStat('stat-products', productsCount);
     
     // Count users/customers
-    let usersCount = demoStats.users;
+    let usersCount = 0;
     if (usersRes.status === 'fulfilled' && usersRes.value) {
       const users = usersRes.value?.users || usersRes.value || [];
-      if (Array.isArray(users) && users.length > 0) {
+      if (Array.isArray(users)) {
         usersCount = users.length;
       }
     }
@@ -328,17 +318,19 @@ async function loadDashboardStats() {
     updateStat('stat-users-badge', '');
     updateStat('stat-users-change', 'Geregistreerd');
     
+    console.log(`✅ Dashboard stats loaded: ${quotesCount} quotes, ${ordersCount} orders, ${productsCount} products, ${usersCount} users`);
+    
   } catch (error) {
-    console.error('Failed to load stats, using demo data:', error);
-    // Set demo fallback values
-    updateStat('stat-quotes', demoStats.quotes);
-    updateStat('stat-quotes-badge', `+${demoStats.newQuotes}`);
-    updateStat('stat-quotes-change', `${demoStats.newQuotes} nieuw`);
-    updateStat('stat-orders', demoStats.orders);
-    updateStat('stat-orders-badge', `+${demoStats.pendingOrders}`);
-    updateStat('stat-orders-change', `${demoStats.pendingOrders} in behandeling`);
-    updateStat('stat-products', demoStats.products);
-    updateStat('stat-users', demoStats.users);
+    console.error('❌ Failed to load dashboard stats:', error);
+    // Show zeros instead of fake data
+    updateStat('stat-quotes', 0);
+    updateStat('stat-quotes-badge', '');
+    updateStat('stat-quotes-change', '0 nieuw');
+    updateStat('stat-orders', 0);
+    updateStat('stat-orders-badge', '');
+    updateStat('stat-orders-change', '0 in behandeling');
+    updateStat('stat-products', 0);
+    updateStat('stat-users', 0);
     updateStat('stat-users-badge', '');
     updateStat('stat-users-change', 'Geregistreerd');
   }

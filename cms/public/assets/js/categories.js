@@ -4,60 +4,6 @@
 
 import api from './api-client.js?v=3';
 
-// Demo data
-const DEMO_CATEGORIES = [
-  {
-    id: 'cat-1',
-    title: 'Graafbakken',
-    slug: 'graafbakken',
-    description: 'Professionele graafbakken voor alle graafmachines.',
-    image_url: 'https://via.placeholder.com/300x200?text=Graafbakken',
-    sort_order: 1,
-    is_active: true,
-    product_count: 12
-  },
-  {
-    id: 'cat-2',
-    title: 'Slotenbakken',
-    slug: 'slotenbakken',
-    description: 'Smalle bakken voor greppels en sloten.',
-    image_url: 'https://via.placeholder.com/300x200?text=Slotenbakken',
-    sort_order: 2,
-    is_active: true,
-    product_count: 8
-  },
-  {
-    id: 'cat-3',
-    title: 'Sloop- en sorteergrijpers',
-    slug: 'sloop-sorteergrijpers',
-    description: 'Grijpers voor sloop en recycling werkzaamheden.',
-    image_url: 'https://via.placeholder.com/300x200?text=Grijpers',
-    sort_order: 3,
-    is_active: true,
-    product_count: 5
-  },
-  {
-    id: 'cat-4',
-    title: 'Adapterstukken',
-    slug: 'adapters',
-    description: 'Adapters en snelwissels voor graafmachines.',
-    image_url: null,
-    sort_order: 4,
-    is_active: true,
-    product_count: 15
-  },
-  {
-    id: 'cat-5',
-    title: 'Overige',
-    slug: 'overige',
-    description: 'Overige aanbouwdelen en accessoires.',
-    image_url: null,
-    sort_order: 5,
-    is_active: false,
-    product_count: 3
-  }
-];
-
 let categories = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,23 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialize with demo data immediately
+ * Initialize data from CMS API
  */
 async function initializeData() {
-  // Load demo data immediately
-  categories = [...DEMO_CATEGORIES];
-  renderCategories();
+  // Show loading state
+  const grid = document.getElementById('categories-grid');
+  if (grid) {
+    grid.innerHTML = '<div class="loading-state">Categorieën laden...</div>';
+  }
   
-  // Try API in background
+  // Load from API
   try {
     const response = await api.get('/categories');
-    if (response?.length > 0 || response?.categories?.length > 0) {
-      categories = response.categories || response;
-      renderCategories();
+    if (response?.categories) {
+      categories = response.categories;
+    } else if (Array.isArray(response)) {
+      categories = response;
+    } else {
+      categories = [];
     }
+    console.log(`✅ Loaded ${categories.length} categories from CMS`);
   } catch (error) {
-    console.log('Using demo categories (API unavailable)');
+    console.error('❌ Error loading categories:', error);
+    categories = [];
   }
+  
+  renderCategories();
 }
 
 function setupEventListeners() {

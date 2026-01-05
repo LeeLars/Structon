@@ -135,8 +135,7 @@ async function loadFeaturedProducts() {
     }
   } catch (error) {
     console.error('Error loading featured products:', error);
-    // Fallback to demo products if API fails or returns empty
-    selected = getDemoProducts().sort(() => 0.5 - Math.random());
+    // No fallback - show empty state if API fails
   }
 
   if (selected.length > 0) {
@@ -188,50 +187,3 @@ function initSwiper() {
   });
 }
 
-/**
- * Demo products for when API is not available
- */
-function getDemoProducts() {
-  return [
-    {
-      id: '1',
-      title: 'Slotenbak 300mm CW10',
-      slug: 'slotenbak-300mm-cw10',
-      category_title: 'Slotenbakken',
-      volume: 80,
-      width: 300,
-      attachment_type: 'CW10',
-      cloudinary_images: [{ url: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=400&h=400&fit=crop' }]
-    },
-    {
-      id: '2',
-      title: 'Dieplepelbak 600mm CW10',
-      slug: 'dieplepelbak-600mm-cw10',
-      category_title: 'Dieplepelbakken',
-      volume: 180,
-      width: 600,
-      attachment_type: 'CW10',
-      cloudinary_images: [{ url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop' }]
-    },
-    {
-      id: '3',
-      title: 'Slotenbak 400mm CW10',
-      slug: 'slotenbak-400mm-cw10',
-      category_title: 'Slotenbakken',
-      volume: 120,
-      width: 400,
-      attachment_type: 'CW10',
-      cloudinary_images: [{ url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop' }]
-    },
-    {
-      id: '4',
-      title: 'Puinbak 1200mm CW30',
-      slug: 'puinbak-1200mm-cw30',
-      category_title: 'Puinbakken',
-      volume: 800,
-      width: 1200,
-      attachment_type: 'CW30',
-      cloudinary_images: [{ url: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&h=400&fit=crop' }]
-    }
-  ];
-}

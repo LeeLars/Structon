@@ -1,6 +1,6 @@
 /**
  * Orders Management Page
- * Handles orders with demo data fallback
+ * Handles orders from CMS API
  */
 
 console.log('[ORDERS] Script loaded');
@@ -8,71 +8,6 @@ console.log('[ORDERS] Script loaded');
 import api from './api-client.js?v=3';
 
 console.log('[ORDERS] API client imported');
-
-// Demo data for when API has no data
-const DEMO_ORDERS = [
-  {
-    id: 'ORD-2024-001',
-    order_number: 'ORD-2024-001',
-    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Jansen Grondverzet BV',
-    customer_email: 'info@jansengrondverzet.nl',
-    total_amount: 2450.00,
-    status: 'paid',
-    items: [
-      { product_title: 'Slotenbak 600mm CW30', quantity: 1, price: 2450.00 }
-    ]
-  },
-  {
-    id: 'ORD-2024-002',
-    order_number: 'ORD-2024-002',
-    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'De Vries Infra',
-    customer_email: 'inkoop@devriesinfra.nl',
-    total_amount: 5890.00,
-    status: 'shipped',
-    items: [
-      { product_title: 'Graafbak 1200mm CW40', quantity: 2, price: 2945.00 }
-    ]
-  },
-  {
-    id: 'ORD-2024-003',
-    order_number: 'ORD-2024-003',
-    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Bouwbedrijf Pietersen',
-    customer_email: 'pietersen@bouwbedrijf.nl',
-    total_amount: 3200.00,
-    status: 'pending',
-    items: [
-      { product_title: 'Sorteergrijper 800mm', quantity: 1, price: 3200.00 }
-    ]
-  },
-  {
-    id: 'ORD-2024-004',
-    order_number: 'ORD-2024-004',
-    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Groenwerk Nederland',
-    customer_email: 'info@groenwerk.nl',
-    total_amount: 1875.00,
-    status: 'completed',
-    items: [
-      { product_title: 'Plantenbak 400mm CW10', quantity: 1, price: 1875.00 }
-    ]
-  },
-  {
-    id: 'ORD-2024-005',
-    order_number: 'ORD-2024-005',
-    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    customer_name: 'Aannemingsbedrijf Smit',
-    customer_email: 'smit@aannemer.nl',
-    total_amount: 4500.00,
-    status: 'completed',
-    items: [
-      { product_title: 'Rioolbak 300mm', quantity: 2, price: 1250.00 },
-      { product_title: 'Graafbak 800mm CW20', quantity: 1, price: 2000.00 }
-    ]
-  }
-];
 
 let allOrders = [];
 let currentFilter = 'all';
@@ -100,25 +35,35 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initialize with demo data immediately
+ * Initialize data from CMS API
  */
 async function initializeData() {
-  // Load demo data immediately
-  allOrders = [...DEMO_ORDERS];
-  renderOrders();
+  // Show loading state
+  const tbody = document.querySelector('#orders-table tbody');
+  if (tbody) {
+    tbody.innerHTML = '<tr><td colspan="6" class="loading-state">Bestellingen laden...</td></tr>';
+  }
   
-  // Try API in background
+  // Load from API
   try {
     console.log('[ORDERS] Trying API...');
     const response = await api.get('/sales/orders');
     console.log('[ORDERS] API response:', response);
-    if (response?.orders?.length > 0 || (Array.isArray(response) && response.length > 0)) {
-      allOrders = response.orders || response;
-      renderOrders();
+    
+    if (response?.orders) {
+      allOrders = response.orders;
+    } else if (Array.isArray(response)) {
+      allOrders = response;
+    } else {
+      allOrders = [];
     }
+    console.log(`✅ Loaded ${allOrders.length} orders from CMS`);
   } catch (error) {
-    console.log('[ORDERS] Using demo orders (API unavailable):', error.message);
+    console.error('❌ Error loading orders:', error);
+    allOrders = [];
   }
+  
+  renderOrders();
 }
 
 /**

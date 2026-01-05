@@ -61,4 +61,36 @@ router.get('/ping', (req, res) => {
   res.send('pong');
 });
 
+// Debug endpoint - check products status (temporary)
+router.get('/debug/products', async (req, res) => {
+  if (!pool) {
+    return res.json({ error: 'No database configured' });
+  }
+  
+  try {
+    const [total, active, inactive] = await Promise.all([
+      pool.query('SELECT COUNT(*)::int as count FROM products'),
+      pool.query('SELECT COUNT(*)::int as count FROM products WHERE is_active = true'),
+      pool.query('SELECT COUNT(*)::int as count FROM products WHERE is_active = false OR is_active IS NULL')
+    ]);
+    
+    // Get sample of products with their is_active status
+    const sample = await pool.query(`
+      SELECT id, title, slug, is_active, is_featured, category_id 
+      FROM products 
+      ORDER BY created_at DESC 
+      LIMIT 10
+    `);
+    
+    res.json({
+      total: total.rows[0].count,
+      active: active.rows[0].count,
+      inactive: inactive.rows[0].count,
+      sample: sample.rows
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

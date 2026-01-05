@@ -5,9 +5,9 @@
 
 console.log('🚀 [PRODUCTS] Script loading...');
 
-import api from './api-client.js?v=3';
+import auth from './auth-simple.js';
 
-console.log('✅ [PRODUCTS] API client imported successfully');
+console.log('✅ [PRODUCTS] Auth module imported successfully');
 
 // Tonnage options
 const TONNAGE_OPTIONS = [
@@ -63,17 +63,10 @@ async function initializeData() {
   
   // Load from API
   try {
-    const productsData = await api.get('/admin/products');
-    
-    if (productsData?.products) {
-      products = productsData.products;
-      filteredProducts = [...products];
-      console.log(`✅ Loaded ${products.length} products from CMS`);
-    } else {
-      console.warn('⚠️ No products returned from API');
-      products = [];
-      filteredProducts = [];
-    }
+    const data = await auth.get('/admin/products');
+    products = data.products;
+    filteredProducts = [...products];
+    console.log(`✅ Loaded ${products.length} products from CMS`);
   } catch (error) {
     console.error('❌ Error loading data from CMS:', error);
     products = [];
@@ -353,17 +346,17 @@ async function handleBulkAction(action) {
     // Process each product
     for (const id of productIds) {
       if (action === 'activate') {
-        await api.put(`/admin/products/${id}`, { is_active: true });
+        await auth.put(`/admin/products/${id}`, { is_active: true });
       } else if (action === 'deactivate') {
-        await api.put(`/admin/products/${id}`, { is_active: false });
+        await auth.put(`/admin/products/${id}`, { is_active: false });
       } else if (action === 'delete') {
-        await api.delete(`/admin/products/${id}`);
+        await auth.delete(`/admin/products/${id}`);
       }
     }
     
     selectedProducts.clear();
     showToast(`${productIds.length} producten ${action === 'delete' ? 'verwijderd' : 'bijgewerkt'}`, 'success');
-    await loadProducts();
+    await initializeData();
   } catch (error) {
     console.error('Bulk action error:', error);
     showToast('Fout bij uitvoeren actie', 'error');
@@ -575,11 +568,11 @@ async function handleProductSubmit(e) {
     
     let savedProduct;
     if (productId) {
-      savedProduct = await api.put(`/admin/products/${productId}`, productData);
+      savedProduct = await auth.patch(`/admin/products/${productId}`, productData);
       console.log('✅ Product updated:', savedProduct);
       showToast('Product bijgewerkt', 'success');
     } else {
-      savedProduct = await api.post('/admin/products', productData);
+      savedProduct = await auth.post('/admin/products', productData);
       console.log('✅ Product created:', savedProduct);
       showToast('Product toegevoegd', 'success');
     }
@@ -599,10 +592,9 @@ async function handleProductSubmit(e) {
   } catch (error) {
     console.error('❌ Failed to save product:', error);
     
-    if (error.message.includes('Unauthorized')) {
-      showToast('Authenticatie verlopen. Refresh de pagina om opnieuw in te loggen.', 'error');
-      // Don't auto-redirect, let user see the error and refresh manually
-      // This prevents the error from disappearing before they can read it
+    if (error.message.includes('Session expired') || error.message.includes('Not authenticated')) {
+      showToast('Sessie verlopen. Je wordt uitgelogd...', 'error');
+      setTimeout(() => auth.logout(), 2000);
     } else if (error.message.includes('slug already exists')) {
       showToast('Een product met deze slug bestaat al. Kies een andere titel.', 'error');
     } else if (error.message.includes('Title is required')) {
@@ -666,7 +658,7 @@ async function handleImageSelect(e) {
     showToast('Afbeeldingen uploaden naar server...', 'info');
     console.log('📤 Uploading to:', '/admin/upload/images');
     
-    const response = await api.upload('/admin/upload/images', formData);
+    const response = await auth.upload('/admin/upload/images', formData);
     console.log('📥 Upload response:', response);
     
     if (response.images && response.images.length > 0) {
@@ -729,18 +721,19 @@ window.deleteProduct = async function(id) {
     return;
   }
   
-  // Try API first
   try {
-    await api.delete(`/admin/products/${id}`);
+    await auth.delete(`/admin/products/${id}`);
+    showToast('Product verwijderd', 'success');
+    await initializeData();
   } catch (error) {
-    console.log('API unavailable, deleting locally');
+    console.error('Failed to delete product:', error);
+    if (error.message.includes('Session expired')) {
+      showToast('Sessie verlopen. Je wordt uitgelogd...', 'error');
+      setTimeout(() => auth.logout(), 2000);
+    } else {
+      showToast('Fout bij verwijderen', 'error');
+    }
   }
-  
-  // Remove from local data
-  products = products.filter(p => p.id !== id);
-  filteredProducts = filteredProducts.filter(p => p.id !== id);
-  showToast('Product verwijderd', 'success');
-  renderProducts();
 };
 
 /**

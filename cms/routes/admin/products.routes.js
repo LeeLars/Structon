@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { pool } from '../../config/database.js';
 import { Product, ProductPrice } from '../../models/index.js';
 import { authenticate, requireAdmin } from '../../middleware/auth.js';
 
@@ -180,6 +181,3 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 export default router;
-
-// Need to import pool for the admin list query
-import { pool } from '../../config/database.js';

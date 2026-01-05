@@ -515,30 +515,28 @@ async function handleProductSubmit(e) {
   }
   
   // Convert tonnage to excavator_weight_min and excavator_weight_max
-  // Take the first selected tonnage range
-  const tonnageRange = selectedTonnage[0];
-  let excavator_weight_min = null;
-  let excavator_weight_max = null;
+  // Parse all selected tonnage ranges and take min/max
+  const tonnageMap = {
+    '1.5-3': { min: 1.5, max: 3 },
+    '3-8': { min: 3, max: 8 },
+    '8-15': { min: 8, max: 15 },
+    '15-25': { min: 15, max: 25 },
+    '25-40': { min: 25, max: 40 },
+    '40+': { min: 40, max: 100 }
+  };
   
-  if (tonnageRange === '1.5-3') {
-    excavator_weight_min = 1.5;
-    excavator_weight_max = 3;
-  } else if (tonnageRange === '3-8') {
-    excavator_weight_min = 3;
-    excavator_weight_max = 8;
-  } else if (tonnageRange === '8-15') {
-    excavator_weight_min = 8;
-    excavator_weight_max = 15;
-  } else if (tonnageRange === '15-25') {
-    excavator_weight_min = 15;
-    excavator_weight_max = 25;
-  } else if (tonnageRange === '25-40') {
-    excavator_weight_min = 25;
-    excavator_weight_max = 40;
-  } else if (tonnageRange === '40+') {
-    excavator_weight_min = 40;
-    excavator_weight_max = 100;
+  const ranges = selectedTonnage.map(t => tonnageMap[t]).filter(Boolean);
+  
+  if (ranges.length === 0) {
+    showToast('Ongeldige tonnage selectie', 'error');
+    return;
   }
+  
+  // Take lowest min and highest max from all selected ranges
+  const excavator_weight_min = Math.min(...ranges.map(r => r.min));
+  const excavator_weight_max = Math.max(...ranges.map(r => r.max));
+  
+  console.log(`📊 Tonnage range: ${excavator_weight_min}-${excavator_weight_max} ton`);
   
   // Use uploaded images if available
   const uploadedImages = window.uploadedImages || [];
@@ -546,10 +544,18 @@ async function handleProductSubmit(e) {
   // Get price value
   const priceValue = parseFloat(document.getElementById('product-price')?.value);
   
+  // Sanitize input to prevent XSS
+  const sanitizeInput = (str) => {
+    if (!str) return '';
+    return str.trim()
+      .replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
+      .substring(0, 1000); // Limit length
+  };
+  
   const productData = {
-    title: document.getElementById('product-title').value,
-    slug: document.getElementById('product-slug').value,
-    description: document.getElementById('product-description').value,
+    title: sanitizeInput(document.getElementById('product-title').value),
+    slug: document.getElementById('product-slug').value.trim().toLowerCase(),
+    description: sanitizeInput(document.getElementById('product-description').value),
     excavator_weight_min,
     excavator_weight_max,
     width: parseInt(document.getElementById('product-width').value) || null,
@@ -578,9 +584,17 @@ async function handleProductSubmit(e) {
       showToast('Product toegevoegd', 'success');
     }
     
-    // Reload products from API to ensure we have the latest data
-    await initializeData();
+    // Close modal first (better UX)
     closeProductModal();
+    
+    // Reload products from API with error handling
+    try {
+      await initializeData();
+      console.log('✅ Products reloaded successfully');
+    } catch (reloadError) {
+      console.error('⚠️ Failed to reload products:', reloadError);
+      showToast('Product opgeslagen, maar lijst kon niet worden vernieuwd. Refresh de pagina handmatig.', 'warning');
+    }
     
   } catch (error) {
     console.error('❌ Failed to save product:', error);
@@ -588,6 +602,10 @@ async function handleProductSubmit(e) {
     if (error.message.includes('Unauthorized')) {
       showToast('Sessie verlopen - log opnieuw in', 'error');
       setTimeout(() => window.location.href = '/cms/', 2000);
+    } else if (error.message.includes('slug already exists')) {
+      showToast('Een product met deze slug bestaat al. Kies een andere titel.', 'error');
+    } else if (error.message.includes('Title is required')) {
+      showToast('Titel is verplicht', 'error');
     } else {
       showToast(`Fout bij opslaan: ${error.message}`, 'error');
     }
@@ -604,7 +622,7 @@ async function handleImageSelect(e) {
   
   console.log('📷 Selected files:', files.map(f => f.name));
   
-  // Show local preview first
+  // Show local preview first (await all previews)
   const uploadArea = document.getElementById('image-upload-area');
   if (uploadArea) {
     // Create preview container if it doesn't exist
@@ -616,21 +634,27 @@ async function handleImageSelect(e) {
       uploadArea.parentNode.insertBefore(previewContainer, uploadArea.nextSibling);
     }
     
-    // Show local previews
+    // Show local previews (wait for all to load)
     previewContainer.innerHTML = '';
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const div = document.createElement('div');
-        div.style.cssText = 'position: relative; width: 100px; height: 100px;';
-        div.innerHTML = `
-          <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; font-size: 10px; padding: 2px; text-align: center; border-radius: 0 0 8px 8px;">Uploading...</div>
-        `;
-        previewContainer.appendChild(div);
-      };
-      reader.readAsDataURL(file);
+    const previewPromises = files.map(file => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const div = document.createElement('div');
+          div.style.cssText = 'position: relative; width: 100px; height: 100px;';
+          div.innerHTML = `
+            <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; font-size: 10px; padding: 2px; text-align: center; border-radius: 0 0 8px 8px;">Uploading...</div>
+          `;
+          previewContainer.appendChild(div);
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
     });
+    
+    // Wait for all previews to render
+    await Promise.all(previewPromises);
   }
   
   // Try to upload to Cloudinary

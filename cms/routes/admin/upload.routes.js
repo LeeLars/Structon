@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { authenticate, requireAdmin } from '../../middleware/auth.js';
+import { apiLimiter } from '../../middleware/rateLimit.js';
 import { env } from '../../config/env.js';
 
 const router = Router();
@@ -35,7 +36,7 @@ router.use(authenticate, requireAdmin);
  * POST /api/admin/upload/images
  * Upload images to Cloudinary
  */
-router.post('/images', upload.array('images', 10), async (req, res, next) => {
+router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, next) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ error: 'No images provided' });

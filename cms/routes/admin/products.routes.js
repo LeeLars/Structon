@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
     const {
       title, slug, description, category_id, subcategory_id, brand_id,
       excavator_weight_min, excavator_weight_max, width, volume, weight,
-      attachment_type, cloudinary_images, specs, stock_quantity, is_featured, sector_ids,
+      attachment_type, cloudinary_images, specs, stock_quantity, is_featured, is_active, sector_ids,
       price
     } = req.body;
 
@@ -89,6 +89,7 @@ router.post('/', async (req, res, next) => {
       specs,
       stock_quantity,
       is_featured,
+      is_active,
       sector_ids
     });
 

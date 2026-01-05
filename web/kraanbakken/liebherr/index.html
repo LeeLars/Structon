@@ -107,98 +107,134 @@
   </nav>
 
   <main data-brand="liebherr">
-    <!-- Page Hero (Universal) -->
-    <section class="page-hero">
+    <!-- 1. BRAND HERO -->
+    <section class="section brand-hero">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
+        <nav class="breadcrumb" aria-label="Kruimelpad" style="margin-bottom: 2rem;">
           <a href="/">Home</a>
           <span>/</span>
           <a href="/kraanbakken/">Kraanbakken</a>
           <span>/</span>
           <span aria-current="page">Liebherr</span>
         </nav>
-        
-        <div class="page-hero-content">
-          <div class="page-hero-text">
-            <h1 class="page-title">Kraanbak voor Liebherr</h1>
-            <p class="page-subtitle">Liebherr bouwt sinds 1949 machines met een reputatie voor onverwoestbaarheid. Structon levert kraanbakken passend voor alle Liebherr R-serie rupsgravers en A-serie wielgravers. Let op: Liebherr heeft zwaardere stick-afmetingen dan andere merken - wij kennen de specificaties.</p>
+
+        <div class="brand-hero-content">
+          <div class="brand-logo-wrapper">
+            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1707917765/brands/liebherr_logo.png" alt="Liebherr Graafmachines" class="brand-logo">
+          </div>
+
+          <div class="brand-hero-text">
+            <h1 class="brand-title">Liebherr Kraanbakken</h1>
+            <p class="brand-subtitle">
+              Liebherr bouwt sinds 1949 machines met een reputatie voor onverwoestbaarheid. Structon levert kraanbakken passend voor alle Liebherr R-serie rupsgravers en A-serie wielgravers. Let op: Liebherr heeft zwaardere stick-afmetingen dan andere merken - wij kennen de specificaties.
+            </p>
+            
+            <ul class="brand-usps">
+              <li><svg style="width:16px;height:16px;vertical-align:text-top;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 100% Pasvorm Garantie</li>
+              <li><svg style="width:16px;height:16px;vertical-align:text-top;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Hardox® 450 Staal</li>
+              <li><svg style="width:16px;height:16px;vertical-align:text-top;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Voor 15:00 besteld, morgen in huis</li>
+            </ul>
+          </div>
+
+          <div class="brand-hero-image">
+             <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop" alt="Liebherr Graafmachine" loading="lazy">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Liebherr Model Selector -->
-    <section class="section model-selector">
+    <!-- 2. MODEL SELECTOR -->
+    <section class="section model-selector" id="model-selector">
       <div class="container">
-        <h2 class="section-title text-center">Zoek op Liebherr Model</h2>
-        <p class="section-subtitle text-center">R = rupsgraafmachine, A = bandengraafmachine. Liebherr start vanaf ~10 ton. Klik op jouw model.</p>
+        <div class="section-header text-center">
+          <h2 class="section-title">Kies uw Liebherr Model</h2>
+          <p class="section-subtitle">Selecteer uw type machine om direct de geschikte bakken te zien. R = Rups, A = Banden.</p>
+        </div>
         
         <div class="model-grid">
+          <!-- Categorie 1: Compacte Middenklasse -->
           <div class="model-category">
-            <h3 class="model-category-title">Compacte Middenklasse (10-26 ton)</h3>
-            <p class="model-category-desc">R = rups, A = banden. CW10 - CW40 snelwissels</p>
+            <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2" style="border-bottom-color: var(--color-primary);">
+                <h3 class="text-lg font-bold m-0">Compacte Middenklasse</h3>
+                <span class="text-sm font-bold text-muted">10 - 26 ton</span>
+            </div>
+            <p class="model-category-desc">CW10 - CW40 snelwissels</p>
             <div class="model-links">
-              <a href="?model=A910" class="model-link" data-tonnage="10" data-cw="CW10" data-type="wielen">A910 Compact</a>
-              <a href="?model=A914" class="model-link" data-tonnage="16" data-cw="CW20" data-type="wielen">A914 Litronic</a>
-              <a href="?model=R914" class="model-link" data-tonnage="15" data-cw="CW20">R914 Compact</a>
-              <a href="?model=A918" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">A918 Compact</a>
-              <a href="?model=R922" class="model-link" data-tonnage="21.7" data-cw="CW40">R922 Litronic</a>
-              <a href="?model=R924" class="model-link" data-tonnage="24" data-cw="CW40">R924</a>
-              <a href="?model=R926" class="model-link" data-tonnage="26" data-cw="CW40">R926 Compact</a>
+              <a href="?model=A910" class="model-link" data-tonnage="10" data-cw="CW10" data-type="wielen">A910 Compact <span class="model-badge" style="background:#e3f2fd;color:#1565c0;">WIEL</span></a>
+              <a href="?model=A914" class="model-link" data-tonnage="16" data-cw="CW20" data-type="wielen">A914 Litronic <span class="model-badge" style="background:#e3f2fd;color:#1565c0;">WIEL</span></a>
+              <a href="?model=R914" class="model-link" data-tonnage="15" data-cw="CW20">R914 Compact <span class="model-badge">15t</span></a>
+              <a href="?model=A918" class="model-link" data-tonnage="18" data-cw="CW30" data-type="wielen">A918 Compact <span class="model-badge" style="background:#e3f2fd;color:#1565c0;">WIEL</span></a>
+              <a href="?model=R922" class="model-link" data-tonnage="21.7" data-cw="CW40">R922 Litronic <span class="model-badge">22t</span></a>
+              <a href="?model=R924" class="model-link" data-tonnage="24" data-cw="CW40">R924 <span class="model-badge">24t</span></a>
+              <a href="?model=R926" class="model-link" data-tonnage="26" data-cw="CW40">R926 Compact <span class="model-badge">26t</span></a>
             </div>
           </div>
           
+          <!-- Categorie 2: Zware Klasse -->
           <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (40-100 ton)</h3>
+            <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2" style="border-bottom-color: var(--color-primary);">
+                <h3 class="text-lg font-bold m-0">Zware Klasse</h3>
+                <span class="text-sm font-bold text-muted">40 - 100 ton</span>
+            </div>
             <p class="model-category-desc">CW45 - CW70 snelwissels</p>
             <div class="model-links">
-              <a href="?model=R946" class="model-link" data-tonnage="45" data-cw="CW45">R946</a>
-              <a href="?model=R956" class="model-link" data-tonnage="55" data-cw="CW55">R956</a>
-              <a href="?model=R966" class="model-link" data-tonnage="70" data-cw="CW70">R966</a>
-              <a href="?model=R976" class="model-link" data-tonnage="90" data-cw="CW70">R976</a>
-              <a href="?model=R980" class="model-link" data-tonnage="100" data-cw="CW70">R980 SME</a>
+              <a href="?model=R946" class="model-link" data-tonnage="45" data-cw="CW45">R946 <span class="model-badge">45t</span></a>
+              <a href="?model=R956" class="model-link" data-tonnage="55" data-cw="CW55">R956 <span class="model-badge">55t</span></a>
+              <a href="?model=R966" class="model-link" data-tonnage="70" data-cw="CW70">R966 <span class="model-badge">70t</span></a>
+              <a href="?model=R976" class="model-link" data-tonnage="90" data-cw="CW70">R976 <span class="model-badge">90t</span></a>
+              <a href="?model=R980" class="model-link" data-tonnage="100" data-cw="CW70">R980 SME <span class="model-badge">100t</span></a>
             </div>
           </div>
           
+          <!-- Categorie 3: Mijnbouw -->
           <div class="model-category">
-            <h3 class="model-category-title">Mijnbouw Klasse (> 100 ton)</h3>
+            <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2" style="border-bottom-color: var(--color-primary);">
+                <h3 class="text-lg font-bold m-0">Mijnbouw Klasse</h3>
+                <span class="text-sm font-bold text-muted">&gt; 100 ton</span>
+            </div>
             <p class="model-category-desc">Speciale toepassingen</p>
             <div class="model-links">
-              <a href="?model=R9800" class="model-link" data-tonnage="800">R9800</a>
+              <a href="?model=R9800" class="model-link" data-tonnage="800">R9800 <span class="model-badge">800t</span></a>
             </div>
           </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="#cw-tabel" class="text-sm text-primary hover:underline flex items-center justify-center gap-1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Welke snelwissel (CW) hoort bij mijn machine?
+            </a>
         </div>
       </div>
     </section>
 
-    <!-- Category Tabs (Coolblue-style) -->
-    <section class="category-tabs-section">
+    <!-- 3. PRODUCT FILTERS -->
+    <section class="category-tabs-section sticky-top" style="position:sticky; top:80px; z-index:90;">
       <div class="container">
         <div class="category-tabs">
           <button class="category-tab active" data-category="graafbakken">
             Graafbakken
-            <span class="category-tab-count" id="count-graafbakken">-</span>
+            <span class="category-tab-count" id="count-graafbakken">0</span>
           </button>
           <button class="category-tab" data-category="slotenbakken">
             Slotenbakken
-            <span class="category-tab-count" id="count-slotenbakken">-</span>
+            <span class="category-tab-count" id="count-slotenbakken">0</span>
           </button>
           <button class="category-tab" data-category="rioolbakken">
             Rioolbakken
-            <span class="category-tab-count" id="count-rioolbakken">-</span>
+            <span class="category-tab-count" id="count-rioolbakken">0</span>
           </button>
           <button class="category-tab" data-category="sorteergrijpers">
             Sorteergrijpers
-            <span class="category-tab-count" id="count-sorteergrijpers">-</span>
+            <span class="category-tab-count" id="count-sorteergrijpers">0</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- Products Section with Inline Display -->
+    <!-- 4. PRODUCTS GRID -->
     <section class="section brand-products-section">
       <div class="container">
-        <!-- Category Intro Text -->
         <div class="category-intro" id="category-intro">
           <h3 class="category-intro-title">Graafbakken voor Liebherr</h3>
           <p class="category-intro-text">
@@ -208,168 +244,82 @@
           </p>
         </div>
         
-        <!-- Products Header -->
         <div class="brand-products-header">
-          <h2 class="brand-products-title">Producten</h2>
-          <p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p>
+          <h2 class="brand-products-title">Beschikbare Producten</h2>
           <div id="filter-summary"></div>
         </div>
         
-        <!-- Products Grid (Inline - No External Links) -->
         <div class="products-list brand-products-list" id="products-grid">
-          <div class="loading">
-            <div class="spinner"></div>
-          </div>
+           <div class="text-center py-12">
+               <div class="spinner"></div>
+               <p class="text-muted mt-4">Producten laden...</p>
+           </div>
         </div>
         
-        <!-- Pagination -->
         <div class="pagination" id="pagination"></div>
       </div>
     </section>
 
-    <!-- SEO Content -->
-    <section class="section seo-content">
+    <!-- 5. HULP & SEO CONTENT -->
+    <section class="section seo-content" id="cw-tabel">
       <div class="container">
         <div class="seo-content-grid">
+          <article class="seo-article" style="grid-column: span 2;">
+            <h2>Liebherr Modellen & CW Aansluitingen</h2>
+            <p>Liebherr machines zijn robuust. Let op de zwaardere pennen.</p>
+            <div style="overflow-x:auto;">
+                <table class="seo-table">
+                  <thead><tr><th>CW-Klasse</th><th>Gewicht</th><th>Liebherr Modellen</th><th>Pin Ø</th></tr></thead>
+                  <tbody>
+                    <tr><td>CW30</td><td>15-20 ton</td><td>A910 Compact, A912, A914 Compact</td><td>65-75mm</td></tr>
+                    <tr><td>CW40</td><td>18-25 ton</td><td>R914, R916, R918, R920, R922, A914, A916, A918, A920, A922</td><td>75-85mm</td></tr>
+                    <tr><td>CW45</td><td>25-35 ton</td><td>R924, R926, R930, R934, R936, A924, A928, A932</td><td>80-90mm</td></tr>
+                    <tr><td>CW55</td><td>35-50 ton</td><td>R938, R944, R946, R950, R954, A934, A944</td><td>90-105mm</td></tr>
+                    <tr><td>CW70</td><td>50-70 ton</td><td>R956, R960, R964, R966, A954, A974</td><td>105-115mm</td></tr>
+                    <tr><td>CW80</td><td>70-120 ton</td><td>R970, R974, R976, R980, R984</td><td>115-135mm</td></tr>
+                  </tbody>
+                </table>
+            </div>
+          </article>
+          
           <article class="seo-article">
-            <h2>Het Liebherr Universum: Duitse Kwaliteit</h2>
-            <p>Liebherr is anders. Dit Duitse familiebedrijf bestaat sinds 1949 en bouwt vrijwel álles: graafmachines, torenkranen, mobiele kranen, mijnbouwtrucks, en zelfs vliegtuigonderdelen. Maar het is vooral hun filosofie die hen onderscheidt: <strong>alles wordt in-house ontwikkeld</strong>. Liebherr ontwerpt en produceert zijn eigen motoren, hydraulische systemen, elektronica, en besturingssystemen.</p>
-            <p>Het resultaat? Machines met een reputatie voor <strong>onverwoestbaarheid</strong>. Liebherr-graafmachines zijn relatief zwaar voor hun klasse - dat is geen nadeel, maar een ontwerpkeuze. Die extra massa betekent stabiliteit, robuuste constructie, en een lange levensduur. Liebherr is het merk voor wie 20.000+ draaiuren verwacht.</p>
-            <h3>De Naamgeving</h3>
-            <ul>
-              <li><strong>R-serie</strong> = Rupsgraafmachines (Raupenbagger). R914 ≈ 14 ton, R926 ≈ 26 ton, R946 ≈ 46 ton</li>
-              <li><strong>A-serie</strong> = Wielgraafmachines. A914 ≈ 14 ton, A924 ≈ 24 ton, A934 ≈ 34 ton</li>
-              <li><strong>Compact</strong> = korte staart voor stedelijk werk</li>
-              <li><strong>Litronic</strong> = Liebherr's elektronische besturingssysteem</li>
-              <li><strong>Demolition</strong> = extra lange arm voor afbraakwerk</li>
-              <li><strong>SME</strong> (Surface Mining Equipment) = voor bovengrondse mijnbouw</li>
+            <h2>Waarom Structon?</h2>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2">
+                  <svg class="text-primary mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Slijtvast:</strong> Volledig Hardox® body voor zwaar werk.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                  <svg class="text-primary mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Geometrie:</strong> Perfecte openingshoek voor Liebherr graafmachines.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                  <svg class="text-primary mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Direct Leverbaar:</strong> Bestel vandaag, morgen graven.</span>
+              </li>
             </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>CW-Compatibiliteit voor Liebherr</h2>
-            <p>Liebherr-machines hebben typisch <strong>zwaardere stick-afmetingen</strong> dan concurrenten in dezelfde gewichtsklasse. Een R926 van 28 ton gebruikt bijvoorbeeld vaak dezelfde CW-klasse als een Cat 330 van 33 ton. Dat komt door de robustere constructie.</p>
-            <table class="seo-table">
-              <thead><tr><th>CW-Klasse</th><th>Gewicht</th><th>Liebherr Modellen</th><th>Pin Ø</th></tr></thead>
-              <tbody>
-                <tr><td>CW30</td><td>15-20 ton</td><td>A910 Compact, A912, A914 Compact</td><td>65-75mm</td></tr>
-                <tr><td>CW40</td><td>18-25 ton</td><td>R914, R916, R918, R920, R922, A914, A916, A918, A920, A922</td><td>75-85mm</td></tr>
-                <tr><td>CW45</td><td>25-35 ton</td><td>R924, R926, R930, R934, R936, A924, A928, A932</td><td>80-90mm</td></tr>
-                <tr><td>CW55</td><td>35-50 ton</td><td>R938, R944, R946, R950, R954, A934, A944</td><td>90-105mm</td></tr>
-                <tr><td>CW70</td><td>50-70 ton</td><td>R956, R960, R964, R966, A954, A974</td><td>105-115mm</td></tr>
-                <tr><td>CW80</td><td>70-120 ton</td><td>R970, R974, R976, R980, R984</td><td>115-135mm</td></tr>
-              </tbody>
-            </table>
-          </article>
-
-          <article class="seo-article">
-            <h2>Belangrijke Liebherr Bijzonderheden</h2>
-            <ul>
-              <li><strong>Pin-diameters zijn groter:</strong> Waar een Cat 320 (22 ton) vaak 70mm pennen heeft, heeft een R922 (ook 22 ton) vaak 80mm pennen</li>
-              <li><strong>Compact-modellen zijn anders:</strong> Een R926 Compact heeft vaak dezelfde stick-dimensies als de standaard R926, ondanks het lagere gewicht</li>
-              <li><strong>Demolition-fronten:</strong> Liebherr's afbraak-uitrustingen hebben vaak langere sticks met speciale versterkingen - check altijd de specifieke afmetingen</li>
-              <li><strong>SME-varianten:</strong> Surface Mining Equipment modellen hebben vaak extra zware pennen en versterkingen</li>
-            </ul>
-            <p><strong>Gouden regel:</strong> Bij twijfel tussen twee CW-klassen voor Liebherr → kies de <strong>zwaardere</strong> optie!</p>
-          </article>
-
-          <article class="seo-article">
-            <h2>R-Serie Rupsgraafmachines</h2>
-            <table class="seo-table">
-              <thead><tr><th>Model</th><th>Gewicht</th><th>CW-Klasse</th><th>Opmerkingen</th></tr></thead>
-              <tbody>
-                <tr><td>R914 / R914 Compact</td><td>16,5-26 ton</td><td>CW30/CW40</td><td>Compact: korte staart, kracht van 23-tonner</td></tr>
-                <tr><td>R920 / R922 / R924</td><td>26-29 ton</td><td>CW40/CW45</td><td>Wegenbouw favoriet</td></tr>
-                <tr><td>R926 / R926 Compact</td><td>28-32 ton</td><td>CW45</td><td>Europese bestseller</td></tr>
-                <tr><td>R934 / R936</td><td>32-42 ton</td><td>CW45</td><td>Sloop &amp; afbraak favoriet</td></tr>
-                <tr><td>R944 / R946</td><td>40-52 ton</td><td>CW55</td><td>Iconisch in afbraakwereld</td></tr>
-                <tr><td>R950 (incl. Tunnel/Demo/SME)</td><td>45-74 ton</td><td>CW55/CW70</td><td>Bereik tot 28 meter hoogte</td></tr>
-                <tr><td>R954 / R956</td><td>50-60 ton</td><td>CW55/CW70</td><td>400+ kW (540+ pk)</td></tr>
-                <tr><td>R960 / R964 / R966</td><td>55-78 ton</td><td>CW70</td><td>Mijnbouw &amp; mega-infra</td></tr>
-                <tr><td>R974 / R976 / R980</td><td>85-101 ton</td><td>CW80</td><td>Surface mining specialist</td></tr>
-              </tbody>
-            </table>
-          </article>
-
-          <article class="seo-article">
-            <h2>A-Serie Wielgraafmachines</h2>
-            <table class="seo-table">
-              <thead><tr><th>Model</th><th>Gewicht</th><th>CW-Klasse</th><th>Opmerkingen</th></tr></thead>
-              <tbody>
-                <tr><td>A910 Compact</td><td>17-19 ton</td><td>CW30</td><td>Kleinste Liebherr wielgraver</td></tr>
-                <tr><td>A914 / A914 Compact</td><td>16-21 ton</td><td>CW30/CW40</td><td>Populair bij gemeenten</td></tr>
-                <tr><td>A918 / A918 Compact</td><td>18-22 ton</td><td>CW30/CW40</td><td>4-wielbesturing</td></tr>
-                <tr><td>A920 / A922</td><td>20-25 ton</td><td>CW40</td><td>Ook als Rail-versie</td></tr>
-                <tr><td>A924 (incl. HEAVYLIFT/Rail)</td><td>24-30 ton</td><td>CW40/CW45</td><td>Meest populaire A-serie</td></tr>
-                <tr><td>A928 / A932</td><td>28-35 ton</td><td>CW45</td><td>Zware wielgraver</td></tr>
-                <tr><td>A934 / A934 HD</td><td>34-44 ton</td><td>CW55</td><td>Heavy Duty beschikbaar</td></tr>
-                <tr><td>A944 / A954 HD</td><td>40-58 ton</td><td>CW55/CW70</td><td>Ultra-zware wielgravers</td></tr>
-              </tbody>
-            </table>
-          </article>
-
-          <article class="seo-article">
-            <h2>Praktische Tips voor Liebherr Eigenaren</h2>
-            <ul>
-              <li><strong>Meet altijd op:</strong> Liebherr's hebben vaak afwijkende stick-afmetingen. Laat altijd opmeten: Pin diameter (E), Center-to-center afstand (L), Breedte tussen oren (B)</li>
-              <li><strong>Let op generaties:</strong> Een R934B heeft andere afmetingen dan een R934C Litronic. De letteraanduiding geeft de generatie aan</li>
-              <li><strong>Compact is niet lichter qua stick:</strong> Een R926 Compact heeft vaak dezelfde stick als een R926 standaard - alleen de bovenwagen is lichter</li>
-              <li><strong>Liebherr service:</strong> Liebherr-dealers kunnen exacte stick-specs opzoeken per serienummer</li>
-              <li><strong>Snelwissel capaciteit:</strong> Omdat Liebherr-machines zwaarder zijn gebouwd, kunnen ze vaak een klasse hoger in hijsvermogen</li>
-            </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>Waarom Structon voor Liebherr?</h2>
-            <ul>
-              <li><strong>Kennis van Liebherr-specificaties:</strong> Wij weten dat Liebherr zwaardere pennen heeft dan andere merken</li>
-              <li><strong>Hardox kwaliteit:</strong> Slijtplaten van Hardox 450 voor maximale levensduur - past bij Liebherr's langlevigheid</li>
-              <li><strong>Maatwerk mogelijk:</strong> Speciale afmetingen voor Demolition en SME-uitvoeringen</li>
-              <li><strong>Snelle levering:</strong> Grote voorraad, snel leverbaar</li>
-            </ul>
-            <p>Als je een Liebherr hebt, laat je stick opmeten, vertel welk model en generatie je hebt, en laat ons de juiste CW-snelwissel met geïntegreerde kraanbak samenstellen. Dan heb je een combinatie die even lang meegaat als de machine zelf: <strong>Duitse kwaliteit van kop tot kraanbak</strong>.</p>
-          </article>
-
-          <article class="seo-article">
-            <h2>Andere Merken</h2>
-            <p>Structon levert kraanbakken voor alle grote merken. Hieronder een overzicht met korte info per merk:</p>
-            <ul class="brand-info-list">
-              <li><a href="/kraanbakken/caterpillar/"><strong>Caterpillar</strong></a> – Amerikaans icoon, 300-serie rupsgravers en M-serie mobiele kranen. Bekend om robuustheid en wereldwijd dealernetwerk.</li>
-              <li><a href="/kraanbakken/komatsu/"><strong>Komatsu</strong></a> – Japanse precisie, PC-serie. Intelligent Machine Control (iMC) en KOMTRAX telematica. Sterk in grondverzet.</li>
-              <li><a href="/kraanbakken/volvo/"><strong>Volvo</strong></a> – Zweeds comfort en veiligheid. EC-serie rupskranen, EW-serie wielgravers. Bekend om cabinecomfort en brandstofefficiëntie.</li>
-              <li><a href="/kraanbakken/hitachi/"><strong>Hitachi</strong></a> – Japanse kwaliteit, Zaxis (ZX) serie. Betrouwbaar, sterk in zware toepassingen. Generaties -5, -6, -7.</li>
-              <li><a href="/kraanbakken/jcb/"><strong>JCB</strong></a> – Brits no-nonsense. JS-serie rupskranen, Hydradig 110W innovatief concept. Eenvoudig onderhoud, sterke prijs/kwaliteit.</li>
-              <li><a href="/kraanbakken/doosan/"><strong>Doosan/Develon</strong></a> – Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.</li>
-              <li><a href="/kraanbakken/hyundai/"><strong>Hyundai</strong></a> – HX/HW-serie, focus op 4 pijlers: onderhoud, comfort, veiligheid, productiviteit. Hi MATE telematica, A-serie met langere intervallen.</li>
-              <li><a href="/kraanbakken/kobelco/"><strong>Kobelco</strong></a> – Japanse specialist, SK-serie. Bekend om zuinigheid en reduced tail swing modellen. Sterk in stedelijke projecten.</li>
-              <li><a href="/kraanbakken/kubota/"><strong>Kubota</strong></a> – Japanse mini-specialist, KX/U-serie. Compact, betrouwbaar, ideaal voor tuinaanleg en kleine werven.</li>
-              <li><a href="/kraanbakken/yanmar/"><strong>Yanmar</strong></a> – Japanse dieselmotor-expertise. ViO-serie met zero tail swing. Populair bij verhuurders en tuinaanleggers.</li>
-              <li><a href="/kraanbakken/takeuchi/"><strong>Takeuchi</strong></a> – Japanse compacte specialist, TB-serie. Robuust, eenvoudig, sterke restwaarde. Favoriet in verhuur.</li>
-              <li><a href="/kraanbakken/case/"><strong>Case</strong></a> – Amerikaans merk (CNH Industrial). CX-serie rupskranen. Solide machines, goede prijs/prestatie.</li>
-              <li><a href="/kraanbakken/wacker-neuson/"><strong>Wacker Neuson</strong></a> – Duits/Oostenrijks, compact materieel specialist. ET/EW-serie mini's. Dual View cabine, zero tail swing.</li>
-              <li><a href="/kraanbakken/sany/"><strong>Sany</strong></a> – Chinese fabrikant, snelgroeiend in Europa. SY-serie. Competitieve prijs, moderne technologie.</li>
-            </ul>
+            <div class="mt-6 text-center">
+                <a href="/contact" class="btn btn-secondary w-full">Vraag Advies</a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section cta-section" style="background: var(--color-primary); padding: 4rem 0;">
-      <div class="container">
-        <div class="cta-content text-center">
-          <h2 class="cta-title" style="color: white;">Kraanbak voor Jouw Liebherr Nodig?</h2>
-          <p class="cta-text" style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-            Neem contact op voor advies of een vrijblijvende offerte.
-          </p>
-          <div style="display: flex; justify-content: center;">
-            <a href="../../pages/contact.html?brand=liebherr" class="btn-split usp-btn" style="background: white;">
-              <span class="btn-split-text" style="background: white; color: var(--color-primary);">Offerte Aanvragen</span>
+    <!-- 6. CTA -->
+    <section class="section cta-section bg-primary text-white py-16">
+      <div class="container text-center">
+        <h2 class="text-3xl font-bold mb-4 text-white">Specifiek Liebherr model niet gevonden?</h2>
+        <p class="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+            Wij leveren maatwerk voor alle Liebherr machines, inclusief oudere modellen.
+        </p>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <a href="../../pages/contact.html?brand=liebherr" class="btn-split usp-btn" style="background: white;">
+              <span class="btn-split-text" style="background: white; color: var(--color-primary);">Maatwerk Offerte</span>
               <span class="btn-split-icon" style="background: white; color: var(--color-primary);">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </span>
             </a>
-          </div>
         </div>
       </div>
     </section>

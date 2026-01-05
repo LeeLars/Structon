@@ -18,16 +18,14 @@
   <meta property="og:url" content="https://structon.be/kraanbakken/jcb/">
   
   <!-- Fonts -->
-  <link rel="preload" href="../../assets/css/fonts.css" as="style">
-  <link rel="stylesheet" href="../../assets/css/fonts.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   
   <!-- Styles -->
   <link rel="stylesheet" href="../../assets/css/global.css">
   <link rel="stylesheet" href="../../assets/css/pages/category.css">
   <link rel="stylesheet" href="../../assets/css/pages/brand.css">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../../assets/images/static/favicon.svg">
   
   <!-- Structured Data: BreadcrumbList -->
   <script type="application/ld+json">
@@ -68,10 +66,18 @@
         </a>
         
         <div class="menu">
-          <a href="../../pages/category.html?cat=graafbakken" class="menu-item">Graafbakken</a>
-          <a href="../../pages/category.html?cat=sloop-sorteergrijpers" class="menu-item">Sloop- en sorteergrijpers</a>
-          <a href="../../pages/category.html?cat=adapters" class="menu-item">Adapterstukken</a>
-          <a href="../../pages/category.html?cat=overige" class="menu-item">Overige</a>
+          <a href="../../pages/category.html?cat=graafbakken" class="menu-item">
+            Graafbakken <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="../../pages/category.html?cat=sloop-sorteergrijpers" class="menu-item">
+            Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="../../pages/category.html?cat=adapters" class="menu-item">
+            Adapterstukken <span class="dropdown-arrow">▼</span>
+          </a>
+          <a href="../../pages/category.html?cat=overige" class="menu-item">
+            Overige <span class="dropdown-arrow">▼</span>
+          </a>
         </div>
         
         <div class="nav-actions">
@@ -101,295 +107,227 @@
   </nav>
 
   <main data-brand="jcb">
-    <!-- Brand Hero -->
-        <!-- Page Hero (Universal) -->
-    <section class="page-hero">
+    <!-- 1. BRAND HERO -->
+    <section class="section brand-hero">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
+        <nav class="breadcrumb" aria-label="Kruimelpad" style="margin-bottom: 2rem;">
           <a href="/">Home</a>
           <span>/</span>
           <a href="/kraanbakken/">Kraanbakken</a>
           <span>/</span>
           <span aria-current="page">JCB</span>
         </nav>
-        
-        <div class="page-hero-content">
-          <div class="page-hero-text">
-            <h1 class="page-title">Kraanbak voor JCB</h1>
-            <p class="page-subtitle">JCB is Brits no-nonsense: machines die werken, makkelijk te bedienen zijn en eenvoudig te onderhouden blijven. Structon levert kraanbakken passend voor JCB mini’s (18Z-1), X-serie rupsgraafmachines (131X/150X/220X) én de unieke Hydradig 110W.</p>
+
+        <div class="brand-hero-content">
+          <div class="brand-logo-wrapper">
+            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1707917765/brands/jcb_logo.png" alt="JCB Graafmachines" class="brand-logo">
           </div>
-          <div class="page-hero-media">
-            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop" alt="Kraanbak voor JCB" loading="lazy">
+
+          <div class="brand-hero-text">
+            <h1 class="brand-title">JCB Kraanbakken</h1>
+            <p class="brand-subtitle">
+              Brits no-nonsense design: machines die werken, makkelijk te bedienen zijn en eenvoudig te onderhouden.
+              Structon levert kraanbakken passend voor JCB mini’s, X-serie rupsgraafmachines en de Hydradig.
+            </p>
+            
+            <ul class="brand-usps">
+              <li><svg style="width:16px;height:16px;vertical-align:text-top;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 100% Pasvorm Garantie</li>
+              <li><svg style="width:16px;height:16px;vertical-align:text-top;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Hardox® 450 Staal</li>
+              <li><svg style="width:16px;height:16px;vertical-align:text-top;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Voor 15:00 besteld, morgen in huis</li>
+            </ul>
+          </div>
+
+          <div class="brand-hero-image">
+             <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop" alt="JCB Graafmachine" loading="lazy">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- JCB Model Selector -->
-    <section class="section model-selector">
+    <!-- 2. MODEL SELECTOR -->
+    <section class="section model-selector" id="model-selector">
       <div class="container">
-        <h2 class="section-title text-center">Zoek op JCB Model</h2>
-        <p class="section-subtitle text-center">Klik op jouw machinemodel voor passende producten.</p>
+        <div class="section-header text-center">
+          <h2 class="section-title">Kies uw JCB Model</h2>
+          <p class="section-subtitle">Selecteer uw type machine om direct de geschikte bakken te zien.</p>
+        </div>
         
         <div class="model-grid">
+          <!-- Categorie 1: Minigravers -->
           <div class="model-category">
-            <h3 class="model-category-title">Minigravers (< 10 ton)</h3>
-            <p class="model-category-desc">CW05 - CW10 snelwissels</p>
+            <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2" style="border-bottom-color: var(--color-primary);">
+                <h3 class="text-lg font-bold m-0">Minigravers</h3>
+                <span class="text-sm font-bold text-muted">&lt; 10 ton</span>
+            </div>
+            <p class="model-category-desc">Z-modellen (ZTS) en C-modellen</p>
             <div class="model-links">
-              <a href="?model=18Z-1" class="model-link" data-tonnage="1.8" data-cw="CW05">JCB 18Z-1</a>
-              <a href="?model=19C-1" class="model-link" data-tonnage="1.9" data-cw="CW05">JCB 19C-1</a>
-              <a href="?model=85Z-2" class="model-link" data-tonnage="8.5" data-cw="CW10">JCB 85Z-2</a>
-              <a href="?model=90Z-2" class="model-link" data-tonnage="9.0" data-cw="CW10">JCB 90Z-2</a>
+              <a href="?model=18Z-1" class="model-link" data-tonnage="1.8" data-cw="CW05">18Z-1 <span class="model-badge">1.8t</span></a>
+              <a href="?model=19C-1" class="model-link" data-tonnage="1.9" data-cw="CW05">19C-1 <span class="model-badge">1.9t</span></a>
+              <a href="?model=55Z-1" class="model-link" data-tonnage="5.5" data-cw="CW10">55Z-1 <span class="model-badge">5.5t</span></a>
+              <a href="?model=85Z-2" class="model-link" data-tonnage="8.5" data-cw="CW10">85Z-2 <span class="model-badge">8.5t</span></a>
+              <a href="?model=90Z-2" class="model-link" data-tonnage="9.0" data-cw="CW10">90Z-2 <span class="model-badge">9t</span></a>
             </div>
           </div>
           
+          <!-- Categorie 2: Middenklasse -->
           <div class="model-category">
-            <h3 class="model-category-title">Middenklasse (10-22 ton)</h3>
-            <p class="model-category-desc">CW10 - CW40 snelwissels</p>
+            <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2" style="border-bottom-color: var(--color-primary);">
+                <h3 class="text-lg font-bold m-0">Middenklasse</h3>
+                <span class="text-sm font-bold text-muted">10 - 22 ton</span>
+            </div>
+            <p class="model-category-desc">JS en nieuwe X-serie</p>
             <div class="model-links">
-              <a href="?model=100C-2" class="model-link" data-tonnage="10" data-cw="CW10">JCB 100C-2</a>
-              <a href="?model=131X" class="model-link" data-tonnage="13.5" data-cw="CW20">JCB 131X</a>
-              <a href="?model=150X" class="model-link" data-tonnage="15" data-cw="CW30">JCB 150X</a>
-              <a href="?model=Hydradig-110W" class="model-link" data-tonnage="11" data-cw="CW20" data-type="wielen">JCB Hydradig 110W</a>
+              <a href="?model=100C-2" class="model-link" data-tonnage="10" data-cw="CW10">100C-2 <span class="model-badge">10t</span></a>
+              <a href="?model=131X" class="model-link" data-tonnage="13.5" data-cw="CW20">131X <span class="model-badge">13.5t</span></a>
+              <a href="?model=150X" class="model-link" data-tonnage="15" data-cw="CW30">150X <span class="model-badge">15t</span></a>
+              <a href="?model=Hydradig-110W" class="model-link" data-tonnage="11" data-cw="CW20" data-type="wielen">Hydradig 110W <span class="model-badge" style="background:#e3f2fd;color:#1565c0;">WIEL</span></a>
             </div>
           </div>
           
+          <!-- Categorie 3: Zware Klasse -->
           <div class="model-category">
-            <h3 class="model-category-title">Zware Klasse (> 20 ton)</h3>
-            <p class="model-category-desc">CW40 snelwissels</p>
+            <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2" style="border-bottom-color: var(--color-primary);">
+                <h3 class="text-lg font-bold m-0">Zware Klasse</h3>
+                <span class="text-sm font-bold text-muted">&gt; 20 ton</span>
+            </div>
+            <p class="model-category-desc">Productiemachines</p>
             <div class="model-links">
-              <a href="?model=220X" class="model-link" data-tonnage="22" data-cw="CW40">JCB 220X</a>
-              <a href="?model=245XR" class="model-link" data-tonnage="25" data-cw="CW40">JCB 245XR</a>
+              <a href="?model=220X" class="model-link" data-tonnage="22" data-cw="CW40">220X <span class="model-badge">22t</span></a>
+              <a href="?model=245XR" class="model-link" data-tonnage="25" data-cw="CW40">245XR <span class="model-badge">25t</span></a>
+              <a href="?model=JS330" class="model-link" data-tonnage="33" data-cw="CW45">JS330 <span class="model-badge">33t</span></a>
+              <a href="?model=JS370" class="model-link" data-tonnage="37" data-cw="CW45">JS370 <span class="model-badge">37t</span></a>
             </div>
           </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="#cw-tabel" class="text-sm text-primary hover:underline flex items-center justify-center gap-1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Welke snelwissel (CW) hoort bij mijn machine?
+            </a>
         </div>
       </div>
     </section>
 
-    <!-- Category Tabs -->
-    <section class="category-tabs-section">
+    <!-- 3. PRODUCT FILTERS -->
+    <section class="category-tabs-section sticky-top" style="position:sticky; top:80px; z-index:90;">
       <div class="container">
         <div class="category-tabs">
-          <button class="category-tab active" data-category="graafbakken">Graafbakken</button>
-          <button class="category-tab" data-category="slotenbakken">Slotenbakken</button>
-          <button class="category-tab" data-category="rioolbakken">Rioolbakken</button>
-          <button class="category-tab" data-category="sorteergrijpers">Sorteergrijpers</button>
+          <button class="category-tab active" data-category="graafbakken">
+            Graafbakken
+            <span class="category-tab-count" id="count-graafbakken">0</span>
+          </button>
+          <button class="category-tab" data-category="slotenbakken">
+            Slotenbakken
+            <span class="category-tab-count" id="count-slotenbakken">0</span>
+          </button>
+          <button class="category-tab" data-category="rioolbakken">
+            Rioolbakken
+            <span class="category-tab-count" id="count-rioolbakken">0</span>
+          </button>
+          <button class="category-tab" data-category="sorteergrijpers">
+            Sorteergrijpers
+            <span class="category-tab-count" id="count-sorteergrijpers">0</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- Products Section -->
+    <!-- 4. PRODUCTS GRID -->
     <section class="section brand-products-section">
       <div class="container">
         <div class="category-intro" id="category-intro">
           <h3 class="category-intro-title">Graafbakken voor JCB</h3>
           <p class="category-intro-text">
-            Professionele graafbakken voor alle grondwerkzaamheden met uw JCB graafmachine. 
-            Van lichte tuinwerkzaamheden tot zware grondverzet projecten.
+            Professionele dieplepelbakken geoptimaliseerd voor JCB geometrie. 
+            Uitgevoerd met voorzetmes en optionele tanden.
           </p>
         </div>
         
         <div class="brand-products-header">
-          <h2 class="brand-products-title">Producten</h2>
-          <p class="brand-products-count"><span id="products-count">0</span> producten gevonden</p>
+          <h2 class="brand-products-title">Beschikbare Producten</h2>
           <div id="filter-summary"></div>
         </div>
         
         <div class="products-list brand-products-list" id="products-grid">
-          <div class="loading"><div class="spinner"></div></div>
+           <div class="text-center py-12">
+               <div class="spinner"></div>
+               <p class="text-muted mt-4">Producten laden...</p>
+           </div>
         </div>
         
         <div class="pagination" id="pagination"></div>
       </div>
     </section>
 
-    <!-- SEO Content -->
-    <section class="section seo-content">
+    <!-- 5. HULP & SEO CONTENT -->
+    <section class="section seo-content" id="cw-tabel">
       <div class="container">
         <div class="seo-content-grid">
+          <article class="seo-article" style="grid-column: span 2;">
+            <h2>JCB Modellen & CW Aansluitingen</h2>
+            <p>JCB gebruikt standaard afmetingen, maar let op de Hydradig. Gebruik onderstaande tabel als richtlijn.</p>
+            <div style="overflow-x:auto;">
+                <table class="seo-table">
+                  <thead>
+                    <tr>
+                      <th>Model Serie</th>
+                      <th>Gewichtsklasse</th>
+                      <th>Type</th>
+                      <th>Snelwissel</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>18Z-1 / 19C-1</td><td>1.8 - 1.9 ton</td><td>Mini</td><td>CW05</td></tr>
+                    <tr><td>48Z - 60C</td><td>4.8 - 6.0 ton</td><td>Mini</td><td>CW10</td></tr>
+                    <tr><td>85Z - 100C</td><td>8.5 - 10 ton</td><td>Midi</td><td>CW10</td></tr>
+                    <tr><td>Hydradig 110W</td><td>11.5 ton</td><td>Wiel</td><td>CW20</td></tr>
+                    <tr><td>131X - 150X</td><td>13 - 15 ton</td><td>Rups</td><td>CW30</td></tr>
+                    <tr><td>210X - 245XR</td><td>21 - 25 ton</td><td>Rups</td><td>CW40</td></tr>
+                    <tr><td>JS300 - JS370</td><td>30 - 37 ton</td><td>Rups</td><td>CW45</td></tr>
+                  </tbody>
+                </table>
+            </div>
+          </article>
+          
           <article class="seo-article">
-            <h2>Het Britse Verhaal: No-Nonsense Engineering</h2>
-            <p>JCB is een <strong>Brits familiebedrijf</strong>, opgericht in 1945 door Joseph Cyril Bamford. Het merk werd wereldberoemd met de backhoe loader en staat vandaag bekend om een simpele filosofie: <strong>maak machines die werken, die iedereen kan bedienen, en die je zelf kunt repareren</strong>.</p>
-            <p>JCB is sterk in de Europese verhuurmarkt omdat machines makkelijk te gebruiken zijn, betrouwbaar blijven en praktisch zijn opgebouwd. De typische gele kleur (“JCB Yellow”) is zelfs een geregistreerd handelsmerk.</p>
-            <h3>Het JCB DNA</h3>
-            <ul>
-              <li><strong>No-nonsense design:</strong> overzichtelijke bediening, weinig onnodige complexiteit</li>
-              <li><strong>Verhuur-focus:</strong> robuust, goed beschermd, snel te onderhouden</li>
-              <li><strong>EcoMAX motoren:</strong> bij bepaalde vermogens minder nabehandelingscomplexiteit (minder onderhoud)</li>
-              <li><strong>CommandPlus cabine:</strong> ruim, veel zicht, intuïtief dashboard</li>
-              <li><strong>Innovatie waar het telt:</strong> o.a. elektrische mini’s en een waterstofprototype</li>
+            <h2>Waarom Structon?</h2>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2">
+                  <svg class="text-primary mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Slijtvast:</strong> Volledig Hardox® body voor zwaar werk.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                  <svg class="text-primary mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Geometrie:</strong> Perfecte openingshoek voor JCB graafmachines.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                  <svg class="text-primary mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Direct Leverbaar:</strong> Bestel vandaag, morgen graven.</span>
+              </li>
             </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>De JCB Range: Van Mini tot Zwaar</h2>
-            <h3>Mini Excavators (1,4 tot 10 ton)</h3>
-            <p>JCB heeft zowel oudere 8-serie mini’s (8008/8010/8014/…) als de modernere letter-serie:</p>
-            <ul>
-              <li><strong>Z-modellen (ZTS):</strong> 18Z-1, 19C-1, 48Z-1, 55Z, 85Z, 90Z</li>
-              <li><strong>C-modellen:</strong> 57C, 67C, 86C, 100C</li>
-              <li><strong>R-modellen:</strong> reduced tail swing varianten</li>
-              <li><strong>Elektrische mini’s:</strong> o.a. 19C-1E (emissievrij en stil)</li>
-            </ul>
-            <h3>JS-serie (13-37 ton) en X-serie (nieuwe generatie)</h3>
-            <p>De JS-serie was jarenlang het gezicht van JCB in rupsgraafmachines. De nieuwere <strong>X-serie</strong> (131X/140X/150X/210X/220X/245X) vervangt veel JS-modellen met focus op stabiliteit, cabinecomfort en onderhoudsgemak.</p>
-            <h3>Wielgraafmachines &amp; Hydradig</h3>
-            <p>Naast traditionele wielgravers is er de unieke <strong>Hydradig 110W</strong>: motor en zware componenten in het chassis, extreem laag zwaartepunt, 360° zicht op de wielen en zeer compacte tailswing.</p>
-          </article>
-
-          <article class="seo-article">
-            <h2>CW-Compatibiliteit voor JCB Machines</h2>
-            <p>JCB-machines hebben doorgaans <strong>standaard afmetingen</strong> die goed passen bij het CW-systeem. JCB is pragmatisch en gebruikt industrie-standaarden.</p>
-            <table class="seo-table">
-              <thead><tr><th>Segment</th><th>CW-Klasse</th><th>Modellen (voorbeelden)</th><th>Pin Ø</th></tr></thead>
-              <tbody>
-                <tr><td>Mini’s (1-3,5 ton)</td><td>CW05</td><td>18Z-1, 19C-1, 8016/8018, 8025/8026</td><td>35-45mm</td></tr>
-                <tr><td>Mini’s (3-10 ton)</td><td>CW10</td><td>48Z-1, 55Z, 67C, 85Z, 90Z, 100C</td><td>45-55mm</td></tr>
-                <tr><td>Rups (13-20 ton)</td><td>CW30</td><td>131X, 140X, 150X, JS130/JS160</td><td>65-75mm</td></tr>
-                <tr><td>Rups (20-27 ton)</td><td>CW40</td><td>210X, 220X, 245X, JS220/JS260</td><td>75-85mm</td></tr>
-                <tr><td>Rups (25-40 ton)</td><td>CW45</td><td>JS290/JS330, JS370</td><td>85-95mm</td></tr>
-                <tr><td>Wielgravers (15-20 ton)</td><td>CW30</td><td>JS145W, JS160W, JS175W</td><td>65-75mm</td></tr>
-                <tr><td>Hydradig 110W (11,5 ton)</td><td>CW20</td><td>Hydradig 110W</td><td>55-65mm</td></tr>
-              </tbody>
-            </table>
-            <p><strong>Let op Hydradig:</strong> door het lage zwaartepunt en de 50/50 gewichtsverdeling moet de kraanbak/snelwissel-combinatie goed gebalanceerd zijn.</p>
-          </article>
-
-          <article class="seo-article">
-            <h2>Populaire modellen (snelle match)</h2>
-            <p>Deze JCB’s kom je in de praktijk het vaakst tegen in NL/BE (verhuur, nuts en aannemers). Daarmee zijn dit ook de meest gevraagde combinaties voor kraanbak + snelwissel:</p>
-            <table class="seo-table">
-              <thead><tr><th>Model</th><th>Klasse</th><th>CW</th><th>Waarom populair?</th></tr></thead>
-              <tbody>
-                <tr><td>18Z-1 / 19C-1</td><td>~2 ton</td><td>CW05</td><td>Compact, geschikt voor smalle doorgangen en verhuur</td></tr>
-                <tr><td>55Z / 57C</td><td>~5-6 ton</td><td>CW10</td><td>Verhuur-bestseller: wendbaar, sterk en makkelijk te bedienen</td></tr>
-                <tr><td>85Z / 90Z</td><td>~8,5-9 ton</td><td>CW10</td><td>Zero tail swing in grotere klasse (stedelijk werk)</td></tr>
-                <tr><td>100C / 131X</td><td>~10-13 ton</td><td>CW10 / CW30</td><td>Overgang naar rupsklasse, veel gezien in nutswerken</td></tr>
-                <tr><td>150X</td><td>~15 ton</td><td>CW30</td><td>Nieuwe generatie met focus op onderhoud en verhuur</td></tr>
-                <tr><td>220X / 245X</td><td>~22-25 ton</td><td>CW40</td><td>Werkpaarden voor grondverzet (meest gangbare klasse)</td></tr>
-                <tr><td>Hydradig 110W</td><td>~11,5 ton</td><td>CW20</td><td>Uniek concept: extreem zicht en stabiliteit in stadswerk</td></tr>
-              </tbody>
-            </table>
-          </article>
-
-          <article class="seo-article">
-            <h2>Quick reference: gewicht naar CW-klasse (JCB)</h2>
-            <table class="seo-table">
-              <thead><tr><th>Machinegewicht</th><th>CW</th><th>Voorbeelden</th><th>Opmerking</th></tr></thead>
-              <tbody>
-                <tr><td>1-3,5 ton</td><td>CW05</td><td>18Z-1, 19C-1, 8016</td><td>Micro/mini</td></tr>
-                <tr><td>3-10 ton</td><td>CW10</td><td>55Z, 67C, 85Z, 90Z, 100C</td><td>Mini/midi</td></tr>
-                <tr><td>10-13 ton</td><td>CW20 / CW30</td><td>Hydradig 110W (CW20), 131X (CW30)</td><td>Hydradig is een uitzondering</td></tr>
-                <tr><td>13-20 ton</td><td>CW30</td><td>131X, 140X, 150X, JS160</td><td>Rupsklasse</td></tr>
-                <tr><td>20-27 ton</td><td>CW40</td><td>220X, 245X, JS220</td><td>Meest voorkomende klasse</td></tr>
-                <tr><td>25-40 ton</td><td>CW45</td><td>JS290, JS330, JS370</td><td>Zware rups</td></tr>
-              </tbody>
-            </table>
-          </article>
-
-          <article class="seo-article">
-            <h2>Hydradig 110W: waar je extra op let</h2>
-            <p>De Hydradig is géén standaard wielgraver. De motor en zware componenten zitten in het chassis, wat zorgt voor een laag zwaartepunt en uitzonderlijk zicht. Voor kraanbakken en snelwissels betekent dat:</p>
-            <ul>
-              <li><strong>Balans boven alles:</strong> vermijd onnodig zware snelwissels vooraan</li>
-              <li><strong>Gebruik de stabiliteit slim:</strong> ideaal voor hijswerk in krappe stadsomgevingen</li>
-              <li><strong>Laat opmeten bij twijfel:</strong> Hydradig is vaak “net anders” dan klassieke 11-12 ton machines</li>
-            </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>JCB Unieke Kenmerken voor Snelwissels</h2>
-            <ul>
-              <li><strong>LiveLink telematica:</strong> locatie, draaiuren, service-alarmen en (op moderne machines) veiligheidssignalen rond vergrendeling</li>
-              <li><strong>Q-Fit systeem:</strong> JCB-eigen snelwissel, maar in NL/BE is CW vaak populairder door universele uitwisselbaarheid</li>
-              <li><strong>CommandPlus integratie:</strong> status, waarschuwingen en werkstanden per aanbouwdeel</li>
-              <li><strong>EcoMAX &amp; hydrauliek:</strong> soepele bediening, belangrijk bij hijswerk met kraanbak</li>
-            </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>Checklist: snelwissel of kraanbak bestellen voor JCB</h2>
-            <ul>
-              <li><strong>Stap 1 – Model + serie:</strong> mini (Z/C), JS of X-serie, wielgraver of Hydradig</li>
-              <li><strong>Stap 2 – Uitvoering checken:</strong> HD-spec / LCD-spec / demolition of andere opties</li>
-              <li><strong>Stap 3 – CW-klasse bepalen:</strong> volg tonnage en de tabellen (meestal zonder “rare” uitzonderingen)</li>
-              <li><strong>Stap 4 – Meet bij twijfel:</strong> pin diameter (E), center-to-center (L), breedte (B)</li>
-              <li><strong>Stap 5 – Verhuur-proof keuzes:</strong> robuust, eenvoudig te gebruiken, duidelijke instructies</li>
-              <li><strong>Stap 6 – Instellingen:</strong> sla profielen op (bij kraanbak: stabiel hijsen, lagere flow)</li>
-            </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>Veelgestelde vragen (JCB)</h2>
-            <ul>
-              <li><strong>Kan ik dezelfde snelwissel gebruiken voor JS en X-serie?</strong> Niet automatisch. Controleer altijd de maatvoering per model/serie.</li>
-              <li><strong>Wat kies ik als ik machines verhuur?</strong> Vaak een robuuste CW-oplossing (universeel) met duidelijke instructies en extra bescherming.</li>
-              <li><strong>Is Q-Fit beter dan CW?</strong> Q-Fit is JCB-eigen en werkt goed, maar CW is in NL/BE meestal praktischer door uitwisselbaarheid.</li>
-              <li><strong>Waarom is de Hydradig speciaal?</strong> Door balans en concept; vermeld expliciet dat het om een Hydradig 110W gaat.</li>
-            </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>Praktische Tips voor JCB Eigenaren</h2>
-            <ul>
-              <li><strong>X-serie ≠ JS-serie:</strong> afmetingen kunnen verschillen; check altijd per model en uitvoering</li>
-              <li><strong>Verhuur overwegingen:</strong> kies robuuste, eenvoudig te gebruiken snelwissels en voorzie duidelijke instructies</li>
-              <li><strong>LCD vs HD spec:</strong> specifieke uitvoeringen kunnen invloed hebben op montage/klasse</li>
-              <li><strong>Hydradig specialisme:</strong> vermeld expliciet dat het om een Hydradig 110W gaat; laat opmeten</li>
-            </ul>
-          </article>
-
-          <article class="seo-article">
-            <h2>Waarom Structon voor JCB?</h2>
-            <ul>
-              <li><strong>Praktische match:</strong> CW-compatibele kraanbakken voor JCB’s populaire modellen (mini, X-serie en Hydradig)</li>
-              <li><strong>Hardox kwaliteit:</strong> slijtplaten van Hardox 450 voor maximale levensduur</li>
-              <li><strong>Verhuur-proof opties:</strong> advies rond robuustheid en gebruiksgemak</li>
-              <li><strong>Snelle levering:</strong> grote voorraad, snel leverbaar</li>
-            </ul>
-            <p>De gouden regel bij JCB is simpel: <strong>laat opmeten, kies een betrouwbare CW-snelwissel en ga werken</strong>. No nonsense, just work.</p>
-          </article>
-
-          <article class="seo-article">
-            <h2>Andere Merken</h2>
-            <p>Structon levert kraanbakken voor alle grote merken. Hieronder een overzicht met korte info per merk:</p>
-            <ul class="brand-info-list">
-              <li><a href="/kraanbakken/caterpillar/"><strong>Caterpillar</strong></a> – Amerikaans icoon, 300-serie rupsgravers en M-serie mobiele kranen. Bekend om robuustheid en wereldwijd dealernetwerk.</li>
-              <li><a href="/kraanbakken/komatsu/"><strong>Komatsu</strong></a> – Japanse precisie, PC-serie. Intelligent Machine Control (iMC) en KOMTRAX telematica. Sterk in grondverzet.</li>
-              <li><a href="/kraanbakken/volvo/"><strong>Volvo</strong></a> – Zweeds comfort en veiligheid. EC-serie rupskranen, EW-serie wielgravers. Bekend om cabinecomfort en brandstofefficiëntie.</li>
-              <li><a href="/kraanbakken/hitachi/"><strong>Hitachi</strong></a> – Japanse kwaliteit, Zaxis (ZX) serie. Betrouwbaar, sterk in zware toepassingen. Generaties -5, -6, -7.</li>
-              <li><a href="/kraanbakken/liebherr/"><strong>Liebherr</strong></a> – Duitse ingenieurskunst sinds 1949. R-serie rupskranen, A-serie wielgravers. Let op: zwaardere stick-afmetingen dan andere merken.</li>
-              <li><a href="/kraanbakken/doosan/"><strong>Doosan/Develon</strong></a> – Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.</li>
-              <li><a href="/kraanbakken/hyundai/"><strong>Hyundai</strong></a> – HX/HW-serie, focus op 4 pijlers: onderhoud, comfort, veiligheid, productiviteit. Hi MATE telematica, A-serie met langere intervallen.</li>
-              <li><a href="/kraanbakken/kobelco/"><strong>Kobelco</strong></a> – Japanse specialist, SK-serie. Bekend om zuinigheid en reduced tail swing modellen. Sterk in stedelijke projecten.</li>
-              <li><a href="/kraanbakken/kubota/"><strong>Kubota</strong></a> – Japanse mini-specialist, KX/U-serie. Compact, betrouwbaar, ideaal voor tuinaanleg en kleine werven.</li>
-              <li><a href="/kraanbakken/yanmar/"><strong>Yanmar</strong></a> – Japanse dieselmotor-expertise. ViO-serie met zero tail swing. Populair bij verhuurders en tuinaanleggers.</li>
-              <li><a href="/kraanbakken/takeuchi/"><strong>Takeuchi</strong></a> – Japanse compacte specialist, TB-serie. Robuust, eenvoudig, sterke restwaarde. Favoriet in verhuur.</li>
-              <li><a href="/kraanbakken/case/"><strong>Case</strong></a> – Amerikaans merk (CNH Industrial). CX-serie rupskranen. Solide machines, goede prijs/prestatie.</li>
-              <li><a href="/kraanbakken/wacker-neuson/"><strong>Wacker Neuson</strong></a> – Duits/Oostenrijks, compact materieel specialist. ET/EW-serie mini's. Dual View cabine, zero tail swing.</li>
-              <li><a href="/kraanbakken/sany/"><strong>Sany</strong></a> – Chinese fabrikant, snelgroeiend in Europa. SY-serie. Competitieve prijs, moderne technologie.</li>
-            </ul>
+            <div class="mt-6 text-center">
+                <a href="/contact" class="btn btn-secondary w-full">Vraag Advies</a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section cta-section" style="background: var(--color-primary); padding: 4rem 0;">
-      <div class="container">
-        <div class="cta-content text-center">
-          <h2 class="cta-title" style="color: white;">Kraanbak voor Jouw JCB Nodig?</h2>
-          <p class="cta-text" style="color: rgba(255,255,255,0.9); margin-bottom: 2rem;">
-            Neem contact op voor advies of een vrijblijvende offerte.
-          </p>
-          <div style="display: flex; justify-content: center;">
-            <a href="../../pages/contact.html?brand=jcb" class="btn-split usp-btn" style="background: white;">
-              <span class="btn-split-text" style="background: white; color: var(--color-primary);">Offerte Aanvragen</span>
+    <!-- 6. CTA -->
+    <section class="section cta-section bg-primary text-white py-16">
+      <div class="container text-center">
+        <h2 class="text-3xl font-bold mb-4 text-white">Specifiek JCB model niet gevonden?</h2>
+        <p class="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+            Wij leveren maatwerk voor alle JCB machines, inclusief oudere JS-series.
+        </p>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <a href="../../pages/contact.html?brand=jcb" class="btn-split usp-btn" style="background: white;">
+              <span class="btn-split-text" style="background: white; color: var(--color-primary);">Maatwerk Offerte</span>
               <span class="btn-split-icon" style="background: white; color: var(--color-primary);">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </span>
             </a>
-          </div>
         </div>
       </div>
     </section>
@@ -403,11 +341,17 @@
           <a href="../../index.html" class="footer-logo">
             <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" width="140">
           </a>
-          <p class="footer-tagline">Specialist in kraanbakken en<br>graafmachine aanbouwdelen.</p>
+          <p class="footer-tagline">
+            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
+          </p>
         </div>
+
         <div class="footer-sitemap-col">
-          <ul id="footer-sitemap" class="sitemap-grid"><li class="sitemap-loading">Navigatie laden...</li></ul>
+          <ul id="footer-sitemap" class="sitemap-grid">
+            <li class="sitemap-loading">Navigatie laden...</li>
+          </ul>
         </div>
+
         <div class="footer-contact-col">
           <h4 class="footer-heading">Contact</h4>
           <address class="footer-address">
@@ -419,6 +363,7 @@
           </address>
         </div>
       </div>
+      
       <div class="footer-bottom">
         <div class="footer-legal">
           <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
@@ -430,13 +375,13 @@
             <a href="../../pages/voorwaarden.html">Voorwaarden</a>
           </div>
         </div>
+        
         <div class="footer-creator">
           <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
         </div>
       </div>
     </div>
   </footer>
-
   <script type="module" src="../../assets/js/main.js"></script>
   <script type="module" src="../../assets/js/pages/home.js"></script>
   <script type="module" src="../../assets/js/pages/brand.js"></script>

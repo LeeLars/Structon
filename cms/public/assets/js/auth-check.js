@@ -8,7 +8,7 @@ import auth from './auth-simple.js';
 // Check authentication
 if (!auth.isAuthenticated()) {
   console.log('❌ Not authenticated, redirecting to login...');
-  window.location.href = '/cms/';
+  window.location.href = '/cms/login.html';
 } else {
   console.log('✅ Authenticated');
 }

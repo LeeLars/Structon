@@ -73,7 +73,7 @@ class SimpleAuth {
    */
   logout() {
     this.setToken(null);
-    window.location.href = '/cms/';
+    window.location.href = '/cms/login.html';
   }
 
   /**

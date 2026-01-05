@@ -106,14 +106,15 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
       }
     });
     
-    // Temporarily show detailed errors to debug Cloudinary issue
-    res.status(500).json({
+    // Don't call next(error) - handle error directly to bypass global error handler
+    return res.status(500).json({
       error: `Upload error: ${error.message}`,
       details: {
         name: error.name,
         code: error.code,
         http_code: error.http_code,
-        message: error.message
+        message: error.message,
+        cloudinaryConfigured: !!(env.cloudinary.cloudName && env.cloudinary.apiKey && env.cloudinary.apiSecret)
       }
     });
   }

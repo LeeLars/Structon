@@ -546,41 +546,83 @@ async function handleImageSelect(e) {
   
   if (files.length === 0) return;
   
+  console.log('📷 Selected files:', files.map(f => f.name));
+  
+  // Show local preview first
+  const uploadArea = document.getElementById('image-upload-area');
+  if (uploadArea) {
+    // Create preview container if it doesn't exist
+    let previewContainer = document.getElementById('image-preview-container');
+    if (!previewContainer) {
+      previewContainer = document.createElement('div');
+      previewContainer.id = 'image-preview-container';
+      previewContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;';
+      uploadArea.parentNode.insertBefore(previewContainer, uploadArea.nextSibling);
+    }
+    
+    // Show local previews
+    previewContainer.innerHTML = '';
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const div = document.createElement('div');
+        div.style.cssText = 'position: relative; width: 100px; height: 100px;';
+        div.innerHTML = `
+          <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; font-size: 10px; padding: 2px; text-align: center; border-radius: 0 0 8px 8px;">Uploading...</div>
+        `;
+        previewContainer.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  // Try to upload to Cloudinary
   const formData = new FormData();
   files.forEach(file => formData.append('images', file));
   
   try {
-    showToast('Afbeeldingen uploaden...', 'info');
+    showToast('Afbeeldingen uploaden naar server...', 'info');
+    console.log('📤 Uploading to:', '/admin/upload/images');
+    
     const response = await api.upload('/admin/upload/images', formData);
+    console.log('📥 Upload response:', response);
     
     if (response.images && response.images.length > 0) {
-      showToast(`${response.images.length} afbeelding(en) geüpload`, 'success');
-      // Store uploaded images for use when saving product
+      showToast(`${response.images.length} afbeelding(en) geüpload!`, 'success');
       window.uploadedImages = response.images;
-      console.log('Uploaded images:', response.images);
       
-      // Show preview of uploaded images
-      const previewArea = document.getElementById('image-preview-area');
-      if (previewArea) {
-        previewArea.innerHTML = response.images.map(img => 
-          `<div class="uploaded-image-preview">
-            <img src="${img.url}" alt="Uploaded">
-            <button type="button" onclick="removeUploadedImage('${img.public_id}')" class="btn-remove-image">×</button>
-          </div>`
-        ).join('');
+      // Update preview with actual URLs
+      const previewContainer = document.getElementById('image-preview-container');
+      if (previewContainer) {
+        previewContainer.innerHTML = response.images.map(img => `
+          <div style="position: relative; width: 100px; height: 100px;">
+            <img src="${img.url}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid #22c55e;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #22c55e; color: white; font-size: 10px; padding: 2px; text-align: center; border-radius: 0 0 8px 8px;">✓ Uploaded</div>
+          </div>
+        `).join('');
       }
     }
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('❌ Upload error:', error);
+    
+    // Update preview to show error
+    const previewContainer = document.getElementById('image-preview-container');
+    if (previewContainer) {
+      const previews = previewContainer.querySelectorAll('div > div');
+      previews.forEach(div => {
+        div.style.background = '#ef4444';
+        div.textContent = 'Upload failed';
+      });
+    }
     
     // Show specific error message
     if (error.message.includes('Unauthorized')) {
       showToast('Sessie verlopen - log opnieuw in', 'error');
-      setTimeout(() => window.location.href = '/cms/', 2000);
     } else if (error.message.includes('Cloudinary not configured')) {
-      showToast('Image upload niet geconfigureerd - neem contact op met beheerder', 'error');
+      showToast('Cloudinary niet geconfigureerd op server', 'error');
     } else {
-      showToast(`Fout bij uploaden: ${error.message}`, 'error');
+      showToast(`Upload fout: ${error.message}`, 'error');
     }
   }
 }

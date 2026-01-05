@@ -302,4 +302,16 @@ router.get('/debug/auth', async (req, res) => {
   });
 });
 
+// Debug cloudinary config endpoint
+router.get('/debug/cloudinary', async (req, res) => {
+  const { env } = await import('../../config/env.js');
+  
+  res.json({
+    configured: !!(env.cloudinary?.cloudName && env.cloudinary?.apiKey && env.cloudinary?.apiSecret),
+    cloudName: env.cloudinary?.cloudName ? `${env.cloudinary.cloudName.substring(0, 4)}...` : null,
+    hasApiKey: !!env.cloudinary?.apiKey,
+    hasApiSecret: !!env.cloudinary?.apiSecret
+  });
+});
+
 export default router;

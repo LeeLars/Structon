@@ -453,7 +453,6 @@ function populateForm(product) {
   document.getElementById('product-title').value = product.title || '';
   document.getElementById('product-slug').value = product.slug || '';
   document.getElementById('product-description').value = product.description || '';
-  // Category removed from form
   document.getElementById('product-width').value = product.width || '';
   document.getElementById('product-volume').value = product.volume || '';
   document.getElementById('product-weight').value = product.weight || '';
@@ -463,11 +462,35 @@ function populateForm(product) {
   const featuredCheckbox = document.getElementById('product-featured');
   if (featuredCheckbox) featuredCheckbox.checked = product.is_featured;
   
-  // Set tonnage checkboxes
+  // Set price if available
+  const priceInput = document.getElementById('product-price');
+  if (priceInput && product.price_excl_vat) {
+    priceInput.value = product.price_excl_vat;
+  }
+  
+  // Set tonnage checkboxes based on excavator_weight_min/max
   const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]');
-  tonnageCheckboxes.forEach(cb => {
-    cb.checked = (product.tonnage || []).includes(cb.value);
-  });
+  tonnageCheckboxes.forEach(cb => cb.checked = false);
+  
+  if (product.excavator_weight_min && product.excavator_weight_max) {
+    const min = product.excavator_weight_min;
+    const max = product.excavator_weight_max;
+    
+    // Match to tonnage range
+    if (min === 1.5 && max === 3) {
+      document.querySelector('input[name="tonnage"][value="1.5-3"]').checked = true;
+    } else if (min === 3 && max === 8) {
+      document.querySelector('input[name="tonnage"][value="3-8"]').checked = true;
+    } else if (min === 8 && max === 15) {
+      document.querySelector('input[name="tonnage"][value="8-15"]').checked = true;
+    } else if (min === 15 && max === 25) {
+      document.querySelector('input[name="tonnage"][value="15-25"]').checked = true;
+    } else if (min === 25 && max === 40) {
+      document.querySelector('input[name="tonnage"][value="25-40"]').checked = true;
+    } else if (min === 40) {
+      document.querySelector('input[name="tonnage"][value="40+"]').checked = true;
+    }
+  }
   
   // Store product ID for update
   document.getElementById('product-form').dataset.productId = product.id;
@@ -491,15 +514,44 @@ async function handleProductSubmit(e) {
     return;
   }
   
+  // Convert tonnage to excavator_weight_min and excavator_weight_max
+  // Take the first selected tonnage range
+  const tonnageRange = selectedTonnage[0];
+  let excavator_weight_min = null;
+  let excavator_weight_max = null;
+  
+  if (tonnageRange === '1.5-3') {
+    excavator_weight_min = 1.5;
+    excavator_weight_max = 3;
+  } else if (tonnageRange === '3-8') {
+    excavator_weight_min = 3;
+    excavator_weight_max = 8;
+  } else if (tonnageRange === '8-15') {
+    excavator_weight_min = 8;
+    excavator_weight_max = 15;
+  } else if (tonnageRange === '15-25') {
+    excavator_weight_min = 15;
+    excavator_weight_max = 25;
+  } else if (tonnageRange === '25-40') {
+    excavator_weight_min = 25;
+    excavator_weight_max = 40;
+  } else if (tonnageRange === '40+') {
+    excavator_weight_min = 40;
+    excavator_weight_max = 100;
+  }
+  
   // Use uploaded images if available
   const uploadedImages = window.uploadedImages || [];
   
+  // Get price value
+  const priceValue = parseFloat(document.getElementById('product-price')?.value);
+  
   const productData = {
-    id: productId || `prod-${Date.now()}`,
     title: document.getElementById('product-title').value,
     slug: document.getElementById('product-slug').value,
     description: document.getElementById('product-description').value,
-    tonnage: selectedTonnage,
+    excavator_weight_min,
+    excavator_weight_max,
     width: parseInt(document.getElementById('product-width').value) || null,
     volume: parseInt(document.getElementById('product-volume').value) || null,
     weight: parseInt(document.getElementById('product-weight').value) || null,
@@ -507,7 +559,8 @@ async function handleProductSubmit(e) {
     stock_quantity: parseInt(document.getElementById('product-stock').value) || 0,
     is_active: document.getElementById('product-active').checked,
     is_featured: document.getElementById('product-featured')?.checked || false,
-    cloudinary_images: uploadedImages
+    cloudinary_images: uploadedImages,
+    price: !isNaN(priceValue) ? priceValue : null
   };
   
   // Save to API

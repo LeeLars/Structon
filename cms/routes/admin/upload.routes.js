@@ -44,9 +44,13 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
 
     // Check if Cloudinary is configured
     if (!env.cloudinary.cloudName || !env.cloudinary.apiKey || !env.cloudinary.apiSecret) {
+      console.error('❌ Cloudinary not configured:', {
+        hasCloudName: !!env.cloudinary.cloudName,
+        hasApiKey: !!env.cloudinary.apiKey,
+        hasApiSecret: !!env.cloudinary.apiSecret
+      });
       return res.status(500).json({ 
-        error: 'Cloudinary not configured',
-        message: 'Image upload is not available. Please configure Cloudinary credentials.'
+        error: 'Cloudinary niet geconfigureerd. Afbeeldingen uploaden is tijdelijk niet beschikbaar. Neem contact op met de beheerder om Cloudinary credentials in te stellen.'
       });
     }
 
@@ -88,8 +92,22 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
       count: images.length
     });
   } catch (error) {
-    console.error('Image upload error:', error);
-    next(error);
+    console.error('❌ Image upload error:', {
+      message: error.message,
+      stack: error.stack,
+      cloudinaryConfig: {
+        hasCloudName: !!env.cloudinary.cloudName,
+        hasApiKey: !!env.cloudinary.apiKey,
+        hasApiSecret: !!env.cloudinary.apiSecret
+      }
+    });
+    
+    // Send user-friendly error
+    res.status(500).json({
+      error: error.message.includes('Cloudinary') 
+        ? error.message 
+        : 'Fout bij uploaden van afbeeldingen. Probeer het opnieuw of neem contact op met de beheerder.'
+    });
   }
 });
 

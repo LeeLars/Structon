@@ -361,7 +361,7 @@ async function handleBulkAction(action) {
     console.error('Bulk action error:', error);
     showToast('Fout bij uitvoeren actie', 'error');
   }
-}
+};
 
 /**
  * Update pagination
@@ -690,15 +690,16 @@ async function handleImageSelect(e) {
     }
     
     // Show specific error message
-    if (error.message.includes('Unauthorized')) {
+    if (error.message.includes('Unauthorized') || error.message.includes('Session expired')) {
       showToast('Sessie verlopen - log opnieuw in', 'error');
-    } else if (error.message.includes('Cloudinary not configured')) {
-      showToast('Cloudinary niet geconfigureerd op server', 'error');
+      setTimeout(() => auth.logout(), 2000);
+    } else if (error.message.includes('Cloudinary') || error.message.includes('niet geconfigureerd')) {
+      showToast('⚠️ Afbeeldingen uploaden is tijdelijk niet beschikbaar. Je kunt het product wel opslaan zonder afbeeldingen.', 'warning');
     } else {
       showToast(`Upload fout: ${error.message}`, 'error');
     }
   }
-}
+};
 
 /**
  * Edit product

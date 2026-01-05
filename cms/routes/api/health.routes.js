@@ -61,32 +61,33 @@ router.get('/ping', (req, res) => {
   res.send('pong');
 });
 
-// Debug endpoint - check products status (temporary)
+// Debug endpoint - check database status (temporary)
 router.get('/debug/products', async (req, res) => {
   if (!pool) {
     return res.json({ error: 'No database configured' });
   }
   
   try {
-    const [total, active, inactive] = await Promise.all([
+    const [products, categories, brands] = await Promise.all([
       pool.query('SELECT COUNT(*)::int as count FROM products'),
-      pool.query('SELECT COUNT(*)::int as count FROM products WHERE is_active = true'),
-      pool.query('SELECT COUNT(*)::int as count FROM products WHERE is_active = false OR is_active IS NULL')
+      pool.query('SELECT COUNT(*)::int as count FROM categories'),
+      pool.query('SELECT COUNT(*)::int as count FROM brands')
     ]);
     
-    // Get sample of products with their is_active status
-    const sample = await pool.query(`
-      SELECT id, title, slug, is_active, is_featured, category_id 
-      FROM products 
-      ORDER BY created_at DESC 
-      LIMIT 10
+    // Get all tables
+    const tables = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+      ORDER BY table_name
     `);
     
     res.json({
-      total: total.rows[0].count,
-      active: active.rows[0].count,
-      inactive: inactive.rows[0].count,
-      sample: sample.rows
+      products: products.rows[0].count,
+      categories: categories.rows[0].count,
+      brands: brands.rows[0].count,
+      tables: tables.rows.map(r => r.table_name),
+      database_url_set: !!process.env.DATABASE_URL
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

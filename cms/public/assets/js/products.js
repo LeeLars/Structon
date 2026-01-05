@@ -437,6 +437,12 @@ function openProductModal(product = null) {
 function closeProductModal() {
   document.getElementById('product-modal').style.display = 'none';
   document.getElementById('product-form').reset();
+  editingProductId = null; // Reset editing ID
+  window.uploadedImages = [];
+  const previewContainer = document.getElementById('image-preview-container');
+  if (previewContainer) {
+    previewContainer.innerHTML = '';
+  }
 }
 
 /**
@@ -484,9 +490,6 @@ function populateForm(product) {
       document.querySelector('input[name="tonnage"][value="40+"]').checked = true;
     }
   }
-  
-  // Store product ID for update
-  document.getElementById('product-form').dataset.productId = product.id;
 }
 
 /**
@@ -495,8 +498,10 @@ function populateForm(product) {
 async function handleProductSubmit(e) {
   e.preventDefault();
   
+  console.log('💾 [PRODUCTS] Form submitted');
+  
   const form = e.target;
-  const productId = form.dataset.productId;
+  const productId = editingProductId; // Use editingProductId instead of dataset
   
   // Get selected tonnage values
   const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]:checked');

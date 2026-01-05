@@ -471,6 +471,27 @@ function updateSidebarUser() {
 }
 
 /**
+ * Format price in EUR
+ */
+function formatPrice(price) {
+  if (price === null || price === undefined) return '-';
+  return new Intl.NumberFormat('nl-NL', {
+    style: 'currency',
+    currency: 'EUR'
+  }).format(price);
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+/**
  * Show toast notification
  */
 function showToast(message, type = 'success') {

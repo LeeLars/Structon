@@ -149,4 +149,143 @@ router.post('/debug/seed', async (req, res) => {
   }
 });
 
+// Add sample products endpoint
+router.post('/debug/seed-products', async (req, res) => {
+  if (!pool) {
+    return res.json({ error: 'No database configured' });
+  }
+  
+  try {
+    // Get category IDs
+    const catResult = await pool.query('SELECT id, slug FROM categories');
+    const categoryMap = {};
+    catResult.rows.forEach(row => categoryMap[row.slug] = row.id);
+    
+    if (Object.keys(categoryMap).length === 0) {
+      return res.json({ error: 'No categories found. Run /debug/seed first.' });
+    }
+    
+    // Sample products matching the CMS screenshot
+    const products = [
+      {
+        title: 'Slotenbak 600mm CW30',
+        slug: 'slotenbak-600mm-cw30',
+        description: 'Professionele slotenbak voor graafmachines van 8-15 ton.',
+        category_slug: 'slotenbakken',
+        excavator_weight_min: 8000,
+        excavator_weight_max: 15000,
+        width: 600,
+        volume: 120,
+        weight: 85,
+        attachment_type: 'CW30',
+        stock_quantity: 5,
+        price: 2450.00,
+        is_featured: true
+      },
+      {
+        title: 'Graafbak 1200mm CW40',
+        slug: 'graafbak-1200mm-cw40',
+        description: 'Zware graafbak voor grote graafmachines.',
+        category_slug: 'graafbakken',
+        excavator_weight_min: 15000,
+        excavator_weight_max: 40000,
+        width: 1200,
+        volume: 450,
+        weight: 280,
+        attachment_type: 'CW40',
+        stock_quantity: 3,
+        price: 2945.00,
+        is_featured: false
+      },
+      {
+        title: 'Sorteergrijper 800mm',
+        slug: 'sorteergrijper-800mm',
+        description: 'Veelzijdige sorteergrijper voor sloop en recycling.',
+        category_slug: 'sloop-sorteergrijpers',
+        excavator_weight_min: 8000,
+        excavator_weight_max: 25000,
+        width: 800,
+        volume: null,
+        weight: 450,
+        attachment_type: 'S50',
+        stock_quantity: 2,
+        price: 3200.00,
+        is_featured: true
+      },
+      {
+        title: 'Plantenbak 400mm CW10',
+        slug: 'plantenbak-400mm-cw10',
+        description: 'Compacte plantenbak voor kleine graafmachines.',
+        category_slug: 'overige',
+        excavator_weight_min: 1500,
+        excavator_weight_max: 8000,
+        width: 400,
+        volume: 45,
+        weight: 35,
+        attachment_type: 'CW10',
+        stock_quantity: 8,
+        price: 1875.00,
+        is_featured: false
+      },
+      {
+        title: 'Rioolbak 300mm CW20',
+        slug: 'rioolbak-300mm-cw20',
+        description: 'Smalle rioolbak voor precisiewerk.',
+        category_slug: 'slotenbakken',
+        excavator_weight_min: 3000,
+        excavator_weight_max: 8000,
+        width: 300,
+        volume: 60,
+        weight: 55,
+        attachment_type: 'CW20',
+        stock_quantity: 0,
+        price: 1250.00,
+        is_featured: false
+      }
+    ];
+    
+    let created = 0;
+    for (const product of products) {
+      const categoryId = categoryMap[product.category_slug];
+      if (!categoryId) continue;
+      
+      const result = await pool.query(`
+        INSERT INTO products (
+          title, slug, description, category_id,
+          excavator_weight_min, excavator_weight_max, width, volume, weight,
+          attachment_type, stock_quantity, is_featured, is_active
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true)
+        ON CONFLICT (slug) DO UPDATE SET is_active = true
+        RETURNING id
+      `, [
+        product.title, product.slug, product.description, categoryId,
+        product.excavator_weight_min, product.excavator_weight_max,
+        product.width, product.volume, product.weight,
+        product.attachment_type, product.stock_quantity, product.is_featured
+      ]);
+      
+      // Add price
+      if (result.rows[0] && product.price) {
+        await pool.query(`
+          INSERT INTO product_prices (product_id, price)
+          VALUES ($1, $2)
+          ON CONFLICT DO NOTHING
+        `, [result.rows[0].id, product.price]);
+      }
+      created++;
+    }
+    
+    const count = await pool.query('SELECT COUNT(*)::int as count FROM products WHERE is_active = true');
+    
+    res.json({
+      success: true,
+      message: `Created ${created} products`,
+      total_active_products: count.rows[0].count
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

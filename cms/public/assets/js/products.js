@@ -21,7 +21,6 @@ const TONNAGE_OPTIONS = [
 
 // State
 let products = [];
-let categories = [];
 let filteredProducts = [];
 let currentPage = 1;
 let itemsPerPage = 20;
@@ -64,13 +63,10 @@ async function initializeData() {
   
   // Load from API
   try {
-    const [productsData, categoriesData] = await Promise.allSettled([
-      api.get('/admin/products'),
-      api.get('/categories')
-    ]);
+    const productsData = await api.get('/admin/products');
     
-    if (productsData.status === 'fulfilled' && productsData.value?.products) {
-      products = productsData.value.products;
+    if (productsData?.products) {
+      products = productsData.products;
       filteredProducts = [...products];
       console.log(`✅ Loaded ${products.length} products from CMS`);
     } else {
@@ -78,18 +74,9 @@ async function initializeData() {
       products = [];
       filteredProducts = [];
     }
-    
-    if (categoriesData.status === 'fulfilled' && categoriesData.value?.categories) {
-      categories = categoriesData.value.categories;
-      console.log(`✅ Loaded ${categories.length} categories from CMS`);
-    } else {
-      console.warn('⚠️ No categories returned from API');
-      categories = [];
-    }
   } catch (error) {
     console.error('❌ Error loading data from CMS:', error);
     products = [];
-    categories = [];
     filteredProducts = [];
   }
   
@@ -584,10 +571,28 @@ async function handleProductSubmit(e) {
 /**
  * Handle image select
  */
-function handleImageSelect(e) {
+async function handleImageSelect(e) {
   const files = Array.from(e.target.files);
-  // TODO: Implement image upload to Cloudinary
-  console.log('Images selected:', files);
+  
+  if (files.length === 0) return;
+  
+  const formData = new FormData();
+  files.forEach(file => formData.append('images', file));
+  
+  try {
+    showToast('Afbeeldingen uploaden...', 'info');
+    const response = await api.upload('/admin/upload/images', formData);
+    
+    if (response.images && response.images.length > 0) {
+      showToast(`${response.images.length} afbeelding(en) geüpload`, 'success');
+      // Store uploaded images for use when saving product
+      window.uploadedImages = response.images;
+      console.log('Uploaded images:', response.images);
+    }
+  } catch (error) {
+    console.error('Upload error:', error);
+    showToast('Fout bij uploaden afbeeldingen', 'error');
+  }
 }
 
 /**

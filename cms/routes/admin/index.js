@@ -7,6 +7,7 @@ import subcategoriesRoutes from './subcategories.routes.js';
 import brandsRoutes from './brands.routes.js';
 import sectorsRoutes from './sectors.routes.js';
 import seedRoutes from './seed.routes.js';
+import uploadRoutes from './upload.routes.js';
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/subcategories', subcategoriesRoutes);
 router.use('/brands', brandsRoutes);
 router.use('/sectors', sectorsRoutes);
 router.use('/seed', seedRoutes);
+router.use('/upload', uploadRoutes);
 
 export default router;

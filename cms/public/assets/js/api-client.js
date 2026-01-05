@@ -122,6 +122,13 @@ class APIClient {
   async upload(endpoint, formData) {
     const url = `${this.baseURL}${endpoint}`;
     
+    // Debug: Check if we have the auth cookie
+    console.log('🔐 Upload auth check:', {
+      url,
+      hasCookie: document.cookie.includes('auth_token'),
+      cookies: document.cookie || '(no cookies visible - httpOnly)'
+    });
+    
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -129,8 +136,12 @@ class APIClient {
         credentials: 'include',
       });
 
+      console.log('📥 Upload response status:', response.status);
+
       if (response.status === 401) {
-        // Don't redirect immediately - throw error so caller can handle it
+        // Check if we need to re-authenticate
+        const authCheck = await fetch(`${this.baseURL}/auth/me`, { credentials: 'include' });
+        console.log('🔐 Auth check status:', authCheck.status);
         throw new Error('Unauthorized - Please log in again');
       }
 

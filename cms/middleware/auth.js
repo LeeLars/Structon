@@ -108,11 +108,14 @@ export const generateToken = (userId) => {
  * Set auth cookie
  */
 export const setAuthCookie = (res, token) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  
   res.cookie('auth_token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin in production
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    path: '/'
   });
 };
 

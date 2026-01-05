@@ -95,18 +95,26 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
     console.error('❌ Image upload error:', {
       message: error.message,
       stack: error.stack,
+      name: error.name,
+      code: error.code,
+      http_code: error.http_code,
       cloudinaryConfig: {
         hasCloudName: !!env.cloudinary.cloudName,
         hasApiKey: !!env.cloudinary.apiKey,
-        hasApiSecret: !!env.cloudinary.apiSecret
+        hasApiSecret: !!env.cloudinary.apiSecret,
+        cloudName: env.cloudinary.cloudName ? `${env.cloudinary.cloudName.substring(0, 4)}...` : 'missing'
       }
     });
     
-    // Send user-friendly error
+    // Send detailed error in development, generic in production
+    const isDev = process.env.NODE_ENV !== 'production';
     res.status(500).json({
-      error: error.message.includes('Cloudinary') 
-        ? error.message 
-        : 'Fout bij uploaden van afbeeldingen. Probeer het opnieuw of neem contact op met de beheerder.'
+      error: isDev 
+        ? `Upload error: ${error.message}` 
+        : error.message.includes('Cloudinary') 
+          ? error.message 
+          : 'Fout bij uploaden van afbeeldingen. Probeer het opnieuw of neem contact op met de beheerder.',
+      ...(isDev && { details: error.message, code: error.code })
     });
   }
 });

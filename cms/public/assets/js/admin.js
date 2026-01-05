@@ -182,6 +182,12 @@ async function handleLogin(e) {
       throw new Error('Geen admin rechten');
     }
 
+    // Store token in localStorage for API requests
+    if (data.token) {
+      localStorage.setItem('auth_token', data.token);
+      console.log('✅ Auth token saved to localStorage');
+    }
+
     currentUser = data.user;
     hideLoginModal();
     updateSidebarUser();
@@ -210,6 +216,9 @@ async function handleLogout() {
     console.error('Logout error:', error);
   }
 
+  // Clear token from localStorage
+  localStorage.removeItem('auth_token');
+  
   currentUser = null;
   showLoginModal();
 }

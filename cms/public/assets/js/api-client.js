@@ -24,15 +24,35 @@ class APIClient {
   }
 
   /**
+   * Get auth token from localStorage
+   */
+  getToken() {
+    return localStorage.getItem('auth_token');
+  }
+
+  /**
+   * Set auth token in localStorage
+   */
+  setToken(token) {
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    } else {
+      localStorage.removeItem('auth_token');
+    }
+  }
+
+  /**
    * Make authenticated request
    */
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    const token = this.getToken();
     
     const config = {
       ...options,
       headers: {
         'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
         ...options.headers,
       },
       credentials: 'include', // Include cookies for JWT
@@ -121,27 +141,31 @@ class APIClient {
    */
   async upload(endpoint, formData) {
     const url = `${this.baseURL}${endpoint}`;
+    const token = this.getToken();
     
-    // Debug: Check if we have the auth cookie
     console.log('🔐 Upload auth check:', {
       url,
-      hasCookie: document.cookie.includes('auth_token'),
-      cookies: document.cookie || '(no cookies visible - httpOnly)'
+      hasToken: !!token,
+      tokenPreview: token ? `${token.substring(0, 20)}...` : null
     });
     
     try {
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
       const response = await fetch(url, {
         method: 'POST',
         body: formData, // Don't set Content-Type, browser will set it with boundary
+        headers,
         credentials: 'include',
       });
 
       console.log('📥 Upload response status:', response.status);
 
       if (response.status === 401) {
-        // Check if we need to re-authenticate
-        const authCheck = await fetch(`${this.baseURL}/auth/me`, { credentials: 'include' });
-        console.log('🔐 Auth check status:', authCheck.status);
+        this.setToken(null); // Clear invalid token
         throw new Error('Unauthorized - Please log in again');
       }
 

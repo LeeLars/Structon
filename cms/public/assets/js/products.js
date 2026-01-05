@@ -510,32 +510,35 @@ async function handleProductSubmit(e) {
     cloudinary_images: uploadedImages
   };
   
-  // Try API first, fallback to local storage
+  // Save to API
   try {
+    console.log('💾 Saving product to API:', productData);
+    
+    let savedProduct;
     if (productId) {
-      await api.put(`/admin/products/${productId}`, productData);
+      savedProduct = await api.put(`/admin/products/${productId}`, productData);
+      console.log('✅ Product updated:', savedProduct);
+      showToast('Product bijgewerkt', 'success');
     } else {
-      await api.post('/admin/products', productData);
+      savedProduct = await api.post('/admin/products', productData);
+      console.log('✅ Product created:', savedProduct);
+      showToast('Product toegevoegd', 'success');
     }
+    
+    // Reload products from API to ensure we have the latest data
+    await initializeData();
+    closeProductModal();
+    
   } catch (error) {
-    console.log('API unavailable, saving locally');
-  }
-  
-  // Update local data regardless of API success
-  if (productId) {
-    const index = products.findIndex(p => p.id === productId);
-    if (index !== -1) {
-      products[index] = { ...products[index], ...productData };
+    console.error('❌ Failed to save product:', error);
+    
+    if (error.message.includes('Unauthorized')) {
+      showToast('Sessie verlopen - log opnieuw in', 'error');
+      setTimeout(() => window.location.href = '/cms/', 2000);
+    } else {
+      showToast(`Fout bij opslaan: ${error.message}`, 'error');
     }
-    showToast('Product bijgewerkt', 'success');
-  } else {
-    products.unshift(productData);
-    showToast('Product toegevoegd', 'success');
   }
-  
-  filteredProducts = [...products];
-  closeProductModal();
-  renderProducts();
 }
 
 /**

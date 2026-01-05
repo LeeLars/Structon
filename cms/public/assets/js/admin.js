@@ -101,8 +101,12 @@ function hidePageLoading() {
  */
 async function checkAuth() {
   try {
+    // Get token from localStorage
+    const token = localStorage.getItem('auth_token');
+    
     const response = await fetch(`${API_BASE}/auth/me`, {
-      credentials: 'include'
+      credentials: 'include',
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     });
 
     if (!response.ok) {

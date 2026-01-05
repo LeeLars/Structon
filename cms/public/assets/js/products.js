@@ -500,14 +500,22 @@ function populateForm(product) {
  * Handle product form submit
  */
 async function handleProductSubmit(e) {
+  console.log('🚀 handleProductSubmit called');
+  
+  // Prevent form from submitting normally
   e.preventDefault();
+  e.stopPropagation();
   
   const form = e.target;
   const productId = form.dataset.productId;
   
+  console.log('📝 Form data:', { productId, formExists: !!form });
+  
   // Get selected tonnage values
   const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]:checked');
   const selectedTonnage = Array.from(tonnageCheckboxes).map(cb => cb.value);
+  
+  console.log('📊 Selected tonnage:', selectedTonnage);
   
   if (selectedTonnage.length === 0) {
     showToast('Selecteer minimaal één tonnage', 'error');
@@ -598,10 +606,16 @@ async function handleProductSubmit(e) {
     
   } catch (error) {
     console.error('❌ Failed to save product:', error);
+    console.error('❌ Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
     
     if (error.message.includes('Unauthorized')) {
-      showToast('Sessie verlopen - log opnieuw in', 'error');
-      setTimeout(() => window.location.href = '/cms/', 2000);
+      showToast('Sessie verlopen - log opnieuw in en probeer opnieuw', 'error');
+      // Don't redirect - let user see the error and manually re-login
+      console.log('💡 Tip: Ga naar /cms/ en log opnieuw in om een nieuw token te krijgen');
     } else if (error.message.includes('slug already exists')) {
       showToast('Een product met deze slug bestaat al. Kies een andere titel.', 'error');
     } else if (error.message.includes('Title is required')) {

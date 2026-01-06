@@ -73,8 +73,9 @@ function parseUrlParams() {
 }
 
 /**
- * Convert tonnage ID to excavator weight value
- * Examples: '1t-2-5t' -> 1500, '5t-10t' -> 7500
+ * Convert tonnage ID to excavator weight value (in TONS, matching database)
+ * Examples: '1t-2-5t' -> 1.75, '5t-10t' -> 7.5
+ * Database stores values in tons (e.g., 3.00, 8.00)
  */
 function parseTonnageToWeight(tonnageId) {
   // Extract numbers from tonnage ID
@@ -83,7 +84,7 @@ function parseTonnageToWeight(tonnageId) {
   // Format: '25t-plus' means 25+ ton
   
   if (tonnageId === '25t-plus') {
-    return 25000; // 25 ton and up
+    return 25; // 25 ton and up (in tons)
   }
   
   // Extract first number (minimum weight)
@@ -96,18 +97,18 @@ function parseTonnageToWeight(tonnageId) {
     if (decimalMatch) {
       // e.g., '1t-2-5t' -> use middle value 1.75 ton
       const maxTon = parseFloat(`${decimalMatch[2]}.${decimalMatch[3]}`);
-      return Math.round((minTon + maxTon) / 2 * 1000); // Convert to kg
+      return (minTon + maxTon) / 2; // Return in tons
     }
     
     // Check for range (e.g., '5t-10t')
     const rangeMatch = tonnageId.match(/(\d+)t-(\d+)t/);
     if (rangeMatch) {
       const maxTon = parseInt(rangeMatch[2]);
-      return Math.round((minTon + maxTon) / 2 * 1000); // Use middle value in kg
+      return (minTon + maxTon) / 2; // Use middle value in tons
     }
     
     // Single value
-    return minTon * 1000; // Convert to kg
+    return minTon; // Return in tons
   }
   
   return null;
@@ -136,11 +137,11 @@ function setupFilterListeners() {
     volumeMax.addEventListener('change', applyFilters);
   }
 
-  // Excavator class checkboxes
+  // Excavator class checkboxes (values are in tons as floats)
   const excavatorFilters = document.querySelectorAll('input[name="excavator"]');
   excavatorFilters.forEach(checkbox => {
     checkbox.addEventListener('change', (e) => {
-      updateCheckboxFilter('excavator_weight', e.target.value, e.target.checked);
+      updateCheckboxFilter('excavator_weight', parseFloat(e.target.value), e.target.checked);
     });
   });
 

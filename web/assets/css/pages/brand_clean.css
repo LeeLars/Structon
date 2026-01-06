@@ -207,8 +207,8 @@ main[data-brand] {
 }
 
 .model-btn:hover, .model-btn.active {
-  border-color: var(--color-gray-900);
-  background: var(--color-gray-900);
+  border-color: var(--color-primary);
+  background: var(--color-primary);
   color: white;
 }
 

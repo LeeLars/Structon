@@ -472,8 +472,11 @@ function populateForm(product) {
   tonnageCheckboxes.forEach(cb => cb.checked = false);
   
   if (product.excavator_weight_min && product.excavator_weight_max) {
-    const min = product.excavator_weight_min;
-    const max = product.excavator_weight_max;
+    // Parse to float to handle both string and number values from DB
+    const min = parseFloat(product.excavator_weight_min);
+    const max = parseFloat(product.excavator_weight_max);
+    
+    console.log('📊 Setting tonnage for:', { min, max });
     
     // Match to tonnage range
     if (min === 1.5 && max === 3) {
@@ -569,14 +572,20 @@ async function handleProductSubmit(e) {
   
   // Save to API
   try {
-    console.log('💾 Saving product to API:', productData);
+    console.log('💾 Saving product to API:');
+    console.log('  - Product ID:', productId);
+    console.log('  - Data:', productData);
     
     let savedProduct;
     if (productId) {
+      console.log(`📤 PATCH /admin/products/${productId}`);
       savedProduct = await auth.patch(`/admin/products/${productId}`, productData);
-      console.log('✅ Product updated:', savedProduct);
+      console.log('✅ Product updated successfully');
+      console.log('  - New stock:', savedProduct.product?.stock_quantity);
+      console.log('  - Full response:', savedProduct);
       showToast('Product bijgewerkt', 'success');
     } else {
+      console.log('📤 POST /admin/products');
       savedProduct = await auth.post('/admin/products', productData);
       console.log('✅ Product created:', savedProduct);
       showToast('Product toegevoegd', 'success');
@@ -596,10 +605,17 @@ async function handleProductSubmit(e) {
     
   } catch (error) {
     console.error('❌ Failed to save product:', error);
+    console.error('  - Error details:', {
+      message: error.message,
+      stack: error.stack
+    });
     
     if (error.message.includes('Session expired') || error.message.includes('Not authenticated')) {
       showToast('Sessie verlopen. Je wordt uitgelogd...', 'error');
       setTimeout(() => auth.logout(), 2000);
+    } else if (error.message.includes('Product not found')) {
+      showToast('Product niet gevonden. Refresh de pagina en probeer opnieuw.', 'error');
+      setTimeout(() => window.location.reload(), 2000);
     } else if (error.message.includes('slug already exists')) {
       showToast('Een product met deze slug bestaat al. Kies een andere titel.', 'error');
     } else if (error.message.includes('Title is required')) {

@@ -9,14 +9,22 @@
   cursor: pointer;
 }
 
+/* Keep menu open when moving mouse to dropdown */
+.menu-item:hover .menu-dropdown,
+.menu-dropdown:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* Mega Menu Dropdown Container */
 .menu-dropdown {
   position: fixed;
   top: 130px; /* Height of header (top bar + main nav) */
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  width: 95vw;
-  max-width: 1200px;
+  width: 99vw;
+  max-width: 100%;
   background: white;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   border-top: 3px solid var(--color-primary);
@@ -26,10 +34,13 @@
   z-index: 1000;
 }
 
+/* Delay before hiding menu - gives user time to move mouse */
+.menu-dropdown {
+  transition: opacity 0.3s ease 0.1s, visibility 0.3s ease 0.1s, transform 0.3s ease;
+}
+
 .menu-item:hover .menu-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  transition-delay: 0s; /* Show immediately on hover */
 }
 
 /* Hover state already defined above */
@@ -58,25 +69,24 @@
 }
 
 .menu-dropdown-view-all {
-  color: #2C5F6F;
+  display: inline-block;
+  background-color: var(--color-primary, #236773);
+  color: white;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: 0.2s;
-  opacity: 0.8;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: background-color 0.2s ease;
 }
 
 .menu-dropdown-view-all:hover {
-  opacity: 1;
-  gap: 10px;
+  background-color: var(--color-primary-dark, #1a4f59);
 }
 
+.menu-dropdown-view-all span:last-child,
 .menu-dropdown-view-all svg {
-  width: 18px;
-  height: 18px;
+  display: none; /* Hide arrow icon - clean rounded button style */
 }
 
 /* Grid Layout */

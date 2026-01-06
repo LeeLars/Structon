@@ -1,0 +1,673 @@
+/* ============================================
+   INDUSTRY LANDING PAGE STYLES (Clean, Integrated Design)
+   Gebaseerd op brand_clean.css maar aangepast voor industrie pagina's
+   ============================================ */
+
+/* Global Industry Page Settings */
+main[data-industry] {
+  background-color: white;
+}
+
+.section-clean {
+  padding: var(--space-12) 0;
+  position: relative;
+}
+
+.section-white {
+  background-color: white;
+}
+
+.section-gray {
+  background-color: #F9FAFB;
+}
+
+/* Typography Overrides */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.industry-hero-clean {
+  background: white;
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.industry-hero-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.industry-hero-content {
+  padding-right: var(--space-8);
+}
+
+.industry-breadcrumbs {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-gray-500);
+}
+
+.industry-breadcrumbs a {
+  color: var(--color-gray-500);
+  text-decoration: none;
+}
+
+.industry-breadcrumbs a:hover {
+  color: var(--color-primary);
+}
+
+.industry-title-large {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-primary);
+  margin-bottom: var(--space-6);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.industry-description {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--color-gray-600);
+  max-width: 640px;
+}
+
+.industry-hero-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.industry-hero-icon {
+  width: 120px;
+  height: 120px;
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+@media (max-width: 992px) {
+  .industry-hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  
+  .industry-hero-content {
+    padding-right: 0;
+  }
+  
+  .industry-hero-icon-wrapper {
+    display: none;
+  }
+}
+
+/* ============================================
+   CTA BANNER
+   ============================================ */
+.industry-cta-banner {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: var(--space-8) 0;
+  margin: var(--space-8) 0;
+}
+
+.industry-cta-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.industry-cta-text {
+  flex: 1;
+}
+
+.industry-cta-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.industry-cta-subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+.industry-cta-button {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .industry-cta-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ============================================
+   TONNAGE FILTER SECTION
+   ============================================ */
+.tonnage-filter-section {
+  padding: var(--space-12) 0;
+  background: white;
+}
+
+.tonnage-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.tonnage-filter-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  text-transform: uppercase;
+}
+
+.tonnage-filter-clear {
+  background: transparent;
+  border: 1px solid var(--color-gray-300);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.tonnage-filter-clear:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.tonnage-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.tonnage-filter {
+  position: relative;
+}
+
+.tonnage-filter input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tonnage-filter label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.tonnage-filter label:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.tonnage-filter input:checked + label {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.tonnage-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.tonnage-filter input:checked + label .tonnage-checkbox {
+  background: white;
+  border-color: white;
+}
+
+.tonnage-filter input:checked + label .tonnage-checkbox::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tonnage-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.tonnage-range {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.tonnage-count {
+  font-size: var(--text-sm);
+  opacity: 0.8;
+}
+
+.tonnage-filter input:checked + label .tonnage-range,
+.tonnage-filter input:checked + label .tonnage-count {
+  color: white;
+}
+
+/* ============================================
+   BUCKET TYPE FILTER SECTION
+   ============================================ */
+.bucket-type-filter-section {
+  padding: var(--space-8) 0;
+  background: var(--color-gray-50);
+  border-top: 1px solid var(--color-gray-100);
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.bucket-type-filter-header {
+  margin-bottom: var(--space-6);
+}
+
+.bucket-type-filter-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  text-transform: uppercase;
+}
+
+.bucket-type-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+
+.bucket-type-filter {
+  position: relative;
+}
+
+.bucket-type-filter input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bucket-type-filter label {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  background: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.bucket-type-filter label:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.bucket-type-filter input:checked + label {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+/* ============================================
+   CATEGORY TABS
+   ============================================ */
+.category-tabs-section {
+  padding: var(--space-8) 0;
+  background: white;
+}
+
+.category-tabs {
+  display: flex;
+  gap: var(--space-2);
+  border-bottom: 2px solid var(--color-gray-100);
+}
+
+.category-tab {
+  padding: var(--space-4) var(--space-6);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  bottom: -2px;
+}
+
+.category-tab:hover {
+  color: var(--color-primary);
+}
+
+.category-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.category-tab-count {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 2px 8px;
+  background: var(--color-gray-100);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.category-tab.active .category-tab-count {
+  background: var(--color-primary);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .category-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .category-tab {
+    white-space: nowrap;
+  }
+}
+
+/* ============================================
+   PRODUCTS SECTION
+   ============================================ */
+.industry-products-section {
+  padding: var(--space-12) 0;
+  background: white;
+}
+
+.category-intro {
+  margin-bottom: var(--space-8);
+  padding: var(--space-6);
+  background: var(--color-gray-50);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+}
+
+.category-intro-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+
+.category-intro-text {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-gray-600);
+}
+
+.industry-products-header {
+  margin-bottom: var(--space-8);
+}
+
+.industry-products-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+
+.industry-products-count {
+  font-size: var(--text-lg);
+  color: var(--color-gray-600);
+}
+
+.industry-products-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+/* ============================================
+   BENEFITS SECTION
+   ============================================ */
+.industry-benefits {
+  padding: var(--space-16) 0;
+  background: var(--color-gray-50);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+.benefit-card {
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.benefit-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-4);
+  color: var(--color-primary);
+  stroke-width: 1.5;
+}
+
+.benefit-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+
+.benefit-text {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-gray-600);
+}
+
+/* ============================================
+   SEO CONTENT SECTION
+   ============================================ */
+.industry-seo-content {
+  padding: var(--space-16) 0;
+  background: white;
+}
+
+.industry-seo-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-12);
+}
+
+.industry-seo-main h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-4);
+  text-transform: uppercase;
+}
+
+.industry-seo-main h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+
+.industry-seo-main p {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-4);
+}
+
+.industry-seo-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.industry-contact-card,
+.industry-related-card {
+  padding: var(--space-6);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-100);
+}
+
+.industry-contact-card h4,
+.industry-related-card h4 {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-4);
+  text-transform: uppercase;
+}
+
+.industry-contact-card p {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-4);
+}
+
+.industry-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.industry-contact-info a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.industry-contact-info a:hover {
+  color: var(--color-primary-dark);
+}
+
+.industry-related-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.industry-related-links a {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-gray-700);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.industry-related-links a:hover {
+  background: white;
+  color: var(--color-primary);
+}
+
+@media (max-width: 992px) {
+  .industry-seo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   CTA SECTION (Footer)
+   ============================================ */
+.industry-cta-section {
+  padding: var(--space-16) 0;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+}
+
+.cta-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--space-4);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.cta-text {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-8);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+  .tonnage-filter-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bucket-type-filter-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .industry-products-list {
+    grid-template-columns: 1fr;
+  }
+}

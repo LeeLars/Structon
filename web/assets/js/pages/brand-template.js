@@ -20,12 +20,23 @@ function getBrandSlug() {
 export function initBrandTemplate() {
   const brandSlug = getBrandSlug();
   
+  console.log('🔍 Brand slug from URL:', brandSlug);
+  console.log('📦 Available brands:', Object.keys(BRAND_DATA));
+  
   if (!brandSlug || !BRAND_DATA[brandSlug]) {
-    console.error('Brand not found:', brandSlug);
+    console.error('❌ Brand not found:', brandSlug);
+    console.error('Available brands:', Object.keys(BRAND_DATA));
     return;
   }
 
   const brandData = BRAND_DATA[brandSlug];
+  
+  console.log('✅ Loading brand data for:', brandData.name);
+  console.log('📊 Brand data:', {
+    name: brandData.name,
+    title: brandData.title,
+    modelCount: brandData.modelCategories?.length || 0
+  });
   
   // Update page metadata
   updateMetadata(brandData);

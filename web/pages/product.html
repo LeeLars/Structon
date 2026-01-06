@@ -12,6 +12,7 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="../assets/css/global.css?v=6">
+  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
   <link rel="stylesheet" href="../assets/css/pages/product.css">
   
   <!-- Favicon -->
@@ -19,74 +20,9 @@
 </head>
 <body>
   <!-- Header Wrapper (Sticky) -->
-  <div class="header-wrapper" id="header-wrapper">
-    <!-- Top bar -->
-    <div class="top-bar">
-    <div class="container">
-      <nav class="top-nav">
-        <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
-        <a href="over-ons.html">Over</a>
-        <a href="dealer.html">Dealer worden</a>
-        <a href="blog.html">Blog</a>
-        <a href="faq.html">FAQ</a>
-        <a href="configurator.html">Configurator</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </div>
-
-  <!-- Main navigation -->
-  <nav class="main-nav">
-    <div class="container">
-      <a href="../index.html" class="logo">
-        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
-      </a>
-      
-      <div class="menu">
-        <a href="category.html?cat=graafbakken" class="menu-item">
-          Graafbakken <span class="dropdown-arrow">▼</span>
-        </a>
-        <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">
-          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
-        </a>
-        <a href="category.html?cat=adapters" class="menu-item">
-          Adapterstukken <span class="dropdown-arrow">▼</span>
-        </a>
-        <a href="category.html?cat=overige" class="menu-item">
-          Overige <span class="dropdown-arrow">▼</span>
-        </a>
-      </div>
-      
-      <div class="nav-actions">
-        <a href="all-products.html" class="cta-button">Bekijk alles</a>
-      </div>
-      
-      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-  </div><!-- End Header Wrapper -->
-
-  <!-- Mobile Navigation -->
-  <nav class="nav-mobile" id="nav-mobile">
-    <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
-    <a href="../index.html" class="nav-link">Home</a>
-    <a href="all-products.html" class="nav-link">Alle Producten</a>
-    <a href="category.html?cat=graafbakken" class="nav-link">Graafbakken</a>
-    <a href="category.html?cat=slotenbakken" class="nav-link">Slotenbakken</a>
-    <a href="category.html?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
-    <a href="category.html?cat=adapters" class="nav-link">Adapterstukken</a>
-    <a href="blog.html" class="nav-link">Blog</a>
-    <hr>
-    <a href="over-ons.html" class="nav-link">Over ons</a>
-    <a href="contact.html" class="nav-link">Contact</a>
-    <a href="login.html" class="btn btn-primary">Inloggen</a>
-  </nav>
-
-  <main>
+  <!-- Header loaded dynamically -->
+  <div id="header-placeholder"></div>
+<main>
     <!-- Breadcrumb -->
     <section class="page-header">
       <div class="container">
@@ -273,6 +209,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="../assets/js/components/header-loader.js"></script>
   <script type="module" src="../assets/js/main.js"></script>
   <script type="module" src="../assets/js/pages/product.js"></script>
   <script src="../assets/js/components/login-modal.js"></script>

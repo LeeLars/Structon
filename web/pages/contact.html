@@ -12,6 +12,7 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="../assets/css/global.css?v=8">
+  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
   <link rel="stylesheet" href="../assets/css/pages/contact.css">
   
   <!-- Favicon -->
@@ -19,57 +20,10 @@
 </head>
 <body>
   <!-- Header Wrapper (Sticky) -->
-  <div class="header-wrapper" id="header-wrapper">
-    <!-- Top bar -->
-    <div class="top-bar">
-    <div class="container">
-      <nav class="top-nav">
-        <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
-        <a href="over-ons.html">Over</a>
-        <a href="dealer.html">Dealer worden</a>
-        <a href="blog.html">Blog</a>
-        <a href="faq.html">FAQ</a>
-        <a href="configurator.html">Configurator</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </div>
+  <!-- Header loaded dynamically -->
+  <div id="header-placeholder"></div>
 
-  <!-- Main navigation -->
-  <nav class="main-nav">
-    <div class="container">
-      <a href="../index.html" class="logo">
-        <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
-      </a>
-      
-      <div class="menu">
-        <a href="category.html?cat=graafbakken" class="menu-item">
-          Graafbakken <span class="dropdown-arrow">▼</span>
-        </a>
-        <a href="category.html?cat=sloop-sorteergrijpers" class="menu-item">
-          Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
-        </a>
-        <a href="category.html?cat=adapters" class="menu-item">
-          Adapterstukken <span class="dropdown-arrow">▼</span>
-        </a>
-        <a href="category.html?cat=overige" class="menu-item">
-          Overige <span class="dropdown-arrow">▼</span>
-        </a>
-      </div>
-      
-      <div class="nav-actions">
-        <a href="all-products.html" class="cta-button">Bekijk alles</a>
-      </div>
-      
-      <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-
-  <main class="contact-page">
+<main class="contact-page">
     <div class="container">
       <!-- Page Header -->
       <div class="contact-header">

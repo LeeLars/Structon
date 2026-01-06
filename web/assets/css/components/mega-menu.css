@@ -11,8 +11,8 @@
 
 /* Mega Menu Dropdown Container */
 .menu-dropdown {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 130px; /* Height of header (top bar + main nav) */
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
   width: 95vw;
@@ -22,7 +22,7 @@
   border-top: 3px solid var(--color-primary);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 1000;
 }
 

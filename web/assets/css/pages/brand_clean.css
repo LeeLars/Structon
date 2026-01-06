@@ -1,10 +1,10 @@
 /* ============================================
-   BRAND LANDING PAGE STYLES (Clean Design)
+   BRAND LANDING PAGE STYLES (Clean, Integrated Design)
    ============================================ */
 
 /* Global Brand Page Settings */
 main[data-brand] {
-  background-color: #F9FAFB; /* Zeer licht grijs als basis */
+  background-color: white;
 }
 
 .section-clean {
@@ -466,4 +466,34 @@ main[data-brand] {
 .btn-white:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ============================================
+   BRAND LINKS (Other Brands Section)
+   ============================================ */
+.brand-links-small {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.brand-links-small a {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.brand-links-small a:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
 }

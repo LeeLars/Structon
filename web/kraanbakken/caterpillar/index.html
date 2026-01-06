@@ -363,6 +363,13 @@
   <script type="module" src="../../assets/js/main.js"></script>
   <script type="module" src="../../assets/js/pages/home.js"></script>
   <script type="module" src="../../assets/js/pages/brand.js"></script>
+  <script type="module">
+    import { initBrandTemplate } from '../../assets/js/pages/brand-template.js';
+    // Initialize brand template on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      initBrandTemplate();
+    });
+  </script>
   <script src="../../assets/js/components/login-modal.js"></script>
 </body>
 </html>

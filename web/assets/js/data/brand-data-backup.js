@@ -158,6 +158,7 @@ export const BRAND_DATA = {
     ctaText: 'Neem contact op voor advies of een vrijblijvende offerte.'
   },
 
+  // Placeholder data voor andere merken - deze kunnen later worden uitgebreid
   komatsu: {
     name: 'Komatsu',
     slug: 'komatsu',
@@ -165,71 +166,13 @@ export const BRAND_DATA = {
     title: 'Kraanbak voor Komatsu',
     metaTitle: 'Kraanbak voor Komatsu | Graafbakken Komatsu Graafmachine | Structon',
     metaDescription: 'Kraanbak voor Komatsu graafmachine? Structon levert graafbakken passend voor alle Komatsu PC modellen. ✓ CW-aansluiting ✓ Hardox staal',
-    metaKeywords: 'kraanbak komatsu, graafbak komatsu, PC200, PC300, slotenbak komatsu',
-    heroDescription: 'Structon levert hoogwaardige kraanbakken passend voor alle Komatsu graafmachines. Van compacte PC30 tot zware PC490. Japanse precisie met Intelligent Machine Control.',
+    metaKeywords: 'kraanbak komatsu, graafbak komatsu, PC200, PC300',
+    heroDescription: 'Structon levert hoogwaardige kraanbakken passend voor alle Komatsu graafmachines. Van compacte PC30 tot zware PC490.',
     heroImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop',
     modelSelectorTitle: 'Zoek op Komatsu Model',
-    modelSelectorSubtitle: 'PC-serie graafmachines met iMC technologie',
-    modelCategories: [
-      {
-        title: 'Minigravers (< 10 ton)',
-        subtitle: 'CW05 - CW10 snelwissels',
-        models: [
-          { name: 'PC18MR', tonnage: 1.8, cw: 'CW05' },
-          { name: 'PC26MR', tonnage: 2.7, cw: 'CW05' },
-          { name: 'PC30MR', tonnage: 3.2, cw: 'CW05' },
-          { name: 'PC55MR', tonnage: 5.5, cw: 'CW10' },
-          { name: 'PC88MR', tonnage: 8.5, cw: 'CW10' }
-        ]
-      },
-      {
-        title: 'Middenklasse (10-30 ton)',
-        subtitle: 'CW20 - CW40 snelwissels',
-        models: [
-          { name: 'PC138US', tonnage: 14, cw: 'CW20' },
-          { name: 'PC170LC', tonnage: 17, cw: 'CW30' },
-          { name: 'PC210LC', tonnage: 22, cw: 'CW40' },
-          { name: 'PC240LC', tonnage: 24, cw: 'CW40' }
-        ]
-      },
-      {
-        title: 'Zware Klasse (> 30 ton)',
-        subtitle: 'CW40 - CW70 snelwissels',
-        models: [
-          { name: 'PC290LC', tonnage: 29, cw: 'CW40' },
-          { name: 'PC360LC', tonnage: 36, cw: 'CW45' },
-          { name: 'PC490LC', tonnage: 49, cw: 'CW55' }
-        ]
-      }
-    ],
-    seoContent: {
-      cwTable: {
-        title: 'Welke CW-Aansluiting voor Komatsu?',
-        description: 'Komatsu PC-serie graafmachines met Intelligent Machine Control (iMC) en KOMTRAX telematica. Japanse precisie, sterk in grondverzet.',
-        rows: [
-          { model: 'PC18MR', weight: '1,8 ton', cw: 'CW05', type: 'Rups' },
-          { model: 'PC26MR', weight: '2,7 ton', cw: 'CW05', type: 'Rups' },
-          { model: 'PC30MR', weight: '3,2 ton', cw: 'CW05', type: 'Rups' },
-          { model: 'PC55MR', weight: '5,5 ton', cw: 'CW10', type: 'Rups' },
-          { model: 'PC88MR', weight: '8,5 ton', cw: 'CW10', type: 'Rups' },
-          { model: 'PC138US', weight: '14 ton', cw: 'CW20', type: 'Rups' },
-          { model: 'PC170LC', weight: '17 ton', cw: 'CW30', type: 'Rups' },
-          { model: 'PC210LC', weight: '22 ton', cw: 'CW40', type: 'Rups' },
-          { model: 'PC290LC', weight: '29 ton', cw: 'CW40', type: 'Rups' },
-          { model: 'PC360LC', weight: '36 ton', cw: 'CW45', type: 'Rups' },
-          { model: 'PC490LC', weight: '49 ton', cw: 'CW55', type: 'Rups' }
-        ]
-      },
-      whyStructon: {
-        title: 'Waarom Structon voor Komatsu?',
-        items: [
-          { title: 'Perfecte pasvorm', description: 'Ontworpen voor optimale prestaties met Komatsu PC-serie' },
-          { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
-          { title: 'Snelle levering', description: 'Grote voorraad, direct leverbaar uit België' },
-          { title: 'Maatwerk', description: 'Speciale afmetingen op aanvraag mogelijk' }
-        ]
-      }
-    },
+    modelSelectorSubtitle: 'PC-serie graafmachines',
+    modelCategories: [],
+    seoContent: { cwTable: { title: 'CW-Aansluitingen', description: '', rows: [] }, whyStructon: { title: 'Waarom Structon?', items: [] } },
     ctaTitle: 'Kraanbak voor Jouw Komatsu Nodig?',
     ctaText: 'Neem contact op voor advies of een vrijblijvende offerte.'
   },
@@ -320,26 +263,12 @@ export const BRAND_DATA = {
   }
 };
 
-// Basis data voor overige merken (kunnen later worden uitgebreid)
+// Helper functie om andere merken te genereren met basis data
 const otherBrands = ['liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'doosan', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
 
 otherBrands.forEach(brand => {
   if (!BRAND_DATA[brand]) {
     const brandName = brand.charAt(0).toUpperCase() + brand.slice(1).replace('-', ' ');
-    const brandDescriptions = {
-      'liebherr': 'Duitse ingenieurskunst sinds 1949. R-serie rupskranen, A-serie wielgravers. Let op: zwaardere stick-afmetingen.',
-      'jcb': 'Brits no-nonsense. JS-serie rupskranen, Hydradig 110W innovatief concept. Eenvoudig onderhoud, sterke prijs/kwaliteit.',
-      'kubota': 'Japanse mini-specialist, KX/U-serie. Compact, betrouwbaar, ideaal voor tuinaanleg en kleine werven.',
-      'takeuchi': 'Japanse compacte specialist, TB-serie. Robuust, eenvoudig, sterke restwaarde. Favoriet in verhuur.',
-      'yanmar': 'Japanse dieselmotor-expertise. ViO-serie met zero tail swing. Populair bij verhuurders en tuinaanleggers.',
-      'doosan': 'Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
-      'case': 'Amerikaans merk (CNH Industrial). CX-serie rupskranen. Solide machines, goede prijs/prestatie.',
-      'hyundai': 'HX/HW-serie, focus op 4 pijlers: onderhoud, comfort, veiligheid, productiviteit. Hi MATE telematica.',
-      'kobelco': 'Japanse specialist, SK-serie. Bekend om zuinigheid en reduced tail swing modellen. Sterk in stedelijke projecten.',
-      'sany': 'Chinese fabrikant, snelgroeiend in Europa. SY-serie. Competitieve prijs, moderne technologie.',
-      'wacker-neuson': 'Duits/Oostenrijks, compact materieel specialist. ET/EW-serie mini\'s. Dual View cabine, zero tail swing.'
-    };
-    
     BRAND_DATA[brand] = {
       name: brandName,
       slug: brand,
@@ -348,19 +277,15 @@ otherBrands.forEach(brand => {
       metaTitle: `Kraanbak voor ${brandName} | Graafbakken ${brandName} Graafmachine | Structon`,
       metaDescription: `Kraanbak voor ${brandName} graafmachine? Structon levert graafbakken passend voor alle ${brandName} modellen. ✓ CW-aansluiting ✓ Hardox staal`,
       metaKeywords: `kraanbak ${brand}, graafbak ${brand}`,
-      heroDescription: `Structon levert hoogwaardige kraanbakken passend voor alle ${brandName} graafmachines. ${brandDescriptions[brand] || ''}`,
+      heroDescription: `Structon levert hoogwaardige kraanbakken passend voor alle ${brandName} graafmachines.`,
       heroImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop',
       modelSelectorTitle: `Zoek op ${brandName} Model`,
       modelSelectorSubtitle: 'Klik op jouw machinemodel voor passende producten',
       modelCategories: [],
       seoContent: {
-        cwTable: { 
-          title: `Welke CW-Aansluiting voor ${brandName}?`, 
-          description: brandDescriptions[brand] || `${brandName} graafmachines met verschillende CW-aansluitingen.`, 
-          rows: [] 
-        },
+        cwTable: { title: 'CW-Aansluitingen', description: '', rows: [] },
         whyStructon: {
-          title: `Waarom Structon voor ${brandName}?`,
+          title: 'Waarom Structon?',
           items: [
             { title: 'Perfecte pasvorm', description: `Ontworpen voor optimale prestaties met ${brandName} machines` },
             { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },

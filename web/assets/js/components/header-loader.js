@@ -14,7 +14,7 @@
     const path = window.location.pathname;
     
     // Root-level folders that need '../' to get back to site root
-    const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina'];
+    const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina', 'account'];
     
     // Check for root-level folders FIRST (works for both local and GitHub Pages)
     // This handles /producten/, /over-ons/, /Structon/producten/, etc.

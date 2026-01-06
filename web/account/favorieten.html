@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bekijk uw favoriete producten.">
+  <title>Mijn Favorieten | Structon</title>
+  
+  <link rel="preload" href="../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="stylesheet" href="../assets/css/global.css?v=8">
+  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../assets/css/pages/account.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboard-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="user-avatar">?</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="user-name">Laden...</div>
+            <div class="sidebar-user-email" id="user-email"></div>
+          </div>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Dashboard</div>
+          <a href="index.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Overzicht
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Producten</div>
+          <a href="favorieten.html" class="sidebar-nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            Favorieten
+          </a>
+          <a href="../producten/" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            Catalogus
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Aanvragen</div>
+          <a href="offertes.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Offertes
+          </a>
+          <a href="bestellingen.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            Bestellingen
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Communicatie</div>
+          <a href="berichten.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Berichten
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Account</div>
+          <a href="instellingen.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Instellingen
+          </a>
+          <a href="#" class="sidebar-nav-item" id="logout-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Uitloggen
+          </a>
+        </div>
+      </nav>
+    </aside>
+    
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    
+    <main class="dashboard-content">
+      <div class="dashboard-header">
+        <div class="dashboard-breadcrumb">
+          <a href="../">Home</a>
+          <span>/</span>
+          <a href="index.html">Mijn Account</a>
+          <span>/</span>
+          <span>Favorieten</span>
+        </div>
+        <h1 class="dashboard-title">MIJN FAVORIETEN</h1>
+        <p class="dashboard-subtitle">Uw opgeslagen producten voor snelle toegang</p>
+      </div>
+      
+      <div class="favorites-grid" id="favorites-grid">
+        <!-- Favorites loaded dynamically -->
+      </div>
+      
+      <div class="empty-state" id="favorites-empty" style="display: none;">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+        <div class="empty-state-title">Geen favorieten</div>
+        <div class="empty-state-text">U heeft nog geen producten aan uw favorieten toegevoegd. Bekijk onze catalogus en klik op het hartje om producten op te slaan.</div>
+        <a href="../producten/" class="btn-dashboard btn-dashboard-primary">Bekijk producten</a>
+      </div>
+    </main>
+  </div>
+  
+  <button class="sidebar-toggle" id="sidebar-toggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <script src="../assets/js/components/header-loader.js"></script>
+  <script type="module" src="../assets/js/pages/account-favorites.js"></script>
+  <script src="../assets/js/components/login-modal.js?v=2"></script>
+</body>
+</html>

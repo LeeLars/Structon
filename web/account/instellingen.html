@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Beheer uw accountinstellingen en bedrijfsgegevens.">
+  <title>Instellingen | Structon</title>
+  
+  <link rel="preload" href="../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="stylesheet" href="../assets/css/global.css?v=8">
+  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../assets/css/pages/account.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar" id="dashboard-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="user-avatar">?</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="user-name">Laden...</div>
+            <div class="sidebar-user-email" id="user-email"></div>
+          </div>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Dashboard</div>
+          <a href="index.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Overzicht
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Producten</div>
+          <a href="favorieten.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            Favorieten
+          </a>
+          <a href="../producten/" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            Catalogus
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Aanvragen</div>
+          <a href="offertes.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Offertes
+          </a>
+          <a href="bestellingen.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            Bestellingen
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Communicatie</div>
+          <a href="berichten.html" class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Berichten
+          </a>
+        </div>
+        
+        <div class="sidebar-nav-section">
+          <div class="sidebar-nav-title">Account</div>
+          <a href="instellingen.html" class="sidebar-nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Instellingen
+          </a>
+          <a href="#" class="sidebar-nav-item" id="logout-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Uitloggen
+          </a>
+        </div>
+      </nav>
+    </aside>
+    
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    
+    <main class="dashboard-content">
+      <div class="dashboard-header">
+        <div class="dashboard-breadcrumb">
+          <a href="../">Home</a>
+          <span>/</span>
+          <a href="index.html">Mijn Account</a>
+          <span>/</span>
+          <span>Instellingen</span>
+        </div>
+        <h1 class="dashboard-title">ACCOUNT INSTELLINGEN</h1>
+        <p class="dashboard-subtitle">Beheer uw profiel en bedrijfsgegevens</p>
+      </div>
+      
+      <!-- Settings Tabs -->
+      <div class="settings-tabs" style="display: flex; gap: 0; margin-bottom: 32px; border-bottom: 1px solid #e5e7eb;">
+        <button class="settings-tab active" data-tab="profile">Profiel</button>
+        <button class="settings-tab" data-tab="company">Bedrijfsgegevens</button>
+        <button class="settings-tab" data-tab="security">Beveiliging</button>
+        <button class="settings-tab" data-tab="notifications">Notificaties</button>
+      </div>
+      
+      <style>
+        .settings-tab {
+          padding: 16px 24px;
+          border: none;
+          background: none;
+          font-size: 14px;
+          font-weight: 500;
+          color: #6b7280;
+          cursor: pointer;
+          border-bottom: 2px solid transparent;
+          margin-bottom: -1px;
+          transition: all 0.15s ease;
+        }
+        .settings-tab:hover {
+          color: #236773;
+        }
+        .settings-tab.active {
+          color: #236773;
+          border-bottom-color: #236773;
+        }
+        .settings-panel {
+          display: none;
+        }
+        .settings-panel.active {
+          display: block;
+        }
+      </style>
+      
+      <!-- Profile Tab -->
+      <div class="settings-panel active" id="panel-profile">
+        <div class="dashboard-card">
+          <div class="dashboard-card-header">
+            <h3 class="dashboard-card-title">Persoonlijke Gegevens</h3>
+          </div>
+          <div class="dashboard-card-body">
+            <form id="profile-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Voornaam</label>
+                  <input type="text" class="form-input" id="first-name" placeholder="Uw voornaam">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Achternaam</label>
+                  <input type="text" class="form-input" id="last-name" placeholder="Uw achternaam">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">E-mailadres</label>
+                  <input type="email" class="form-input" id="email" disabled>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Telefoonnummer</label>
+                  <input type="tel" class="form-input" id="phone" placeholder="+32 ...">
+                </div>
+              </div>
+              <div style="margin-top: 24px;">
+                <button type="submit" class="btn-dashboard btn-dashboard-primary">Opslaan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Company Tab -->
+      <div class="settings-panel" id="panel-company">
+        <div class="dashboard-card">
+          <div class="dashboard-card-header">
+            <h3 class="dashboard-card-title">Bedrijfsgegevens</h3>
+          </div>
+          <div class="dashboard-card-body">
+            <form id="company-form">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Bedrijfsnaam</label>
+                  <input type="text" class="form-input" id="company-name" placeholder="Uw bedrijfsnaam">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">BTW-nummer</label>
+                  <input type="text" class="form-input" id="vat-number" placeholder="BE0123456789">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">KvK-nummer</label>
+                  <input type="text" class="form-input" id="kvk-number" placeholder="12345678">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Adres</label>
+                  <input type="text" class="form-input" id="address" placeholder="Straat en huisnummer">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Postcode</label>
+                  <input type="text" class="form-input" id="postal-code" placeholder="1234 AB">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Plaats</label>
+                  <input type="text" class="form-input" id="city" placeholder="Stad">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Land</label>
+                  <select class="form-select" id="country">
+                    <option value="BE">België</option>
+                    <option value="NL">Nederland</option>
+                    <option value="DE">Duitsland</option>
+                    <option value="FR">Frankrijk</option>
+                    <option value="LU">Luxemburg</option>
+                  </select>
+                </div>
+              </div>
+              <div style="margin-top: 24px;">
+                <button type="submit" class="btn-dashboard btn-dashboard-primary">Opslaan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Security Tab -->
+      <div class="settings-panel" id="panel-security">
+        <div class="dashboard-card">
+          <div class="dashboard-card-header">
+            <h3 class="dashboard-card-title">Wachtwoord Wijzigen</h3>
+          </div>
+          <div class="dashboard-card-body">
+            <form id="password-form">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Huidig wachtwoord</label>
+                  <input type="password" class="form-input" id="current-password" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Nieuw wachtwoord</label>
+                  <input type="password" class="form-input" id="new-password" required>
+                  <span class="form-hint" style="font-size: 12px; color: #6b7280; margin-top: 4px; display: block;">Minimaal 8 tekens, 1 hoofdletter, 1 cijfer</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Bevestig nieuw wachtwoord</label>
+                  <input type="password" class="form-input" id="confirm-password" required>
+                </div>
+              </div>
+              <div style="margin-top: 24px;">
+                <button type="submit" class="btn-dashboard btn-dashboard-primary">Wachtwoord wijzigen</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Notifications Tab -->
+      <div class="settings-panel" id="panel-notifications">
+        <div class="dashboard-card">
+          <div class="dashboard-card-header">
+            <h3 class="dashboard-card-title">E-mail Notificaties</h3>
+          </div>
+          <div class="dashboard-card-body">
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="notify-quotes" checked style="width: 20px; height: 20px; accent-color: #236773;">
+                <div>
+                  <div style="font-weight: 500; color: #1f2937;">Offerte updates</div>
+                  <div style="font-size: 13px; color: #6b7280;">Ontvang een e-mail wanneer uw offerte status wijzigt</div>
+                </div>
+              </label>
+              <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="notify-orders" checked style="width: 20px; height: 20px; accent-color: #236773;">
+                <div>
+                  <div style="font-weight: 500; color: #1f2937;">Bestelling updates</div>
+                  <div style="font-size: 13px; color: #6b7280;">Ontvang een e-mail over uw bestellingen en leveringen</div>
+                </div>
+              </label>
+              <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="notify-newsletter" style="width: 20px; height: 20px; accent-color: #236773;">
+                <div>
+                  <div style="font-weight: 500; color: #1f2937;">Nieuwsbrief</div>
+                  <div style="font-size: 13px; color: #6b7280;">Ontvang nieuws over nieuwe producten en aanbiedingen</div>
+                </div>
+              </label>
+            </div>
+            <div style="margin-top: 24px;">
+              <button type="button" class="btn-dashboard btn-dashboard-primary" id="save-notifications">Voorkeuren opslaan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <button class="sidebar-toggle" id="sidebar-toggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <script src="../assets/js/components/header-loader.js"></script>
+  <script type="module" src="../assets/js/pages/account-settings.js"></script>
+  <script src="../assets/js/components/login-modal.js?v=2"></script>
+</body>
+</html>

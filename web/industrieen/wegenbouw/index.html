@@ -24,9 +24,7 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="../../assets/css/global.css">
-  <link rel="stylesheet" href="../../assets/css/pages/category.css">
-  <link rel="stylesheet" href="../../assets/css/pages/brand.css">
-  <link rel="stylesheet" href="../../assets/css/pages/industry.css">
+  <link rel="stylesheet" href="../../assets/css/pages/industry_clean.css">
   
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -107,11 +105,11 @@
     <a href="../../pages/contact.html" class="nav-link">Contact</a>
   </nav>
 
-  <main    <!-- Industry Hero -->
-        <!-- Page Hero (Universal) -->
-    <section class="page-hero">
+  <main data-industry="wegenbouw"    <!-- Industry Hero -->
+        <!-- Industry Hero -->
+    <section class="industry-hero-clean">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
+        <nav class="industry-breadcrumbs" aria-label="Kruimelpad">
           <a href="/">Home</a>
           <span>/</span>
           <a href="/industrieen/">Industrieën</a>
@@ -119,15 +117,15 @@
           <span aria-current="page">Wegenbouw</span>
         </nav>
         
-        <div class="page-hero-content">
-          <div class="page-hero-text">
-            <h1 class="page-title">Kraanbakken voor Wegenbouw</h1>
-            <p class="page-subtitle">Infrastructuurprojecten vragen om betrouwbaar materiaal dat intensief gebruik aankan. 
+        <div class="industry-hero-grid">
+          <div class="industry-hero-content">
+            <h1 class="industry-title-large">Kraanbakken voor Wegenbouw</h1>
+            <p class="industry-description">Infrastructuurprojecten vragen om betrouwbaar materiaal dat intensief gebruik aankan. 
               Structon levert robuuste graafbakken, slotenbakken en rioolbakken voor wegenbouw, 
               bestrating en nutsvoorzieningen. Gebouwd voor de zwaarste omstandigheden.</p>
           </div>
-          <div class="page-hero-media">
-            <svg class="page-hero-icon" style="width: 120px; height: 120px; color: var(--color-primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="industry-hero-icon-wrapper">
+            <svg class="industry-hero-icon" style="width: 120px; height: 120px; color: var(--color-primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
               <line x1="4" y1="22" x2="4" y2="15"/>
             </svg>
@@ -483,6 +481,7 @@
   <script type="module" src="../../assets/js/main.js"></script>
   <script type="module" src="../../assets/js/pages/home.js"></script>
   <script type="module" src="../../assets/js/pages/industry.js"></script>
+  <script type="module" src="../../assets/js/pages/industry-template.js"></script>
   <script src="../../assets/js/components/login-modal.js"></script>
 </body>
 </html>

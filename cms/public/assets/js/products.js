@@ -502,9 +502,13 @@ async function handleProductSubmit(e) {
   e.preventDefault();
   
   console.log('💾 [PRODUCTS] Form submitted');
+  console.log('💾 [PRODUCTS] editingProductId:', editingProductId);
   
   const form = e.target;
   const productId = editingProductId; // Use editingProductId instead of dataset
+  
+  console.log('💾 [PRODUCTS] Using productId:', productId);
+  console.log('💾 [PRODUCTS] Is new product:', !productId);
   
   // Get selected tonnage values
   const tonnageCheckboxes = document.querySelectorAll('input[name="tonnage"]:checked');

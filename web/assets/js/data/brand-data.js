@@ -175,11 +175,96 @@ export const BRAND_DATA = {
     seoContent: { cwTable: { title: 'CW-Aansluitingen', description: '', rows: [] }, whyStructon: { title: 'Waarom Structon?', items: [] } },
     ctaTitle: 'Kraanbak voor Jouw Komatsu Nodig?',
     ctaText: 'Neem contact op voor advies of een vrijblijvende offerte.'
+  },
+
+  hitachi: {
+    name: 'Hitachi',
+    slug: 'hitachi',
+    shortName: 'Hitachi',
+    title: 'Kraanbak voor Hitachi',
+    metaTitle: 'Kraanbak voor Hitachi | Graafbakken Hitachi Graafmachine | Structon',
+    metaDescription: 'Kraanbak voor Hitachi graafmachine? Structon levert graafbakken passend voor alle Hitachi Zaxis modellen. ✓ CW-aansluiting ✓ Hardox staal',
+    metaKeywords: 'kraanbak hitachi, graafbak hitachi, slotenbak hitachi, kraanbak ZX210, kraanbak ZX350',
+    heroDescription: 'Structon levert hoogwaardige kraanbakken passend voor alle Hitachi graafmachines. Van de compacte ZX17 minigraver tot de zware ZX490 rupskraan.',
+    heroImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop',
+    modelSelectorTitle: 'Zoek op Hitachi Model',
+    modelSelectorSubtitle: 'Zaxis (ZX) reeks. Suffix -5, -6 of -7 geeft de generatie aan',
+    modelCategories: [
+      {
+        title: 'Minigravers (< 10 ton)',
+        subtitle: 'CW05 - CW10 snelwissels',
+        models: [
+          { name: 'ZX19U-5', tonnage: 1.9, cw: 'CW05' },
+          { name: 'ZX26U-6', tonnage: 2.7, cw: 'CW05' },
+          { name: 'ZX48U-5', tonnage: 4.8, cw: 'CW05' },
+          { name: 'ZX55U-6', tonnage: 5.5, cw: 'CW10' },
+          { name: 'ZX85US-6', tonnage: 8.5, cw: 'CW10' }
+        ]
+      },
+      {
+        title: 'Middenklasse (10-30 ton)',
+        subtitle: 'CW30 - CW40 snelwissels',
+        models: [
+          { name: 'ZX135US-7', tonnage: 15, cw: 'CW30' },
+          { name: 'ZX160LC-6', tonnage: 17, cw: 'CW30' },
+          { name: 'ZX210LC-6', tonnage: 21, cw: 'CW40' },
+          { name: 'ZX250LC-6', tonnage: 25, cw: 'CW40' },
+          { name: 'ZX170W-6', tonnage: 17, cw: 'CW30', type: 'wielen' },
+          { name: 'ZX190W-6', tonnage: 19, cw: 'CW30', type: 'wielen' }
+        ]
+      },
+      {
+        title: 'Zware Klasse (> 30 ton)',
+        subtitle: 'CW40 - CW70 snelwissels',
+        models: [
+          { name: 'ZX300LC-6', tonnage: 30, cw: 'CW40' },
+          { name: 'ZX350LC-7', tonnage: 35, cw: 'CW45' },
+          { name: 'ZX490LCH-6', tonnage: 49, cw: 'CW55' },
+          { name: 'ZX690LCH-7', tonnage: 69, cw: 'CW70' },
+          { name: 'EX1200-7', tonnage: 120, cw: 'CW70' }
+        ]
+      }
+    ],
+    seoContent: {
+      cwTable: {
+        title: 'Welke CW-Aansluiting voor Hitachi?',
+        description: 'Hitachi produceert graafmachines van ~2 ton tot de allergrootste ter wereld (~800 ton). De Zaxis (ZX) reeks omvat compacte mini\'s tot zware machines. Hieronder de CW-snelwissels:',
+        rows: [
+          { model: 'ZX19U-5', weight: '1,9 ton', cw: 'CW05', type: 'Rups' },
+          { model: 'ZX26U-6', weight: '2,7 ton', cw: 'CW05', type: 'Rups' },
+          { model: 'ZX48U-5', weight: '4,8 ton', cw: 'CW05/CW10', type: 'Rups' },
+          { model: 'ZX55U-6', weight: '5,5 ton', cw: 'CW10', type: 'Rups' },
+          { model: 'ZX85US-6', weight: '8,5 ton', cw: 'CW10', type: 'Rups' },
+          { model: 'ZX135US-7', weight: '15 ton', cw: 'CW30', type: 'Rups' },
+          { model: 'ZX160LC-6', weight: '17 ton', cw: 'CW30', type: 'Rups' },
+          { model: 'ZX170W-6', weight: '17 ton', cw: 'CW30', type: 'Banden' },
+          { model: 'ZX190W-6', weight: '19 ton', cw: 'CW30', type: 'Banden' },
+          { model: 'ZX210LC-6', weight: '21 ton', cw: 'CW40', type: 'Rups' },
+          { model: 'ZX250LC-6', weight: '25 ton', cw: 'CW40', type: 'Rups' },
+          { model: 'ZX300LC-6', weight: '30 ton', cw: 'CW40', type: 'Rups' },
+          { model: 'ZX350LC-7', weight: '35 ton', cw: 'CW45', type: 'Rups' },
+          { model: 'ZX490LCH-6', weight: '49 ton', cw: 'CW55', type: 'Rups' },
+          { model: 'ZX690LCH-7', weight: '69 ton', cw: 'CW70', type: 'Rups' },
+          { model: 'EX1200-7', weight: '120 ton', cw: 'CW70', type: 'Rups' }
+        ]
+      },
+      whyStructon: {
+        title: 'Waarom Structon voor Hitachi?',
+        items: [
+          { title: 'Perfecte pasvorm', description: 'Onze bakken zijn ontworpen voor optimale prestaties met Hitachi machines' },
+          { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
+          { title: 'Snelle levering', description: 'Grote voorraad, snel leverbaar' },
+          { title: 'Maatwerk mogelijk', description: 'Speciale afmetingen op aanvraag' }
+        ]
+      }
+    },
+    ctaTitle: 'Kraanbak voor Jouw Hitachi Nodig?',
+    ctaText: 'Neem contact op voor advies of een vrijblijvende offerte.'
   }
 };
 
 // Helper functie om andere merken te genereren met basis data
-const otherBrands = ['hitachi', 'liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'doosan', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
+const otherBrands = ['liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'doosan', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
 
 otherBrands.forEach(brand => {
   if (!BRAND_DATA[brand]) {

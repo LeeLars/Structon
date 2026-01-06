@@ -205,12 +205,19 @@ router.post('/debug/seed-subcategories', async (req, res) => {
       const categoryId = categoryMap[sub.category_slug];
       if (!categoryId) continue;
       
-      await pool.query(`
-        INSERT INTO subcategories (title, slug, category_id, sort_order, is_active)
-        VALUES ($1, $2, $3, $4, true)
-        ON CONFLICT (slug) DO NOTHING
-      `, [sub.title, sub.slug, categoryId, sub.sort_order]);
-      created++;
+      // Check if subcategory already exists
+      const existing = await pool.query(
+        'SELECT id FROM subcategories WHERE slug = $1',
+        [sub.slug]
+      );
+      
+      if (existing.rows.length === 0) {
+        await pool.query(`
+          INSERT INTO subcategories (title, slug, category_id, sort_order, is_active)
+          VALUES ($1, $2, $3, $4, true)
+        `, [sub.title, sub.slug, categoryId, sub.sort_order]);
+        created++;
+      }
     }
     
     const subCount = await pool.query('SELECT COUNT(*)::int as count FROM subcategories');

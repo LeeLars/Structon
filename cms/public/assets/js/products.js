@@ -83,7 +83,7 @@ async function initializeData() {
     
     // Populate dropdowns
     populateCategoryDropdown();
-    populateBrandDropdown();
+    populateBrandCheckboxes();
   } catch (error) {
     console.error('❌ Error loading data from CMS:', error);
     products = [];
@@ -125,14 +125,68 @@ function populateSubcategoryDropdown(categoryId) {
 }
 
 /**
- * Populate brand dropdown
+ * Populate brand checkboxes (multi-select with "alle merken" option)
  */
-function populateBrandDropdown() {
-  const brandSelect = document.getElementById('product-brand');
-  if (!brandSelect) return;
+function populateBrandCheckboxes() {
+  const container = document.getElementById('brand-checkboxes');
+  if (!container) return;
   
-  brandSelect.innerHTML = '<option value="">Selecteer merk</option>' +
-    brands.map(brand => `<option value="${brand.id}">${escapeHtml(brand.title)}</option>`).join('');
+  // Keep the "Alle merken" checkbox, add individual brand checkboxes
+  const allCheckbox = container.querySelector('#brand-all');
+  
+  container.innerHTML = `
+    <label class="checkbox-label checkbox-all">
+      <input type="checkbox" id="brand-all" name="brand_all" value="all">
+      <strong>Alle merken</strong>
+    </label>
+  ` + brands.map(brand => `
+    <label class="checkbox-label">
+      <input type="checkbox" name="brand_ids" value="${brand.id}">
+      ${escapeHtml(brand.title)}
+    </label>
+  `).join('');
+  
+  // Setup "Alle merken" toggle behavior
+  setupBrandAllToggle();
+}
+
+/**
+ * Setup "Alle merken" checkbox toggle behavior
+ */
+function setupBrandAllToggle() {
+  const allCheckbox = document.getElementById('brand-all');
+  const brandCheckboxes = document.querySelectorAll('input[name="brand_ids"]');
+  
+  if (!allCheckbox) return;
+  
+  // When "Alle merken" is checked, uncheck all individual brands
+  allCheckbox.addEventListener('change', () => {
+    if (allCheckbox.checked) {
+      brandCheckboxes.forEach(cb => cb.checked = false);
+    }
+  });
+  
+  // When any individual brand is checked, uncheck "Alle merken"
+  brandCheckboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (cb.checked) {
+        allCheckbox.checked = false;
+      }
+    });
+  });
+}
+
+/**
+ * Get selected brand IDs from checkboxes
+ */
+function getSelectedBrandIds() {
+  const allCheckbox = document.getElementById('brand-all');
+  if (allCheckbox && allCheckbox.checked) {
+    return 'all'; // Return 'all' to indicate all brands
+  }
+  
+  const brandCheckboxes = document.querySelectorAll('input[name="brand_ids"]:checked');
+  return Array.from(brandCheckboxes).map(cb => cb.value);
 }
 
 /**
@@ -539,9 +593,18 @@ function populateForm(product) {
     }
   }, 50);
   
-  const brandSelect = document.getElementById('product-brand');
-  if (brandSelect && product.brand_id) {
-    brandSelect.value = product.brand_id;
+  // Set brand checkboxes
+  const brandCheckboxes = document.querySelectorAll('input[name="brand_ids"]');
+  const brandAllCheckbox = document.getElementById('brand-all');
+  
+  // Reset all brand checkboxes
+  brandCheckboxes.forEach(cb => cb.checked = false);
+  if (brandAllCheckbox) brandAllCheckbox.checked = false;
+  
+  // If product has a brand_id, check that checkbox
+  if (product.brand_id) {
+    const brandCheckbox = document.querySelector(`input[name="brand_ids"][value="${product.brand_id}"]`);
+    if (brandCheckbox) brandCheckbox.checked = true;
   }
   
   // Set price if available (from current_price field returned by admin API)
@@ -646,10 +709,16 @@ async function handleProductSubmit(e) {
       .substring(0, 1000); // Limit length
   };
   
-  // Get category, subcategory and brand
+  // Get category, subcategory and brand(s)
   const categoryId = document.getElementById('product-category')?.value || null;
   const subcategoryId = document.getElementById('product-subcategory')?.value || null;
-  const brandId = document.getElementById('product-brand')?.value || null;
+  
+  // Get selected brands (can be 'all' or array of IDs)
+  const selectedBrands = getSelectedBrandIds();
+  // For now, store first selected brand in brand_id (database supports single brand)
+  // Store all selected brands in brand_ids for future multi-brand support
+  const brandId = selectedBrands === 'all' ? null : (selectedBrands[0] || null);
+  const brandIds = selectedBrands === 'all' ? 'all' : selectedBrands;
   
   const productData = {
     title: sanitizeInput(document.getElementById('product-title').value),

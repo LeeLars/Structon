@@ -24,10 +24,10 @@ function buildQuoteUrl(product) {
   if (product.category_title) params.set('product_category', product.category_title);
   if (product.brand_title) params.set('product_brand', product.brand_title);
   
-  // Tonnage from excavator weight range
+  // Tonnage from excavator weight range (values are already in tons)
   if (product.excavator_weight_min && product.excavator_weight_max) {
-    const minTon = Math.round(product.excavator_weight_min / 1000);
-    const maxTon = Math.round(product.excavator_weight_max / 1000);
+    const minTon = Math.round(parseFloat(product.excavator_weight_min));
+    const maxTon = Math.round(parseFloat(product.excavator_weight_max));
     params.set('product_tonnage', `${minTon}-${maxTon}`);
   }
   

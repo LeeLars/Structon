@@ -103,7 +103,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
       ${product.volume ? `<dt>Inhoud</dt><dd>${product.volume} liter</dd>` : ''}
       ${product.width ? `<dt>Breedte</dt><dd>${product.width} mm</dd>` : ''}
       ${product.excavator_weight_min && product.excavator_weight_max ? 
-        `<dt>Graafmachine klasse</dt><dd>${(product.excavator_weight_min/1000).toFixed(1).replace('.',',')} - ${(product.excavator_weight_max/1000).toFixed(1).replace('.',',')} ton</dd>` : ''}
+        `<dt>Graafmachine klasse</dt><dd>${parseFloat(product.excavator_weight_min).toFixed(1).replace('.',',')} - ${parseFloat(product.excavator_weight_max).toFixed(1).replace('.',',')} ton</dd>` : ''}
       ${product.attachment_type ? `<dt>Ophanging</dt><dd>${product.attachment_type}</dd>` : ''}
     </dl>
   `;

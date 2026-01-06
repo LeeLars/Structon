@@ -601,10 +601,11 @@ main:not(.no-padding) {
   max-height: calc(100vh - 90px);
   overflow-y: auto;
   
-  /* CRITICAL: Always hidden by default */
-  display: none;
-  opacity: 0;
-  visibility: hidden;
+  /* CRITICAL: Always hidden by default - use !important to override inline styles */
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
   transform-origin: top center;
   transform: scaleY(0.95);
   
@@ -624,9 +625,10 @@ main:not(.no-padding) {
 
 .menu-item:hover .menu-dropdown,
 .menu-dropdown:hover {
-  display: block;
-  opacity: 1;
-  visibility: visible;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
   transform: scaleY(1);
   
   /* Delay toegevoegd: 500ms wachten voordat menu verschijnt */

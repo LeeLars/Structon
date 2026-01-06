@@ -407,7 +407,7 @@ export const OTHER_BRANDS = [
   { name: 'Kubota', slug: 'kubota' },
   { name: 'Takeuchi', slug: 'takeuchi' },
   { name: 'Yanmar', slug: 'yanmar' },
-  { name: 'Doosan', slug: 'doosan' },
+  { name: 'Develon', slug: 'develon' },
   { name: 'Case', slug: 'case' },
   { name: 'Caterpillar', slug: 'caterpillar' },
   { name: 'Hyundai', slug: 'hyundai' },

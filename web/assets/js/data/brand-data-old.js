@@ -321,7 +321,7 @@ export const BRAND_DATA = {
 };
 
 // Basis data voor overige merken (kunnen later worden uitgebreid)
-const otherBrands = ['liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'doosan', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
+const otherBrands = ['liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'develon', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
 
 otherBrands.forEach(brand => {
   if (!BRAND_DATA[brand]) {
@@ -332,7 +332,7 @@ otherBrands.forEach(brand => {
       'kubota': 'Japanse mini-specialist, KX/U-serie. Compact, betrouwbaar, ideaal voor tuinaanleg en kleine werven.',
       'takeuchi': 'Japanse compacte specialist, TB-serie. Robuust, eenvoudig, sterke restwaarde. Favoriet in verhuur.',
       'yanmar': 'Japanse dieselmotor-expertise. ViO-serie met zero tail swing. Populair bij verhuurders en tuinaanleggers.',
-      'doosan': 'Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
+      'develon': 'Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
       'case': 'Amerikaans merk (CNH Industrial). CX-serie rupskranen. Solide machines, goede prijs/prestatie.',
       'hyundai': 'HX/HW-serie, focus op 4 pijlers: onderhoud, comfort, veiligheid, productiviteit. Hi MATE telematica.',
       'kobelco': 'Japanse specialist, SK-serie. Bekend om zuinigheid en reduced tail swing modellen. Sterk in stedelijke projecten.',
@@ -386,7 +386,7 @@ export const OTHER_BRANDS = [
   { name: 'Kubota', slug: 'kubota' },
   { name: 'Takeuchi', slug: 'takeuchi' },
   { name: 'Yanmar', slug: 'yanmar' },
-  { name: 'Doosan', slug: 'doosan' },
+  { name: 'Develon', slug: 'develon' },
   { name: 'Case', slug: 'case' },
   { name: 'Caterpillar', slug: 'caterpillar' },
   { name: 'Hyundai', slug: 'hyundai' },

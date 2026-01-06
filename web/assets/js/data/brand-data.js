@@ -631,17 +631,17 @@ export const BRAND_DATA = {
     ctaText: 'Neem contact op voor advies of een vrijblijvende offerte.'
   },
 
-  doosan: {
-    name: 'Doosan',
-    slug: 'doosan',
-    shortName: 'Doosan',
-    title: 'Kraanbak voor Doosan',
-    metaTitle: 'Kraanbak voor Doosan | Graafbakken Doosan/Develon Graafmachine | Structon',
-    metaDescription: 'Kraanbak voor Doosan/Develon graafmachine? Structon levert graafbakken passend voor alle DX-serie modellen. ✓ CW-aansluiting ✓ Hardox staal',
-    metaKeywords: 'kraanbak doosan, graafbak doosan, DX225, DX300, develon',
-    heroDescription: 'Structon levert hoogwaardige kraanbakken passend voor alle Doosan/Develon graafmachines. Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
+  develon: {
+    name: 'Develon',
+    slug: 'develon',
+    shortName: 'Develon',
+    title: 'Kraanbak voor Develon',
+    metaTitle: 'Kraanbak voor Develon | Graafbakken Develon/Develon Graafmachine | Structon',
+    metaDescription: 'Kraanbak voor Develon/Develon graafmachine? Structon levert graafbakken passend voor alle DX-serie modellen. ✓ CW-aansluiting ✓ Hardox staal',
+    metaKeywords: 'kraanbak develon, graafbak develon, DX225, DX300, develon',
+    heroDescription: 'Structon levert hoogwaardige kraanbakken passend voor alle Develon/Develon graafmachines. Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
     heroImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop',
-    modelSelectorTitle: 'Zoek op Doosan Model',
+    modelSelectorTitle: 'Zoek op Develon Model',
     modelSelectorSubtitle: 'DX-serie (nu Develon) - D-ECOPOWER hydrauliek',
     modelCategories: [
       {
@@ -676,8 +676,8 @@ export const BRAND_DATA = {
     ],
     seoContent: {
       cwTable: {
-        title: 'Welke CW-Aansluiting voor Doosan/Develon?',
-        description: 'Doosan/Develon - Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
+        title: 'Welke CW-Aansluiting voor Develon/Develon?',
+        description: 'Develon/Develon - Sinds 2023 Develon, zelfde DX-serie. D-ECOPOWER hydrauliek, veel standaarduitrusting. Sterk in verhuurmarkt.',
         rows: [
           { model: 'DX17Z', weight: '1,7 ton', cw: 'CW05', type: 'Rups' },
           { model: 'DX27Z', weight: '2,7 ton', cw: 'CW05', type: 'Rups' },
@@ -692,16 +692,16 @@ export const BRAND_DATA = {
         ]
       },
       whyStructon: {
-        title: 'Waarom Structon voor Doosan/Develon?',
+        title: 'Waarom Structon voor Develon/Develon?',
         items: [
-          { title: 'Perfecte pasvorm', description: 'Ontworpen voor optimale prestaties met Doosan/Develon DX-serie' },
+          { title: 'Perfecte pasvorm', description: 'Ontworpen voor optimale prestaties met Develon/Develon DX-serie' },
           { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
           { title: 'Snelle levering', description: 'Grote voorraad, direct leverbaar uit België' },
           { title: 'Maatwerk', description: 'Speciale afmetingen op aanvraag mogelijk' }
         ]
       }
     },
-    ctaTitle: 'Kraanbak voor Jouw Doosan/Develon Nodig?',
+    ctaTitle: 'Kraanbak voor Jouw Develon/Develon Nodig?',
     ctaText: 'Neem contact op voor advies of een vrijblijvende offerte.'
   },
 
@@ -1060,7 +1060,7 @@ export const OTHER_BRANDS = [
   { name: 'Kubota', slug: 'kubota' },
   { name: 'Takeuchi', slug: 'takeuchi' },
   { name: 'Yanmar', slug: 'yanmar' },
-  { name: 'Doosan', slug: 'doosan' },
+  { name: 'Develon', slug: 'develon' },
   { name: 'Case', slug: 'case' },
   { name: 'Caterpillar', slug: 'caterpillar' },
   { name: 'Hyundai', slug: 'hyundai' },

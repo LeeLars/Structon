@@ -264,7 +264,7 @@ export const BRAND_DATA = {
 };
 
 // Helper functie om andere merken te genereren met basis data
-const otherBrands = ['liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'doosan', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
+const otherBrands = ['liebherr', 'jcb', 'kubota', 'takeuchi', 'yanmar', 'develon', 'case', 'hyundai', 'kobelco', 'sany', 'wacker-neuson'];
 
 otherBrands.forEach(brand => {
   if (!BRAND_DATA[brand]) {
@@ -311,7 +311,7 @@ export const OTHER_BRANDS = [
   { name: 'Kubota', slug: 'kubota' },
   { name: 'Takeuchi', slug: 'takeuchi' },
   { name: 'Yanmar', slug: 'yanmar' },
-  { name: 'Doosan', slug: 'doosan' },
+  { name: 'Develon', slug: 'develon' },
   { name: 'Case', slug: 'case' },
   { name: 'Caterpillar', slug: 'caterpillar' },
   { name: 'Hyundai', slug: 'hyundai' },

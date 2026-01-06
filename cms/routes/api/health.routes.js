@@ -149,6 +149,82 @@ router.post('/debug/seed', async (req, res) => {
   }
 });
 
+// Seed subcategories endpoint
+router.post('/debug/seed-subcategories', async (req, res) => {
+  if (!pool) {
+    return res.json({ error: 'No database configured' });
+  }
+  
+  try {
+    // Get category IDs
+    const catResult = await pool.query('SELECT id, slug FROM categories');
+    const categoryMap = {};
+    catResult.rows.forEach(row => categoryMap[row.slug] = row.id);
+    
+    if (Object.keys(categoryMap).length === 0) {
+      return res.json({ error: 'No categories found. Run /debug/seed first.' });
+    }
+    
+    // Subcategories per category (matching header navigation)
+    const subcategories = [
+      // Graafbakken subcategories
+      { title: 'Slotenbakken', slug: 'slotenbakken', category_slug: 'graafbakken', sort_order: 1 },
+      { title: 'Dieplepelbakken', slug: 'dieplepelbakken', category_slug: 'graafbakken', sort_order: 2 },
+      { title: 'Sleuvenbakken', slug: 'sleuvenbakken', category_slug: 'graafbakken', sort_order: 3 },
+      { title: 'Kantelbakken', slug: 'kantelbakken', category_slug: 'graafbakken', sort_order: 4 },
+      { title: 'Rioolbakken', slug: 'rioolbakken', category_slug: 'graafbakken', sort_order: 5 },
+      { title: 'Trapezium Bakken', slug: 'trapezium-bakken', category_slug: 'graafbakken', sort_order: 6 },
+      { title: 'Grondverzet Bakken', slug: 'grondverzet-bakken', category_slug: 'graafbakken', sort_order: 7 },
+      { title: 'Plantenbakken', slug: 'plantenbakken', category_slug: 'graafbakken', sort_order: 8 },
+      
+      // Sloop- en sorteergrijpers subcategories
+      { title: 'Sorteergrijpers', slug: 'sorteergrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 1 },
+      { title: 'Sloopgrijpers', slug: 'sloopgrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 2 },
+      { title: 'Puingrijpers', slug: 'puingrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 3 },
+      { title: 'Houtgrijpers', slug: 'houtgrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 4 },
+      { title: 'Steengrijpers', slug: 'steengrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 5 },
+      
+      // Adapters subcategories
+      { title: 'Snelwissels', slug: 'snelwissels', category_slug: 'adapters', sort_order: 1 },
+      { title: 'Adapterplaten', slug: 'adapterplaten', category_slug: 'adapters', sort_order: 2 },
+      { title: 'Rotators', slug: 'rotators', category_slug: 'adapters', sort_order: 3 },
+      { title: 'Tiltrotators', slug: 'tiltrotators', category_slug: 'adapters', sort_order: 4 },
+      { title: 'Kantelstukken', slug: 'kantelstukken', category_slug: 'adapters', sort_order: 5 },
+      
+      // Overige subcategories
+      { title: 'Ripper Tanden', slug: 'ripper-tanden', category_slug: 'overige', sort_order: 1 },
+      { title: 'Hydraulische Hamers', slug: 'hydraulische-hamers', category_slug: 'overige', sort_order: 2 },
+      { title: 'Egaliseerbalken', slug: 'egaliseerbalken', category_slug: 'overige', sort_order: 3 },
+      { title: 'Verdichtingsplaten', slug: 'verdichtingsplaten', category_slug: 'overige', sort_order: 4 },
+      { title: 'Rupsbanden', slug: 'rupsbanden', category_slug: 'overige', sort_order: 5 },
+      { title: 'Slijttanden', slug: 'slijttanden', category_slug: 'overige', sort_order: 6 }
+    ];
+    
+    let created = 0;
+    for (const sub of subcategories) {
+      const categoryId = categoryMap[sub.category_slug];
+      if (!categoryId) continue;
+      
+      await pool.query(`
+        INSERT INTO subcategories (title, slug, category_id, sort_order, is_active)
+        VALUES ($1, $2, $3, $4, true)
+        ON CONFLICT (slug) DO NOTHING
+      `, [sub.title, sub.slug, categoryId, sub.sort_order]);
+      created++;
+    }
+    
+    const subCount = await pool.query('SELECT COUNT(*)::int as count FROM subcategories');
+    
+    res.json({
+      success: true,
+      message: `Subcategories seeded successfully`,
+      subcategories: subCount.rows[0].count
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Add sample products endpoint
 router.post('/debug/seed-products', async (req, res) => {
   if (!pool) {

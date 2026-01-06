@@ -13,25 +13,26 @@
 .menu-dropdown {
   position: absolute;
   top: 100%;
-  left: 0;
-  width: 100vw;
-  max-width: 1400px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  width: 95vw;
+  max-width: 1200px;
   background: white;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   border-top: 3px solid var(--color-primary);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
   transition: all 0.3s ease;
   z-index: 1000;
-  margin-left: calc(-50vw + 50%);
 }
 
 .menu-item:hover .menu-dropdown {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
+
+/* Hover state already defined above */
 
 .menu-dropdown-container {
   padding: 40px;

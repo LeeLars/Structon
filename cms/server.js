@@ -23,6 +23,8 @@ console.log(`🗄️  Database URL: ${env.databaseUrl ? 'configured' : '❌ MISS
 
 /**
  * Run database migrations automatically on startup
+ * Uses _migrations table to track which migrations have been applied
+ * This ensures migrations only run ONCE, not on every restart
  */
 async function runMigrations() {
   // Skip if no database pool
@@ -33,21 +35,47 @@ async function runMigrations() {
 
   console.log('🔄 Checking database migrations...');
   
+  // First, ensure the migrations tracking table exists
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS _migrations (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) UNIQUE NOT NULL,
+      applied_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  
+  // Get list of already applied migrations
+  const appliedResult = await pool.query('SELECT name FROM _migrations');
+  const appliedMigrations = new Set(appliedResult.rows.map(r => r.name));
+  
   const migrationsDir = path.join(__dirname, 'database', 'migrations');
   const files = fs.readdirSync(migrationsDir)
     .filter(f => f.endsWith('.sql'))
     .sort();
 
+  let newMigrations = 0;
+  
   for (const file of files) {
+    // Skip if already applied
+    if (appliedMigrations.has(file)) {
+      console.log(`   ⏭️  ${file} (already applied)`);
+      continue;
+    }
+    
     const sql = fs.readFileSync(path.join(migrationsDir, file), 'utf8');
     
     try {
       await pool.query(sql);
+      // Record that this migration was applied
+      await pool.query('INSERT INTO _migrations (name) VALUES ($1) ON CONFLICT (name) DO NOTHING', [file]);
       console.log(`   ✅ ${file}`);
+      newMigrations++;
     } catch (error) {
       // Ignore "already exists" errors and duplicate key errors
       if (error.message.includes('already exists') || 
           error.message.includes('duplicate key')) {
+        // Still record it as applied
+        await pool.query('INSERT INTO _migrations (name) VALUES ($1) ON CONFLICT (name) DO NOTHING', [file]);
         console.log(`   ⏭️  ${file} (already applied)`);
       } else {
         console.error(`   ❌ Error in ${file}:`, error.message);
@@ -56,9 +84,13 @@ async function runMigrations() {
     }
   }
 
-  console.log('✅ Database migrations complete\n');
+  if (newMigrations > 0) {
+    console.log(`✅ Applied ${newMigrations} new migration(s)\n`);
+  } else {
+    console.log('✅ Database schema is up to date\n');
+  }
   
-  // Check if database is empty and seed if needed
+  // Check database status
   await checkAndSeedDatabase();
 }
 

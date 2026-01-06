@@ -4,7 +4,7 @@
  * Vergelijkbaar met brand-template.js maar voor industrie pagina's
  */
 
-import { INDUSTRY_DATA, getIndustryData, getRelatedIndustries } from '../data/industry-data.js';
+import { INDUSTRY_DATA, getIndustryData, getRelatedIndustries } from '../data/industry-data.js?v=1';
 
 class IndustryTemplate {
   constructor() {

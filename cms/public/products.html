@@ -151,6 +151,26 @@
                 <input type="text" id="product-slug" name="slug" required placeholder="slotenbak-300mm-cw10">
                 <span class="form-hint">Automatisch gegenereerd uit titel</span>
               </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="product-category">Categorie *</label>
+                  <select id="product-category" name="category_id" required>
+                    <option value="">Selecteer categorie</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="product-subcategory">Subcategorie</label>
+                  <select id="product-subcategory" name="subcategory_id">
+                    <option value="">Selecteer subcategorie</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="product-brand">Merk</label>
+                <select id="product-brand" name="brand_id">
+                  <option value="">Selecteer merk</option>
+                </select>
+              </div>
               <div class="form-group">
                 <label for="product-description">Beschrijving</label>
                 <textarea id="product-description" name="description" rows="4" placeholder="Uitgebreide productbeschrijving..."></textarea>

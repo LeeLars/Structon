@@ -22,6 +22,9 @@ const TONNAGE_OPTIONS = [
 // State
 let products = [];
 let filteredProducts = [];
+let categories = [];
+let subcategories = [];
+let brands = [];
 let currentPage = 1;
 let itemsPerPage = 20;
 let selectedProducts = new Set();
@@ -61,21 +64,75 @@ async function initializeData() {
     tbody.innerHTML = '<tr><td colspan="10" class="loading-cell">Producten laden...</td></tr>';
   }
   
-  // Load from API
+  // Load products, categories, subcategories and brands from API
   try {
-    const data = await auth.get('/admin/products');
-    products = data.products;
+    const [productsData, categoriesData, subcategoriesData, brandsData] = await Promise.all([
+      auth.get('/admin/products'),
+      auth.get('/categories'),
+      auth.get('/subcategories'),
+      auth.get('/brands')
+    ]);
+    
+    products = productsData.products || [];
     filteredProducts = [...products];
-    console.log(`✅ Loaded ${products.length} products from CMS`);
+    categories = categoriesData.categories || [];
+    subcategories = subcategoriesData.subcategories || [];
+    brands = brandsData.brands || [];
+    
+    console.log(`✅ Loaded ${products.length} products, ${categories.length} categories, ${subcategories.length} subcategories, ${brands.length} brands`);
+    
+    // Populate dropdowns
+    populateCategoryDropdown();
+    populateBrandDropdown();
   } catch (error) {
     console.error('❌ Error loading data from CMS:', error);
     products = [];
     filteredProducts = [];
+    categories = [];
+    subcategories = [];
+    brands = [];
   }
   
   renderProducts();
   populateFilters();
   console.log('   Initial render complete');
+}
+
+/**
+ * Populate category dropdown
+ */
+function populateCategoryDropdown() {
+  const categorySelect = document.getElementById('product-category');
+  if (!categorySelect) return;
+  
+  categorySelect.innerHTML = '<option value="">Selecteer categorie</option>' +
+    categories.map(cat => `<option value="${cat.id}">${escapeHtml(cat.title)}</option>`).join('');
+}
+
+/**
+ * Populate subcategory dropdown based on selected category
+ */
+function populateSubcategoryDropdown(categoryId) {
+  const subcategorySelect = document.getElementById('product-subcategory');
+  if (!subcategorySelect) return;
+  
+  const filteredSubcats = categoryId 
+    ? subcategories.filter(sc => sc.category_id === categoryId)
+    : [];
+  
+  subcategorySelect.innerHTML = '<option value="">Selecteer subcategorie</option>' +
+    filteredSubcats.map(sc => `<option value="${sc.id}">${escapeHtml(sc.title)}</option>`).join('');
+}
+
+/**
+ * Populate brand dropdown
+ */
+function populateBrandDropdown() {
+  const brandSelect = document.getElementById('product-brand');
+  if (!brandSelect) return;
+  
+  brandSelect.innerHTML = '<option value="">Selecteer merk</option>' +
+    brands.map(brand => `<option value="${brand.id}">${escapeHtml(brand.title)}</option>`).join('');
 }
 
 /**
@@ -122,6 +179,11 @@ function setupEventListeners() {
   document.getElementById('product-title')?.addEventListener('input', (e) => {
     const slug = generateSlug(e.target.value);
     document.getElementById('product-slug').value = slug;
+  });
+  
+  // Category change - load subcategories
+  document.getElementById('product-category')?.addEventListener('change', (e) => {
+    populateSubcategoryDropdown(e.target.value);
   });
   
   // Image upload
@@ -461,10 +523,31 @@ function populateForm(product) {
   const featuredCheckbox = document.getElementById('product-featured');
   if (featuredCheckbox) featuredCheckbox.checked = product.is_featured;
   
-  // Set price if available
+  // Set category, subcategory and brand
+  const categorySelect = document.getElementById('product-category');
+  if (categorySelect && product.category_id) {
+    categorySelect.value = product.category_id;
+    // Populate subcategories for this category
+    populateSubcategoryDropdown(product.category_id);
+  }
+  
+  // Set subcategory after dropdown is populated
+  setTimeout(() => {
+    const subcategorySelect = document.getElementById('product-subcategory');
+    if (subcategorySelect && product.subcategory_id) {
+      subcategorySelect.value = product.subcategory_id;
+    }
+  }, 50);
+  
+  const brandSelect = document.getElementById('product-brand');
+  if (brandSelect && product.brand_id) {
+    brandSelect.value = product.brand_id;
+  }
+  
+  // Set price if available (from current_price field returned by admin API)
   const priceInput = document.getElementById('product-price');
-  if (priceInput && product.price_excl_vat) {
-    priceInput.value = product.price_excl_vat;
+  if (priceInput && product.current_price) {
+    priceInput.value = product.current_price;
   }
   
   // Set tonnage checkboxes based on excavator_weight_min/max
@@ -492,6 +575,12 @@ function populateForm(product) {
     } else if (min === 40) {
       document.querySelector('input[name="tonnage"][value="40+"]').checked = true;
     }
+  }
+  
+  // Set existing images
+  if (product.cloudinary_images && product.cloudinary_images.length > 0) {
+    window.uploadedImages = product.cloudinary_images;
+    renderImagePreviews();
   }
 }
 
@@ -557,10 +646,18 @@ async function handleProductSubmit(e) {
       .substring(0, 1000); // Limit length
   };
   
+  // Get category, subcategory and brand
+  const categoryId = document.getElementById('product-category')?.value || null;
+  const subcategoryId = document.getElementById('product-subcategory')?.value || null;
+  const brandId = document.getElementById('product-brand')?.value || null;
+  
   const productData = {
     title: sanitizeInput(document.getElementById('product-title').value),
     slug: document.getElementById('product-slug').value.trim().toLowerCase(),
     description: sanitizeInput(document.getElementById('product-description').value),
+    category_id: categoryId || null,
+    subcategory_id: subcategoryId || null,
+    brand_id: brandId || null,
     excavator_weight_min,
     excavator_weight_max,
     width: parseInt(document.getElementById('product-width').value) || null,
@@ -725,6 +822,49 @@ async function handleImageSelect(e) {
     }
   }
 };
+
+/**
+ * Render image previews for existing images
+ */
+function renderImagePreviews() {
+  const uploadArea = document.getElementById('image-upload-area');
+  if (!uploadArea) return;
+  
+  // Create or get preview container
+  let previewContainer = document.getElementById('image-preview-container');
+  if (!previewContainer) {
+    previewContainer = document.createElement('div');
+    previewContainer.id = 'image-preview-container';
+    previewContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;';
+    uploadArea.parentNode.insertBefore(previewContainer, uploadArea.nextSibling);
+  }
+  
+  previewContainer.innerHTML = '';
+  
+  const images = window.uploadedImages || [];
+  images.forEach((img, index) => {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position: relative; width: 100px; height: 100px;';
+    
+    const imgEl = document.createElement('img');
+    imgEl.src = img.url;
+    imgEl.alt = img.alt || 'Product afbeelding';
+    imgEl.style.cssText = 'width: 100%; height: 100%; object-fit: cover; border-radius: 8px;';
+    
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.innerHTML = '×';
+    removeBtn.style.cssText = 'position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #ef4444; color: white; border: none; cursor: pointer; font-size: 16px; line-height: 1;';
+    removeBtn.onclick = () => {
+      window.uploadedImages.splice(index, 1);
+      renderImagePreviews();
+    };
+    
+    wrapper.appendChild(imgEl);
+    wrapper.appendChild(removeBtn);
+    previewContainer.appendChild(wrapper);
+  });
+}
 
 /**
  * Edit product

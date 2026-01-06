@@ -1,0 +1,195 @@
+/* ============================================
+   MEGA MENU COMPONENT
+   Dropdown menu met subcategorieën en tonnage filters
+   ============================================ */
+
+/* Menu Item Hover State */
+.menu-item {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Mega Menu Dropdown Container */
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100vw;
+  max-width: 1400px;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-top: 3px solid var(--color-primary);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  margin-left: calc(-50vw + 50%);
+}
+
+.menu-item:hover .menu-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu-dropdown-container {
+  padding: 40px;
+}
+
+/* Dropdown Header */
+.menu-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.menu-dropdown-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2C5F6F;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menu-dropdown-view-all {
+  color: #2C5F6F;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+  opacity: 0.8;
+}
+
+.menu-dropdown-view-all:hover {
+  opacity: 1;
+  gap: 10px;
+}
+
+.menu-dropdown-view-all svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Grid Layout */
+.menu-dropdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+/* Column Styling */
+.menu-column-title {
+  display: block;
+  font-weight: 700;
+  font-size: 18px;
+  color: #2C5F6F;
+  margin-bottom: 16px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.menu-column-title:hover {
+  color: var(--color-primary-dark);
+}
+
+/* Tonnage List */
+.menu-tonnage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-tonnage-link {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: 0.2s;
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.menu-tonnage-link:hover {
+  background: #f5f5f5;
+  color: #2C5F6F;
+  padding-left: 16px;
+}
+
+.menu-tonnage-link span:first-child {
+  color: #2C5F6F;
+  font-size: 18px;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+/* CTA Box */
+.menu-cta-box {
+  background: #2C5F6F;
+  color: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  box-shadow: 0 10px 30px rgba(44, 95, 111, 0.2);
+}
+
+.menu-cta-content {
+  flex: 1;
+}
+
+.menu-cta-title {
+  font-size: 20px;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menu-cta-text {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.95;
+  margin: 0;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .menu-dropdown-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .menu-dropdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  
+  .menu-dropdown-container {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-dropdown {
+    display: none; /* Hide mega menu on mobile, use mobile nav instead */
+  }
+}

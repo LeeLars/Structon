@@ -13,16 +13,15 @@
   function getBasePath() {
     const path = window.location.pathname;
     
-    // Root level (index.html or /)
-    if (path === '/' || path.endsWith('/index.html') || path.match(/^\/[^\/]+\/?$/)) {
-      // Check if we're in a root-level folder like /contact/, /over-ons/, etc
-      const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina'];
-      for (const folder of rootFolders) {
-        if (path.includes('/' + folder + '/') || path.includes('/' + folder)) {
-          return '../';
-        }
+    // Root-level folders that need '../' to get back to site root
+    const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina'];
+    
+    // Check for root-level folders FIRST (works for both local and GitHub Pages)
+    // This handles /producten/, /over-ons/, /Structon/producten/, etc.
+    for (const folder of rootFolders) {
+      if (path.includes('/' + folder + '/') || path.endsWith('/' + folder)) {
+        return '../';
       }
-      return '';
     }
     
     // Pages folder (/pages/*.html)
@@ -43,6 +42,11 @@
     // Slotenbakken landing page
     if (path.includes('/slotenbakken/')) {
       return '../';
+    }
+    
+    // Root level (index.html or /) - no prefix needed
+    if (path === '/' || path.endsWith('/index.html') || path.match(/^\/[^\/]+\/?$/)) {
+      return '';
     }
     
     // Default fallback

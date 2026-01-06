@@ -11,7 +11,7 @@ let activeFilters = {
   subcategory: null,
   volume_min: null,
   volume_max: null,
-  excavator_weight: null, // Changed from array to single value for tonnage
+  excavator_weight: [], // Array for multiple tonnage selections
   width: [],
   attachment_type: [],
   search: null,
@@ -55,7 +55,10 @@ function parseUrlParams() {
   // Tonnage filter (from navigation menu) - convert to excavator_weight
   if (params.has('tonnage')) {
     const tonnage = params.get('tonnage');
-    activeFilters.excavator_weight = parseTonnageToWeight(tonnage);
+    const weight = parseTonnageToWeight(tonnage);
+    if (weight) {
+      activeFilters.excavator_weight = [weight];
+    }
   }
   
   // Search filter
@@ -248,9 +251,9 @@ export function getActiveFilters() {
     filters.subcategory_slug = activeFilters.subcategory;
   }
   
-  // Excavator weight filter (tonnage in kg)
-  if (activeFilters.excavator_weight) {
-    filters.excavator_weight = activeFilters.excavator_weight;
+  // Excavator weight filter (tonnage in kg) - use first selected value
+  if (activeFilters.excavator_weight && activeFilters.excavator_weight.length > 0) {
+    filters.excavator_weight = activeFilters.excavator_weight[0];
   }
   
   // Volume range filters
@@ -293,7 +296,7 @@ export function clearFilters() {
     subcategory: activeFilters.subcategory, // Keep subcategory
     volume_min: null,
     volume_max: null,
-    excavator_weight: null, // Keep as null (single value)
+    excavator_weight: [], // Reset to empty array
     width: [],
     attachment_type: [],
     search: null,

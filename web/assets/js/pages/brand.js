@@ -5,6 +5,7 @@
 
 import { products, brands } from '../api/client.js';
 import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
+import { BRAND_DATA } from '../data/brand-data.js';
 
 // Brand page state
 let currentBrand = null;
@@ -36,12 +37,14 @@ export async function initBrandPage() {
   
   currentBrand = brandSlug;
 
-  // Resolve brand ID/title for API filters
-  try {
-    const { brand } = await brands.getBySlug(brandSlug);
-    currentBrandId = brand?.id || null;
-    currentBrandTitle = brand?.title || null;
-  } catch (e) {
+  // Get brand data from local brand-data.js instead of API
+  const brandData = BRAND_DATA[brandSlug];
+  if (brandData) {
+    currentBrandId = brandSlug; // Use slug as ID for filtering
+    currentBrandTitle = brandData.name;
+    console.log('✅ Brand data loaded from brand-data.js:', brandData.name);
+  } else {
+    console.warn('⚠️ Brand not found in brand-data.js:', brandSlug);
     currentBrandId = null;
     currentBrandTitle = null;
   }

@@ -2327,15 +2327,19 @@ main:not(.no-padding) {
    ============================================ */
 
 .page-hero {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  padding: 0 0 var(--space-12) 0;
+  /* Gradient: Light (Top) to Dark (Bottom) */
+  background: linear-gradient(180deg, var(--color-primary-light) 0%, var(--color-primary-dark) 100%);
+  
+  /* Equal padding top & bottom for vertical centering */
+  padding: var(--space-20) 0;
+  
   margin-top: 0;
   position: relative;
-  text-align: center; /* Center alignment for text-only hero */
+  text-align: center;
 }
 
 .page-hero::before {
-  /* Subtle pattern overlay or noise can go here if needed, keeping it clean for now */
+  /* Subtle pattern overlay */
   content: '';
   position: absolute;
   inset: 0;
@@ -2346,13 +2350,12 @@ main:not(.no-padding) {
 }
 
 .page-hero .container {
-  /* Zorgt voor lucht tussen tekst en sticky header */
-  padding-top: calc(var(--space-16) + 40px);
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* Removed extra padding-top hack, relying on hero padding */
 }
 
 /* Breadcrumb Styles within Hero */
@@ -2427,8 +2430,13 @@ main:not(.no-padding) {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .page-hero {
+    /* Smaller equal padding for mobile */
+    padding: var(--space-12) 0;
+  }
+
   .page-hero .container {
-    padding-top: calc(var(--space-12) + 60px);
+    padding-top: 0;
   }
   
   .page-title {

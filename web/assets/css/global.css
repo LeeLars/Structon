@@ -2327,10 +2327,22 @@ main:not(.no-padding) {
    ============================================ */
 
 .page-hero {
-  background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-200) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   padding: 0 0 var(--space-12) 0;
-  margin-top: 0; /* Hero tegen header */
+  margin-top: 0;
   position: relative;
+  text-align: center; /* Center alignment for text-only hero */
+}
+
+.page-hero::before {
+  /* Subtle pattern overlay or noise can go here if needed, keeping it clean for now */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .page-hero .container {
@@ -2338,74 +2350,92 @@ main:not(.no-padding) {
   padding-top: calc(var(--space-16) + 40px);
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Layout Grid: Breadcrumb boven, Content eronder */
+/* Breadcrumb Styles within Hero */
+.page-hero .breadcrumb {
+  justify-content: center;
+  margin-bottom: var(--space-6);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-hero .breadcrumb a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-hero .breadcrumb a:hover {
+  color: var(--color-white);
+}
+
+.page-hero .breadcrumb span {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.page-hero .breadcrumb span[aria-current="page"] {
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+/* Layout Grid - Simplified for text-only */
 .page-hero-grid {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  width: 100%;
 }
 
 .page-hero-content {
-  display: grid;
-  grid-template-columns: 1fr auto; /* Tekst links, Media rechts */
-  gap: var(--space-8);
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .page-hero-text {
-  max-width: 800px;
+  width: 100%;
 }
 
 /* Typography */
 .page-title {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, var(--text-5xl));
-  font-weight: var(--font-bold);
+  font-size: clamp(2.5rem, 6vw, var(--text-6xl)); /* Slightly larger for impact */
+  font-weight: var(--font-black); /* Extra bold */
   line-height: 1.1;
   margin-bottom: var(--space-4);
-  color: var(--color-gray-900);
+  color: var(--color-white);
   text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .page-subtitle {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   line-height: 1.6;
-  color: var(--color-gray-600);
-  max-width: 650px;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: var(--font-light);
 }
 
-/* Media / Image / Icon (Rechts) */
+/* Hide media in new design */
 .page-hero-media {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 400px;
-}
-
-.page-hero-media img {
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  max-height: 300px;
-  object-fit: cover;
+  display: none;
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .page-hero-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .page-hero-media {
-    display: none; /* Verberg media op tablet/mobiel */
-  }
-}
-
 @media (max-width: 768px) {
   .page-hero .container {
     padding-top: calc(var(--space-12) + 60px);
+  }
+  
+  .page-title {
+    font-size: 2.25rem;
+  }
+  
+  .page-subtitle {
+    font-size: var(--text-base);
   }
 }

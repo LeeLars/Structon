@@ -4,7 +4,7 @@
 
 .contact-page {
   min-height: 60vh;
-  padding: 100px 0 80px;
+  padding: 0 0 80px; /* Removed top padding for hero */
   background-color: var(--color-gray-50);
 }
 

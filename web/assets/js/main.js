@@ -92,9 +92,15 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
   const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
   const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
   
-  const productUrl = window.location.pathname.includes('/pages/')
-    ? `product.html?id=${product.slug || product.id}`
-    : `pages/product.html?id=${product.slug || product.id}`;
+  // Determine correct product URL based on current location
+  let productUrl;
+  if (window.location.pathname.includes('/pages/')) {
+    productUrl = `product.html?id=${product.slug || product.id}`;
+  } else if (window.location.pathname.includes('/producten/')) {
+    productUrl = `../pages/product.html?id=${product.slug || product.id}`;
+  } else {
+    productUrl = `pages/product.html?id=${product.slug || product.id}`;
+  }
 
   // Build specs list (Matching screenshot: Label | Value)
   const specsHtml = `
@@ -180,9 +186,21 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
   const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
   const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
   
-  const productUrl = window.location.pathname.includes('/pages/')
-    ? `product.html?id=${product.slug || product.id}`
-    : `../../pages/product.html?id=${product.slug || product.id}`;
+  // Determine correct product URL based on current location
+  let productUrl;
+  if (window.location.pathname.includes('/pages/')) {
+    // Already in /pages/ folder
+    productUrl = `product.html?id=${product.slug || product.id}`;
+  } else if (window.location.pathname.includes('/industrieen/') || window.location.pathname.includes('/kraanbakken/')) {
+    // In industry or brand subfolder, need ../../
+    productUrl = `../../pages/product.html?id=${product.slug || product.id}`;
+  } else if (window.location.pathname.includes('/producten/')) {
+    // In /producten/ folder
+    productUrl = `../pages/product.html?id=${product.slug || product.id}`;
+  } else {
+    // From root
+    productUrl = `pages/product.html?id=${product.slug || product.id}`;
+  }
 
   // Build quote URL with pre-filled data
   const quoteParams = new URLSearchParams();
@@ -325,9 +343,15 @@ export function createProductCard(product, isLoggedIn = false) {
   const imageUrl = product.cloudinary_images?.[0]?.url 
     || STOCK_PHOTOS[stockIndex];
   
-  const productUrl = window.location.pathname.includes('/pages/')
-    ? `product.html?id=${product.slug || product.id}`
-    : `pages/product.html?id=${product.slug || product.id}`;
+  // Determine correct product URL based on current location
+  let productUrl;
+  if (window.location.pathname.includes('/pages/')) {
+    productUrl = `product.html?id=${product.slug || product.id}`;
+  } else if (window.location.pathname.includes('/producten/')) {
+    productUrl = `../pages/product.html?id=${product.slug || product.id}`;
+  } else {
+    productUrl = `pages/product.html?id=${product.slug || product.id}`;
+  }
 
   // Stock status logic
   const stock = product.stock || 0;

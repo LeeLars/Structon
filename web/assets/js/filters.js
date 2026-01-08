@@ -14,6 +14,7 @@ let activeFilters = {
   excavator_weight: [], // Array for multiple tonnage selections
   width: [],
   attachment_type: [],
+  brand: [], // Array for multiple brand selections
   search: null,
   sort: 'newest'
 };
@@ -23,11 +24,14 @@ let onFilterChange = null;
 /**
  * Initialize filters
  */
-export function initFilters(callback) {
+export async function initFilters(callback) {
   onFilterChange = callback;
   
   // Parse URL params
   parseUrlParams();
+  
+  // Load brand filters
+  await loadBrandFilters();
   
   // Setup event listeners
   setupFilterListeners();
@@ -161,6 +165,9 @@ function setupFilterListeners() {
     });
   });
 
+  // Brand checkboxes (setup after dynamic load)
+  setupBrandListeners();
+
   // Sort select
   const sortSelect = document.getElementById('sort-select');
   if (sortSelect) {
@@ -275,6 +282,11 @@ export function getActiveFilters() {
     filters.attachment_type = activeFilters.attachment_type[0];
   }
   
+  // Brand filter
+  if (activeFilters.brand.length > 0) {
+    filters.brand_slug = activeFilters.brand; // Send as array
+  }
+  
   // Search filter
   if (activeFilters.search) {
     filters.search = activeFilters.search;
@@ -300,6 +312,7 @@ export function clearFilters() {
     excavator_weight: [], // Reset to empty array
     width: [],
     attachment_type: [],
+    brand: [], // Reset brand filter
     search: null,
     sort: 'newest'
   };
@@ -339,6 +352,63 @@ function updateUrl() {
   
   const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
   window.history.replaceState({}, '', newUrl);
+}
+
+/**
+ * Load brand filters from API
+ */
+async function loadBrandFilters() {
+  const loadingEl = document.getElementById('brand-filters-loading');
+  const containerEl = document.getElementById('brand-filters-container');
+  
+  if (!loadingEl || !containerEl) return;
+  
+  try {
+    // Import brands API
+    const { brands } = await import('./api/client.js');
+    const data = await brands.getAll(true); // with count
+    
+    if (!data || !data.length) {
+      loadingEl.style.display = 'none';
+      containerEl.innerHTML = '<p class="filter-empty">Geen merken beschikbaar</p>';
+      containerEl.style.display = 'block';
+      return;
+    }
+    
+    // Sort brands alphabetically
+    const sortedBrands = data.sort((a, b) => a.name.localeCompare(b.name));
+    
+    // Generate checkboxes
+    containerEl.innerHTML = sortedBrands.map(brand => `
+      <label class="checkbox-label">
+        <input type="checkbox" name="brand" value="${brand.slug}">
+        <span>${brand.name}${brand.product_count ? ` (${brand.product_count})` : ''}</span>
+      </label>
+    `).join('');
+    
+    // Hide loading, show container
+    loadingEl.style.display = 'none';
+    containerEl.style.display = 'block';
+    
+    console.log('✅ Brand filters loaded:', sortedBrands.length);
+  } catch (error) {
+    console.error('Error loading brand filters:', error);
+    loadingEl.style.display = 'none';
+    containerEl.innerHTML = '<p class="filter-error">Kon merken niet laden</p>';
+    containerEl.style.display = 'block';
+  }
+}
+
+/**
+ * Setup brand filter event listeners
+ */
+function setupBrandListeners() {
+  const brandFilters = document.querySelectorAll('input[name="brand"]');
+  brandFilters.forEach(checkbox => {
+    checkbox.addEventListener('change', (e) => {
+      updateCheckboxFilter('brand', e.target.value, e.target.checked);
+    });
+  });
 }
 
 /**

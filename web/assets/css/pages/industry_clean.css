@@ -456,9 +456,21 @@ main[data-industry] {
 
 .industry-products-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-6);
   margin-bottom: var(--space-8);
+}
+
+@media (max-width: 1200px) {
+  .industry-products-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .industry-products-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ============================================

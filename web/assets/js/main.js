@@ -359,20 +359,22 @@ export function createProductCard(product, isLoggedIn = false) {
         <span class="product-price">€${product.price_excl_vat || '0.00'}</span>
         <span class="product-vat">,- excl. BTW</span>
       </div>
-      <div class="product-footer-divider"></div>
-      <a href="${productUrl}" class="btn-product-cta">
-        In winkelwagen
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <a href="${productUrl}" class="btn-split btn-split-sm">
+        <span class="btn-split-text">In winkelwagen</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></path></svg>
+        </span>
       </a>
     `;
   } else {
-    // Niet ingelogd: Prijs op aanvraag boven de lijn, offerte aanvragen button eronder
+    // Niet ingelogd: Prijs op aanvraag, offerte aanvragen button
     footerHtml = `
-      <span class="product-price-label">Prijs op aanvraag</span>
-      <div class="product-footer-divider"></div>
-      <a href="/contact/?product=${product.slug || product.id}" class="btn-product-cta">
-        Offerte aanvragen
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      <span class="product-price-label" style="display: block; margin-bottom: 8px;">Prijs op aanvraag</span>
+      <a href="/contact/?product=${product.slug || product.id}" class="btn-split btn-split-sm">
+        <span class="btn-split-text">Offerte Aanvragen</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
       </a>
     `;
   }

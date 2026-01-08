@@ -174,6 +174,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
 
 /**
  * Create Industry Product Card (Grid Layout)
+ * Uses new universal .product-card design
  */
 export function createIndustryProductCard(product, isLoggedIn = false) {
   const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
@@ -195,31 +196,34 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
     : `../../pages/contact.html?${quoteParams.toString()}`;
 
   return `
-    <article class="industry-product-card" data-product-id="${product.id}">
-      <a href="${productUrl}" class="industry-product-image">
+    <article class="product-card" data-product-id="${product.id}">
+      <a href="${productUrl}" class="product-card-image-wrapper">
         <img src="${imageUrl}" alt="${escapeHtml(product.title)}" loading="lazy">
       </a>
       
-      <div class="industry-product-content">
-        <span class="industry-product-category">${product.category_title || 'Product'}</span>
-        <h3 class="industry-product-title">
+      <div class="product-card-divider"></div>
+      
+      <div class="product-card-content">
+        <span class="product-card-category">${product.category_title || 'Product'}</span>
+        
+        <h3 class="product-card-title">
           <a href="${productUrl}">${escapeHtml(product.title)}</a>
         </h3>
         
-        <p class="industry-product-description">
-          ${product.description ? escapeHtml(product.description.substring(0, 80)) + '...' : 'Hoogwaardig aanbouwdeel voor uw machine.'}
+        <p class="product-card-description">
+          ${product.description ? escapeHtml(product.description.substring(0, 100)) : 'Hoogwaardig aanbouwdeel voor uw machine. Robuust en betrouwbaar.'}
         </p>
         
-        <div class="industry-product-actions">
-          <a href="${quoteUrl}" class="btn-split btn-split-sm" style="flex: 1;">
+        <div class="product-card-actions">
+          <a href="${quoteUrl}" class="btn-split btn-split-sm">
             <span class="btn-split-text">Offerte</span>
             <span class="btn-split-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </span>
           </a>
-          <a href="${productUrl}" class="btn-split btn-split-sm" style="flex: 1; --color-primary: var(--color-gray-600);">
-            <span class="btn-split-text" style="background-color: var(--color-gray-200); color: var(--color-gray-800);">Info</span>
-            <span class="btn-split-icon" style="background-color: var(--color-gray-300);">
+          <a href="${productUrl}" class="btn-split btn-split-sm card-btn-secondary">
+            <span class="btn-split-text">Info</span>
+            <span class="btn-split-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
             </span>
           </a>

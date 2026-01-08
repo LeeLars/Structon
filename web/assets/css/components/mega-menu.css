@@ -30,17 +30,18 @@
   border-top: 3px solid var(--color-primary);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
   z-index: 1000;
 }
 
-/* Delay before hiding menu - gives user time to move mouse */
-.menu-dropdown {
-  transition: opacity 0.3s ease 0.1s, visibility 0.3s ease 0.1s, transform 0.3s ease;
+/* Hover delay: 200ms before showing menu */
+.menu-item:hover .menu-dropdown {
+  transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s, visibility 0s linear 0.2s;
 }
 
-.menu-item:hover .menu-dropdown {
-  transition-delay: 0s; /* Show immediately on hover */
+/* When already open and hovering dropdown itself, keep it open instantly */
+.menu-dropdown:hover {
+  transition-delay: 0s;
 }
 
 /* Hover state already defined above */

@@ -4,21 +4,25 @@
  * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v9';
+const CACHE_VERSION = 'structon-v10';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;
 
+// Determine base path for GitHub Pages compatibility
+const BASE_PATH = self.location.pathname.includes('/Structon/') ? '/Structon' : '';
+
 // Static assets to cache immediately (critical path)
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/assets/css/global.css',
-  '/assets/css/fonts.css',
-  '/assets/js/main.js',
-  '/assets/images/static/logo.svg',
-  '/assets/images/static/favicon.svg'
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/index.html`,
+  `${BASE_PATH}/assets/css/global.css`,
+  `${BASE_PATH}/assets/css/fonts.css`,
+  `${BASE_PATH}/assets/js/main.js`,
+  `${BASE_PATH}/assets/images/static/logo.svg`,
+  `${BASE_PATH}/assets/images/static/favicon.svg`,
+  `${BASE_PATH}/offline.html`
 ];
 
 // Cache size limits
@@ -158,7 +162,7 @@ async function cacheFirstStrategy(request, cacheName) {
     // Return offline page for HTML requests
     if (request.destination === 'document') {
       const cache = await caches.open(STATIC_CACHE);
-      return cache.match('/offline.html') || new Response('Offline', { status: 503 });
+      return cache.match(`${BASE_PATH}/offline.html`) || new Response('Offline', { status: 503 });
     }
     
     throw error;
@@ -191,7 +195,7 @@ async function networkFirstStrategy(request, cacheName) {
     // Return offline page for HTML requests
     if (request.destination === 'document') {
       const cache = await caches.open(STATIC_CACHE);
-      return cache.match('/offline.html') || new Response('Offline', { status: 503 });
+      return cache.match(`${BASE_PATH}/offline.html`) || new Response('Offline', { status: 503 });
     }
 
     throw error;

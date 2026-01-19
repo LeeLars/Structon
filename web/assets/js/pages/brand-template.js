@@ -142,6 +142,8 @@ function renderHero(brandData) {
   if (heroImage) {
     heroImage.src = brandData.heroImage;
     heroImage.alt = `${brandData.name} graafmachine aan het werk`;
+    if (brandData.heroImageWidth) heroImage.width = brandData.heroImageWidth;
+    if (brandData.heroImageHeight) heroImage.height = brandData.heroImageHeight;
   }
 }
 

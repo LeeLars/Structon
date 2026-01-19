@@ -12,9 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('dealer-form');
   const submitBtn = document.getElementById('submit-btn');
   const alertContainer = document.getElementById('dealer-alert');
+  const businessTypeSelect = document.getElementById('business-type');
+  const otherBusinessTypeGroup = document.getElementById('other-business-type-group');
 
   if (form) {
     form.addEventListener('submit', handleSubmit);
+  }
+
+  // Toggle "Anders" text field
+  if (businessTypeSelect) {
+    businessTypeSelect.addEventListener('change', (e) => {
+      if (e.target.value === 'other') {
+        otherBusinessTypeGroup.style.display = 'block';
+      } else {
+        otherBusinessTypeGroup.style.display = 'none';
+        document.getElementById('other-business-type').value = '';
+      }
+    });
   }
 
   /**
@@ -47,13 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           // Company info
           company_name: data.company_name,
-          kvk_number: data.kvk,
           vat_number: data.btw,
           website: data.website || null,
           
           // Contact person
           contact_name: data.contact_name,
-          contact_function: data.contact_function,
+          contact_function: data.contact_function || null,
           email: data.email,
           phone: data.phone,
           
@@ -65,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
           // Business info
           business_type: data.business_type,
+          other_business_type: data.other_business_type || null,
           annual_turnover: data.annual_turnover || null,
           message: data.message || null,
           
@@ -139,8 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function validateForm(data) {
     // Check required fields
     const requiredFields = [
-      'company_name', 'kvk', 'btw', 'contact_name', 
-      'contact_function', 'email', 'phone', 'address', 
+      'company_name', 'btw', 'contact_name', 
+      'email', 'phone', 'address', 
       'postal_code', 'city', 'country', 'business_type'
     ];
 
@@ -178,14 +192,13 @@ DEALER AANMELDING - STRUCTON
 BEDRIJFSGEGEVENS
 ----------------
 Bedrijfsnaam: ${data.company_name}
-KVK nummer: ${data.kvk}
 BTW nummer: ${data.btw}
 Website: ${data.website || 'Niet opgegeven'}
 
 CONTACTPERSOON
 --------------
 Naam: ${data.contact_name}
-Functie: ${data.contact_function}
+Functie: ${data.contact_function || 'Niet opgegeven'}
 E-mail: ${data.email}
 Telefoon: ${data.phone}
 
@@ -199,6 +212,7 @@ Land: ${data.country}
 BEDRIJFSINFORMATIE
 ------------------
 Type bedrijf: ${data.business_type}
+${data.other_business_type ? `Specificatie: ${data.other_business_type}` : ''}
 Jaaromzet: ${data.annual_turnover || 'Niet opgegeven'}
 
 MOTIVATIE / OPMERKINGEN

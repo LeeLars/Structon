@@ -112,20 +112,16 @@
               
               <div class="form-row">
                 <div class="form-group">
-                  <label for="company-name" class="form-label">Bedrijfsnaam *</label>
+                  <label for="company-name" class="form-label">Bedrijfsnaam</label>
                   <input type="text" id="company-name" name="company_name" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label for="kvk" class="form-label">KVK nummer *</label>
-                  <input type="text" id="kvk" name="kvk" class="form-input" required>
+                  <label for="btw" class="form-label">BTW nummer</label>
+                  <input type="text" id="btw" name="btw" class="form-input" required>
                 </div>
               </div>
 
               <div class="form-row">
-                <div class="form-group">
-                  <label for="btw" class="form-label">BTW nummer *</label>
-                  <input type="text" id="btw" name="btw" class="form-input" required>
-                </div>
                 <div class="form-group">
                   <label for="website" class="form-label">Website</label>
                   <input type="url" id="website" name="website" class="form-input" placeholder="https://">
@@ -139,22 +135,22 @@
               
               <div class="form-row">
                 <div class="form-group">
-                  <label for="contact-name" class="form-label">Naam *</label>
+                  <label for="contact-name" class="form-label">Naam</label>
                   <input type="text" id="contact-name" name="contact_name" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label for="contact-function" class="form-label">Functie *</label>
-                  <input type="text" id="contact-function" name="contact_function" class="form-input" required>
+                  <label for="contact-function" class="form-label">Functie</label>
+                  <input type="text" id="contact-function" name="contact_function" class="form-input">
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="email" class="form-label">E-mailadres *</label>
+                  <label for="email" class="form-label">E-mailadres</label>
                   <input type="email" id="email" name="email" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label for="phone" class="form-label">Telefoonnummer *</label>
+                  <label for="phone" class="form-label">Telefoonnummer</label>
                   <input type="tel" id="phone" name="phone" class="form-input" required>
                 </div>
               </div>
@@ -165,23 +161,23 @@
               <h3 class="form-section-title">Adresgegevens</h3>
               
               <div class="form-group">
-                <label for="address" class="form-label">Straat + huisnummer *</label>
+                <label for="address" class="form-label">Straat + huisnummer</label>
                 <input type="text" id="address" name="address" class="form-input" required>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="postal-code" class="form-label">Postcode *</label>
+                  <label for="postal-code" class="form-label">Postcode</label>
                   <input type="text" id="postal-code" name="postal_code" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label for="city" class="form-label">Plaats *</label>
+                  <label for="city" class="form-label">Plaats</label>
                   <input type="text" id="city" name="city" class="form-input" required>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="country" class="form-label">Land *</label>
+                <label for="country" class="form-label">Land</label>
                 <select id="country" name="country" class="form-input" required>
                   <option value="">Selecteer land</option>
                   <option value="BE" selected>België</option>
@@ -198,7 +194,7 @@
               <h3 class="form-section-title">Bedrijfsinformatie</h3>
               
               <div class="form-group">
-                <label for="business-type" class="form-label">Type bedrijf *</label>
+                <label for="business-type" class="form-label">Type bedrijf</label>
                 <select id="business-type" name="business_type" class="form-input" required>
                   <option value="">Selecteer type</option>
                   <option value="dealer">Dealer / Handelaar</option>
@@ -207,6 +203,11 @@
                   <option value="manufacturer">Fabrikant</option>
                   <option value="other">Anders</option>
                 </select>
+              </div>
+
+              <div class="form-group" id="other-business-type-group" style="display: none;">
+                <label for="other-business-type" class="form-label">Specificeer type bedrijf</label>
+                <input type="text" id="other-business-type" name="other_business_type" class="form-input" placeholder="Bijv. verkoper, importeur...">
               </div>
 
               <div class="form-group">

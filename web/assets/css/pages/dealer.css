@@ -280,13 +280,10 @@ select.form-input {
 }
 
 /* Required Field Indicator */
-.form-label::after {
-  content: "";
-}
-
 .form-group:has(input[required]) .form-label::after,
 .form-group:has(select[required]) .form-label::after,
 .form-group:has(textarea[required]) .form-label::after {
   content: " *";
-  color: var(--color-danger);
+  color: #dc2626;
+  font-weight: 600;
 }

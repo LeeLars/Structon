@@ -171,6 +171,20 @@ function renderProduct(product) {
     </div>
   `;
 
+  // Add related products section container after product detail
+  const existingRelatedSection = document.getElementById('related-section');
+  if (!existingRelatedSection) {
+    const relatedSectionHtml = `
+      <section id="related-section" class="section" style="display: none; padding-top: var(--space-16); padding-bottom: var(--space-16);">
+        <div class="container">
+          <h2 style="font-size: var(--text-3xl); color: var(--color-primary); margin-bottom: var(--space-8); text-align: center;">GERELATEERDE PRODUCTEN</h2>
+          <div id="related-products" class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6);"></div>
+        </div>
+      </section>
+    `;
+    container.insertAdjacentHTML('afterend', relatedSectionHtml);
+  }
+
   // Setup thumbnail clicks
   setupThumbnails();
 

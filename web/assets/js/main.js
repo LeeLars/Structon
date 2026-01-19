@@ -205,8 +205,9 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
   quoteParams.set('product_name', product.title);
   if (product.category_slug) quoteParams.set('category', product.category_slug);
   
-  // Determine quote URL path
-  const quoteUrl = `/contact/?${quoteParams.toString()}`;
+  // Determine quote URL path - use dynamic base path for GitHub Pages
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  const quoteUrl = `${basePath}/offerte-aanvragen/?${quoteParams.toString()}`;
 
   return `
     <article class="product-card" data-product-id="${product.id}">
@@ -389,7 +390,7 @@ export function createProductCard(product, isLoggedIn = false) {
     // Niet ingelogd: Prijs op aanvraag, offerte aanvragen button
     footerHtml = `
       <span class="product-price-label" style="display: block; margin-bottom: 8px;">Prijs op aanvraag</span>
-      <a href="/contact/?product=${product.slug || product.id}" class="btn-split btn-split-sm" style="width: 100%;">
+      <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/offerte-aanvragen/?product=${product.slug || product.id}" class="btn-split btn-split-sm" style="width: 100%;">
         <span class="btn-split-text" style="flex: 1; justify-content: center;">Offerte Aanvragen</span>
         <span class="btn-split-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>

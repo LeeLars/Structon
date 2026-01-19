@@ -12,11 +12,16 @@ function getBasePath() {
   const path = window.location.pathname;
   
   // Brand pages are at /kraanbakken/brand/ or /Structon/kraanbakken/brand/
-  // We need to go back to root: ../../
+  // Count how many levels deep we are from the brand page
   if (path.includes('/kraanbakken/')) {
     const parts = path.split('/').filter(p => p && !p.includes('.html'));
-    if (parts.length >= 2) {
-      return '../../';
+    // Find kraanbakken index
+    const kraanbakkenIndex = parts.indexOf('kraanbakken');
+    if (kraanbakkenIndex !== -1 && parts[kraanbakkenIndex + 1]) {
+      // We're in a brand subfolder (e.g., /Structon/kraanbakken/volvo/)
+      // Need to go up to root: count levels after kraanbakken + 1 for kraanbakken itself
+      const levelsUp = parts.length - kraanbakkenIndex;
+      return '../'.repeat(levelsUp);
     }
   }
   
@@ -252,7 +257,8 @@ function renderOtherBrands(currentBrandSlug) {
   if (!container) return;
   
   const basePath = getBasePath();
-  const otherBrandsList = OTHER_BRANDS.filter(b => b.slug !== currentBrandSlug).slice(0, 10);
+  // Show all brands except current one (no slice limit)
+  const otherBrandsList = OTHER_BRANDS.filter(b => b.slug !== currentBrandSlug);
   
   container.innerHTML = otherBrandsList.map(brand => 
     `<a href="${basePath}kraanbakken/${brand.slug}/">${brand.name}</a>`

@@ -6,6 +6,24 @@
 import { BRAND_DATA, OTHER_BRANDS } from '../data/brand-data.js?v=2';
 
 /**
+ * Get base path for correct URL generation (GitHub Pages compatible)
+ */
+function getBasePath() {
+  const path = window.location.pathname;
+  
+  // Brand pages are at /kraanbakken/brand/ or /Structon/kraanbakken/brand/
+  // We need to go back to root: ../../
+  if (path.includes('/kraanbakken/')) {
+    const parts = path.split('/').filter(p => p && !p.includes('.html'));
+    if (parts.length >= 2) {
+      return '../../';
+    }
+  }
+  
+  return '';
+}
+
+/**
  * Get brand slug from URL path
  */
 function getBrandSlug() {
@@ -233,10 +251,11 @@ function renderOtherBrands(currentBrandSlug) {
   const container = document.getElementById('other-brands-links');
   if (!container) return;
   
+  const basePath = getBasePath();
   const otherBrandsList = OTHER_BRANDS.filter(b => b.slug !== currentBrandSlug).slice(0, 10);
   
   container.innerHTML = otherBrandsList.map(brand => 
-    `<a href="/kraanbakken/${brand.slug}/">${brand.name}</a>`
+    `<a href="${basePath}kraanbakken/${brand.slug}/">${brand.name}</a>`
   ).join('');
 }
 
@@ -250,9 +269,10 @@ function renderCTA(brandData) {
   const ctaText = document.querySelector('.brand-cta-text');
   if (ctaText) ctaText.textContent = brandData.ctaText;
   
+  const basePath = getBasePath();
   const ctaLink = document.querySelector('.brand-cta .btn-white');
   if (ctaLink) {
-    ctaLink.href = `/contact/?brand=${brandData.slug}`;
+    ctaLink.href = `${basePath}contact/?brand=${brandData.slug}`;
   }
 }
 

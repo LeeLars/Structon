@@ -6,6 +6,24 @@
 
 import { INDUSTRY_DATA, getIndustryData, getRelatedIndustries } from '../data/industry-data.js?v=1';
 
+/**
+ * Get base path for correct URL generation (GitHub Pages compatible)
+ */
+function getBasePath() {
+  const path = window.location.pathname;
+  
+  // Industry pages are at /industrieen/industry/ or /Structon/industrieen/industry/
+  // We need to go back to root: ../../
+  if (path.includes('/industrieen/')) {
+    const parts = path.split('/').filter(p => p && !p.includes('.html'));
+    if (parts.length >= 2) {
+      return '../../';
+    }
+  }
+  
+  return '';
+}
+
 class IndustryTemplate {
   constructor() {
     this.industrySlug = null;
@@ -109,10 +127,11 @@ class IndustryTemplate {
     const breadcrumb = document.querySelector('.industry-breadcrumbs, .breadcrumb');
     if (!breadcrumb) return;
 
+    const basePath = getBasePath();
     breadcrumb.innerHTML = `
-      <a href="/">Home</a>
+      <a href="${basePath}">Home</a>
       <span>/</span>
-      <a href="/industrieen/">Industrieën</a>
+      <a href="${basePath}industrieen/">Industrieën</a>
       <span>/</span>
       <span aria-current="page">${this.industryData.name}</span>
     `;
@@ -277,10 +296,11 @@ class IndustryTemplate {
     
     if (!relatedLinks) return;
 
+    const basePath = getBasePath();
     const related = getRelatedIndustries(this.industrySlug);
     
     relatedLinks.innerHTML = related.map(industry => {
-      return `<a href="/industrieen/${industry.slug}/">${industry.name}</a>`;
+      return `<a href="${basePath}industrieen/${industry.slug}/">${industry.name}</a>`;
     }).join('');
   }
 

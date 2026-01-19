@@ -282,7 +282,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
         Weet u niet zeker welke ${categoryName.toLowerCase()} geschikt zijn voor uw machine? Onze specialisten helpen u graag.
       </p>
     </div>
-    <a href="/pages/contact.html" class="btn-split">
+    <a href="/contact/" class="btn-split">
       <span class="btn-split-text">Neem contact op</span>
       <span class="btn-split-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

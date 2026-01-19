@@ -209,9 +209,7 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
   if (product.category_slug) quoteParams.set('category', product.category_slug);
   
   // Determine quote URL path
-  const quoteUrl = window.location.pathname.includes('/pages/')
-    ? `contact.html?${quoteParams.toString()}`
-    : `../../pages/contact.html?${quoteParams.toString()}`;
+  const quoteUrl = `/contact/?${quoteParams.toString()}`;
 
   return `
     <article class="product-card" data-product-id="${product.id}">

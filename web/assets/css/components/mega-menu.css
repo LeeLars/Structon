@@ -9,6 +9,18 @@
   cursor: pointer;
 }
 
+/* Hover Bridge - invisible area to prevent gap between menu and dropdown */
+.menu-item::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: transparent;
+  z-index: 999;
+}
+
 /* Keep menu open when moving mouse to dropdown */
 .menu-item:hover .menu-dropdown,
 .menu-dropdown:hover {
@@ -22,7 +34,7 @@
   position: fixed;
   top: 130px; /* Height of header (top bar + main nav) */
   left: 50%;
-  transform: translateX(-50%) translateY(-10px);
+  transform: translateX(-50%) translateY(0);
   width: 99vw;
   max-width: 100%;
   background: white;
@@ -34,9 +46,9 @@
   z-index: 1000;
 }
 
-/* Hover delay: 200ms before showing menu */
+/* Hover delay: 100ms before showing menu - faster response */
 .menu-item:hover .menu-dropdown {
-  transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s, visibility 0s linear 0.2s;
+  transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s, visibility 0s linear 0.1s;
 }
 
 /* When already open and hovering dropdown itself, keep it open instantly */

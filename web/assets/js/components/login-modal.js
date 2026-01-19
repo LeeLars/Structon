@@ -65,7 +65,7 @@ function createLoginModal() {
       </div>
       
       <div class="login-modal-info">
-        Nog geen klant? <a href="pages/contact.html">Neem contact op</a>
+        Nog geen klant? <a href="/contact/">Neem contact op</a>
       </div>
     </div>
   `;

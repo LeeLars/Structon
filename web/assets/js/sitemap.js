@@ -33,9 +33,9 @@ export async function initSitemap() {
         <h5 class="sitemap-heading">Algemeen</h5>
         <ul class="sitemap-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/pages/about.html">Over Ons</a></li>
-          <li><a href="/pages/contact.html">Contact</a></li>
-          <li><a href="/pages/login.html">Klant Login</a></li>
+          <li><a href="/over-ons/">Over Ons</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/login/">Klant Login</a></li>
         </ul>
       </li>
     `;
@@ -67,8 +67,8 @@ export async function initSitemap() {
         <h5 class="sitemap-heading">Navigatie</h5>
         <ul class="sitemap-links">
           <li><a href="/">Home</a></li>
-          <li><a href="/pages/about.html">Over Ons</a></li>
-          <li><a href="/pages/contact.html">Contact</a></li>
+          <li><a href="/over-ons/">Over Ons</a></li>
+          <li><a href="/contact/">Contact</a></li>
           <li><a href="/kraanbakken/">Kraanbakken</a></li>
           <li><a href="/slotenbakken/">Slotenbakken</a></li>
         </ul>

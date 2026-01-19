@@ -252,7 +252,7 @@ function renderCTA(brandData) {
   
   const ctaLink = document.querySelector('.brand-cta .btn-white');
   if (ctaLink) {
-    ctaLink.href = `../../pages/contact.html?brand=${brandData.slug}`;
+    ctaLink.href = `/contact/?brand=${brandData.slug}`;
   }
 }
 

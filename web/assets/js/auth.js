@@ -90,11 +90,7 @@ function updateAuthUI(isAuthenticated) {
       loginBtn.addEventListener('click', handleAccountClick);
     } else {
       loginBtn.innerHTML = `<span>Inloggen</span>`;
-      loginBtn.href = 'pages/login.html';
-      // Check if we're in pages folder
-      if (window.location.pathname.includes('/pages/')) {
-        loginBtn.href = 'login.html';
-      }
+      loginBtn.href = '/login/';
     }
   }
 

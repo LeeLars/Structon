@@ -125,15 +125,10 @@ function renderAddToCart(data) {
 function renderLockedPrice(container) {
   container.classList.add('price-locked');
   
-  // Determine correct login path
-  const loginPath = window.location.pathname.includes('/pages/') 
-    ? 'login.html' 
-    : 'pages/login.html';
-  
   container.innerHTML = `
     <div class="product-price">Login voor prijs</div>
     <p class="login-prompt">
-      <a href="${loginPath}">Log in</a> om prijzen te bekijken en te bestellen.
+      <a href="/login/">Log in</a> om prijzen te bekijken en te bestellen.
     </p>
   `;
 }

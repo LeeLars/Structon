@@ -92,15 +92,9 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
   const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
   const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
   
-  // Determine correct product URL based on current location
-  let productUrl;
-  if (window.location.pathname.includes('/producten/')) {
-    productUrl = `?id=${product.slug || product.id}`;
-  } else if (window.location.pathname.includes('/industrieen/') || window.location.pathname.includes('/kraanbakken/')) {
-    productUrl = `../../producten/?id=${product.slug || product.id}`;
-  } else {
-    productUrl = `producten/?id=${product.slug || product.id}`;
-  }
+  // Use absolute path with dynamic base for GitHub Pages compatibility
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
 
   // Build specs list (Matching screenshot: Label | Value)
   const specsHtml = `
@@ -186,18 +180,9 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
   const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
   const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
   
-  // Determine correct product URL based on current location
-  let productUrl;
-  if (window.location.pathname.includes('/producten/')) {
-    // Already in /producten/ folder
-    productUrl = `?id=${product.slug || product.id}`;
-  } else if (window.location.pathname.includes('/industrieen/') || window.location.pathname.includes('/kraanbakken/')) {
-    // In industry or brand subfolder, need ../../
-    productUrl = `../../producten/?id=${product.slug || product.id}`;
-  } else {
-    // From root
-    productUrl = `producten/?id=${product.slug || product.id}`;
-  }
+  // Use absolute path with dynamic base for GitHub Pages compatibility
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
 
   // Build quote URL with pre-filled data
   const quoteParams = new URLSearchParams();
@@ -205,8 +190,6 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
   quoteParams.set('product_name', product.title);
   if (product.category_slug) quoteParams.set('category', product.category_slug);
   
-  // Determine quote URL path - use dynamic base path for GitHub Pages
-  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   const quoteUrl = `${basePath}/offerte-aanvragen/?${quoteParams.toString()}`;
 
   return `
@@ -339,15 +322,9 @@ export function createProductCard(product, isLoggedIn = false) {
   const imageUrl = product.cloudinary_images?.[0]?.url 
     || STOCK_PHOTOS[stockIndex];
   
-  // Determine correct product URL based on current location
-  let productUrl;
-  if (window.location.pathname.includes('/producten/')) {
-    productUrl = `?id=${product.slug || product.id}`;
-  } else if (window.location.pathname.includes('/industrieen/') || window.location.pathname.includes('/kraanbakken/')) {
-    productUrl = `../../producten/?id=${product.slug || product.id}`;
-  } else {
-    productUrl = `producten/?id=${product.slug || product.id}`;
-  }
+  // Use absolute path with dynamic base for GitHub Pages compatibility
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
 
   // Stock status logic
   const stock = product.stock || 0;

@@ -1,0 +1,8 @@
+# Robots.txt for Structon
+# https://leelars.github.io/Structon/
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://leelars.github.io/Structon/sitemap.xml

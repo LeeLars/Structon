@@ -7,8 +7,11 @@ export function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', async () => {
       try {
-        const registration = await navigator.serviceWorker.register('/service-worker.js', {
-          scope: '/'
+        // Determine base path for GitHub Pages compatibility
+        const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+        
+        const registration = await navigator.serviceWorker.register(`${basePath}/service-worker.js`, {
+          scope: `${basePath}/`
         });
         
         console.log('✅ Service Worker registered:', registration.scope);

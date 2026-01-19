@@ -142,7 +142,7 @@ function renderQuoteRequired(container) {
     <p class="quote-prompt">
       Neem contact met ons op voor een offerte.
     </p>
-    <a href="contact.html" class="btn btn-primary">Offerte Aanvragen</a>
+    <a href="/offerte-aanvragen/" class="btn btn-primary">Offerte Aanvragen</a>
   `;
 }
 

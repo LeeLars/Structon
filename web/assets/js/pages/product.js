@@ -31,7 +31,7 @@ function buildQuoteUrl(product) {
     params.set('product_tonnage', `${minTon}-${maxTon}`);
   }
   
-  return `contact.html?${params.toString()}`;
+  return `../offerte-aanvragen/?${params.toString()}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

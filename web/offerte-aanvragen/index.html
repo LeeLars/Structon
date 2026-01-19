@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Neem contact op met Structon voor vragen over kraanbakken en aanbouwdelen. Wij helpen u graag verder.">
-  <title>Contact | Structon</title>
+  <meta name="description" content="Vraag een offerte aan voor kraanbakken en graafmachine aanbouwdelen. Binnen 24 uur ontvangt u ons antwoord van onze specialisten.">
+  <title>Offerte Aanvragen | Structon</title>
   
   <!-- Fonts - Custom Arthouse -->
   <link rel="preload" href="../assets/css/fonts.css" as="style">
@@ -30,13 +30,13 @@
         <nav class="breadcrumb" aria-label="Kruimelpad">
           <a href="../index.html">Home</a>
           <span>/</span>
-          <span aria-current="page">Contact</span>
+          <span aria-current="page">Offerte Aanvragen</span>
         </nav>
         
         <div class="page-hero-content">
           <div class="page-hero-text">
-            <h1 class="page-title">NEEM CONTACT OP</h1>
-            <p class="page-subtitle">Heeft u vragen of opmerkingen? Neem contact met ons op en wij helpen u graag verder.</p>
+            <h1 class="page-title">OFFERTE AANVRAGEN</h1>
+            <p class="page-subtitle">Vraag een vrijblijvende offerte aan voor kraanbakken en aanbouwdelen. Binnen 24 uur ontvangt u ons antwoord.</p>
           </div>
         </div>
       </div>
@@ -47,38 +47,157 @@
         <!-- Left: Quote Form -->
         <div class="contact-form-section">
           <div class="form-card">
-            <h2 class="form-title">Stel uw vraag</h2>
-            <p class="form-subtitle">Vul het formulier in en wij nemen zo snel mogelijk contact met u op.</p>
+            <h2 class="form-title">Offerte of vraag?</h2>
+            <p class="form-subtitle">Vul het formulier in en wij zorgen dat u snel de juiste informatie ontvangt.</p>
             <p class="form-notice" style="background: #f0f7f9; border-left: 3px solid var(--color-primary); padding: 12px 16px; margin: 16px 0; font-size: 0.9rem; color: #555;">
-              <strong>Tip:</strong> Voor een offerte aanvraag kunt u <a href="/offerte-aanvragen/" style="color: var(--color-primary); font-weight: 600;">hier terecht</a>.
+              <strong>Let op:</strong> Structon levert uitsluitend aan zakelijke klanten (B2B). Betaling geschiedt via factuur.
             </p>
             
-            <!-- Contact Form -->
-            <form id="contact-form" class="quote-form" novalidate>
+            <!-- Quote Form -->
+            <form id="quote-form" class="quote-form" novalidate>
+              <!-- Hidden fields for tracking -->
+              <input type="hidden" name="source_page" id="source-page">
+              <input type="hidden" name="product_id" id="product-id">
+              <input type="hidden" name="product_slug" id="product-slug">
+              <input type="hidden" name="industry" id="industry">
+              <input type="hidden" name="brand" id="brand">
               
-              <!-- Contact Info -->
+              <!-- Form Type Selection -->
               <div class="form-group">
-                <label for="customer_name" class="form-label">Naam *</label>
-                <input type="text" id="customer_name" name="customer_name" class="form-input" required placeholder="Uw volledige naam">
-                <span class="form-error">Vul uw naam in</span>
+                <label class="form-label">Type aanvraag *</label>
+                <div class="form-radio-group">
+                  <label class="form-radio">
+                    <input type="radio" name="request_type" value="offerte" checked>
+                    <span class="radio-custom"></span>
+                    <span class="radio-label">Offerte aanvragen</span>
+                  </label>
+                  <label class="form-radio">
+                    <input type="radio" name="request_type" value="vraag">
+                    <span class="radio-custom"></span>
+                    <span class="radio-label">Vraag stellen</span>
+                  </label>
+                  <label class="form-radio">
+                    <input type="radio" name="request_type" value="maatwerk">
+                    <span class="radio-custom"></span>
+                    <span class="radio-label">Maatwerk aanvraag</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Personal Info -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="customer_name" class="form-label">Naam *</label>
+                  <input type="text" id="customer_name" name="customer_name" class="form-input" required placeholder="Uw volledige naam">
+                  <span class="form-error">Vul uw naam in</span>
+                </div>
+                <div class="form-group">
+                  <label for="company_name" class="form-label">Bedrijfsnaam *</label>
+                  <input type="text" id="company_name" name="company_name" class="form-input" required placeholder="Uw bedrijfsnaam">
+                  <span class="form-error">Vul uw bedrijfsnaam in</span>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="customer_email" class="form-label">E-mailadres *</label>
+                  <input type="email" id="customer_email" name="customer_email" class="form-input" required placeholder="uw@bedrijf.be">
+                  <span class="form-error">Vul een geldig e-mailadres in</span>
+                </div>
+                <div class="form-group">
+                  <label for="customer_phone" class="form-label">Telefoonnummer</label>
+                  <input type="tel" id="customer_phone" name="customer_phone" class="form-input" placeholder="+32 XXX XX XX XX">
+                </div>
+              </div>
+              
+              <!-- BTW nummer (B2B verplicht) -->
+              <div class="form-group">
+                <label for="vat_number" class="form-label">BTW-nummer *</label>
+                <input type="text" id="vat_number" name="vat_number" class="form-input" required placeholder="BE0123456789">
+                <span class="form-error">Vul een geldig BTW-nummer in</span>
+              </div>
+              
+              <!-- Product Selection -->
+              <div class="form-group" id="product-selection-group">
+                <label for="product_name" class="form-label">Product / Baktype</label>
+                <select id="product_category" name="product_category" class="form-select">
+                  <option value="">Selecteer een categorie...</option>
+                  <option value="graafbakken">Graafbakken</option>
+                  <option value="slotenbakken">Slotenbakken</option>
+                  <option value="rioolbakken">Rioolbakken</option>
+                  <option value="sorteergrijpers">Sorteergrijpers</option>
+                  <option value="sloophamers">Sloophamers</option>
+                  <option value="adapters">Adapterstukken</option>
+                  <option value="overige">Overige</option>
+                </select>
+              </div>
+              
+              <!-- Pre-filled product info (shown when coming from product page) -->
+              <div class="form-group product-prefilled" id="product-prefilled" style="display: none;">
+                <label class="form-label">Geselecteerd product</label>
+                <div class="prefilled-product-card" style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; position: relative;">
+                  <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999;">×</button>
+                  <div class="prefilled-details">
+                    <p style="margin: 0 0 8px 0;"><strong>Product:</strong> <span id="prefilled-product-name"></span></p>
+                    <p style="margin: 0 0 8px 0;" id="prefilled-category-row"><strong>Type:</strong> <span id="prefilled-product-category"></span></p>
+                    <p style="margin: 0 0 8px 0;" id="prefilled-brand-row"><strong>Merk:</strong> <span id="prefilled-product-brand"></span></p>
+                    <p style="margin: 0;" id="prefilled-tonnage-row"><strong>Tonnage:</strong> <span id="prefilled-product-tonnage"></span></p>
+                  </div>
+                </div>
+                <!-- Hidden fields for prefilled data -->
+                <input type="hidden" name="prefilled_product_name" id="prefilled-product-name-input">
+                <input type="hidden" name="prefilled_product_category" id="prefilled-product-category-input">
+                <input type="hidden" name="prefilled_product_brand" id="prefilled-product-brand-input">
+                <input type="hidden" name="prefilled_product_tonnage" id="prefilled-product-tonnage-input">
+              </div>
+              
+              <!-- Machine Info -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="machine_brand" class="form-label">Merk graafmachine</label>
+                  <select id="machine_brand" name="machine_brand" class="form-select">
+                    <option value="">Selecteer merk...</option>
+                    <option value="caterpillar">Caterpillar</option>
+                    <option value="komatsu">Komatsu</option>
+                    <option value="volvo">Volvo</option>
+                    <option value="hitachi">Hitachi</option>
+                    <option value="liebherr">Liebherr</option>
+                    <option value="jcb">JCB</option>
+                    <option value="takeuchi">Takeuchi</option>
+                    <option value="kubota">Kubota</option>
+                    <option value="case">Case</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="develon">Develon</option>
+                    <option value="anders">Anders</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="machine_model" class="form-label">Model / Tonnage</label>
+                  <input type="text" id="machine_model" name="machine_model" class="form-input" placeholder="bv. CAT 320 of 20 ton">
+                </div>
               </div>
               
               <div class="form-group">
-                <label for="customer_email" class="form-label">E-mailadres *</label>
-                <input type="email" id="customer_email" name="customer_email" class="form-input" required placeholder="uw@email.be">
-                <span class="form-error">Vul een geldig e-mailadres in</span>
-              </div>
-              
-              <div class="form-group">
-                <label for="customer_phone" class="form-label">Telefoonnummer</label>
-                <input type="tel" id="customer_phone" name="customer_phone" class="form-input" placeholder="+32 XXX XX XX XX">
+                <label for="attachment_type" class="form-label">CW-aansluiting</label>
+                <select id="attachment_type" name="attachment_type" class="form-select">
+                  <option value="">Selecteer aansluiting...</option>
+                  <option value="CW05">CW05 (0-2 ton)</option>
+                  <option value="CW10">CW10 (2-6 ton)</option>
+                  <option value="CW20">CW20 (6-15 ton)</option>
+                  <option value="CW30">CW30 (15-25 ton)</option>
+                  <option value="CW40">CW40 (25-40 ton)</option>
+                  <option value="CW45">CW45 (40+ ton)</option>
+                  <option value="S40">S40 (Steelwrist)</option>
+                  <option value="S60">S60 (Steelwrist)</option>
+                  <option value="S70">S70 (Steelwrist)</option>
+                  <option value="weet-niet">Weet ik niet</option>
+                </select>
               </div>
               
               <!-- Message -->
               <div class="form-group">
-                <label for="message" class="form-label">Uw bericht *</label>
-                <textarea id="message" name="message" class="form-textarea" rows="6" required placeholder="Stel hier uw vraag of typ uw bericht..."></textarea>
-                <span class="form-error">Vul uw bericht in</span>
+                <label for="message" class="form-label">Uw vraag of opmerkingen</label>
+                <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="Beschrijf uw vraag, gewenste afmetingen, of andere specificaties..."></textarea>
               </div>
               
               <!-- Privacy -->
@@ -93,7 +212,7 @@
               
               <!-- Submit -->
               <button type="submit" class="btn-submit" id="submit-btn">
-                <span class="btn-text">Verstuur Bericht</span>
+                <span class="btn-text">Offerte Aanvragen</span>
                 <span class="btn-loading" style="display: none;">
                   <svg class="spinner" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="30 70"></circle>
@@ -109,8 +228,9 @@
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <h3>Bedankt voor uw bericht!</h3>
-              <p>Wij hebben uw bericht ontvangen en nemen zo snel mogelijk contact met u op.</p>
+              <h3>Bedankt voor uw aanvraag!</h3>
+              <p>Wij hebben uw offerte-aanvraag ontvangen. U ontvangt binnen 24 uur een bevestiging per e-mail.</p>
+              <p class="success-ref">Referentie: <span id="quote-reference"></span></p>
               <a href="../index.html" class="btn-split usp-btn">
                 <span class="btn-split-text">Terug naar Home</span>
                 <span class="btn-split-icon">
@@ -153,7 +273,7 @@
                 </div>
                 <div class="member-info">
                   <h4>Arno</h4>
-                  <p>External Sales</p>
+                  <p>Verantwoordelijke verkoopafdeling</p>
                 </div>
               </div>
             </div>
@@ -301,7 +421,7 @@
 
   <script src="../assets/js/components/header-loader.js"></script>
   <script type="module" src="../assets/js/main.js"></script>
-  <script type="module" src="../assets/js/pages/contact.js"></script>
+  <script type="module" src="../assets/js/pages/offerte.js"></script>
   <script src="../assets/js/components/login-modal.js"></script>
 </body>
 </html>

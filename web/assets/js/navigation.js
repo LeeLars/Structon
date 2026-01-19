@@ -197,7 +197,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
   mainTitle.textContent = categoryName;
   
   const viewAllBtn = document.createElement('a');
-  viewAllBtn.href = `/pages/category.html?cat=${categorySlug}`;
+  viewAllBtn.href = `/producten/?cat=${categorySlug}`;
   viewAllBtn.style.cssText = 'color:#2C5F6F; text-decoration:none; font-size:15px; font-weight:600; display:flex; align-items:center; gap:6px; transition:all 0.2s; opacity:0.8;';
   viewAllBtn.innerHTML = `
     <span>Bekijk alles</span>
@@ -230,7 +230,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
     
     // Category Title
     const titleLink = document.createElement('a');
-    titleLink.href = `/pages/category.html?cat=${categorySlug}&subcat=${item.slug}`;
+    titleLink.href = `/producten/?cat=${categorySlug}&subcat=${item.slug}`;
     titleLink.className = 'menu-column-title';
     titleLink.style.cssText = 'display:block; font-weight:700; font-size:18px; color:#2C5F6F; margin-bottom:16px; text-decoration:none; transition:color 0.2s;';
     titleLink.textContent = item.title;
@@ -246,7 +246,7 @@ function createDropdownMenu(menuItem, categorySlug, items) {
       
       item.tonnages.forEach(t => {
         const tLink = document.createElement('a');
-        tLink.href = `/pages/category.html?cat=${categorySlug}&subcat=${item.slug}&tonnage=${t.id}`;
+        tLink.href = `/producten/?cat=${categorySlug}&subcat=${item.slug}&tonnage=${t.id}`;
         tLink.className = 'menu-tonnage-link';
         tLink.style.cssText = 'color:#666; text-decoration:none; font-size:14px; line-height:1.4; transition:all 0.2s; display:flex; align-items:start; gap:8px; padding:8px 12px; border-radius:6px;';
         tLink.innerHTML = `<span style="color:#2C5F6F; font-size:18px; line-height:1; margin-top:-2px;">•</span> <span>${t.label}</span>`;

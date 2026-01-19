@@ -87,7 +87,7 @@ function renderFavorites(items) {
             ${product.category_title || ''} ${product.excavator_weight_min && product.excavator_weight_max ? `• ${product.excavator_weight_min}-${product.excavator_weight_max} ton` : ''}
           </div>
           <div class="favorite-card-actions">
-            <a href="../pages/product.html?id=${product.slug || product.id}" class="btn-dashboard btn-dashboard-primary btn-dashboard-sm">Bekijk</a>
+            <a href="../producten/?id=${product.slug || product.id}" class="btn-dashboard btn-dashboard-primary btn-dashboard-sm">Bekijk</a>
             <button class="btn-dashboard btn-dashboard-secondary btn-dashboard-sm" onclick="removeFavorite('${product.id}')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </button>

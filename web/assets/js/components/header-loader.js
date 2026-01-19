@@ -24,8 +24,8 @@
       }
     }
     
-    // Pages folder (/pages/*.html)
-    if (path.includes('/pages/')) {
+    // Producten folder (/producten/)
+    if (path.includes('/producten/')) {
       return '../';
     }
     
@@ -55,9 +55,9 @@
 
   // Get the header HTML with correct paths
   function getHeaderHTML(basePath) {
-    // For pages in /pages/ folder, category links don't need prefix
+    // For pages in /producten/ folder, category links don't need prefix
     // For other pages, they need the appropriate prefix
-    const pagesPrefix = basePath === '../' && window.location.pathname.includes('/pages/') ? '' : basePath + 'pages/';
+    const pagesPrefix = basePath === '../' && window.location.pathname.includes('/producten/') ? '' : basePath + 'producten/';
     
     return `
   <!-- Header Wrapper (Sticky) -->

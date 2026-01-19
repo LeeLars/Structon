@@ -259,9 +259,9 @@ export function getActiveFilters() {
     filters.subcategory_slug = activeFilters.subcategory;
   }
   
-  // Excavator weight filter (tonnage in kg) - use first selected value
+  // Excavator weight filter (tonnage in kg) - send all selected ranges
   if (activeFilters.excavator_weight && activeFilters.excavator_weight.length > 0) {
-    filters.excavator_weight = activeFilters.excavator_weight[0];
+    filters.excavator_weight_ranges = activeFilters.excavator_weight;
   }
   
   // Volume range filters
@@ -444,10 +444,23 @@ export function filterProducts(products, filters) {
       return false;
     }
     
-    // Excavator weight filter
-    if (filters.excavator_weight) {
-      const [min, max] = filters.excavator_weight.split('-').map(Number);
-      if (product.excavator_weight_max < min || product.excavator_weight_min > max) {
+    // Excavator weight filter - check if product falls within ANY selected range
+    if (filters.excavator_weight_ranges && filters.excavator_weight_ranges.length > 0) {
+      const matchesAnyRange = filters.excavator_weight_ranges.some(rangeValue => {
+        // rangeValue is midpoint in kg (e.g., 4000 for 3-8 ton range)
+        // Define ranges based on checkbox values
+        let min, max;
+        if (rangeValue === 1500) { min = 1500; max = 3000; }      // 1.5-3 ton
+        else if (rangeValue === 4000) { min = 3000; max = 8000; } // 3-8 ton
+        else if (rangeValue === 12000) { min = 8000; max = 15000; } // 8-15 ton
+        else if (rangeValue === 20000) { min = 15000; max = 25000; } // 15-25 ton
+        else if (rangeValue === 30000) { min = 25000; max = 50000; } // 25-50 ton
+        
+        // Check if product's weight range overlaps with filter range
+        return product.excavator_weight_min <= max && product.excavator_weight_max >= min;
+      });
+      
+      if (!matchesAnyRange) {
         return false;
       }
     }

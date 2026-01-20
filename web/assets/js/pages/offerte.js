@@ -152,25 +152,65 @@ function parseUrlParameters() {
       categorySelect.value = category;
     }
   }
+
+  // Machine info pre-fill (from product page configuration)
+  const machineModel = params.get('machine_model');
+  if (machineModel) {
+    const modelField = document.getElementById('machine_model');
+    if (modelField) {
+      modelField.value = decodeURIComponent(machineModel);
+    }
+  }
+
+  const attachmentType = params.get('attachment_type');
+  if (attachmentType) {
+    const attachmentSelect = document.getElementById('attachment_type');
+    if (attachmentSelect) {
+      attachmentSelect.value = decodeURIComponent(attachmentType);
+    }
+  }
 }
 
 /**
- * Setup request type toggle (changes submit button text)
+ * Setup request type toggle (changes submit button text and field visibility)
  */
 function setupRequestTypeToggle() {
   const radioButtons = document.querySelectorAll('input[name="request_type"]');
   const submitBtn = document.querySelector('.btn-text');
+  const technicalFields = document.getElementById('technical-fields');
+  
+  const updateState = (type) => {
+    // Update button text
+    const labels = {
+      'offerte': 'Offerte Aanvragen',
+      'vraag': 'Vraag Versturen',
+      'maatwerk': 'Maatwerk Aanvragen'
+    };
+    if (submitBtn) {
+      submitBtn.textContent = labels[type] || 'Verzenden';
+    }
+    
+    // Update fields visibility
+    if (technicalFields) {
+      if (type === 'vraag') {
+        technicalFields.style.display = 'none';
+        // Clear required attributes if any (though currently none are required in this section)
+      } else {
+        technicalFields.style.display = 'block';
+        // Restore/scroll animation could go here
+      }
+    }
+  };
+
+  // Initial state check
+  const currentChecked = document.querySelector('input[name="request_type"]:checked');
+  if (currentChecked) {
+    updateState(currentChecked.value);
+  }
   
   radioButtons.forEach(radio => {
     radio.addEventListener('change', (e) => {
-      const labels = {
-        'offerte': 'Offerte Aanvragen',
-        'vraag': 'Vraag Versturen',
-        'maatwerk': 'Maatwerk Aanvragen'
-      };
-      if (submitBtn) {
-        submitBtn.textContent = labels[e.target.value] || 'Verzenden';
-      }
+      updateState(e.target.value);
     });
   });
 }

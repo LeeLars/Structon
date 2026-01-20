@@ -49,7 +49,7 @@
           <div class="form-card">
             <h2 class="form-title">Offerte of vraag?</h2>
             <p class="form-subtitle">Vul het formulier in en wij zorgen dat u snel de juiste informatie ontvangt.</p>
-            <p class="form-notice" style="background: #f0f7f9; border-left: 3px solid var(--color-primary); padding: 12px 16px; margin: 16px 0; font-size: 0.9rem; color: #555;">
+            <p class="form-notice">
               <strong>Let op:</strong> Structon levert uitsluitend aan zakelijke klanten (B2B). Betaling geschiedt via factuur.
             </p>
             
@@ -64,22 +64,37 @@
               
               <!-- Form Type Selection -->
               <div class="form-group">
-                <label class="form-label">Type aanvraag *</label>
-                <div class="form-radio-group">
-                  <label class="form-radio">
+                <label class="form-label">Wat wilt u doen? *</label>
+                <div class="request-type-grid">
+                  <label class="request-type-card">
                     <input type="radio" name="request_type" value="offerte" checked>
-                    <span class="radio-custom"></span>
-                    <span class="radio-label">Offerte aanvragen</span>
+                    <div class="card-content">
+                      <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                      </div>
+                      <span class="card-title">Offerte aanvragen</span>
+                      <span class="card-desc">Prijsopgave voor een specifiek product</span>
+                    </div>
                   </label>
-                  <label class="form-radio">
-                    <input type="radio" name="request_type" value="vraag">
-                    <span class="radio-custom"></span>
-                    <span class="radio-label">Vraag stellen</span>
-                  </label>
-                  <label class="form-radio">
+                  <label class="request-type-card">
                     <input type="radio" name="request_type" value="maatwerk">
-                    <span class="radio-custom"></span>
-                    <span class="radio-label">Maatwerk aanvraag</span>
+                    <div class="card-content">
+                      <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                      </div>
+                      <span class="card-title">Maatwerk</span>
+                      <span class="card-desc">Specifieke wensen of aanpassingen</span>
+                    </div>
+                  </label>
+                  <label class="request-type-card">
+                    <input type="radio" name="request_type" value="vraag">
+                    <div class="card-content">
+                      <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                      </div>
+                      <span class="card-title">Vraag stellen</span>
+                      <span class="card-desc">Algemene informatie of advies</span>
+                    </div>
                   </label>
                 </div>
               </div>
@@ -117,81 +132,86 @@
                 <span class="form-error">Vul een geldig BTW-nummer in</span>
               </div>
               
-              <!-- Product Selection -->
-              <div class="form-group" id="product-selection-group">
-                <label for="product_name" class="form-label">Product / Baktype</label>
-                <select id="product_category" name="product_category" class="form-select">
-                  <option value="">Selecteer een categorie...</option>
-                  <option value="graafbakken">Graafbakken</option>
-                  <option value="slotenbakken">Slotenbakken</option>
-                  <option value="rioolbakken">Rioolbakken</option>
-                  <option value="sorteergrijpers">Sorteergrijpers</option>
-                  <option value="sloophamers">Sloophamers</option>
-                  <option value="adapters">Adapterstukken</option>
-                  <option value="overige">Overige</option>
-                </select>
-              </div>
-              
-              <!-- Pre-filled product info (shown when coming from product page) -->
-              <div class="form-group product-prefilled" id="product-prefilled" style="display: none;">
-                <label class="form-label">Geselecteerd product</label>
-                <div class="prefilled-product-card" style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; position: relative;">
-                  <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999;">×</button>
-                  <div class="prefilled-details">
-                    <p style="margin: 0 0 8px 0;"><strong>Product:</strong> <span id="prefilled-product-name"></span></p>
-                    <p style="margin: 0 0 8px 0;" id="prefilled-category-row"><strong>Type:</strong> <span id="prefilled-product-category"></span></p>
-                    <p style="margin: 0 0 8px 0;" id="prefilled-brand-row"><strong>Merk:</strong> <span id="prefilled-product-brand"></span></p>
-                    <p style="margin: 0;" id="prefilled-tonnage-row"><strong>Tonnage:</strong> <span id="prefilled-product-tonnage"></span></p>
-                  </div>
-                </div>
-                <!-- Hidden fields for prefilled data -->
-                <input type="hidden" name="prefilled_product_name" id="prefilled-product-name-input">
-                <input type="hidden" name="prefilled_product_category" id="prefilled-product-category-input">
-                <input type="hidden" name="prefilled_product_brand" id="prefilled-product-brand-input">
-                <input type="hidden" name="prefilled_product_tonnage" id="prefilled-product-tonnage-input">
-              </div>
-              
-              <!-- Machine Info -->
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="machine_brand" class="form-label">Merk graafmachine</label>
-                  <select id="machine_brand" name="machine_brand" class="form-select">
-                    <option value="">Selecteer merk...</option>
-                    <option value="caterpillar">Caterpillar</option>
-                    <option value="komatsu">Komatsu</option>
-                    <option value="volvo">Volvo</option>
-                    <option value="hitachi">Hitachi</option>
-                    <option value="liebherr">Liebherr</option>
-                    <option value="jcb">JCB</option>
-                    <option value="takeuchi">Takeuchi</option>
-                    <option value="kubota">Kubota</option>
-                    <option value="case">Case</option>
-                    <option value="hyundai">Hyundai</option>
-                    <option value="develon">Develon</option>
-                    <option value="anders">Anders</option>
+              <!-- Technical Fields Container (Hidden for 'Vraag') -->
+              <div id="technical-fields">
+                <div class="form-section-title">Specificaties</div>
+                
+                <!-- Product Selection -->
+                <div class="form-group" id="product-selection-group">
+                  <label for="product_category" class="form-label">Product / Baktype</label>
+                  <select id="product_category" name="product_category" class="form-select">
+                    <option value="">Selecteer een categorie...</option>
+                    <option value="graafbakken">Graafbakken</option>
+                    <option value="slotenbakken">Slotenbakken</option>
+                    <option value="rioolbakken">Rioolbakken</option>
+                    <option value="sorteergrijpers">Sorteergrijpers</option>
+                    <option value="sloophamers">Sloophamers</option>
+                    <option value="adapters">Adapterstukken</option>
+                    <option value="overige">Overige</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="machine_model" class="form-label">Model / Tonnage</label>
-                  <input type="text" id="machine_model" name="machine_model" class="form-input" placeholder="bv. CAT 320 of 20 ton">
+                
+                <!-- Pre-filled product info (shown when coming from product page) -->
+                <div class="form-group product-prefilled" id="product-prefilled" style="display: none;">
+                  <label class="form-label">Geselecteerd product</label>
+                  <div class="prefilled-product-card" style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; position: relative;">
+                    <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999;">×</button>
+                    <div class="prefilled-details">
+                      <p style="margin: 0 0 8px 0;"><strong>Product:</strong> <span id="prefilled-product-name"></span></p>
+                      <p style="margin: 0 0 8px 0;" id="prefilled-category-row"><strong>Type:</strong> <span id="prefilled-product-category"></span></p>
+                      <p style="margin: 0 0 8px 0;" id="prefilled-brand-row"><strong>Merk:</strong> <span id="prefilled-product-brand"></span></p>
+                      <p style="margin: 0;" id="prefilled-tonnage-row"><strong>Tonnage:</strong> <span id="prefilled-product-tonnage"></span></p>
+                    </div>
+                  </div>
+                  <!-- Hidden fields for prefilled data -->
+                  <input type="hidden" name="prefilled_product_name" id="prefilled-product-name-input">
+                  <input type="hidden" name="prefilled_product_category" id="prefilled-product-category-input">
+                  <input type="hidden" name="prefilled_product_brand" id="prefilled-product-brand-input">
+                  <input type="hidden" name="prefilled_product_tonnage" id="prefilled-product-tonnage-input">
                 </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="attachment_type" class="form-label">CW-aansluiting</label>
-                <select id="attachment_type" name="attachment_type" class="form-select">
-                  <option value="">Selecteer aansluiting...</option>
-                  <option value="CW05">CW05 (0-2 ton)</option>
-                  <option value="CW10">CW10 (2-6 ton)</option>
-                  <option value="CW20">CW20 (6-15 ton)</option>
-                  <option value="CW30">CW30 (15-25 ton)</option>
-                  <option value="CW40">CW40 (25-40 ton)</option>
-                  <option value="CW45">CW45 (40+ ton)</option>
-                  <option value="S40">S40 (Steelwrist)</option>
-                  <option value="S60">S60 (Steelwrist)</option>
-                  <option value="S70">S70 (Steelwrist)</option>
-                  <option value="weet-niet">Weet ik niet</option>
-                </select>
+                
+                <!-- Machine Info -->
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="machine_brand" class="form-label">Merk graafmachine</label>
+                    <select id="machine_brand" name="machine_brand" class="form-select">
+                      <option value="">Selecteer merk...</option>
+                      <option value="caterpillar">Caterpillar</option>
+                      <option value="komatsu">Komatsu</option>
+                      <option value="volvo">Volvo</option>
+                      <option value="hitachi">Hitachi</option>
+                      <option value="liebherr">Liebherr</option>
+                      <option value="jcb">JCB</option>
+                      <option value="takeuchi">Takeuchi</option>
+                      <option value="kubota">Kubota</option>
+                      <option value="case">Case</option>
+                      <option value="hyundai">Hyundai</option>
+                      <option value="develon">Develon</option>
+                      <option value="anders">Anders</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="machine_model" class="form-label">Model / Tonnage</label>
+                    <input type="text" id="machine_model" name="machine_model" class="form-input" placeholder="bv. CAT 320 of 20 ton">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="attachment_type" class="form-label">CW-aansluiting</label>
+                  <select id="attachment_type" name="attachment_type" class="form-select">
+                    <option value="">Selecteer aansluiting...</option>
+                    <option value="CW05">CW05 (0-2 ton)</option>
+                    <option value="CW10">CW10 (2-6 ton)</option>
+                    <option value="CW20">CW20 (6-15 ton)</option>
+                    <option value="CW30">CW30 (15-25 ton)</option>
+                    <option value="CW40">CW40 (25-40 ton)</option>
+                    <option value="CW45">CW45 (40+ ton)</option>
+                    <option value="S40">S40 (Steelwrist)</option>
+                    <option value="S60">S60 (Steelwrist)</option>
+                    <option value="S70">S70 (Steelwrist)</option>
+                    <option value="weet-niet">Weet ik niet</option>
+                  </select>
+                </div>
               </div>
               
               <!-- Message -->

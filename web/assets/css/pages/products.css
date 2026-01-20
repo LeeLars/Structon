@@ -13,12 +13,12 @@
 /* Product Card - Brede horizontale kaart */
 .product-card-horizontal {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 40px;
-  padding: 40px 0;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  padding: 48px 0;
   background: transparent;
   border-bottom: 1px solid #e5e7eb; /* De scheidingslijn */
-  transition: background-color 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 /* Laatste item geen border */
@@ -39,7 +39,7 @@
   align-items: center;
   justify-content: center;
   background: transparent; /* Geen grijs kader meer */
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   margin: 0;
   box-shadow: none;
@@ -48,7 +48,7 @@
 .product-card-horizontal .product-image img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Of 'cover' als je de hele box wilt vullen met de foto */
+  object-fit: contain;
   transition: transform 0.3s ease;
   filter: none;
 }
@@ -63,60 +63,68 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 0;
-  gap: 16px;
+  gap: 24px;
 }
 
 /* Title Styling */
 .product-card-horizontal .product-title {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-primary); /* Structon blauw/petrol */
-  margin-bottom: 8px;
+  color: var(--color-gray-900);
+  margin-bottom: 0;
   line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
 
 .product-card-horizontal .product-title a {
   color: inherit;
   text-decoration: none;
-  background: none; /* Geen underline animatie */
+  background: none;
+}
+
+.product-card-horizontal .product-title a:hover {
+  color: var(--color-primary);
 }
 
 /* Specs Lijst - Zoals in screenshot (Label: Waarde) */
 .product-specs {
   display: grid;
-  grid-template-columns: 140px 1fr; /* Vaste breedte voor labels */
-  gap: 8px 0;
+  grid-template-columns: 180px 1fr; /* Bredere labels */
+  gap: 12px 0;
   margin: 0;
   opacity: 1;
 }
 
 .product-specs dt {
-  display: block; /* Labels weer tonen */
+  display: block;
   font-weight: 700;
   color: var(--color-gray-900);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .product-specs dd {
   display: block;
   margin: 0;
   color: var(--color-gray-600);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 400;
 }
 
 .product-specs dd::before {
-  content: none; /* Geen bullets meer */
+  content: none;
 }
 
 /* Price & Actions Container */
 .product-actions-wrapper {
-  margin-top: 0; /* Weg met margin */
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0; /* Weg met gap */
+  gap: 16px;
 }
 
 /* Price */
@@ -127,12 +135,8 @@
 
 .product-price-amount {
   font-size: 1.5rem;
-  color: var(--color-primary);
+  color: var(--color-gray-900);
   font-weight: 700;
-}
-
-.product-price-vat {
-  display: none; /* Cleaner zonder VAT tekst, of heel klein */
 }
 
 /* Buttons */
@@ -141,41 +145,44 @@
   flex-direction: row;
   gap: 16px;
   width: auto;
+  margin-top: 8px;
 }
 
-/* Meer info knop (Secondary style) */
-.btn-more-info-outline {
+/* Meer info knop (Tekst pijl style zoals screenshot) */
+.btn-more-info-text {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 24px;
+  padding: 0;
   background: transparent;
-  border: 2px solid #e5e7eb;
-  border-radius: 4px;
-  color: var(--color-gray-700);
+  border: none;
+  color: var(--color-gray-900);
   font-weight: 600;
+  font-size: 1rem;
   text-decoration: none;
   transition: all 0.2s ease;
+  border-bottom: 1px solid var(--color-gray-900);
+  padding-bottom: 2px;
 }
 
-.btn-more-info-outline:hover {
-  border-color: var(--color-primary);
+.btn-more-info-text:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  gap: 12px;
+}
+
+.btn-more-info-text svg {
+  width: 20px;
+  height: 20px;
   color: var(--color-primary);
 }
 
-.btn-more-info-outline svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* Tags verbergen voor cleanere look of subtiel maken */
+/* Tags verbergen */
 .product-tags {
   display: none; 
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* Responsive */
 @media (max-width: 768px) {
   .product-card-horizontal {
     grid-template-columns: 1fr;
@@ -184,12 +191,13 @@
   }
 
   .product-card-horizontal .product-image {
-    height: 200px;
+    height: 240px;
     width: 100%;
+    justify-content: flex-start; /* Links uitlijnen op mobiel */
   }
   
   .product-specs {
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 140px 1fr;
   }
 }
 

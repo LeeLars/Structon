@@ -4,7 +4,7 @@
  * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v11'; // Updated: Fixed cross-origin API request handling
+const CACHE_VERSION = 'structon-v12'; // Updated: Fixed cross-origin API + improved cache error handling
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -43,11 +43,25 @@ self.addEventListener('install', (event) => {
   
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then((cache) => {
+      .then(async (cache) => {
         console.log('[SW] Caching static assets');
-        return cache.addAll(STATIC_ASSETS);
+        // Cache assets individually to avoid failing on missing files
+        const cachePromises = STATIC_ASSETS.map(async (url) => {
+          try {
+            await cache.add(url);
+            console.log('[SW] Cached:', url);
+          } catch (error) {
+            console.warn('[SW] Failed to cache (non-critical):', url, error.message);
+          }
+        });
+        await Promise.all(cachePromises);
       })
       .then(() => self.skipWaiting())
+      .catch((error) => {
+        console.error('[SW] Installation failed:', error);
+        // Still skip waiting to activate new service worker
+        return self.skipWaiting();
+      })
   );
 });
 

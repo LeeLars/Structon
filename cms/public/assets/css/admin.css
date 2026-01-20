@@ -737,6 +737,12 @@ body {
   color: var(--col-primary);
 }
 
+.badge-secondary {
+  background: var(--col-surface);
+  color: var(--col-text);
+  border: 1px solid var(--col-border);
+}
+
 .badge-neutral {
   background: var(--col-bg);
   color: var(--col-text-muted);

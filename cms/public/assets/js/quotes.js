@@ -37,7 +37,7 @@ async function initializeData() {
   // Load from API
   try {
     console.log('[QUOTES] Attempting API call...');
-    const response = await api.get('/sales/quotes');
+    const response = await api.get('/quotes');
     console.log('[QUOTES] API response:', response);
     
     if (response?.quotes) {

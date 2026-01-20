@@ -98,6 +98,12 @@
   --transition-base: 200ms ease;
   --transition-slow: 300ms ease;
   
+  /* Key Specs Grid (Shared between Product Detail & List) */
+  --spec-bg: var(--color-gray-50);
+  --spec-icon-color: var(--color-primary);
+  --spec-label-color: var(--color-gray-500);
+  --spec-value-color: var(--color-gray-900);
+  
   /* Layout */
   --container-max: 1280px;
   --container-padding: 1.5rem;
@@ -2563,4 +2569,42 @@ main:not(.no-padding) {
   .page-subtitle {
     font-size: var(--text-base);
   }
+}
+
+/* Key Specs Grid Component */
+.key-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.key-spec-item {
+  background: var(--spec-bg);
+  padding: 8px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.spec-icon {
+  color: var(--spec-icon-color);
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.spec-label {
+  font-size: 0.7rem;
+  color: var(--spec-label-color);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.spec-value {
+  font-weight: 600;
+  color: var(--spec-value-color);
+  font-size: 0.85rem;
 }

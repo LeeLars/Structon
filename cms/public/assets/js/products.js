@@ -95,7 +95,46 @@ async function initializeData() {
   
   renderProducts();
   populateFilters();
+  updateStats();
   console.log('   Initial render complete');
+}
+
+/**
+ * Update statistics cards
+ */
+function updateStats() {
+  const total = products.length;
+  const active = products.filter(p => p.is_active).length;
+  const lowStock = products.filter(p => p.stock_quantity > 0 && p.stock_quantity <= 5).length;
+  const outOfStock = products.filter(p => p.stock_quantity === 0 || !p.stock_quantity).length;
+  
+  animateValue('stat-total', total);
+  animateValue('stat-active', active);
+  animateValue('stat-low-stock', lowStock);
+  animateValue('stat-out-stock', outOfStock);
+}
+
+/**
+ * Animate number value
+ */
+function animateValue(id, target) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  
+  const duration = 800;
+  const start = parseInt(element.textContent) || 0;
+  const increment = (target - start) / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
+      element.textContent = target;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.round(current);
+    }
+  }, 16);
 }
 
 /**

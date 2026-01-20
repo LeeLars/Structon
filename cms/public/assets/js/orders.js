@@ -64,6 +64,84 @@ async function initializeData() {
   }
   
   renderOrders();
+  updateStats();
+}
+
+/**
+ * Update statistics cards
+ */
+function updateStats() {
+  const total = allOrders.length;
+  
+  // Count new orders today
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const newToday = allOrders.filter(order => {
+    const orderDate = new Date(order.created_at);
+    orderDate.setHours(0, 0, 0, 0);
+    return orderDate.getTime() === today.getTime();
+  }).length;
+  
+  // Count pending orders (pending, paid, shipped)
+  const pending = allOrders.filter(order => 
+    ['pending', 'paid', 'shipped'].includes(order.status)
+  ).length;
+  
+  // Calculate total revenue
+  const revenue = allOrders.reduce((sum, order) => 
+    sum + (order.total_amount || 0), 0
+  );
+  
+  animateValue('stat-total', total);
+  animateValue('stat-new', newToday);
+  animateValue('stat-pending', pending);
+  animateRevenue('stat-revenue', revenue);
+}
+
+/**
+ * Animate number value
+ */
+function animateValue(id, target) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  
+  const duration = 800;
+  const start = parseInt(element.textContent) || 0;
+  const increment = (target - start) / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
+      element.textContent = target;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.round(current);
+    }
+  }, 16);
+}
+
+/**
+ * Animate revenue value with currency formatting
+ */
+function animateRevenue(id, target) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  
+  const duration = 800;
+  const start = 0;
+  const increment = (target - start) / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
+      element.textContent = '€' + target.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      clearInterval(timer);
+    } else {
+      element.textContent = '€' + Math.round(current).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+  }, 16);
 }
 
 /**

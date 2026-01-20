@@ -321,6 +321,34 @@ function renderProductDetail(product, container) {
             </div>
           ` : ''}
 
+          <!-- Machine Configuration -->
+          <div class="config-section">
+            <h4 class="config-title">Configureer uw aanvraag</h4>
+            
+            <div class="config-group">
+              <label for="config-machine" class="config-label">
+                Merk & Model Machine
+                <span class="tooltip-icon" title="Vul uw machine in zodat wij kunnen controleren of het aanbouwdeel past.">?</span>
+              </label>
+              <input type="text" id="config-machine" class="config-input" placeholder="bv. Kubota KX016-4">
+            </div>
+
+            <div class="config-group">
+              <label for="config-hitch" class="config-label">Snelwissel (Optioneel)</label>
+              <select id="config-hitch" class="config-select">
+                <option value="">Selecteer type...</option>
+                <option value="CW05">CW05 (0-2 ton)</option>
+                <option value="CW10">CW10 (2-6 ton)</option>
+                <option value="CW20">CW20 (6-15 ton)</option>
+                <option value="CW30">CW30 (15-25 ton)</option>
+                <option value="CW40">CW40 (25-40 ton)</option>
+                <option value="S40">S40 (Steelwrist)</option>
+                <option value="S60">S60 (Steelwrist)</option>
+                <option value="Anders">Anders / Weet ik niet</option>
+              </select>
+            </div>
+          </div>
+
           <!-- CTAs -->
           <div class="pro-actions">
             ${isLoggedIn ? `
@@ -329,7 +357,7 @@ function renderProductDetail(product, container) {
                 In Winkelwagen
               </button>
             ` : ''}
-            <a href="${quoteUrl}" class="btn-secondary btn-lg btn-block icon-btn">
+            <a href="${quoteUrl}" id="btn-request-quote" class="btn-secondary btn-lg btn-block icon-btn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               Offerte Aanvragen
             </a>
@@ -407,7 +435,47 @@ function renderProductDetail(product, container) {
   // Setup handlers
   setupThumbnailHandlers();
   setupTabHandlers();
+  setupConfigHandlers(product);
   loadRelatedProducts(product);
+}
+
+/**
+ * Setup configuration handlers (Machine & Hitch)
+ */
+function setupConfigHandlers(product) {
+  const machineInput = document.getElementById('config-machine');
+  const hitchSelect = document.getElementById('config-hitch');
+  const quoteBtn = document.getElementById('btn-request-quote');
+  
+  if (!quoteBtn) return;
+  
+  const updateQuoteUrl = () => {
+    // We use the href property which gives us the absolute URL
+    let url;
+    try {
+      url = new URL(quoteBtn.href);
+    } catch (e) {
+      // Fallback for relative paths if needed, though href property is usually absolute
+      url = new URL(quoteBtn.getAttribute('href'), window.location.origin);
+    }
+    
+    if (machineInput && machineInput.value) {
+      url.searchParams.set('machine_model', machineInput.value);
+    } else {
+      url.searchParams.delete('machine_model');
+    }
+    
+    if (hitchSelect && hitchSelect.value) {
+      url.searchParams.set('attachment_type', hitchSelect.value);
+    } else {
+      url.searchParams.delete('attachment_type');
+    }
+    
+    quoteBtn.href = url.toString();
+  };
+  
+  if (machineInput) machineInput.addEventListener('input', updateQuoteUrl);
+  if (hitchSelect) hitchSelect.addEventListener('change', updateQuoteUrl);
 }
 
 /**

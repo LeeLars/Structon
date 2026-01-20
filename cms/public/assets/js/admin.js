@@ -416,9 +416,9 @@ async function loadRecentQuotes() {
 
 function getStatusColor(status) {
   const colors = {
-    new: 'primary',
+    new: 'success',
     processing: 'warning',
-    quoted: 'info',
+    quoted: 'secondary',
     won: 'success',
     lost: 'error'
   };
@@ -429,7 +429,7 @@ function getStatusLabel(status) {
   const labels = {
     new: 'Nieuw',
     processing: 'In behandeling',
-    quoted: 'Geoffreerd',
+    quoted: 'Offerte verstuurd',
     won: 'Gewonnen',
     lost: 'Verloren'
   };

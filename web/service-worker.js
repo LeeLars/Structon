@@ -4,7 +4,7 @@
  * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v10';
+const CACHE_VERSION = 'structon-v11'; // Updated: Fixed cross-origin API request handling
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -91,7 +91,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // CRITICAL FIX: Skip cross-origin requests (e.g., Railway API)
+  // The Service Worker should only handle same-origin requests
+  // Cross-origin API requests should be handled directly by the browser
+  if (url.origin !== self.location.origin) {
+    return; // Let browser handle cross-origin requests normally
+  }
+
   // API requests - stale-while-revalidate for better UX
+  // NOTE: This will only apply to same-origin API requests now
   if (url.pathname.startsWith('/api/')) {
     // Check if it's a cacheable API endpoint
     const isLongCache = LONG_CACHE_API.some(ep => url.pathname.includes(ep));

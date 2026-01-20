@@ -51,7 +51,14 @@ async function loadProducts() {
     filters.limit = getItemsPerPage();
     filters.offset = getOffset();
 
+    console.log('🔍 Loading products with filters:', filters);
     const data = await products.getAll(filters);
+    
+    console.log('📦 Products API Response:', {
+      total: data.total,
+      itemsCount: data.items?.length || 0,
+      items: data.items
+    });
     
     allProducts = data.items || [];
     const total = data.total || allProducts.length;
@@ -126,13 +133,19 @@ async function loadSingleProduct(productId) {
   showLoading(container);
   
   try {
+    console.log('🔍 Loading product with ID/slug:', productId);
     const data = await products.getById(productId);
+    console.log('📦 Product API Response:', data);
+    
     currentProduct = data.product;
     
     if (!currentProduct) {
+      console.error('❌ Product not found in API response');
       showProductNotFound(container);
       return;
     }
+    
+    console.log('✅ Product loaded successfully:', currentProduct.title);
     
     // Update page title and breadcrumb
     document.title = `${currentProduct.title} | Structon`;
@@ -158,8 +171,15 @@ async function loadSingleProduct(productId) {
     renderProductDetail(currentProduct, container);
     
   } catch (error) {
-    console.error('Error loading product:', error);
-    showError(container, 'Kon product niet laden. Probeer het later opnieuw.');
+    console.error('❌ Error loading product:', error);
+    console.error('Product ID/Slug:', productId);
+    
+    // Check if it's a 404 (product not found)
+    if (error.message && (error.message.includes('404') || error.message.includes('not found'))) {
+      showProductNotFound(container);
+    } else {
+      showError(container, 'Kon product niet laden. Probeer het later opnieuw.');
+    }
   }
 }
 

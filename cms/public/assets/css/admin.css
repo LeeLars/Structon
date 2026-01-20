@@ -229,6 +229,19 @@ body {
   opacity: 1;
 }
 
+/* Notification Badge */
+.nav-badge {
+  margin-left: auto;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
 /* Sidebar Footer */
 .sidebar-footer {
   padding: 1.25rem;

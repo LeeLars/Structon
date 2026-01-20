@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Structon CMS – Offertes</title>
+  <title>Structon CMS – Aanvragen</title>
   <link rel="stylesheet" href="/cms/assets/css/admin.css">
 </head>
 <body>
@@ -19,8 +19,8 @@
         <div class="nav-section">Overzicht</div>
         <a href="/cms/" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Dashboard</span></a>
         <div class="nav-section">Verkoop</div>
-        <a href="/cms/quotes.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Offertes</span></a>
-        <a href="/cms/aanvragen.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Aanvragen</span><span class="nav-badge" id="requests-badge" style="display: none;">0</span></a>
+        <a href="/cms/quotes.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Offertes</span></a>
+        <a href="/cms/aanvragen.html" class="nav-item active"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Aanvragen</span><span class="nav-badge" id="requests-badge" style="display: none;">0</span></a>
         <a href="/cms/orders.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span>Bestellingen</span></a>
         <div class="nav-section">Catalogus</div>
         <a href="/cms/products.html" class="nav-item"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg><span>Producten</span></a>
@@ -44,8 +44,8 @@
     <main class="admin-main">
       <header class="admin-header">
         <div class="header-left">
-          <h2 class="page-title">Offertes</h2>
-          <p class="page-subtitle">Beheer inkomende aanvragen</p>
+          <h2 class="page-title">Aanvragen</h2>
+          <p class="page-subtitle">Dealer aanvragen en contactformulieren</p>
         </div>
         <div class="header-actions">
           <button class="btn btn-primary">
@@ -60,7 +60,7 @@
         <div class="stats-grid mb-6">
           <div class="stat-card">
             <div class="stat-icon bg-primary-light text-primary">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </div>
             <div class="stat-info">
               <span class="stat-label">Totaal Aanvragen</span>
@@ -91,31 +91,31 @@
           <div class="toolbar-left">
             <div class="search-box">
               <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" placeholder="Zoek op klant, referentie..." id="search-quotes" class="search-input">
+              <input type="text" placeholder="Zoek op naam, email, bedrijf..." id="search-requests" class="search-input">
             </div>
             <div class="filters-bar">
-              <button class="filter-pill active" data-status="all">Alle</button>
-              <button class="filter-pill" data-status="new">Nieuw</button>
-              <button class="filter-pill" data-status="processing">In behandeling</button>
-              <button class="filter-pill" data-status="quoted">Geoffreerd</button>
+              <button class="filter-pill active" data-type="all">Alle</button>
+              <button class="filter-pill" data-type="dealer">Dealer aanvragen</button>
+              <button class="filter-pill" data-type="contact">Contact formulieren</button>
             </div>
           </div>
         </div>
 
         <div class="table-container">
-          <table class="admin-table" id="quotes-table">
+          <table class="admin-table" id="requests-table">
             <thead>
               <tr>
-                <th>Referentie</th>
+                <th>Type</th>
                 <th>Datum</th>
-                <th>Klant</th>
+                <th>Naam / Bedrijf</th>
+                <th>Contact</th>
                 <th>Status</th>
                 <th class="text-right">Acties</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="requests-tbody">
               <tr>
-                <td colspan="5" class="loading-cell">
+                <td colspan="6" class="loading-cell">
                   <div class="loading-spinner"></div>
                   <span>Aanvragen laden...</span>
                 </td>
@@ -127,6 +127,6 @@
     </main>
   </div>
 
-  <script type="module" src="/cms/assets/js/quotes.js?v=3"></script>
+  <script type="module" src="/cms/assets/js/aanvragen.js?v=1"></script>
 </body>
 </html>

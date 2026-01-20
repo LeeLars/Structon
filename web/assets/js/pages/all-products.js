@@ -392,6 +392,23 @@ function renderProductDetail(product, container) {
           <div class="pro-description-content">
             <p>${escapeHtml(product.description || 'Geen omschrijving beschikbaar.')}</p>
           </div>
+          
+          ${product.brand_title ? `
+          <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--pro-border);">
+            <h3 class="specs-title">Compatibiliteit</h3>
+            <div class="pro-description-content">
+              <p style="margin-bottom: 16px;">Deze kraanbak is speciaal ontworpen en getest voor gebruik met de volgende merken:</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                <span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">
+                  ${escapeHtml(product.brand_title)}
+                </span>
+              </div>
+              <p style="margin-top: 16px; color: #64748b; font-size: 0.9rem;">
+                <strong>Let op:</strong> Controleer altijd de specificaties van uw machine om te zorgen voor een perfecte pasvorm. Neem bij twijfel contact op met onze specialisten.
+              </p>
+            </div>
+          </div>
+          ` : ''}
         </div>
       </div>
 

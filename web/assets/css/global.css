@@ -794,13 +794,13 @@ p {
 
 .cta-button {
   display: none;
-  background-color: #2C5F6F;
+  background-color: var(--color-primary);
   color: white;
   padding: 12px 35px; /* Adjusted padding */
   border-radius: 25px; /* Specific radius requested */
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease;
   position: absolute; /* Absolute positioning for centering */
   left: 50%;
   transform: translateX(-50%);
@@ -817,7 +817,9 @@ p {
 }
 
 .cta-button:hover {
-  background-color: #3a7a8c;
+  background-color: #1a4f59;
+  transform: translateX(-50%) translateY(-1px);
+  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
 }
 
 /* Mobile Menu Toggle */

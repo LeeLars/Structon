@@ -335,21 +335,20 @@ h6 { font-size: var(--text-base); }
 
 /* Blok 1: Tekst */
 .btn-split-text {
-  background-color: var(--color-primary);
+  background-color: #1a4f59;
   color: white;
   padding: 14px 24px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 8px 0 0 8px;
   display: flex;
   align-items: center;
-  justify-content: center;
   transition: all 0.2s ease;
 }
 
 /* Blok 2: Pijl */
 .btn-split-icon {
-  background-color: var(--color-primary);
+  background-color: #1a4f59;
   color: white;
   width: 52px;
   display: flex;
@@ -367,7 +366,7 @@ h6 { font-size: var(--text-base); }
 /* Hover: beide blokken tegelijk */
 .btn-split:hover .btn-split-text,
 .btn-split:hover .btn-split-icon {
-  background-color: #1a4f59;
+  background-color: var(--color-primary);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
 }

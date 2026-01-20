@@ -259,10 +259,6 @@ function renderProductDetail(product, container) {
 
       <!-- Header Section -->
       <div class="pro-header">
-        <div class="pro-meta-tags">
-          <span class="tag-category">${escapeHtml(product.category_title || 'Product')}</span>
-          ${product.brand_title ? `<span class="tag-brand">${escapeHtml(product.brand_title)}</span>` : ''}
-        </div>
         <h1 class="pro-title">${escapeHtml(product.title)}</h1>
       </div>
 
@@ -271,7 +267,6 @@ function renderProductDetail(product, container) {
         <div class="pro-col-gallery">
           <div class="main-image-wrapper">
             <img src="${mainImage}" alt="${escapeHtml(product.title)}" id="main-product-image">
-            ${product.is_featured ? '<span class="badge-featured">Uitgelicht</span>' : ''}
           </div>
           ${images.length > 1 ? `
             <div class="thumbnail-list">
@@ -296,10 +291,6 @@ function renderProductDetail(product, container) {
             ` : `
               <div class="price-request">Prijs op aanvraag</div>
             `}
-            <div class="stock-status">
-              <span class="icon-check">✓</span> Op voorraad
-              <span class="delivery-time">- Vandaag besteld, morgen in huis</span>
-            </div>
           </div>
 
           <!-- Key Specs Grid -->
@@ -321,34 +312,6 @@ function renderProductDetail(product, container) {
             </div>
           ` : ''}
 
-          <!-- Machine Configuration -->
-          <div class="config-section">
-            <h4 class="config-title">Configureer uw aanvraag</h4>
-            
-            <div class="config-group">
-              <label for="config-machine" class="config-label">
-                Merk & Model Machine
-                <span class="tooltip-icon" title="Vul uw machine in zodat wij kunnen controleren of het aanbouwdeel past.">?</span>
-              </label>
-              <input type="text" id="config-machine" class="config-input" placeholder="bv. Kubota KX016-4">
-            </div>
-
-            <div class="config-group">
-              <label for="config-hitch" class="config-label">Snelwissel (Optioneel)</label>
-              <select id="config-hitch" class="config-select">
-                <option value="">Selecteer type...</option>
-                <option value="CW05">CW05 (0-2 ton)</option>
-                <option value="CW10">CW10 (2-6 ton)</option>
-                <option value="CW20">CW20 (6-15 ton)</option>
-                <option value="CW30">CW30 (15-25 ton)</option>
-                <option value="CW40">CW40 (25-40 ton)</option>
-                <option value="S40">S40 (Steelwrist)</option>
-                <option value="S60">S60 (Steelwrist)</option>
-                <option value="Anders">Anders / Weet ik niet</option>
-              </select>
-            </div>
-          </div>
-
           <!-- CTAs -->
           <div class="pro-actions">
             ${isLoggedIn ? `
@@ -357,9 +320,11 @@ function renderProductDetail(product, container) {
                 In Winkelwagen
               </button>
             ` : ''}
-            <a href="${quoteUrl}" id="btn-request-quote" class="btn-secondary btn-lg btn-block icon-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Offerte Aanvragen
+            <a href="${quoteUrl}" id="btn-request-quote" class="btn-split btn-split-lg" style="width: 100%; text-decoration: none; justify-content: center;">
+              <span class="btn-split-text">Offerte Aanvragen</span>
+              <span class="btn-split-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
             </a>
           </div>
         </div>
@@ -373,22 +338,20 @@ function renderProductDetail(product, container) {
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               </div>
               <div class="expert-info">
-                <strong>Hulp nodig?</strong>
-                <span>Bel onze specialist</span>
+                <strong>Arno Vermeersch</strong>
+                <span>External Sales</span>
               </div>
             </div>
-            <p class="expert-text">Twijfel je over de juiste ophanging of maat? Wij kijken graag met je mee.</p>
-            <a href="tel:+31000000000" class="expert-phone">+31 (0)12 345 6789</a>
-            <a href="mailto:info@structon.nl" class="expert-email">info@structon.nl</a>
+            <p class="expert-text">Twijfel je over de juiste ophanging of maat? Neem contact op met onze specialist.</p>
+            <a href="tel:+32469702138" class="expert-phone">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              +32 469 70 21 38
+            </a>
+            <a href="mailto:arno.vermeersch@structon.be" class="expert-email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              arno.vermeersch@structon.be
+            </a>
           </div>
-
-          <!-- USPs -->
-          <ul class="usp-list">
-            <li><span class="check">✓</span> <strong>Gratis verzending</strong> vanaf €500</li>
-            <li><span class="check">✓</span> <strong>Snelle levering</strong> in Benelux</li>
-            <li><span class="check">✓</span> <strong>2 jaar garantie</strong> op constructie</li>
-            <li><span class="check">✓</span> Eigen productiefaciliteit</li>
-          </ul>
         </div>
       </div>
 
@@ -421,11 +384,11 @@ function renderProductDetail(product, container) {
         </div>
       </div>
 
-      <!-- Related Products Section -->
+      <!-- Featured Products Section -->
       <div class="related-section">
-        <h2 class="related-title">Misschien ook interessant</h2>
+        <h2 class="related-title">Uitgelichte Producten</h2>
         <div id="related-products-grid" class="related-grid">
-          <!-- Zal worden gevuld door loadRelatedProducts -->
+          <!-- Zal worden gevuld door loadFeaturedProducts -->
           <div style="padding: 20px; text-align: center; color: #94a3b8;">Laden...</div>
         </div>
       </div>
@@ -435,47 +398,7 @@ function renderProductDetail(product, container) {
   // Setup handlers
   setupThumbnailHandlers();
   setupTabHandlers();
-  setupConfigHandlers(product);
-  loadRelatedProducts(product);
-}
-
-/**
- * Setup configuration handlers (Machine & Hitch)
- */
-function setupConfigHandlers(product) {
-  const machineInput = document.getElementById('config-machine');
-  const hitchSelect = document.getElementById('config-hitch');
-  const quoteBtn = document.getElementById('btn-request-quote');
-  
-  if (!quoteBtn) return;
-  
-  const updateQuoteUrl = () => {
-    // We use the href property which gives us the absolute URL
-    let url;
-    try {
-      url = new URL(quoteBtn.href);
-    } catch (e) {
-      // Fallback for relative paths if needed, though href property is usually absolute
-      url = new URL(quoteBtn.getAttribute('href'), window.location.origin);
-    }
-    
-    if (machineInput && machineInput.value) {
-      url.searchParams.set('machine_model', machineInput.value);
-    } else {
-      url.searchParams.delete('machine_model');
-    }
-    
-    if (hitchSelect && hitchSelect.value) {
-      url.searchParams.set('attachment_type', hitchSelect.value);
-    } else {
-      url.searchParams.delete('attachment_type');
-    }
-    
-    quoteBtn.href = url.toString();
-  };
-  
-  if (machineInput) machineInput.addEventListener('input', updateQuoteUrl);
-  if (hitchSelect) hitchSelect.addEventListener('change', updateQuoteUrl);
+  loadFeaturedProducts(product);
 }
 
 /**
@@ -512,41 +435,49 @@ function setupTabHandlers() {
 }
 
 /**
- * Load related products
+ * Load featured products
  */
-async function loadRelatedProducts(currentProduct) {
+async function loadFeaturedProducts(currentProduct) {
   const container = document.getElementById('related-products-grid');
   if (!container) return;
 
   try {
-    // Fetch products from same category
+    // Fetch featured products
     const filters = {
+      is_featured: true,
       limit: 5 // Fetch 5 to have a buffer if we filter out the current one
     };
-    
-    // Prioritize category, otherwise random (latest)
-    if (currentProduct.category_id) {
-      filters.category_id = currentProduct.category_id;
-    }
 
     const data = await products.getAll(filters);
-    let related = data.items || [];
+    let featured = data.items || [];
 
     // Filter out current product
-    related = related.filter(p => p.id !== currentProduct.id).slice(0, 4);
+    featured = featured.filter(p => p.id !== currentProduct.id).slice(0, 4);
 
-    if (related.length === 0) {
+    // If no featured products, fall back to same category
+    if (featured.length === 0) {
+      const categoryFilters = {
+        limit: 5
+      };
+      if (currentProduct.category_id) {
+        categoryFilters.category_id = currentProduct.category_id;
+      }
+      const categoryData = await products.getAll(categoryFilters);
+      featured = (categoryData.items || []).filter(p => p.id !== currentProduct.id).slice(0, 4);
+    }
+
+    if (featured.length === 0) {
       const section = document.querySelector('.related-section');
       if (section) section.style.display = 'none';
       return;
     }
 
     // Render using Industry Card style
-    container.innerHTML = related.map(p => createIndustryProductCard(p, isLoggedIn)).join('');
+    container.innerHTML = featured.map(p => createIndustryProductCard(p, isLoggedIn)).join('');
     
   } catch (error) {
-    console.error('Error loading related products:', error);
-    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8;">Kon gerelateerde producten niet laden.</div>';
+    console.error('Error loading featured products:', error);
+    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8;">Kon uitgelichte producten niet laden.</div>';
   }
 }
 
@@ -605,9 +536,6 @@ function injectProStyles() {
     /* Header */
     .pro-header { margin-bottom: 32px; }
     .back-link { display: none; } /* Hidden in favor of breadcrumbs */
-    .pro-meta-tags { display: flex; gap: 8px; margin-bottom: 12px; }
-    .tag-category { background: #e0f2f1; color: var(--pro-primary); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
-    .tag-brand { background: #f1f5f9; color: #64748b; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
     .pro-title { font-size: 2.5rem; font-weight: 800; color: var(--pro-text-dark); margin: 0; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
 
     /* Grid Layout */
@@ -625,7 +553,6 @@ function injectProStyles() {
       position: relative; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
     }
     .main-image-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .badge-featured { position: absolute; top: 16px; left: 16px; background: #fbbf24; color: #92400e; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
     
     .thumbnail-list { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
     .thumb-btn { 
@@ -641,8 +568,6 @@ function injectProStyles() {
     .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--pro-primary); }
     .price-suffix { font-size: 0.9rem; color: #64748b; margin-left: 4px; }
     .price-request { font-size: 1.5rem; font-weight: 600; color: var(--pro-text-dark); }
-    .stock-status { display: flex; align-items: center; gap: 6px; color: #16a34a; font-weight: 600; margin-top: 8px; font-size: 0.95rem; }
-    .delivery-time { color: #64748b; font-weight: 400; font-size: 0.9rem; }
     
     .key-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .key-spec-item { background: var(--pro-bg-light); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px; }
@@ -668,11 +593,6 @@ function injectProStyles() {
     .expert-text { font-size: 0.9rem; color: #475569; margin-bottom: 16px; line-height: 1.5; }
     .expert-phone, .expert-email { display: block; text-decoration: none; color: var(--pro-primary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; transition: opacity 0.2s; }
     .expert-phone:hover, .expert-email:hover { opacity: 0.8; }
-    
-    .usp-list { list-style: none; padding: 0; margin: 0; background: var(--pro-bg-light); border-radius: 12px; padding: 20px; }
-    .usp-list li { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.9rem; color: #475569; align-items: flex-start; }
-    .usp-list li:last-child { margin-bottom: 0; }
-    .check { color: #16a34a; font-weight: 800; }
 
     /* Bottom Section */
     .pro-details-section { border-top: 1px solid var(--pro-border); padding-top: 48px; margin-bottom: 64px; }
@@ -690,8 +610,8 @@ function injectProStyles() {
     
     .pro-description-content { max-width: 800px; line-height: 1.8; color: #334155; }
 
-    /* Related Products */
-    .related-section { border-top: 1px solid var(--pro-border); padding-top: 48px; }
+    /* Featured Products */
+    .related-section { border-top: 1px solid var(--pro-border); padding-top: 48px; margin-top: 48px; }
     .related-title { font-size: 1.8rem; margin-bottom: 32px; color: var(--pro-text-dark); font-weight: 700; text-transform: uppercase; }
     .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; }
 

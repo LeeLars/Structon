@@ -197,14 +197,7 @@ async function request(endpoint, options = {}) {
       // Show error to user
       showApiError(endpoint, error);
       
-      // Return normalized empty data structure based on endpoint
-      if (endpoint.includes('/products')) {
-        return normalizeProductsResponse({ products: [], total: 0 });
-      }
-      if (endpoint.includes('/categories') || endpoint.includes('/brands')) {
-        return [];
-      }
-      
+      // Always throw the error so calling code can handle it properly
       throw error;
     } finally {
       // Remove from pending requests

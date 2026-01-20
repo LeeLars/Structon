@@ -1080,21 +1080,21 @@ export const BRAND_DATA = {
   }
 };
 
-// Lijst van andere merken voor cross-linking
+// Lijst van andere merken voor cross-linking (alfabetisch gesorteerd)
 export const OTHER_BRANDS = [
-  { name: 'Komatsu', slug: 'komatsu' },
-  { name: 'Volvo', slug: 'volvo' },
-  { name: 'Hitachi', slug: 'hitachi' },
-  { name: 'Liebherr', slug: 'liebherr' },
-  { name: 'JCB', slug: 'jcb' },
-  { name: 'Kubota', slug: 'kubota' },
-  { name: 'Takeuchi', slug: 'takeuchi' },
-  { name: 'Yanmar', slug: 'yanmar' },
-  { name: 'Develon', slug: 'develon' },
   { name: 'Case', slug: 'case' },
   { name: 'Caterpillar', slug: 'caterpillar' },
+  { name: 'Develon', slug: 'develon' },
+  { name: 'Hitachi', slug: 'hitachi' },
   { name: 'Hyundai', slug: 'hyundai' },
+  { name: 'JCB', slug: 'jcb' },
   { name: 'Kobelco', slug: 'kobelco' },
+  { name: 'Komatsu', slug: 'komatsu' },
+  { name: 'Kubota', slug: 'kubota' },
+  { name: 'Liebherr', slug: 'liebherr' },
   { name: 'Sany', slug: 'sany' },
-  { name: 'Wacker Neuson', slug: 'wacker-neuson' }
+  { name: 'Takeuchi', slug: 'takeuchi' },
+  { name: 'Volvo', slug: 'volvo' },
+  { name: 'Wacker Neuson', slug: 'wacker-neuson' },
+  { name: 'Yanmar', slug: 'yanmar' }
 ];

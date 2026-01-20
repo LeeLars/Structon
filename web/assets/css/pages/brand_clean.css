@@ -696,7 +696,6 @@ main[data-brand] {
   color: white;
   position: relative;
   overflow: hidden;
-  margin-top: var(--space-16);
 }
 
 .cta-box::before {

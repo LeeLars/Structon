@@ -435,7 +435,7 @@ p {
    TOP BAR (Donker Petrol)
    ============================================ */
 .top-bar {
-  background-color: #2C5F6F;
+  background-color: #236773;
   color: white;
   padding: 10px 0;
   font-size: 14px;
@@ -525,7 +525,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #2C5F6F; /* Match Top Bar */
+  background-color: #236773; /* Match Top Bar */
   height: 165px; /* Originele grootte */
   width: 135px; /* Originele grootte */
   min-width: 135px; /* Forceer breedte */

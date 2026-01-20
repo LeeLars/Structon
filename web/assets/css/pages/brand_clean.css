@@ -431,7 +431,7 @@ main[data-brand] {
    ============================================ */
 .brand-cta-banner {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  padding: var(--space-8) 0;
+  padding: var(--space-16) 0;
   margin: var(--space-8) 0;
 }
 

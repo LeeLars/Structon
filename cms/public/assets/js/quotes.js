@@ -48,6 +48,7 @@ async function initializeData() {
       allQuotes = [];
     }
     console.log(`✅ Loaded ${allQuotes.length} quotes from CMS`);
+    updateStats();
   } catch (error) {
     console.error('❌ Error loading quotes:', error);
     allQuotes = [];
@@ -55,6 +56,33 @@ async function initializeData() {
   
   renderQuotes();
   console.log('[QUOTES] Initial render complete');
+}
+
+/**
+ * Update Dashboard Statistics
+ */
+function updateStats() {
+  const total = allQuotes.length;
+  const newQuotes = allQuotes.filter(q => q.status === 'new').length;
+  const openQuotes = allQuotes.filter(q => ['new', 'processing', 'quoted'].includes(q.status)).length;
+  const wonQuotes = allQuotes.filter(q => q.status === 'won').length;
+  const lostQuotes = allQuotes.filter(q => q.status === 'lost').length;
+  const closedQuotes = wonQuotes + lostQuotes;
+  
+  // Calculate conversion rate (won / closed * 100)
+  const conversion = closedQuotes > 0 ? Math.round((wonQuotes / closedQuotes) * 100) : 0;
+
+  // Animate numbers
+  animateValue('stat-total', total);
+  animateValue('stat-new', newQuotes);
+  animateValue('stat-open', openQuotes);
+  document.getElementById('stat-conversion').textContent = `${conversion}%`;
+}
+
+function animateValue(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = value;
 }
 
 /**
@@ -81,6 +109,20 @@ function initEventListeners() {
       currentFilter = pill.dataset.status;
       renderQuotes();
     });
+  });
+  
+  // Close drawer on overlay click
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('drawer-overlay')) {
+      closeQuoteDrawer();
+    }
+  });
+  
+  // Escape key to close drawer
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeQuoteDrawer();
+    }
   });
 }
 
@@ -132,18 +174,18 @@ function renderQuotes() {
   }
 
   tableBody.innerHTML = filtered.map(quote => `
-    <tr>
+    <tr onclick="viewQuote('${quote.id}')" style="cursor: pointer;">
       <td><strong>${quote.reference || quote.id}</strong></td>
       <td>
         <div>${formatDate(quote.created_at)}</div>
         <div class="text-muted small">${formatTime(quote.created_at)}</div>
       </td>
       <td>
-        <div>${quote.customer_name}</div>
-        <div class="text-muted small">${quote.customer_email}</div>
+        <div class="font-medium">${quote.customer_name}</div>
+        <div class="text-muted small">${quote.company_name || ''}</div>
       </td>
       <td><span class="badge badge-${getStatusColor(quote.status)}">${getStatusLabel(quote.status)}</span></td>
-      <td class="text-right">
+      <td class="text-right" onclick="event.stopPropagation()">
         ${quote.customer_phone ? `
         <a href="https://wa.me/${quote.customer_phone.replace(/[^0-9+]/g, '')}" class="btn-icon" title="WhatsApp" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -164,14 +206,7 @@ function renderQuotes() {
         </a>
         <button class="btn-icon" onclick="viewQuote('${quote.id}')" title="Bekijken">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-        </button>
-        <button class="btn-icon" onclick="updateQuoteStatus('${quote.id}')" title="Status wijzigen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            <path d="M9 18l6-6-6-6"></path>
           </svg>
         </button>
       </td>
@@ -180,7 +215,7 @@ function renderQuotes() {
 }
 
 function getStatusColor(status) {
-  const colors = { new: 'success', processing: 'warning', quoted: 'secondary', won: 'success', lost: 'danger' };
+  const colors = { new: 'success', processing: 'warning', quoted: 'info', won: 'success', lost: 'danger' };
   return colors[status] || 'secondary';
 }
 
@@ -201,169 +236,228 @@ function formatTime(dateString) {
 window.viewQuote = (id) => {
   const quote = allQuotes.find(q => q.id === id);
   if (quote) {
-    openQuoteModal(quote, 'view');
+    openQuoteDrawer(quote);
   }
 };
 
 window.updateQuoteStatus = (id) => {
   const quote = allQuotes.find(q => q.id === id);
   if (quote) {
-    openQuoteModal(quote, 'status');
+    openQuoteDrawer(quote);
   }
 };
 
 /**
- * Open quote modal for viewing or status change
+ * Open Quote Drawer (Slide-over)
  */
-function openQuoteModal(quote, mode = 'view') {
-  // Create modal if it doesn't exist
-  let modal = document.getElementById('quote-modal');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'quote-modal';
-    modal.className = 'modal';
-    modal.innerHTML = `
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 id="quote-modal-title">Offerte Details</h2>
-          <button class="btn-close" onclick="closeQuoteModal()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div class="modal-body" id="quote-modal-body"></div>
-        <div class="modal-footer" id="quote-modal-footer"></div>
-      </div>
-    `;
-    document.body.appendChild(modal);
+function openQuoteDrawer(quote) {
+  // Create drawer if it doesn't exist
+  let drawer = document.getElementById('quote-drawer');
+  let overlay = document.getElementById('drawer-overlay');
+  
+  if (!drawer) {
+    overlay = document.createElement('div');
+    overlay.id = 'drawer-overlay';
+    overlay.className = 'drawer-overlay';
+    document.body.appendChild(overlay);
+    
+    drawer = document.createElement('div');
+    drawer.id = 'quote-drawer';
+    drawer.className = 'drawer';
+    document.body.appendChild(drawer);
   }
+  
+  // Populate Drawer
+  drawer.innerHTML = `
+    <div class="drawer-header">
+      <div>
+        <h2 class="drawer-title">Offerte ${quote.reference || quote.id}</h2>
+        <p class="drawer-subtitle">Aangevraagd op ${formatDate(quote.created_at)} om ${formatTime(quote.created_at)}</p>
+      </div>
+      <button class="btn-icon" onclick="closeQuoteDrawer()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    
+    <div class="drawer-content">
+      <!-- Status Actions -->
+      <div class="detail-section">
+        <div class="detail-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Status & Opvolging
+        </div>
+        <div class="status-actions">
+          <button class="status-btn ${quote.status === 'new' ? 'active' : ''}" onclick="saveQuoteStatus('${quote.id}', 'new')">Nieuw</button>
+          <button class="status-btn ${quote.status === 'processing' ? 'active' : ''}" onclick="saveQuoteStatus('${quote.id}', 'processing')">In behandeling</button>
+          <button class="status-btn ${quote.status === 'quoted' ? 'active' : ''}" onclick="saveQuoteStatus('${quote.id}', 'quoted')">Offerte verstuurd</button>
+          <button class="status-btn ${quote.status === 'won' ? 'active' : ''}" onclick="saveQuoteStatus('${quote.id}', 'won')">Gewonnen</button>
+          <button class="status-btn ${quote.status === 'lost' ? 'active' : ''}" onclick="saveQuoteStatus('${quote.id}', 'lost')">Verloren</button>
+        </div>
+      </div>
 
-  const title = document.getElementById('quote-modal-title');
-  const body = document.getElementById('quote-modal-body');
-  const footer = document.getElementById('quote-modal-footer');
-
-  if (mode === 'view') {
-    title.textContent = `Offerte ${quote.reference || quote.id}`;
-    body.innerHTML = `
-      <div class="quote-details">
-        <div class="detail-row">
-          <span class="detail-label">Referentie</span>
-          <span class="detail-value">${quote.reference || quote.id}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Datum</span>
-          <span class="detail-value">${formatDate(quote.created_at)} ${formatTime(quote.created_at)}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Klant</span>
-          <span class="detail-value">${quote.customer_name}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Email</span>
-          <span class="detail-value"><a href="mailto:${quote.customer_email}">${quote.customer_email}</a></span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Telefoon</span>
-          <span class="detail-value">${quote.customer_phone || '-'}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Product</span>
-          <span class="detail-value">${quote.product_title || '-'}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Status</span>
-          <span class="detail-value"><span class="badge badge-${getStatusColor(quote.status)}">${getStatusLabel(quote.status)}</span></span>
-        </div>
-        ${quote.message ? `
-        <div class="detail-row full-width">
-          <span class="detail-label">Bericht</span>
-          <span class="detail-value">${quote.message}</span>
-        </div>
+      <!-- Quick Actions -->
+      <div class="comm-actions">
+        ${quote.customer_phone ? `
+        <a href="https://wa.me/${quote.customer_phone.replace(/[^0-9+]/g, '')}" target="_blank" class="comm-btn comm-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          WhatsApp
+        </a>
+        <a href="tel:${quote.customer_phone}" class="comm-btn comm-phone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Bellen
+        </a>
         ` : ''}
+        <a href="mailto:${quote.customer_email}" class="comm-btn comm-email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          E-mail
+        </a>
       </div>
-    `;
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="closeQuoteModal()">Sluiten</button>
-      <button class="btn btn-primary" onclick="openQuoteModal(allQuotes.find(q => q.id === '${quote.id}'), 'status')">Status Wijzigen</button>
-    `;
-  } else if (mode === 'status') {
-    title.textContent = 'Status Wijzigen';
-    body.innerHTML = `
-      <div class="status-selector">
-        <p style="margin-bottom: 1rem; color: var(--col-text-muted);">Selecteer de nieuwe status voor offerte <strong>${quote.reference || quote.id}</strong></p>
-        <div class="status-options" id="status-options">
-          <label class="status-option ${quote.status === 'new' ? 'selected' : ''}">
-            <input type="radio" name="quote-status" value="new" ${quote.status === 'new' ? 'checked' : ''}>
-            <span class="status-option-badge badge badge-success">Nieuw</span>
-          </label>
-          <label class="status-option ${quote.status === 'processing' ? 'selected' : ''}">
-            <input type="radio" name="quote-status" value="processing" ${quote.status === 'processing' ? 'checked' : ''}>
-            <span class="status-option-badge badge badge-warning">In behandeling</span>
-          </label>
-          <label class="status-option ${quote.status === 'quoted' ? 'selected' : ''}">
-            <input type="radio" name="quote-status" value="quoted" ${quote.status === 'quoted' ? 'checked' : ''}>
-            <span class="status-option-badge badge badge-secondary">Offerte verstuurd</span>
-          </label>
-          <label class="status-option ${quote.status === 'won' ? 'selected' : ''}">
-            <input type="radio" name="quote-status" value="won" ${quote.status === 'won' ? 'checked' : ''}>
-            <span class="status-option-badge badge badge-success">Gewonnen</span>
-          </label>
-          <label class="status-option ${quote.status === 'lost' ? 'selected' : ''}">
-            <input type="radio" name="quote-status" value="lost" ${quote.status === 'lost' ? 'checked' : ''}>
-            <span class="status-option-badge badge badge-danger">Verloren</span>
-          </label>
+
+      <!-- Customer Details -->
+      <div class="detail-section">
+        <div class="detail-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Klantgegevens
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <label>Naam</label>
+            <div>${quote.customer_name}</div>
+          </div>
+          ${quote.company_name ? `
+          <div class="detail-item">
+            <label>Bedrijf</label>
+            <div>${quote.company_name}</div>
+          </div>
+          ` : ''}
+          <div class="detail-item">
+            <label>E-mail</label>
+            <div><a href="mailto:${quote.customer_email}">${quote.customer_email}</a></div>
+          </div>
+          <div class="detail-item">
+            <label>Telefoon</label>
+            <div>${quote.customer_phone || '-'}</div>
+          </div>
+          ${quote.vat_number ? `
+          <div class="detail-item">
+            <label>BTW Nummer</label>
+            <div>${quote.vat_number}</div>
+          </div>
+          ` : ''}
         </div>
       </div>
-    `;
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="closeQuoteModal()">Annuleren</button>
-      <button class="btn btn-primary" onclick="saveQuoteStatus('${quote.id}')">Opslaan</button>
-    `;
 
-    // Add click handlers for status options
-    setTimeout(() => {
-      document.querySelectorAll('.status-option').forEach(opt => {
-        opt.addEventListener('click', () => {
-          document.querySelectorAll('.status-option').forEach(o => o.classList.remove('selected'));
-          opt.classList.add('selected');
-          opt.querySelector('input').checked = true;
-        });
-      });
-    }, 0);
-  }
+      <!-- Product Details -->
+      <div class="detail-section">
+        <div class="detail-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          Aanvraag Details
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <label>Product / Onderwerp</label>
+            <div>${quote.product_title || quote.product_name || 'Algemene aanvraag'}</div>
+          </div>
+          ${quote.machine_brand ? `
+          <div class="detail-item">
+            <label>Machine Merk</label>
+            <div>${quote.machine_brand}</div>
+          </div>
+          ` : ''}
+          ${quote.machine_model ? `
+          <div class="detail-item">
+            <label>Machine Model</label>
+            <div>${quote.machine_model}</div>
+          </div>
+          ` : ''}
+          ${quote.attachment_type ? `
+          <div class="detail-item">
+            <label>Aansluiting</label>
+            <div>${quote.attachment_type}</div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
 
-  modal.style.display = 'flex';
+      <!-- Message -->
+      ${quote.message ? `
+      <div class="detail-section">
+        <div class="detail-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          Bericht
+        </div>
+        <div style="background: var(--col-bg); padding: 1rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap;">${quote.message}</div>
+      </div>
+      ` : ''}
+    </div>
+    
+    <div class="drawer-footer">
+      <button class="btn btn-secondary" onclick="closeQuoteDrawer()">Sluiten</button>
+    </div>
+  `;
+  
+  // Show drawer with animation
+  requestAnimationFrame(() => {
+    overlay.classList.add('open');
+    drawer.classList.add('open');
+  });
 }
 
-window.closeQuoteModal = () => {
-  const modal = document.getElementById('quote-modal');
-  if (modal) modal.style.display = 'none';
+window.closeQuoteDrawer = () => {
+  const drawer = document.getElementById('quote-drawer');
+  const overlay = document.getElementById('drawer-overlay');
+  
+  if (drawer && overlay) {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+      // drawer.remove(); 
+      // overlay.remove();
+      // Don't remove to keep DOM elements for next time, just hide
+    }, 300);
+  }
 };
 
-window.saveQuoteStatus = async (id) => {
-  const selected = document.querySelector('input[name="quote-status"]:checked');
-  if (!selected) return;
-
-  const newStatus = selected.value;
+window.saveQuoteStatus = async (id, newStatus) => {
   const quote = allQuotes.find(q => q.id === id);
+  if (!quote) return;
   
-  if (quote) {
-    // Try API first
-    try {
-      await api.put(`/sales/quotes/${id}`, { status: newStatus });
-    } catch (error) {
-      console.log('API unavailable, updating locally');
-    }
+  // Optimistic update
+  const oldStatus = quote.status;
+  quote.status = newStatus;
+  
+  // Update UI immediately
+  renderQuotes();
+  updateStats();
+  
+  // Re-render drawer actions to show new active state
+  openQuoteDrawer(quote); // Refreshes content
+  
+  try {
+    await api.put(`/sales/quotes/${id}`, { status: newStatus });
     
-    quote.status = newStatus;
-    renderQuotes();
-    closeQuoteModal();
-    
-    // Show success toast
     if (window.showToast) {
       window.showToast('Status bijgewerkt', 'success');
+    }
+  } catch (error) {
+    console.error('Failed to update status:', error);
+    // Revert on error
+    quote.status = oldStatus;
+    renderQuotes();
+    updateStats();
+    openQuoteDrawer(quote);
+    
+    if (window.showToast) {
+      window.showToast('Fout bij updaten status', 'error');
     }
   }
 };

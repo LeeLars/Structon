@@ -120,7 +120,6 @@
 
 /* Price & Actions Container */
 .product-actions-wrapper {
-  margin-top: 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -145,7 +144,6 @@
   flex-direction: row;
   gap: 16px;
   width: auto;
-  margin-top: 8px;
 }
 
 /* Meer info knop (Tekst pijl style zoals screenshot) */

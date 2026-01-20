@@ -179,6 +179,24 @@ function setupRequestTypeToggle() {
   const submitBtn = document.querySelector('.btn-text');
   const technicalFields = document.getElementById('technical-fields');
   
+  // Setup custom brand field toggle
+  const machineBrandSelect = document.getElementById('machine_brand');
+  const customBrandGroup = document.getElementById('custom-brand-group');
+  const customBrandInput = document.getElementById('custom_brand');
+  
+  if (machineBrandSelect && customBrandGroup) {
+    machineBrandSelect.addEventListener('change', function() {
+      if (this.value === 'anders') {
+        customBrandGroup.style.display = 'block';
+        customBrandInput.required = true;
+      } else {
+        customBrandGroup.style.display = 'none';
+        customBrandInput.required = false;
+        customBrandInput.value = '';
+      }
+    });
+  }
+  
   const updateState = (type) => {
     // Update button text
     const labels = {
@@ -331,8 +349,10 @@ async function handleFormSubmit(e) {
     product_id: formData.get('product_id') || null,
     product_slug: formData.get('product_slug') || null,
     
-    // Machine info
-    machine_brand: formData.get('machine_brand') || null,
+    // Machine info - use custom brand if "anders" is selected
+    machine_brand: formData.get('machine_brand') === 'anders' 
+      ? formData.get('custom_brand') 
+      : formData.get('machine_brand') || null,
     machine_model: formData.get('machine_model') || null,
     attachment_type: formData.get('attachment_type') || null,
     

@@ -235,12 +235,6 @@ p {
   padding: var(--space-24) 0;
 }
 
-/* Page Content Spacing - Fix header overlap */
-.page-content, 
-main:not(.no-padding) {
-  padding-top: var(--space-12); /* Minimum top padding to clear header/logo */
-}
-
 /* Ensure logo doesn't overlap content on small screens or tight layouts */
 @media (max-width: 1024px) {
   .page-content, 

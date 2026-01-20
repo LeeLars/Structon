@@ -87,15 +87,9 @@ function updateStats() {
     ['pending', 'paid', 'shipped'].includes(order.status)
   ).length;
   
-  // Calculate total revenue
-  const revenue = allOrders.reduce((sum, order) => 
-    sum + (order.total_amount || 0), 0
-  );
-  
   animateValue('stat-total', total);
   animateValue('stat-new', newToday);
   animateValue('stat-pending', pending);
-  animateRevenue('stat-revenue', revenue);
 }
 
 /**

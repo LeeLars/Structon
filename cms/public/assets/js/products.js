@@ -373,8 +373,8 @@ function renderProducts() {
   const pageProducts = filteredProducts.slice(startIndex, endIndex);
   
   tbody.innerHTML = pageProducts.map(product => `
-    <tr>
-      <td>
+    <tr class="product-row" data-product-id="${product.id}" style="cursor: pointer;">
+      <td onclick="event.stopPropagation();">
         <input type="checkbox" class="checkbox product-checkbox" data-id="${product.id}" 
           ${selectedProducts.has(product.id) ? 'checked' : ''}>
       </td>
@@ -408,7 +408,7 @@ function renderProducts() {
         </span>
         ${product.is_featured ? '<span class="status-badge status-badge-featured"><span class="status-dot"></span>Featured</span>' : ''}
       </td>
-      <td>
+      <td onclick="event.stopPropagation();">
         <div class="action-buttons">
           <button class="btn-action btn-edit" onclick="editProduct('${product.id}')" title="Bewerken">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -430,6 +430,16 @@ function renderProducts() {
   // Add checkbox listeners
   document.querySelectorAll('.product-checkbox').forEach(cb => {
     cb.addEventListener('change', handleProductSelect);
+  });
+  
+  // Add row click listeners to edit product
+  document.querySelectorAll('.product-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const productId = row.dataset.productId;
+      if (productId) {
+        editProduct(productId);
+      }
+    });
   });
   
   updatePagination();
@@ -1017,8 +1027,25 @@ window.deleteProduct = async function(id) {
  * Switch view
  */
 function switchView(view) {
-  // TODO: Implement grid view
-  console.log('Switch to view:', view);
+  const tableContainer = document.querySelector('.table-container');
+  const viewGridBtn = document.getElementById('view-grid');
+  const viewListBtn = document.getElementById('view-list');
+  
+  if (!tableContainer) return;
+  
+  if (view === 'grid') {
+    tableContainer.classList.add('grid-view');
+    tableContainer.classList.remove('list-view');
+    viewGridBtn?.classList.add('active');
+    viewListBtn?.classList.remove('active');
+  } else {
+    tableContainer.classList.remove('grid-view');
+    tableContainer.classList.add('list-view');
+    viewListBtn?.classList.add('active');
+    viewGridBtn?.classList.remove('active');
+  }
+  
+  renderProducts();
 }
 
 /**

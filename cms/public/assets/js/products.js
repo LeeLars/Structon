@@ -578,6 +578,8 @@ function openProductModal(product = null) {
   } else {
     title.textContent = 'Nieuw Product';
     editingProductId = null;
+    // Initialize empty images array for new product
+    window.uploadedImages = [];
     // Set default active state
     document.getElementById('product-active').checked = true;
   }
@@ -857,8 +859,7 @@ async function handleImageSelect(e) {
       uploadArea.parentNode.insertBefore(previewContainer, uploadArea.nextSibling);
     }
     
-    // Show local previews (wait for all to load)
-    previewContainer.innerHTML = '';
+    // Show local previews (wait for all to load) - append to existing previews
     const previewPromises = files.map(file => {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -893,17 +894,19 @@ async function handleImageSelect(e) {
     
     if (response.images && response.images.length > 0) {
       showToast(`${response.images.length} afbeelding(en) geüpload!`, 'success');
-      window.uploadedImages = response.images;
+      // Append new images to existing ones instead of replacing
+      if (!window.uploadedImages) {
+        window.uploadedImages = [];
+      }
+      window.uploadedImages = [...window.uploadedImages, ...response.images];
       
-      // Update preview with actual URLs
-      const previewContainer = document.getElementById('image-preview-container');
-      if (previewContainer) {
-        previewContainer.innerHTML = response.images.map(img => `
-          <div style="position: relative; width: 100px; height: 100px;">
-            <img src="${img.url}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid #22c55e;">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #22c55e; color: white; font-size: 10px; padding: 2px; text-align: center; border-radius: 0 0 8px 8px;">✓ Uploaded</div>
-          </div>
-        `).join('');
+      // Re-render all images including the new ones
+      renderImagePreviews();
+      
+      // Reset file input to allow selecting more images
+      const imageInput = document.getElementById('image-input');
+      if (imageInput) {
+        imageInput.value = '';
       }
     }
   } catch (error) {

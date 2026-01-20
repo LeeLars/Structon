@@ -304,6 +304,17 @@ function renderProductDetail(product, container) {
             `).join('')}
           </div>
 
+          <!-- Brand Compatibility -->
+          ${product.brand_title ? `
+            <div class="brand-compatibility">
+              <h4 class="compatibility-title">Compatibel met</h4>
+              <div class="compatibility-brands">
+                <span class="brand-tag">${escapeHtml(product.brand_title)}</span>
+              </div>
+              <p class="compatibility-note">Deze kraanbak is speciaal ontworpen voor ${escapeHtml(product.brand_title)} machines.</p>
+            </div>
+          ` : ''}
+
           <!-- Description Snippet -->
           ${product.description ? `
             <div class="pro-description">
@@ -550,9 +561,9 @@ function injectProStyles() {
     .pro-col-gallery { display: flex; flex-direction: column; gap: 16px; }
     .main-image-wrapper { 
       background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; 
-      position: relative; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+      position: relative; width: 100%; height: 500px; display: flex; align-items: center; justify-content: center;
     }
-    .main-image-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .main-image-wrapper img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
     
     .thumbnail-list { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
     .thumb-btn { 
@@ -577,6 +588,13 @@ function injectProStyles() {
 
     .pro-description p { color: #475569; line-height: 1.6; font-size: 0.95rem; margin-bottom: 8px; }
     .read-more-link { color: var(--pro-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; border-bottom: 1px dashed var(--pro-primary); }
+    
+    /* Brand Compatibility */
+    .brand-compatibility { background: var(--pro-bg-light); padding: 20px; border-radius: 12px; border-left: 4px solid var(--pro-primary); }
+    .compatibility-title { font-size: 0.85rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .compatibility-brands { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .brand-tag { display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+    .compatibility-note { font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5; }
     
     .pro-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
     .btn-block { width: 100%; justify-content: center; }

@@ -1452,7 +1452,7 @@ p {
    FOOTER
    ============================================ */
 .site-footer {
-  background-color: var(--color-gray-900);
+  background-color: #236773;
   color: var(--color-gray-300);
   padding: var(--space-16) 0 var(--space-8);
 }

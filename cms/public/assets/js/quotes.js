@@ -65,18 +65,11 @@ function updateStats() {
   const total = allQuotes.length;
   const newQuotes = allQuotes.filter(q => q.status === 'new').length;
   const openQuotes = allQuotes.filter(q => ['new', 'processing', 'quoted'].includes(q.status)).length;
-  const wonQuotes = allQuotes.filter(q => q.status === 'won').length;
-  const lostQuotes = allQuotes.filter(q => q.status === 'lost').length;
-  const closedQuotes = wonQuotes + lostQuotes;
   
-  // Calculate conversion rate (won / closed * 100)
-  const conversion = closedQuotes > 0 ? Math.round((wonQuotes / closedQuotes) * 100) : 0;
-
   // Animate numbers
   animateValue('stat-total', total);
   animateValue('stat-new', newQuotes);
   animateValue('stat-open', openQuotes);
-  document.getElementById('stat-conversion').textContent = `${conversion}%`;
 }
 
 function animateValue(id, value) {
@@ -215,7 +208,7 @@ function renderQuotes() {
 }
 
 function getStatusColor(status) {
-  const colors = { new: 'success', processing: 'warning', quoted: 'info', won: 'success', lost: 'danger' };
+  const colors = { new: 'success', processing: 'warning', quoted: 'secondary', won: 'success', lost: 'danger' };
   return colors[status] || 'secondary';
 }
 
@@ -234,16 +227,22 @@ function formatTime(dateString) {
 
 // Global functions for inline onclick
 window.viewQuote = (id) => {
-  const quote = allQuotes.find(q => q.id === id);
+  // Use loose equality to handle both string and number IDs
+  const quote = allQuotes.find(q => q.id == id);
   if (quote) {
     openQuoteDrawer(quote);
+  } else {
+    console.error('Quote not found:', id);
   }
 };
 
 window.updateQuoteStatus = (id) => {
-  const quote = allQuotes.find(q => q.id === id);
+  // Use loose equality to handle both string and number IDs
+  const quote = allQuotes.find(q => q.id == id);
   if (quote) {
     openQuoteDrawer(quote);
+  } else {
+    console.error('Quote not found:', id);
   }
 };
 

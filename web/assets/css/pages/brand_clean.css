@@ -678,6 +678,91 @@ main[data-brand] {
 }
 
 /* ============================================
+   EXPERT BOX
+   ============================================ */
+.expert-box {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.expert-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.expert-avatar {
+  width: 56px;
+  height: 56px;
+  background: #f0f9ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.expert-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expert-info strong {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.expert-info span {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.expert-text {
+  color: #4b5563;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.expert-phone,
+.expert-email {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #236773;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.expert-phone:hover,
+.expert-email:hover {
+  background: #236773;
+  color: white;
+  transform: translateX(4px);
+}
+
+.expert-phone svg,
+.expert-email svg {
+  flex-shrink: 0;
+}
+
+/* ============================================
    BRAND LINKS (Other Brands Section)
    ============================================ */
 .brand-links-small {

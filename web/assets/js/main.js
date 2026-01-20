@@ -96,54 +96,16 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
 
-  // Build specs list (Grid Layout with Icons)
+  // Build specs list (Develon Style: Clean Label | Value list)
   const specsHtml = `
-    <div class="key-specs-grid">
-      ${product.weight ? `
-        <div class="key-spec-item">
-          <span class="spec-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"></path><path d="M5 8h14"></path><path d="M2 18h20"></path></svg>
-          </span>
-          <span class="spec-label">Gewicht</span>
-          <span class="spec-value">${product.weight} kg</span>
-        </div>` : ''}
-      
-      ${product.volume ? `
-        <div class="key-spec-item">
-          <span class="spec-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          </span>
-          <span class="spec-label">Inhoud</span>
-          <span class="spec-value">${product.volume} L</span>
-        </div>` : ''}
-      
-      ${product.width ? `
-        <div class="key-spec-item">
-          <span class="spec-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"></path><path d="M5 9v6"></path><path d="M19 9v6"></path></svg>
-          </span>
-          <span class="spec-label">Breedte</span>
-          <span class="spec-value">${product.width} mm</span>
-        </div>` : ''}
-
-      ${product.excavator_weight_min && product.excavator_weight_max ? `
-        <div class="key-spec-item">
-          <span class="spec-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-          </span>
-          <span class="spec-label">Klasse</span>
-          <span class="spec-value">${parseFloat(product.excavator_weight_min).toFixed(1).replace('.',',')}-${parseFloat(product.excavator_weight_max).toFixed(1).replace('.',',')}t</span>
-        </div>` : ''}
-      
-      ${product.attachment_type ? `
-        <div class="key-spec-item">
-          <span class="spec-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-          </span>
-          <span class="spec-label">Ophanging</span>
-          <span class="spec-value">${product.attachment_type}</span>
-        </div>` : ''}
-    </div>
+    <dl class="product-specs">
+      ${product.weight ? `<dt>Gewicht</dt><dd>${product.weight} kg</dd>` : ''}
+      ${product.width ? `<dt>Breedte</dt><dd>${product.width} mm</dd>` : ''}
+      ${product.volume ? `<dt>Inhoud</dt><dd>${product.volume} liter</dd>` : ''}
+      ${product.excavator_weight_min && product.excavator_weight_max ? 
+        `<dt>Machine klasse</dt><dd>${parseFloat(product.excavator_weight_min).toFixed(1).replace('.',',')} - ${parseFloat(product.excavator_weight_max).toFixed(1).replace('.',',')} ton</dd>` : ''}
+      ${product.attachment_type ? `<dt>Ophanging</dt><dd>${product.attachment_type}</dd>` : ''}
+    </dl>
   `;
 
   // Price display
@@ -151,43 +113,26 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
     ? `<div class="product-price-display">
          <div class="product-price-amount">€${formatPrice(product.price_excl_vat)},-</div>
        </div>`
-    : `<div class="product-price-display">
-         <!-- Price hidden for non-logged in users, or show 'Prijs op aanvraag' if desired -->
-       </div>`;
+    : ''; // Don't show price block if not logged in, keep it clean
 
-  // Buttons - Structon Style (Alleen 'Meer info')
-  // Common More Info button (Structon Standard)
+  // Buttons - Develon Style (Simple Text Link)
   const moreInfoBtn = `
-    <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
-      <span class="btn-split-text">Meer info</span>
-      <span class="btn-split-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </span>
+    <a href="${productUrl}" class="btn-more-info-text">
+      Bekijk product
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </a>
   `;
 
-  // Als ingelogd: In winkelmandje + Meer info
-  // Als niet ingelogd: ALLEEN Meer info (zoals gevraagd)
-  let buttonsHtml;
-  if (isLoggedIn) {
-    buttonsHtml = `
-      <div class="product-buttons" style="margin-top: 16px;">
-        <button class="btn btn-primary" onclick="addToCart('${product.id}', '${escapeHtml(product.title)}')" style="width: 100%; justify-content: center;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="margin-right: 8px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          In winkelmandje
-        </button>
+  // Actions Wrapper
+  const actionsHtml = `
+    <div class="product-actions-wrapper">
+      ${priceHtml}
+      <div class="product-buttons">
         ${moreInfoBtn}
       </div>
-    `;
-  } else {
-    buttonsHtml = `
-      <div class="product-buttons" style="margin-top: 16px;">
-        ${moreInfoBtn}
-      </div>
-    `;
-  }
+    </div>
+  `;
 
-  // New Structure: Grid 300px | 1fr
   return `
     <article class="product-card-horizontal" data-product-id="${product.id}">
       <a href="${productUrl}" class="product-image">
@@ -201,10 +146,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
         
         ${specsHtml}
         
-        <div class="product-actions-wrapper">
-          ${priceHtml}
-          ${buttonsHtml}
-        </div>
+        ${actionsHtml}
       </div>
     </article>
   `;

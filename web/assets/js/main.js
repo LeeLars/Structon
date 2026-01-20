@@ -82,6 +82,52 @@ const STOCK_PHOTOS = [
 ];
 
 /**
+ * Create Industry Product Card (Grid Layout)
+ * Uses new universal .product-card design
+ */
+export function createIndustryProductCard(product, isLoggedIn = false) {
+  const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
+  const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
+  
+  // Use absolute path with dynamic base for GitHub Pages compatibility
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
+
+  // Build quote URL with pre-filled data
+  const quoteParams = new URLSearchParams();
+  quoteParams.set('product_id', product.id);
+  quoteParams.set('product_name', product.title);
+  if (product.category_slug) quoteParams.set('category', product.category_slug);
+  
+  const quoteUrl = `${basePath}/offerte-aanvragen/?${quoteParams.toString()}`;
+
+  return `
+    <article class="product-card" data-product-id="${product.id}" style="border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: white; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column;">
+      <a href="${productUrl}" class="product-card-image-wrapper" style="position: relative; aspect-ratio: 4/3; display: block; background: #f8fafc; overflow: hidden;">
+        <img src="${imageUrl}" alt="${escapeHtml(product.title)}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; padding: 16px;">
+      </a>
+      
+      <div class="product-card-content" style="padding: 16px; flex: 1; display: flex; flex-direction: column;">
+        <span class="product-card-category" style="font-size: 0.75rem; color: #64748b; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">${escapeHtml(product.category_title || 'Product')}</span>
+        
+        <h3 class="product-card-title" style="font-size: 1.1rem; font-weight: 700; margin: 0 0 8px 0; line-height: 1.4;">
+          <a href="${productUrl}" style="color: #0f172a; text-decoration: none;">${escapeHtml(product.title)}</a>
+        </h3>
+        
+        <div class="product-card-actions" style="margin-top: auto; padding-top: 16px; display: flex; gap: 8px;">
+          <a href="${quoteUrl}" class="btn-split btn-split-sm" style="flex: 1; text-decoration: none; justify-content: center;">
+            <span class="btn-split-text">Offerte</span>
+          </a>
+          <a href="${productUrl}" class="btn-split btn-split-sm" style="flex: 0 0 auto; background: #f1f5f9; color: #334155; border-color: #e2e8f0; text-decoration: none;">
+            <span class="btn-split-icon">→</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+/**
  * Create HORIZONTAL product card (new design for product lists)
  * - Wide card with image left, specs middle, price/buttons right
  * - Price only visible when logged in

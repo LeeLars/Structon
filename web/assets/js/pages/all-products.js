@@ -5,7 +5,7 @@
  */
 
 import { products } from '../api/client.js';
-import { createProductCardHorizontal, showLoading, showError, showNoResults, escapeHtml } from '../main.js';
+import { createProductCardHorizontal, createProductCard, createIndustryProductCard, showLoading, showError, showNoResults, escapeHtml } from '../main.js';
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
 
@@ -197,112 +197,459 @@ function showProductNotFound(container) {
 }
 
 /**
- * Render product detail view
+ * Render product detail view - PRO Version
  */
 function renderProductDetail(product, container) {
+  // Inject custom styles for the pro layout
+  injectProStyles();
+
   const images = product.cloudinary_images || [];
   const mainImage = images[0]?.url || 'https://via.placeholder.com/600x600?text=Geen+Afbeelding';
   
-  // Build specs table
-  const specs = [];
-  if (product.volume) specs.push({ label: 'Inhoud', value: `${product.volume} liter` });
-  if (product.width) specs.push({ label: 'Breedte', value: `${product.width} mm` });
-  if (product.weight) specs.push({ label: 'Gewicht', value: `${product.weight} kg` });
-  if (product.attachment_type) specs.push({ label: 'Ophanging', value: product.attachment_type });
+  // Build specs arrays
+  const keySpecs = [];
+  if (product.weight) keySpecs.push({ label: 'Gewicht', value: `${product.weight} kg`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>' }); // Using heart as placeholder, ideally weight icon
+  if (product.width) keySpecs.push({ label: 'Breedte', value: `${product.width} mm`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M5 9v6"/><path d="M19 9v6"/></svg>' });
+  if (product.volume) keySpecs.push({ label: 'Inhoud', value: `${product.volume} L`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' });
+  if (product.attachment_type) keySpecs.push({ label: 'Ophanging', value: product.attachment_type, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' });
+
+  // Fix icons for weight (scale)
+  if (keySpecs.find(s => s.label === 'Gewicht')) {
+     keySpecs.find(s => s.label === 'Gewicht').icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M2 18h20"/></svg>';
+  }
+
+  const allSpecs = [];
+  if (product.id) allSpecs.push({ label: 'Artikelnummer', value: product.id.substring(0, 8).toUpperCase() });
+  if (product.category_title) allSpecs.push({ label: 'Categorie', value: product.category_title });
+  if (product.brand_title) allSpecs.push({ label: 'Merk', value: product.brand_title });
+  if (product.weight) allSpecs.push({ label: 'Gewicht', value: `${product.weight} kg` });
+  if (product.width) allSpecs.push({ label: 'Breedte', value: `${product.width} mm` });
+  if (product.volume) allSpecs.push({ label: 'Inhoud (SAE)', value: `${product.volume} liter` });
+  if (product.attachment_type) allSpecs.push({ label: 'Ophanging', value: product.attachment_type });
   if (product.excavator_weight_min && product.excavator_weight_max) {
-    specs.push({ 
-      label: 'Graafmachine klasse', 
+    allSpecs.push({ 
+      label: 'Machine klasse', 
       value: `${parseFloat(product.excavator_weight_min).toFixed(1)} - ${parseFloat(product.excavator_weight_max).toFixed(1)} ton` 
     });
   }
-  if (product.brand_title) specs.push({ label: 'Merk', value: product.brand_title });
-  
-  const specsHtml = specs.length > 0 ? `
-    <div class="specs-section" style="margin-top: 32px;">
-      <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase;">Specificaties</h3>
-      <table class="specs-table" style="width: 100%; border-collapse: collapse;">
-        <tbody>
-          ${specs.map(s => `
-            <tr style="border-bottom: 1px solid #e5e7eb;">
-              <th style="text-align: left; padding: 12px 0; font-weight: 500; color: #6b7280; width: 40%;">${s.label}</th>
-              <td style="text-align: left; padding: 12px 0; font-weight: 600;">${s.value}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>
-  ` : '';
-  
-  // Build quote URL
+
+  // Quote URL
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   const quoteParams = new URLSearchParams();
   quoteParams.set('product_id', product.id);
   quoteParams.set('product_name', product.title);
   if (product.category_title) quoteParams.set('product_category', product.category_title);
   const quoteUrl = `${basePath}/offerte-aanvragen/?${quoteParams.toString()}`;
-  
+
+  // Build HTML
   container.innerHTML = `
-    <div class="product-detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
-      <!-- Product Gallery -->
-      <div class="product-gallery">
-        <div class="product-main-image" style="background: #f9fafb; border-radius: 12px; padding: 24px; margin-bottom: 16px;">
-          <img src="${mainImage}" alt="${escapeHtml(product.title)}" id="main-product-image" style="width: 100%; height: auto; object-fit: contain;">
+    <div class="pro-product-page">
+      <!-- Breadcrumbs -->
+      <nav class="pro-breadcrumbs">
+        <a href="./">Home</a>
+        <span class="separator">/</span>
+        <a href="./">Producten</a>
+        ${product.category_title ? `
+          <span class="separator">/</span>
+          <span class="current">${escapeHtml(product.category_title)}</span>
+        ` : ''}
+        <span class="separator">/</span>
+        <span class="current">${escapeHtml(product.title)}</span>
+      </nav>
+
+      <!-- Header Section -->
+      <div class="pro-header">
+        <div class="pro-meta-tags">
+          <span class="tag-category">${escapeHtml(product.category_title || 'Product')}</span>
+          ${product.brand_title ? `<span class="tag-brand">${escapeHtml(product.brand_title)}</span>` : ''}
         </div>
-        ${images.length > 1 ? `
-          <div class="product-thumbnails" style="display: flex; gap: 12px; flex-wrap: wrap;">
-            ${images.map((img, i) => `
-              <button class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}" style="width: 80px; height: 80px; border: 2px solid ${i === 0 ? '#236773' : '#e5e7eb'}; border-radius: 8px; overflow: hidden; cursor: pointer; padding: 4px; background: #fff;">
-                <img src="${img.url}" alt="${escapeHtml(product.title)} ${i + 1}" style="width: 100%; height: 100%; object-fit: cover;">
-              </button>
+        <h1 class="pro-title">${escapeHtml(product.title)}</h1>
+      </div>
+
+      <div class="pro-grid">
+        <!-- 1. Gallery Column -->
+        <div class="pro-col-gallery">
+          <div class="main-image-wrapper">
+            <img src="${mainImage}" alt="${escapeHtml(product.title)}" id="main-product-image">
+            ${product.is_featured ? '<span class="badge-featured">Uitgelicht</span>' : ''}
+          </div>
+          ${images.length > 1 ? `
+            <div class="thumbnail-list">
+              ${images.map((img, i) => `
+                <button class="thumb-btn ${i === 0 ? 'active' : ''}" data-image="${img.url}">
+                  <img src="${img.url}" alt="Thumbnail ${i + 1}">
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- 2. Details Column -->
+        <div class="pro-col-details">
+          <!-- Price Block -->
+          <div class="price-block">
+            ${isLoggedIn ? `
+              <div class="price-row">
+                <span class="price-amount">€${product.price_excl_vat || '0.00'}</span>
+                <span class="price-suffix">excl. BTW</span>
+              </div>
+            ` : `
+              <div class="price-request">Prijs op aanvraag</div>
+            `}
+            <div class="stock-status">
+              <span class="icon-check">✓</span> Op voorraad
+              <span class="delivery-time">- Vandaag besteld, morgen in huis</span>
+            </div>
+          </div>
+
+          <!-- Key Specs Grid -->
+          <div class="key-specs-grid">
+            ${keySpecs.map(spec => `
+              <div class="key-spec-item">
+                <span class="spec-icon">${spec.icon}</span>
+                <span class="spec-label">${spec.label}</span>
+                <span class="spec-value">${spec.value}</span>
+              </div>
             `).join('')}
           </div>
-        ` : ''}
+
+          <!-- Description Snippet -->
+          ${product.description ? `
+            <div class="pro-description">
+              <p>${escapeHtml(product.description).substring(0, 150)}...</p>
+              <a href="#full-specs" class="read-more-link">Bekijk alle specificaties ↓</a>
+            </div>
+          ` : ''}
+
+          <!-- CTAs -->
+          <div class="pro-actions">
+            ${isLoggedIn ? `
+              <button class="btn-primary btn-lg btn-block icon-btn" onclick="addToCart('${product.id}', '${escapeHtml(product.title)}')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                In Winkelwagen
+              </button>
+            ` : ''}
+            <a href="${quoteUrl}" class="btn-secondary btn-lg btn-block icon-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Offerte Aanvragen
+            </a>
+          </div>
+        </div>
+
+        <!-- 3. Sidebar Column (Expert & Trust) -->
+        <div class="pro-col-sidebar">
+          <!-- Expert Box -->
+          <div class="expert-box">
+            <div class="expert-header">
+              <div class="expert-avatar">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div class="expert-info">
+                <strong>Hulp nodig?</strong>
+                <span>Bel onze specialist</span>
+              </div>
+            </div>
+            <p class="expert-text">Twijfel je over de juiste ophanging of maat? Wij kijken graag met je mee.</p>
+            <a href="tel:+31000000000" class="expert-phone">+31 (0)12 345 6789</a>
+            <a href="mailto:info@structon.nl" class="expert-email">info@structon.nl</a>
+          </div>
+
+          <!-- USPs -->
+          <ul class="usp-list">
+            <li><span class="check">✓</span> <strong>Gratis verzending</strong> vanaf €500</li>
+            <li><span class="check">✓</span> <strong>Snelle levering</strong> in Benelux</li>
+            <li><span class="check">✓</span> <strong>2 jaar garantie</strong> op constructie</li>
+            <li><span class="check">✓</span> Eigen productiefaciliteit</li>
+          </ul>
+        </div>
       </div>
-      
-      <!-- Product Info -->
-      <div class="product-info">
-        <span class="product-category" style="display: inline-block; background: #e0f2f1; color: #236773; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-bottom: 12px;">${escapeHtml(product.category_title || 'Product')}</span>
-        <h1 class="product-title" style="font-size: 32px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase;">${escapeHtml(product.title)}</h1>
-        
-        ${product.description ? `
-          <p class="product-description" style="font-size: 16px; line-height: 1.6; color: #4b5563; margin-bottom: 24px;">${escapeHtml(product.description)}</p>
-        ` : ''}
-        
-        ${specsHtml}
-        
-        <!-- Price Section -->
-        <div class="product-price-section" style="margin-top: 32px; padding: 24px; background: #f9fafb; border-radius: 12px;">
-          ${isLoggedIn ? `
-            <div class="product-price" style="font-size: 28px; font-weight: 700; color: #236773;">€${product.price_excl_vat || '0.00'},- <span style="font-size: 14px; font-weight: 400; color: #6b7280;">excl. BTW</span></div>
-          ` : `
-            <div class="product-price" style="font-size: 20px; font-weight: 600; color: #374151;">Prijs op aanvraag</div>
-            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">Neem contact met ons op voor een offerte.</p>
-          `}
+
+      <!-- Full Specs & Details Section -->
+      <div id="full-specs" class="pro-details-section">
+        <div class="tabs-header">
+          <button class="tab-btn active" data-target="specs">Specificaties</button>
+          <button class="tab-btn" data-target="desc">Omschrijving</button>
         </div>
         
-        <!-- Action Buttons -->
-        <div class="product-actions" style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
-          <a href="${quoteUrl}" class="btn-split" style="flex: 1; min-width: 200px; text-decoration: none;">
-            <span class="btn-split-text">Offerte Aanvragen</span>
-            <span class="btn-split-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </span>
-          </a>
-          <a href="./" class="btn btn-secondary" style="padding: 12px 24px;">Terug naar producten</a>
+        <div id="tab-specs" class="tab-content active">
+          <h3 class="specs-title">Technische Specificaties</h3>
+          <table class="pro-specs-table">
+            <tbody>
+              ${allSpecs.map((s, i) => `
+                <tr class="${i % 2 === 0 ? 'bg-gray' : ''}">
+                  <th>${s.label}</th>
+                  <td>${s.value}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <div id="tab-desc" class="tab-content" style="display: none;">
+          <h3 class="specs-title">Product Omschrijving</h3>
+          <div class="pro-description-content">
+            <p>${escapeHtml(product.description || 'Geen omschrijving beschikbaar.')}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products Section -->
+      <div class="related-section">
+        <h2 class="related-title">Misschien ook interessant</h2>
+        <div id="related-products-grid" class="related-grid">
+          <!-- Zal worden gevuld door loadRelatedProducts -->
+          <div style="padding: 20px; text-align: center; color: #94a3b8;">Laden...</div>
         </div>
       </div>
     </div>
   `;
   
-  // Setup thumbnail click handlers
+  // Setup handlers
   setupThumbnailHandlers();
+  setupTabHandlers();
+  loadRelatedProducts(product);
+}
+
+/**
+ * Setup tab switching handlers
+ */
+function setupTabHandlers() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      tabs.forEach(t => t.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      tab.classList.add('active');
+      
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.style.display = 'none';
+      });
+      
+      // Show target content
+      const targetId = `tab-${tab.dataset.target}`;
+      const targetContent = document.getElementById(targetId);
+      if (targetContent) {
+        targetContent.style.display = 'block';
+        // Add simple animation
+        targetContent.style.opacity = '0';
+        setTimeout(() => targetContent.style.opacity = '1', 10);
+        targetContent.style.transition = 'opacity 0.3s ease';
+      }
+    });
+  });
+}
+
+/**
+ * Load related products
+ */
+async function loadRelatedProducts(currentProduct) {
+  const container = document.getElementById('related-products-grid');
+  if (!container) return;
+
+  try {
+    // Fetch products from same category
+    const filters = {
+      limit: 5 // Fetch 5 to have a buffer if we filter out the current one
+    };
+    
+    // Prioritize category, otherwise random (latest)
+    if (currentProduct.category_id) {
+      filters.category_id = currentProduct.category_id;
+    }
+
+    const data = await products.getAll(filters);
+    let related = data.items || [];
+
+    // Filter out current product
+    related = related.filter(p => p.id !== currentProduct.id).slice(0, 4);
+
+    if (related.length === 0) {
+      const section = document.querySelector('.related-section');
+      if (section) section.style.display = 'none';
+      return;
+    }
+
+    // Render using Industry Card style
+    container.innerHTML = related.map(p => createIndustryProductCard(p, isLoggedIn)).join('');
+    
+  } catch (error) {
+    console.error('Error loading related products:', error);
+    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8;">Kon gerelateerde producten niet laden.</div>';
+  }
+}
+
+/**
+ * Inject Custom CSS for Pro Product Layout
+ */
+function injectProStyles() {
+  if (document.getElementById('pro-product-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'pro-product-styles';
+  style.textContent = `
+    /* Pro Product Layout Variables */
+    :root {
+      --pro-primary: #236773;
+      --pro-bg-light: #f8fafc;
+      --pro-border: #e2e8f0;
+      --pro-text: #334155;
+      --pro-text-dark: #0f172a;
+    }
+
+    .pro-product-page {
+      font-family: 'Inter', -apple-system, sans-serif;
+      max-width: 1400px;
+      margin: 0 auto;
+      color: var(--pro-text);
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Breadcrumbs */
+    .pro-breadcrumbs {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+    .pro-breadcrumbs a {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .pro-breadcrumbs a:hover {
+      color: var(--pro-primary);
+    }
+    .pro-breadcrumbs .separator {
+      color: #cbd5e1;
+    }
+    .pro-breadcrumbs .current {
+      color: var(--pro-text-dark);
+      font-weight: 500;
+    }
+
+    /* Header */
+    .pro-header { margin-bottom: 32px; }
+    .back-link { display: none; } /* Hidden in favor of breadcrumbs */
+    .pro-meta-tags { display: flex; gap: 8px; margin-bottom: 12px; }
+    .tag-category { background: #e0f2f1; color: var(--pro-primary); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .tag-brand { background: #f1f5f9; color: #64748b; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+    .pro-title { font-size: 2.5rem; font-weight: 800; color: var(--pro-text-dark); margin: 0; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
+
+    /* Grid Layout */
+    .pro-grid {
+      display: grid;
+      grid-template-columns: 45% 30% 25%; /* 3 Column Layout */
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    /* Column 1: Gallery */
+    .pro-col-gallery { display: flex; flex-direction: column; gap: 16px; }
+    .main-image-wrapper { 
+      background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; 
+      position: relative; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    }
+    .main-image-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .badge-featured { position: absolute; top: 16px; left: 16px; background: #fbbf24; color: #92400e; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; }
+    
+    .thumbnail-list { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+    .thumb-btn { 
+      width: 80px; height: 80px; border: 2px solid var(--pro-border); border-radius: 8px; 
+      padding: 4px; background: white; cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+    }
+    .thumb-btn:hover, .thumb-btn.active { border-color: var(--pro-primary); }
+    .thumb-btn img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* Column 2: Details */
+    .pro-col-details { display: flex; flex-direction: column; gap: 24px; }
+    .price-block { border-bottom: 1px solid var(--pro-border); padding-bottom: 20px; }
+    .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--pro-primary); }
+    .price-suffix { font-size: 0.9rem; color: #64748b; margin-left: 4px; }
+    .price-request { font-size: 1.5rem; font-weight: 600; color: var(--pro-text-dark); }
+    .stock-status { display: flex; align-items: center; gap: 6px; color: #16a34a; font-weight: 600; margin-top: 8px; font-size: 0.95rem; }
+    .delivery-time { color: #64748b; font-weight: 400; font-size: 0.9rem; }
+    
+    .key-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .key-spec-item { background: var(--pro-bg-light); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px; }
+    .spec-icon { color: var(--pro-primary); display: flex; align-items: center; margin-bottom: 4px; }
+    .spec-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+    .spec-value { font-weight: 600; color: var(--pro-text-dark); font-size: 0.95rem; }
+
+    .pro-description p { color: #475569; line-height: 1.6; font-size: 0.95rem; margin-bottom: 8px; }
+    .read-more-link { color: var(--pro-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; border-bottom: 1px dashed var(--pro-primary); }
+    
+    .pro-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+    .btn-block { width: 100%; justify-content: center; }
+    .icon-btn { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    /* Column 3: Sidebar */
+    .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; }
+    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .expert-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .expert-avatar { width: 48px; height: 48px; background: #e0f2f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .expert-info { display: flex; flex-direction: column; }
+    .expert-info strong { font-size: 1.1rem; color: var(--pro-text-dark); }
+    .expert-info span { font-size: 0.9rem; color: #64748b; }
+    .expert-text { font-size: 0.9rem; color: #475569; margin-bottom: 16px; line-height: 1.5; }
+    .expert-phone, .expert-email { display: block; text-decoration: none; color: var(--pro-primary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; transition: opacity 0.2s; }
+    .expert-phone:hover, .expert-email:hover { opacity: 0.8; }
+    
+    .usp-list { list-style: none; padding: 0; margin: 0; background: var(--pro-bg-light); border-radius: 12px; padding: 20px; }
+    .usp-list li { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.9rem; color: #475569; align-items: flex-start; }
+    .usp-list li:last-child { margin-bottom: 0; }
+    .check { color: #16a34a; font-weight: 800; }
+
+    /* Bottom Section */
+    .pro-details-section { border-top: 1px solid var(--pro-border); padding-top: 48px; margin-bottom: 64px; }
+    .tabs-header { display: flex; gap: 24px; border-bottom: 2px solid var(--pro-border); margin-bottom: 32px; }
+    .tab-btn { background: none; border: none; padding: 0 0 16px 0; font-size: 1.1rem; font-weight: 500; color: #64748b; cursor: pointer; position: relative; }
+    .tab-btn.active { color: var(--pro-primary); font-weight: 700; }
+    .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: var(--pro-primary); }
+    
+    .specs-title { margin-bottom: 24px; font-size: 1.5rem; color: var(--pro-text-dark); }
+    .pro-specs-table { width: 100%; max-width: 800px; border-collapse: collapse; }
+    .pro-specs-table tr { border-bottom: 1px solid var(--pro-border); }
+    .pro-specs-table tr.bg-gray { background: #f8fafc; }
+    .pro-specs-table th { text-align: left; padding: 12px 16px; color: #64748b; font-weight: 500; width: 40%; }
+    .pro-specs-table td { padding: 12px 16px; color: var(--pro-text-dark); font-weight: 600; }
+    
+    .pro-description-content { max-width: 800px; line-height: 1.8; color: #334155; }
+
+    /* Related Products */
+    .related-section { border-top: 1px solid var(--pro-border); padding-top: 48px; }
+    .related-title { font-size: 1.8rem; margin-bottom: 32px; color: var(--pro-text-dark); font-weight: 700; text-transform: uppercase; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .pro-grid { grid-template-columns: 1fr 1fr; }
+      .pro-col-sidebar { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    }
+    @media (max-width: 768px) {
+      .pro-grid { grid-template-columns: 1fr; gap: 32px; }
+      .pro-col-sidebar { grid-template-columns: 1fr; }
+      .pro-title { font-size: 1.8rem; }
+      .key-specs-grid { grid-template-columns: 1fr 1fr; }
+      .related-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  `;
+  document.head.appendChild(style);
 }
 
 /**
  * Setup thumbnail click handlers for image gallery
  */
 function setupThumbnailHandlers() {
-  const thumbnails = document.querySelectorAll('.product-thumbnail');
+  const thumbnails = document.querySelectorAll('.thumb-btn');
   const mainImage = document.getElementById('main-product-image');
   
   thumbnails.forEach(thumb => {
@@ -311,8 +658,8 @@ function setupThumbnailHandlers() {
       mainImage.src = thumb.dataset.image;
       
       // Update active state
-      thumbnails.forEach(t => t.style.borderColor = '#e5e7eb');
-      thumb.style.borderColor = '#236773';
+      thumbnails.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
     });
   });
 }

@@ -331,7 +331,7 @@ function renderProductDetail(product, container) {
                 In Winkelwagen
               </button>
             ` : ''}
-            <a href="${quoteUrl}" id="btn-request-quote" class="btn-split btn-split-lg" style="width: 100%; text-decoration: none; justify-content: center;">
+            <a href="${quoteUrl}" id="btn-request-quote" class="btn-split btn-split-lg" style="width: 100%; text-decoration: none;">
               <span class="btn-split-text">Offerte Aanvragen</span>
               <span class="btn-split-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -596,9 +596,10 @@ function injectProStyles() {
     .brand-tag { display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
     .compatibility-note { font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5; }
     
-    .pro-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
-    .btn-block { width: 100%; justify-content: center; }
-    .icon-btn { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .pro-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 0; }
+    .btn-block { width: 100%; justify-content: flex-start; }
+    .icon-btn { display: flex; align-items: center; justify-content: flex-start; gap: 8px; }
+    #btn-request-quote { justify-content: flex-start !important; }
 
     /* Column 3: Sidebar */
     .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; }

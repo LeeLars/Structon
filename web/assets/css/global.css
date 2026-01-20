@@ -199,10 +199,6 @@ h6 { font-size: var(--text-base); }
   h3 { font-size: var(--text-3xl); }
 }
 
-p {
-  margin-bottom: var(--space-4);
-}
-
 .text-primary { color: var(--color-primary); }
 .text-secondary { color: var(--color-secondary); }
 .text-muted { color: var(--color-gray-500); }

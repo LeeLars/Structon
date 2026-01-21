@@ -308,6 +308,19 @@ export const categories = {
 };
 
 /**
+ * Subcategories API
+ */
+export const subcategories = {
+  async getAll() {
+    return request('/subcategories');
+  },
+
+  async getByCategoryId(categoryId) {
+    return request(`/subcategories?category_id=${categoryId}`);
+  }
+};
+
+/**
  * Brands API
  */
 export const brands = {
@@ -387,6 +400,7 @@ export default {
   auth,
   products,
   categories,
+  subcategories,
   brands,
   sectors,
   navigation,

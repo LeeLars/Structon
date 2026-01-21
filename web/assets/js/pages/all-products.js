@@ -4,7 +4,7 @@
  * Also handles single product detail view when ?id= parameter is present
  */
 
-import { products, categories } from '../api/client.js';
+import { products, categories, subcategories } from '../api/client.js';
 import { createProductCardHorizontal, createProductCard, createIndustryProductCard, showLoading, showError, showNoResults, escapeHtml } from '../main.js';
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
@@ -58,7 +58,7 @@ async function loadSubcategories(categorySlug) {
   try {
     console.log('🔍 Loading subcategories for:', categorySlug);
     
-    // Fetch all categories with product counts
+    // Fetch all categories to find the main category
     const categoriesData = await categories.getAll(true);
     console.log('📦 Categories data:', categoriesData);
     
@@ -67,7 +67,7 @@ async function loadSubcategories(categorySlug) {
       return;
     }
     
-    // Find the main category
+    // Find the main category by slug
     const mainCategory = categoriesData.categories.find(cat => 
       cat.slug === categorySlug || cat.title.toLowerCase() === categorySlug.toLowerCase()
     );
@@ -78,17 +78,60 @@ async function loadSubcategories(categorySlug) {
     }
     
     currentCategory = mainCategory;
-    console.log('✅ Found main category:', mainCategory.title);
+    console.log('✅ Found main category:', mainCategory.title, 'ID:', mainCategory.id);
     
-    // Filter subcategories that belong to this main category and have products
-    const subcategories = categoriesData.categories.filter(cat => 
-      cat.parent_id === mainCategory.id && 
-      cat.product_count > 0
+    // Fetch all subcategories
+    const subcategoriesData = await subcategories.getAll();
+    console.log('📦 Subcategories data:', subcategoriesData);
+    
+    if (!subcategoriesData || !subcategoriesData.subcategories) {
+      console.log('No subcategories data available');
+      section.style.display = 'none';
+      return;
+    }
+    
+    // Filter subcategories that belong to this main category
+    const categorySubcategories = subcategoriesData.subcategories.filter(subcat => 
+      subcat.category_id === mainCategory.id && subcat.is_active
     );
     
-    console.log(`📋 Found ${subcategories.length} subcategories with products`);
+    console.log(`📋 Found ${categorySubcategories.length} subcategories for this category`);
     
-    if (subcategories.length === 0) {
+    if (categorySubcategories.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+    
+    // Fetch product counts for each subcategory
+    const subcategoriesWithCounts = await Promise.all(
+      categorySubcategories.map(async (subcat) => {
+        try {
+          const productsData = await products.getAll({ 
+            subcategory_id: subcat.id,
+            limit: 1 
+          });
+          return {
+            ...subcat,
+            product_count: productsData.total || 0
+          };
+        } catch (error) {
+          console.error(`Error fetching products for subcategory ${subcat.slug}:`, error);
+          return {
+            ...subcat,
+            product_count: 0
+          };
+        }
+      })
+    );
+    
+    // Filter out subcategories with no products
+    const subcategoriesWithProducts = subcategoriesWithCounts.filter(subcat => 
+      subcat.product_count > 0
+    );
+    
+    console.log(`📋 Found ${subcategoriesWithProducts.length} subcategories with products`);
+    
+    if (subcategoriesWithProducts.length === 0) {
       section.style.display = 'none';
       return;
     }
@@ -102,7 +145,7 @@ async function loadSubcategories(categorySlug) {
     }
     
     // Render subcategories
-    grid.innerHTML = subcategories.map(subcat => createSubcategoryCard(subcat)).join('');
+    grid.innerHTML = subcategoriesWithProducts.map(subcat => createSubcategoryCard(subcat)).join('');
     section.style.display = 'block';
     
   } catch (error) {

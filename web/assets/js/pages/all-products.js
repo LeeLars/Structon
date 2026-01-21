@@ -205,6 +205,43 @@ function createSubcategoryCard(subcategory) {
 }
 
 /**
+ * Update category header with dynamic title and description
+ */
+function updateCategoryHeader() {
+  const params = new URLSearchParams(window.location.search);
+  const categoryParam = params.get('cat');
+  const subcategoryParam = params.get('subcat');
+  
+  const headerSection = document.getElementById('category-header');
+  const headerTitle = document.getElementById('category-header-title');
+  const headerDescription = document.getElementById('category-header-description');
+  
+  if (!headerSection || !headerTitle || !headerDescription) return;
+  
+  // If viewing a specific subcategory
+  if (subcategoryParam && currentCategory) {
+    subcategories.getAll().then(data => {
+      const subcat = data.subcategories?.find(s => s.slug === subcategoryParam);
+      if (subcat) {
+        headerTitle.textContent = subcat.title.toUpperCase();
+        headerDescription.textContent = `Ontdek ons assortiment ${subcat.title.toLowerCase()} bij Structon. Professionele ${subcat.title.toLowerCase()} voor alle toepassingen. Scherpe prijzen, snelle levering en deskundig advies.`;
+        headerSection.style.display = 'block';
+      }
+    });
+  }
+  // If viewing a main category
+  else if (categoryParam && currentCategory) {
+    headerTitle.textContent = currentCategory.title.toUpperCase();
+    headerDescription.textContent = `Ontdek ons complete assortiment ${currentCategory.title.toLowerCase()} bij Structon. Hoogwaardige ${currentCategory.title.toLowerCase()} voor professioneel gebruik. Scherpe prijzen, snelle levering en deskundig advies.`;
+    headerSection.style.display = 'block';
+  }
+  // Hide header when viewing all products
+  else {
+    headerSection.style.display = 'none';
+  }
+}
+
+/**
  * Load products
  */
 async function loadProducts() {
@@ -232,6 +269,9 @@ async function loadProducts() {
 
     // Update count
     document.getElementById('products-count').textContent = total;
+
+    // Update category header
+    updateCategoryHeader();
 
     // Initialize/update pagination
     initPagination(total, handlePageChange);

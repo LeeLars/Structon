@@ -54,7 +54,7 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--color-accent);
+  color: white;
   padding: 8px 16px;
   border-radius: 50px;
   font-size: 0.85rem;
@@ -83,7 +83,7 @@
 }
 
 .hero-title span {
-  color: var(--color-accent);
+  color: white;
 }
 
 .hero-subtitle-text {
@@ -121,8 +121,8 @@
 }
 
 .hero-search-btn {
-  background-color: var(--color-accent);
-  color: var(--color-gray-900);
+  background-color: var(--color-primary-dark);
+  color: white;
   border: none;
   padding: 0 24px;
   font-weight: 700;
@@ -137,7 +137,7 @@
 }
 
 .hero-search-btn:hover {
-  background-color: #e6a820; /* Slightly darker gold */
+  background-color: #153e46; /* Even darker petrol */
 }
 
 /* Quick USPs below search */
@@ -157,7 +157,7 @@
 }
 
 .hero-quick-usp svg {
-  color: var(--color-accent);
+  color: white;
   width: 18px;
   height: 18px;
 }
@@ -396,8 +396,11 @@
   color: white;
   margin: 0 0 var(--space-2);
   text-transform: uppercase;
-  line-height: 1;
+  line-height: 1.2;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .category-link-text {

@@ -110,12 +110,14 @@ main[data-industry] {
 /* ============================================
    CTA BANNER
    ============================================ */
+.brand-cta-banner,
 .industry-cta-banner {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   padding: var(--space-8) 0;
   margin: var(--space-8) 0;
 }
 
+.brand-cta-content,
 .industry-cta-content {
   display: flex;
   align-items: center;
@@ -123,10 +125,12 @@ main[data-industry] {
   gap: var(--space-8);
 }
 
+.brand-cta-text-wrapper,
 .industry-cta-text {
   flex: 1;
 }
 
+.brand-cta-banner-title,
 .industry-cta-title {
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3vw, 2rem);
@@ -137,17 +141,20 @@ main[data-industry] {
   letter-spacing: -0.01em;
 }
 
+.brand-cta-banner-subtitle,
 .industry-cta-subtitle {
   font-size: var(--text-lg);
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.5;
 }
 
+.brand-cta-button-wrapper,
 .industry-cta-button {
   flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
+  .brand-cta-content,
   .industry-cta-content {
     flex-direction: column;
     text-align: center;

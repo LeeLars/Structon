@@ -163,19 +163,19 @@ class IndustryTemplate {
     const data = this.industryData;
     
     // Update CTA title
-    const ctaTitle = document.querySelector('.industry-cta-title');
+    const ctaTitle = document.querySelector('.brand-cta-banner-title, .industry-cta-title');
     if (ctaTitle) {
       ctaTitle.textContent = data.ctaBanner.title;
     }
     
     // Update CTA subtitle
-    const ctaSubtitle = document.querySelector('.industry-cta-subtitle');
+    const ctaSubtitle = document.querySelector('.brand-cta-banner-subtitle, .industry-cta-subtitle');
     if (ctaSubtitle) {
       ctaSubtitle.textContent = data.ctaBanner.subtitle;
     }
     
     // Update CTA button link
-    const ctaButton = document.querySelector('.industry-cta-button a');
+    const ctaButton = document.querySelector('.brand-cta-button-wrapper a, .industry-cta-button a');
     if (ctaButton) {
       const currentHref = ctaButton.getAttribute('href');
       if (currentHref) {

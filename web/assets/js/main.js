@@ -342,15 +342,17 @@ export function createProductCard(product, isLoggedIn = false) {
       </a>
     `;
   } else {
-    // Niet ingelogd: Prijs op aanvraag, offerte aanvragen button
+    // Niet ingelogd: Prijs op aanvraag, meer info button
     footerHtml = `
       <span class="product-price-label" style="display: block; margin-bottom: 8px;">Prijs op aanvraag</span>
-      <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/offerte-aanvragen/?product=${product.slug || product.id}" class="btn-split btn-split-sm" style="width: 100%;">
-        <span class="btn-split-text" style="flex: 1; justify-content: center;">Offerte Aanvragen</span>
-        <span class="btn-split-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-      </a>
+      <div class="product-buttons">
+        <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
+          <span class="btn-split-text">Meer info</span>
+          <span class="btn-split-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </span>
+        </a>
+      </div>
     `;
   }
 

@@ -677,12 +677,8 @@
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <div class="hero-bg">
-        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2000&auto=format&fit=crop" alt="Structon Industrial Background">
-      </div>
-      <div class="hero-overlay"></div>
-      
       <div class="container">
+        <!-- Left Column: Content -->
         <div class="hero-content">
           <!-- Configurator Badge -->
           <a href="configurator/" class="hero-badge">
@@ -701,32 +697,44 @@
           
           <p class="hero-subtitle-text">
             Specialist in kraanbakken, sloophamers en graafmachine toebehoren. 
-            Direct uit voorraad leverbaar of volledig op maat gemaakt in onze eigen werkplaats.
+            Direct uit voorraad leverbaar of volledig op maat gemaakt.
           </p>
 
-          <div class="hero-cta-wrapper">
-            <a href="producten/" class="btn-hero-primary">
-              Bekijk Aanbod
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-            <a href="contact/" class="btn-hero-secondary">
-              Neem Contact Op
-            </a>
-          </div>
+          <!-- New Search Bar -->
+          <form action="/zoeken" method="GET" class="hero-search-wrapper">
+            <input type="text" name="q" class="hero-search-input" placeholder="Zoek op product, merk of type..." required>
+            <button type="submit" class="hero-search-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>Zoeken</span>
+            </button>
+          </form>
 
-          <div class="hero-features">
-            <div class="hero-feature">
-              <strong>24u</strong>
-              <span>Levering</span>
+          <!-- Quick USPs -->
+          <div class="hero-quick-usps">
+            <div class="hero-quick-usp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              24u Levering
             </div>
-            <div class="hero-feature">
-              <strong>100%</strong>
-              <span>Eigen Productie</span>
+            <div class="hero-quick-usp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Eigen Productie
             </div>
-            <div class="hero-feature">
-              <strong>5000+</strong>
-              <span>Producten</span>
+            <div class="hero-quick-usp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              5000+ Producten
             </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Image -->
+        <div class="hero-image-col">
+          <div class="hero-circle-bg"></div>
+          <!-- Using a high quality product image -->
+          <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768986955/Graafbakken-hero_ntuebf.jpg" alt="Structon Graafbak" class="hero-main-img">
+          
+          <div class="floating-badge">
+            <strong>100%</strong>
+            <span>Belgische Makelij</span>
           </div>
         </div>
       </div>
@@ -741,7 +749,7 @@
           <!-- Blok 1: Graafbakken -->
           <a href="producten/?cat=graafbakken" class="category-block">
             <div class="category-image">
-              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768832366/sany_qmxbbe.jpg" alt="Graafbakken">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768986955/Graafbakken-hero_ntuebf.jpg" alt="Graafbakken">
             </div>
             <div class="category-overlay"></div>
             <div class="category-content">

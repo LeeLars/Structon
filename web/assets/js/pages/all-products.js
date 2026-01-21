@@ -102,7 +102,7 @@ async function loadSubcategories(categorySlug) {
       return;
     }
     
-    // Fetch product counts for each subcategory
+    // Fetch product counts and first product image for each subcategory
     const subcategoriesWithCounts = await Promise.all(
       categorySubcategories.map(async (subcat) => {
         try {
@@ -110,15 +110,26 @@ async function loadSubcategories(categorySlug) {
             subcategory_id: subcat.id,
             limit: 1 
           });
+          
+          let firstProductImage = null;
+          if (productsData.products && productsData.products.length > 0) {
+            const product = productsData.products[0];
+            if (product.cloudinary_images && product.cloudinary_images.length > 0) {
+              firstProductImage = product.cloudinary_images[0].url;
+            }
+          }
+
           return {
             ...subcat,
-            product_count: productsData.total || 0
+            product_count: productsData.total || 0,
+            first_product_image: firstProductImage
           };
         } catch (error) {
           console.error(`Error fetching products for subcategory ${subcat.slug}:`, error);
           return {
             ...subcat,
-            product_count: 0
+            product_count: 0,
+            first_product_image: null
           };
         }
       })
@@ -158,12 +169,23 @@ async function loadSubcategories(categorySlug) {
  * Create subcategory card HTML
  */
 function createSubcategoryCard(subcategory) {
-  // Use category image or fallback to placeholder
-  const imageUrl = subcategory.image_url || 
+  // Use first product image as primary source, then category image, then fallback
+  const imageUrl = subcategory.first_product_image || 
+    subcategory.image_url || 
     subcategory.cloudinary_image?.url || 
     'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768988292/graafbak-hero_apbtll.png';
   
   const productCount = subcategory.product_count || 0;
+  // If we are already on the products page with ?cat=, clicking a subcategory should filter by that subcategory
+  // But currently the URL structure is ?cat=subcategory-slug for main categories.
+  // The subcategory filter should probably just set the filter in the sidebar or navigate to filtered view.
+  // Since this is a simple page, let's make it link to the same page but with extra filter? 
+  // Wait, the user request implied "viewing a main category". 
+  // If I click "Slotenbakken" while inside "Graafbakken", it usually filters the list below.
+  // For now, let's keep it simple: ?cat=subcategory-slug (if that works) or implement click handler.
+  // Based on previous code: const categoryUrl = `?cat=${subcategory.slug}`;
+  // This seems to assume subcategories can be treated as main categories in the URL or the logic handles it.
+  // Let's stick to the existing URL logic.
   const categoryUrl = `?cat=${subcategory.slug}`;
   
   return `
@@ -173,21 +195,10 @@ function createSubcategoryCard(subcategory) {
       </div>
       <div class="subcategory-overlay"></div>
       <div class="subcategory-content">
+        <h3>${escapeHtml(subcategory.title)}</h3>
         <div class="subcategory-count">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-          </svg>
           ${productCount} ${productCount === 1 ? 'product' : 'producten'}
         </div>
-        <h3>${escapeHtml(subcategory.title)}</h3>
-        <span class="subcategory-link-text">
-          Bekijk categorie
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </span>
       </div>
     </a>
   `;

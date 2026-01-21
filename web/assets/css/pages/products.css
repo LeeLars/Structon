@@ -233,17 +233,17 @@
   height: 200px; /* Shorter cards */
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-items: flex-end;
   text-decoration: none;
-  background-color: var(--color-gray-900);
+  background-color: var(--color-gray-100);
 }
 
 .subcategory-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(35, 103, 115, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .subcategory-image {
@@ -261,10 +261,12 @@
   object-fit: cover;
   object-position: center;
   transition: transform 0.5s ease;
+  filter: grayscale(100%); /* Start black/white for subtle look */
 }
 
 .subcategory-card:hover .subcategory-image img {
   transform: scale(1.05);
+  filter: grayscale(0%); /* Color on hover */
 }
 
 .subcategory-overlay {
@@ -274,16 +276,20 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(to top, 
-    rgba(35, 103, 115, 0.9) 0%, 
-    rgba(35, 103, 115, 0.4) 50%, 
-    rgba(35, 103, 115, 0) 100%);
+    rgba(0, 0, 0, 0.7) 0%, 
+    rgba(0, 0, 0, 0.2) 50%, 
+    rgba(0, 0, 0, 0) 100%);
   transition: opacity 0.3s ease;
   z-index: 2;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .subcategory-card:hover .subcategory-overlay {
-  opacity: 0.95;
+  opacity: 0.8;
+  background: linear-gradient(to top, 
+    rgba(35, 103, 115, 0.9) 0%, 
+    rgba(35, 103, 115, 0.3) 60%, 
+    rgba(35, 103, 115, 0) 100%);
 }
 
 .subcategory-content {
@@ -296,22 +302,24 @@
 
 .subcategory-content h3 {
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-weight: 700;
   color: white;
   margin: 0;
   text-transform: uppercase;
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  letter-spacing: 0.02em;
 }
 
 .subcategory-count {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.75rem;
   font-weight: 500;
-  margin-bottom: var(--space-2);
+  margin-top: 4px;
 }
 
 .subcategory-count svg {

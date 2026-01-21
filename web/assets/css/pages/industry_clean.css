@@ -93,7 +93,7 @@ main[data-industry] {
   font-size: var(--text-lg);
   line-height: 1.6;
   color: var(--color-gray-600);
-  max-width: 640px;
+  max-width: 540px;
 }
 
 .industry-hero-icon-wrapper {

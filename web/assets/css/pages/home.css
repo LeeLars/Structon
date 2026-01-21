@@ -404,7 +404,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-accent);
+  color: var(--color-white);
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;

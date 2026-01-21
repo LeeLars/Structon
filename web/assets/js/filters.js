@@ -27,8 +27,8 @@ let onFilterChange = null;
 export async function initFilters(callback) {
   onFilterChange = callback;
   
-  // Parse URL params
-  parseUrlParams();
+  // Parse URL params (now async to detect subcategories)
+  await parseUrlParams();
   
   // Load brand filters
   await loadBrandFilters();
@@ -43,12 +43,44 @@ export async function initFilters(callback) {
 /**
  * Parse URL parameters into filter state
  */
-function parseUrlParams() {
+async function parseUrlParams() {
   const params = new URLSearchParams(window.location.search);
   
-  // Category filter
+  // Category filter - need to check if it's a main category or subcategory
   if (params.has('cat')) {
-    activeFilters.category = params.get('cat');
+    const catParam = params.get('cat');
+    
+    // Check if this is a subcategory by fetching all categories and subcategories
+    try {
+      const { categories, subcategories } = await import('./api/client.js');
+      
+      // Fetch categories to check if catParam is a main category
+      const categoriesData = await categories.getAll(true);
+      const isMainCategory = categoriesData?.categories?.some(cat => cat.slug === catParam);
+      
+      if (isMainCategory) {
+        // It's a main category
+        activeFilters.category = catParam;
+        activeFilters.subcategory = null;
+      } else {
+        // Check if it's a subcategory
+        const subcategoriesData = await subcategories.getAll();
+        const isSubcategory = subcategoriesData?.subcategories?.some(sub => sub.slug === catParam);
+        
+        if (isSubcategory) {
+          // It's a subcategory - set subcategory filter instead
+          activeFilters.subcategory = catParam;
+          activeFilters.category = null;
+        } else {
+          // Fallback: treat as category
+          activeFilters.category = catParam;
+        }
+      }
+    } catch (error) {
+      console.error('Error parsing category parameter:', error);
+      // Fallback: treat as category
+      activeFilters.category = catParam;
+    }
   }
   
   // Subcategory filter (from navigation menu)

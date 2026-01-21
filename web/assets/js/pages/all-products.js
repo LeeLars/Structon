@@ -35,11 +35,19 @@ async function initPage() {
     await loadSingleProduct(productId);
   } else {
     // Show products list
-    initFilters(handleFilterChange);
+    await initFilters(handleFilterChange);
     
-    // Load subcategories if viewing a main category
+    // Load subcategories only if viewing a main category (not a subcategory)
     if (categoryParam) {
-      await loadSubcategories(categoryParam);
+      // Check if categoryParam is a main category or subcategory
+      const subcategoriesData = await subcategories.getAll();
+      const isSubcategory = subcategoriesData?.subcategories?.some(sub => sub.slug === categoryParam);
+      
+      if (!isSubcategory) {
+        // It's a main category - load its subcategories
+        await loadSubcategories(categoryParam);
+      }
+      // If it's a subcategory, don't load subcategories (just show products)
     }
     
     await loadProducts();
@@ -246,7 +254,7 @@ const SUBCATEGORY_DESCRIPTIONS = {
 /**
  * Update category header with dynamic title and description
  */
-function updateCategoryHeader() {
+async function updateCategoryHeader() {
   const params = new URLSearchParams(window.location.search);
   const categoryParam = params.get('cat');
   const subcategoryParam = params.get('subcat');
@@ -257,33 +265,51 @@ function updateCategoryHeader() {
   
   if (!headerSection || !headerTitle || !headerDescription) return;
   
-  // If viewing a specific subcategory
+  // If viewing a specific subcategory via ?subcat=
   if (subcategoryParam && currentCategory) {
-    subcategories.getAll().then(data => {
-      const subcat = data.subcategories?.find(s => s.slug === subcategoryParam);
-      if (subcat) {
-        headerTitle.textContent = subcat.title.toUpperCase();
-        // Use unique description or fallback to generic
-        const description = SUBCATEGORY_DESCRIPTIONS[subcategoryParam] || 
-          `Ontdek ons assortiment ${subcat.title.toLowerCase()} bij Structon. Professionele ${subcat.title.toLowerCase()} voor alle toepassingen. Scherpe prijzen, snelle levering en deskundig advies.`;
-        headerDescription.textContent = description;
-        headerSection.style.display = 'block';
-      }
-    });
+    const data = await subcategories.getAll();
+    const subcat = data.subcategories?.find(s => s.slug === subcategoryParam);
+    if (subcat) {
+      headerTitle.textContent = subcat.title.toUpperCase();
+      // Use unique description or fallback to generic
+      const description = SUBCATEGORY_DESCRIPTIONS[subcategoryParam] || 
+        `Ontdek ons assortiment ${subcat.title.toLowerCase()} bij Structon. Professionele ${subcat.title.toLowerCase()} voor alle toepassingen. Scherpe prijzen, snelle levering en deskundig advies.`;
+      headerDescription.textContent = description;
+      headerSection.style.display = 'block';
+      return;
+    }
   }
-  // If viewing a main category
-  else if (categoryParam && currentCategory) {
-    headerTitle.textContent = currentCategory.title.toUpperCase();
-    // Use unique description or fallback to generic
-    const description = CATEGORY_DESCRIPTIONS[categoryParam] || 
-      `Ontdek ons complete assortiment ${currentCategory.title.toLowerCase()} bij Structon. Hoogwaardige ${currentCategory.title.toLowerCase()} voor professioneel gebruik. Scherpe prijzen, snelle levering en deskundig advies.`;
-    headerDescription.textContent = description;
-    headerSection.style.display = 'block';
+  
+  // Check if categoryParam is actually a subcategory (e.g., ?cat=slotenbakken)
+  if (categoryParam) {
+    // First check if it's a subcategory
+    const subcategoriesData = await subcategories.getAll();
+    const subcat = subcategoriesData.subcategories?.find(s => s.slug === categoryParam);
+    
+    if (subcat) {
+      // It's a subcategory - show subcategory header
+      headerTitle.textContent = subcat.title.toUpperCase();
+      const description = SUBCATEGORY_DESCRIPTIONS[categoryParam] || 
+        `Ontdek ons assortiment ${subcat.title.toLowerCase()} bij Structon. Professionele ${subcat.title.toLowerCase()} voor alle toepassingen. Scherpe prijzen, snelle levering en deskundig advies.`;
+      headerDescription.textContent = description;
+      headerSection.style.display = 'block';
+      return;
+    }
+    
+    // If not a subcategory, treat as main category
+    if (currentCategory) {
+      headerTitle.textContent = currentCategory.title.toUpperCase();
+      // Use unique description or fallback to generic
+      const description = CATEGORY_DESCRIPTIONS[categoryParam] || 
+        `Ontdek ons complete assortiment ${currentCategory.title.toLowerCase()} bij Structon. Hoogwaardige ${currentCategory.title.toLowerCase()} voor professioneel gebruik. Scherpe prijzen, snelle levering en deskundig advies.`;
+      headerDescription.textContent = description;
+      headerSection.style.display = 'block';
+      return;
+    }
   }
+  
   // Hide header when viewing all products
-  else {
-    headerSection.style.display = 'none';
-  }
+  headerSection.style.display = 'none';
 }
 
 /**

@@ -3,7 +3,7 @@
  * Handles form submission to CMS with validation and confirmation emails
  */
 
-import { quotes } from '../api/client.js';
+import { quotes, products } from '../api/client.js';
 
 // Form state
 let isSubmitting = false;
@@ -103,6 +103,9 @@ function parseUrlParameters() {
       
       prefilledGroup.style.display = 'block';
       if (selectionGroup) selectionGroup.style.display = 'none';
+
+      // Try to fetch full product details for a richer preview
+      fetchAndPopulateProductPreview(productId, productSlug);
     }
   }
   
@@ -168,6 +171,93 @@ function parseUrlParameters() {
     if (attachmentSelect) {
       attachmentSelect.value = decodeURIComponent(attachmentType);
     }
+  }
+}
+
+/**
+ * Fetch full product info (image + specs) for a richer prefilled preview
+ */
+async function fetchAndPopulateProductPreview(productId, productSlug) {
+  const lookup = productId || productSlug;
+  if (!lookup) return;
+
+  try {
+    const res = await products.getById(lookup);
+    const product = res?.product;
+    if (!product) return;
+
+    // Image
+    const imageWrapper = document.getElementById('prefilled-product-image-wrapper');
+    const imageEl = document.getElementById('prefilled-product-image');
+    const imageUrl = product.cloudinary_images?.[0]?.url;
+    if (imageWrapper && imageEl && imageUrl) {
+      imageEl.src = imageUrl;
+      imageEl.alt = product.title || 'Geselecteerd product';
+      imageWrapper.style.display = 'block';
+    }
+
+    // Prefer authoritative values from API
+    const prefilledName = document.getElementById('prefilled-product-name');
+    if (prefilledName && product.title) prefilledName.textContent = product.title;
+    const nameInput = document.getElementById('prefilled-product-name-input');
+    if (nameInput && product.title) nameInput.value = product.title;
+
+    const categorySpan = document.getElementById('prefilled-product-category');
+    const categoryInput = document.getElementById('prefilled-product-category-input');
+    const categoryRow = document.getElementById('prefilled-category-row');
+    if (categorySpan && categoryInput && product.category_title) {
+      categorySpan.textContent = product.category_title;
+      categoryInput.value = product.category_title;
+      if (categoryRow) categoryRow.style.display = 'block';
+    }
+
+    const brandSpan = document.getElementById('prefilled-product-brand');
+    const brandInput = document.getElementById('prefilled-product-brand-input');
+    const brandRow = document.getElementById('prefilled-brand-row');
+    if (brandSpan && brandInput && product.brand_title) {
+      brandSpan.textContent = product.brand_title;
+      brandInput.value = product.brand_title;
+      if (brandRow) brandRow.style.display = 'block';
+    }
+
+    // Tonnage range (tons)
+    const tonnageSpan = document.getElementById('prefilled-product-tonnage');
+    const tonnageInput = document.getElementById('prefilled-product-tonnage-input');
+    const tonnageRow = document.getElementById('prefilled-tonnage-row');
+    if (tonnageSpan && tonnageInput && product.excavator_weight_min && product.excavator_weight_max) {
+      const minTon = Math.round(parseFloat(product.excavator_weight_min));
+      const maxTon = Math.round(parseFloat(product.excavator_weight_max));
+      const tonnage = `${minTon}-${maxTon}`;
+      tonnageSpan.textContent = tonnage;
+      tonnageInput.value = tonnage;
+      if (tonnageRow) tonnageRow.style.display = 'block';
+    }
+
+    // Attachment type
+    const attachmentRow = document.getElementById('prefilled-attachment-row');
+    const attachmentSpan = document.getElementById('prefilled-product-attachment');
+    if (attachmentRow && attachmentSpan && product.attachment_type) {
+      attachmentSpan.textContent = product.attachment_type;
+      attachmentRow.style.display = 'block';
+    }
+
+    // Width
+    const widthRow = document.getElementById('prefilled-width-row');
+    const widthSpan = document.getElementById('prefilled-product-width');
+    if (widthRow && widthSpan && product.width) {
+      widthSpan.textContent = `${product.width} mm`;
+      widthRow.style.display = 'block';
+    }
+
+    // Volume
+    const volumeRow = document.getElementById('prefilled-volume-row');
+    const volumeSpan = document.getElementById('prefilled-product-volume');
+    if (volumeRow && volumeSpan && product.volume) {
+      volumeSpan.textContent = `${product.volume} L`;
+      volumeRow.style.display = 'block';
+    }
+  } catch (e) {
+    console.warn('⚠️ Could not fetch product preview data:', e);
   }
 }
 

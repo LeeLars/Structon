@@ -156,11 +156,19 @@
                   <label class="form-label">Geselecteerd product</label>
                   <div class="prefilled-product-card" style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; position: relative;">
                     <button type="button" class="prefilled-clear" onclick="clearPrefilledProduct()" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999;">×</button>
-                    <div class="prefilled-details">
-                      <p style="margin: 0 0 8px 0;"><strong>Product:</strong> <span id="prefilled-product-name"></span></p>
-                      <p style="margin: 0 0 8px 0;" id="prefilled-category-row"><strong>Type:</strong> <span id="prefilled-product-category"></span></p>
-                      <p style="margin: 0 0 8px 0;" id="prefilled-brand-row"><strong>Merk:</strong> <span id="prefilled-product-brand"></span></p>
-                      <p style="margin: 0;" id="prefilled-tonnage-row"><strong>Tonnage:</strong> <span id="prefilled-product-tonnage"></span></p>
+                    <div class="prefilled-product-preview">
+                      <div class="prefilled-product-image" id="prefilled-product-image-wrapper" style="display: none;">
+                        <img id="prefilled-product-image" src="" alt="" loading="lazy">
+                      </div>
+                      <div class="prefilled-details">
+                        <p style="margin: 0 0 8px 0;"><strong>Product:</strong> <span id="prefilled-product-name"></span></p>
+                        <p style="margin: 0 0 8px 0;" id="prefilled-category-row"><strong>Type:</strong> <span id="prefilled-product-category"></span></p>
+                        <p style="margin: 0 0 8px 0;" id="prefilled-brand-row"><strong>Merk:</strong> <span id="prefilled-product-brand"></span></p>
+                        <p style="margin: 0 0 8px 0;" id="prefilled-tonnage-row"><strong>Tonnage:</strong> <span id="prefilled-product-tonnage"></span></p>
+                        <p style="margin: 0 0 8px 0; display: none;" id="prefilled-attachment-row"><strong>Ophanging:</strong> <span id="prefilled-product-attachment"></span></p>
+                        <p style="margin: 0 0 8px 0; display: none;" id="prefilled-width-row"><strong>Breedte:</strong> <span id="prefilled-product-width"></span></p>
+                        <p style="margin: 0; display: none;" id="prefilled-volume-row"><strong>Inhoud:</strong> <span id="prefilled-product-volume"></span></p>
+                      </div>
                     </div>
                   </div>
                   <!-- Hidden fields for prefilled data -->

@@ -837,3 +837,143 @@ main[data-industry] {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================
+   CTA BOX (About Section Style)
+   ============================================ */
+.cta-box {
+  background: var(--color-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-16);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-title {
+  color: white;
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.cta-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-8);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.cta-box .btn-split {
+  background: white;
+  color: var(--color-primary);
+  display: inline-flex;
+  margin-top: var(--space-4);
+}
+
+.cta-box .btn-split:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ============================================
+   EXPERT BOX
+   ============================================ */
+.expert-box {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.expert-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.expert-avatar {
+  width: 56px;
+  height: 56px;
+  background: #f0f9ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.expert-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expert-info strong {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.expert-info span {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.expert-text {
+  color: #4b5563;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.expert-phone,
+.expert-email {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #236773;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.expert-phone:hover,
+.expert-email:hover {
+  background: #236773;
+  color: white;
+  transform: translateX(4px);
+}
+
+.expert-phone svg,
+.expert-email svg {
+  flex-shrink: 0;
+}

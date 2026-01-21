@@ -193,19 +193,15 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
           ${product.description ? escapeHtml(product.description.substring(0, 100)) : 'Hoogwaardig aanbouwdeel voor uw machine. Robuust en betrouwbaar.'}
         </p>
         
-        <div class="product-card-actions">
-          <a href="${quoteUrl}" class="btn-split btn-split-sm">
-            <span class="btn-split-text">Offerte</span>
-            <span class="btn-split-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </span>
-          </a>
-          <a href="${productUrl}" class="btn-split btn-split-sm card-btn-secondary">
-            <span class="btn-split-text">Info</span>
-            <span class="btn-split-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </span>
-          </a>
+        <div class="product-actions-wrapper">
+          <div class="product-buttons">
+            <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
+              <span class="btn-split-text">Meer info</span>
+              <span class="btn-split-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </article>

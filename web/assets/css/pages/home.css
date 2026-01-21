@@ -180,22 +180,22 @@
   right: 5vw;
   left: auto;
   transform: none;
-  height: 160px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 24px;
   text-decoration: none;
   z-index: 10;
   cursor: pointer;
   padding-bottom: 50px;
-  mix-blend-mode: overlay; /* Cool effect blending with bg */
+  transition: all 0.4s ease;
 }
 
 .hero-scroll-indicator:hover {
-  opacity: 1;
-  padding-bottom: 40px; /* Slight movement up */
+  padding-bottom: 40px;
+  transform: translateY(-5px);
 }
 
 /* Vertical Line connecting to bottom */
@@ -204,37 +204,39 @@
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 1px;
+  width: 2px;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 100%);
   transform: translateX(-50%);
   z-index: -1;
 }
 
 .scroll-text {
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.35em;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   color: white;
-  opacity: 0.8;
+  opacity: 1;
   transition: all 0.3s ease;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .hero-scroll-indicator:hover .scroll-text {
-  opacity: 1;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.4em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
 }
 
 .scroll-track {
-  width: 2px;
-  height: 50px;
-  background: rgba(255,255,255,0.15);
+  width: 3px;
+  height: 60px;
+  background: rgba(255,255,255,0.3);
   position: relative;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 6px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
 
 .scroll-bar {
@@ -242,16 +244,17 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 40%;
+  height: 45%;
   background: #fff;
-  border-radius: 4px;
-  animation: scroll-drop 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  border-radius: 6px;
+  animation: scroll-drop 2.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.4);
 }
 
 @keyframes scroll-drop {
   0% { top: -100%; opacity: 0; }
-  20% { opacity: 1; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
   100% { top: 100%; opacity: 0; }
 }
 

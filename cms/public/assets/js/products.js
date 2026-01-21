@@ -651,9 +651,18 @@ function populateForm(product) {
   // Reset all brand checkboxes
   brandCheckboxes.forEach(cb => cb.checked = false);
   if (brandAllCheckbox) brandAllCheckbox.checked = false;
-  
-  // If product has a brand_id, check that checkbox
-  if (product.brand_id) {
+
+  // Prefer multi-brand compatibility stored in specs
+  const compatibleBrandIds = product.specs?.compatible_brand_ids;
+  if (compatibleBrandIds === 'all') {
+    if (brandAllCheckbox) brandAllCheckbox.checked = true;
+  } else if (Array.isArray(compatibleBrandIds) && compatibleBrandIds.length > 0) {
+    compatibleBrandIds.forEach((id) => {
+      const brandCheckbox = document.querySelector(`input[name="brand_ids"][value="${id}"]`);
+      if (brandCheckbox) brandCheckbox.checked = true;
+    });
+  } else if (product.brand_id) {
+    // Fallback: legacy single brand
     const brandCheckbox = document.querySelector(`input[name="brand_ids"][value="${product.brand_id}"]`);
     if (brandCheckbox) brandCheckbox.checked = true;
   }
@@ -778,6 +787,9 @@ async function handleProductSubmit(e) {
     category_id: categoryId || null,
     subcategory_id: subcategoryId || null,
     brand_id: brandId || null,
+    specs: {
+      compatible_brand_ids: brandIds
+    },
     excavator_weight_min,
     excavator_weight_max,
     width: parseInt(document.getElementById('product-width').value) || null,

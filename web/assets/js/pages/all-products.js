@@ -4,7 +4,7 @@
  * Also handles single product detail view when ?id= parameter is present
  */
 
-import { products, categories, subcategories } from '../api/client.js';
+import { products, categories, subcategories, brands } from '../api/client.js';
 import { createProductCardHorizontal, createProductCard, createIndustryProductCard, showLoading, showError, showNoResults, escapeHtml } from '../main.js';
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
@@ -373,7 +373,26 @@ async function loadSingleProduct(productId) {
     const heroSubtitle = document.querySelector('.page-subtitle');
     if (heroTitle) heroTitle.textContent = currentProduct.title.toUpperCase();
     if (heroSubtitle) heroSubtitle.textContent = currentProduct.category_title || 'Product';
-    
+
+    // Resolve compatible brand titles (for "Geschikt voor merken")
+    const compatibleBrandIds = currentProduct?.specs?.compatible_brand_ids;
+    if (compatibleBrandIds) {
+      try {
+        if (compatibleBrandIds === 'all') {
+          currentProduct.compatible_brand_titles = 'all';
+        } else if (Array.isArray(compatibleBrandIds) && compatibleBrandIds.length > 0) {
+          const brandsData = await brands.getAll(false);
+          const brandList = brandsData?.brands || [];
+          const byId = new Map(brandList.map(b => [b.id, b.title]));
+          currentProduct.compatible_brand_titles = compatibleBrandIds
+            .map(id => byId.get(id))
+            .filter(Boolean);
+        }
+      } catch (e) {
+        console.warn('⚠️ Failed to resolve compatible brand titles:', e);
+      }
+    }
+
     // Render product detail
     renderProductDetail(currentProduct, container);
     
@@ -581,15 +600,28 @@ function renderProductDetail(product, container) {
             <p>${escapeHtml(product.description || 'Geen omschrijving beschikbaar.')}</p>
           </div>
           
-          ${product.brand_title ? `
+          ${(product.compatible_brand_titles || product.brand_title) ? `
           <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--pro-border);">
-            <h3 class="specs-title">Compatibiliteit</h3>
+            <h3 class="specs-title">Geschikt voor merken</h3>
             <div class="pro-description-content">
-              <p style="margin-bottom: 16px;">Deze kraanbak is speciaal ontworpen en getest voor gebruik met de volgende merken:</p>
+              <p style="margin-bottom: 16px;">Deze kraanbak is geschikt voor gebruik met de volgende merken:</p>
               <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-                <span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">
-                  ${escapeHtml(product.brand_title)}
-                </span>
+                ${(() => {
+                  if (product.compatible_brand_titles === 'all') {
+                    return `<span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">Alle merken</span>`;
+                  }
+                  if (Array.isArray(product.compatible_brand_titles) && product.compatible_brand_titles.length > 0) {
+                    return product.compatible_brand_titles.map(t => `
+                      <span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">
+                        ${escapeHtml(t)}
+                      </span>
+                    `).join('');
+                  }
+                  if (product.brand_title) {
+                    return `<span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">${escapeHtml(product.brand_title)}</span>`;
+                  }
+                  return '';
+                })()}
               </div>
               <p style="margin-top: 16px; color: #64748b; font-size: 0.9rem;">
                 <strong>Let op:</strong> Controleer altijd de specificaties van uw machine om te zorgen voor een perfecte pasvorm. Neem bij twijfel contact op met onze specialisten.

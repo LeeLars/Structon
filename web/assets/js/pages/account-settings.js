@@ -147,13 +147,46 @@ async function changePassword() {
     return;
   }
   
+  // Validate password strength
+  if (!/[a-z]/.test(newPassword)) {
+    showToast('Wachtwoord moet minimaal 1 kleine letter bevatten', 'error');
+    return;
+  }
+  if (!/[A-Z]/.test(newPassword)) {
+    showToast('Wachtwoord moet minimaal 1 hoofdletter bevatten', 'error');
+    return;
+  }
+  if (!/[0-9]/.test(newPassword)) {
+    showToast('Wachtwoord moet minimaal 1 cijfer bevatten', 'error');
+    return;
+  }
+  
   try {
-    await auth.patch('/auth/password', {
-      currentPassword,
-      newPassword
+    // Determine API base URL
+    const hostname = window.location.hostname;
+    const apiBase = (hostname === 'localhost' || hostname === '127.0.0.1')
+      ? 'http://localhost:4000/api'
+      : 'https://structon-production.up.railway.app/api';
+    
+    const token = localStorage.getItem('auth_token');
+    
+    const response = await fetch(`${apiBase}/auth/change-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: 'include',
+      body: JSON.stringify({ currentPassword, newPassword })
     });
     
-    showToast('Wachtwoord gewijzigd', 'success');
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.error || 'Fout bij wijzigen wachtwoord');
+    }
+    
+    showToast('Wachtwoord succesvol gewijzigd', 'success');
     document.getElementById('password-form').reset();
   } catch (error) {
     showToast(error.message || 'Fout bij wijzigen wachtwoord', 'error');

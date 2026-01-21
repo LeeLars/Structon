@@ -85,6 +85,48 @@ router.get('/me', authenticate, (req, res) => {
 });
 
 /**
+ * POST /api/auth/change-password
+ * Change password for authenticated user
+ */
+router.post('/change-password', authenticate, async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+
+    // Get user with password hash
+    const user = await User.findByEmail(req.user.email);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Verify current password
+    const isValid = await User.verifyPassword(currentPassword, user.password_hash);
+    
+    if (!isValid) {
+      return res.status(401).json({ error: 'Current password is incorrect' });
+    }
+
+    // Update password
+    await User.update(user.id, { password: newPassword });
+
+    res.json({
+      success: true,
+      message: 'Password changed successfully'
+    });
+  } catch (error) {
+    // Handle validation errors from User.validatePassword
+    if (error.message.includes('Password must')) {
+      return res.status(400).json({ error: error.message });
+    }
+    next(error);
+  }
+});
+
+/**
  * POST /api/auth/password-reset-request
  * Request password reset (placeholder - needs email service)
  */

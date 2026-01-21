@@ -4,7 +4,7 @@
  * Also handles single product detail view when ?id= parameter is present
  */
 
-import { products } from '../api/client.js';
+import { products, categories } from '../api/client.js';
 import { createProductCardHorizontal, createProductCard, createIndustryProductCard, showLoading, showError, showNoResults, escapeHtml } from '../main.js';
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
@@ -12,6 +12,7 @@ import { createExpertBox } from '../components/expert-box.js';
 
 let allProducts = [];
 let currentProduct = null;
+let currentCategory = null;
 
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
@@ -27,6 +28,7 @@ async function initPage() {
   // Check if we're viewing a single product
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('id');
+  const categoryParam = params.get('cat');
   
   if (productId) {
     // Show single product detail view
@@ -34,8 +36,118 @@ async function initPage() {
   } else {
     // Show products list
     initFilters(handleFilterChange);
+    
+    // Load subcategories if viewing a main category
+    if (categoryParam) {
+      await loadSubcategories(categoryParam);
+    }
+    
     await loadProducts();
   }
+}
+
+/**
+ * Load and display subcategories for a main category
+ */
+async function loadSubcategories(categorySlug) {
+  const section = document.getElementById('subcategories-section');
+  const grid = document.getElementById('subcategories-grid');
+  
+  if (!section || !grid) return;
+  
+  try {
+    console.log('🔍 Loading subcategories for:', categorySlug);
+    
+    // Fetch all categories with product counts
+    const categoriesData = await categories.getAll(true);
+    console.log('📦 Categories data:', categoriesData);
+    
+    if (!categoriesData || !categoriesData.categories) {
+      console.log('No categories data available');
+      return;
+    }
+    
+    // Find the main category
+    const mainCategory = categoriesData.categories.find(cat => 
+      cat.slug === categorySlug || cat.title.toLowerCase() === categorySlug.toLowerCase()
+    );
+    
+    if (!mainCategory) {
+      console.log('Main category not found:', categorySlug);
+      return;
+    }
+    
+    currentCategory = mainCategory;
+    console.log('✅ Found main category:', mainCategory.title);
+    
+    // Filter subcategories that belong to this main category and have products
+    const subcategories = categoriesData.categories.filter(cat => 
+      cat.parent_id === mainCategory.id && 
+      cat.product_count > 0
+    );
+    
+    console.log(`📋 Found ${subcategories.length} subcategories with products`);
+    
+    if (subcategories.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+    
+    // Update page title and description
+    const pageTitle = document.querySelector('.page-title');
+    const pageSubtitle = document.querySelector('.page-subtitle');
+    if (pageTitle) pageTitle.textContent = mainCategory.title.toUpperCase();
+    if (pageSubtitle && mainCategory.description) {
+      pageSubtitle.textContent = mainCategory.description;
+    }
+    
+    // Render subcategories
+    grid.innerHTML = subcategories.map(subcat => createSubcategoryCard(subcat)).join('');
+    section.style.display = 'block';
+    
+  } catch (error) {
+    console.error('Error loading subcategories:', error);
+    section.style.display = 'none';
+  }
+}
+
+/**
+ * Create subcategory card HTML
+ */
+function createSubcategoryCard(subcategory) {
+  // Use category image or fallback to placeholder
+  const imageUrl = subcategory.image_url || 
+    subcategory.cloudinary_image?.url || 
+    'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768988292/graafbak-hero_apbtll.png';
+  
+  const productCount = subcategory.product_count || 0;
+  const categoryUrl = `?cat=${subcategory.slug}`;
+  
+  return `
+    <a href="${categoryUrl}" class="subcategory-card">
+      <div class="subcategory-image">
+        <img src="${imageUrl}" alt="${escapeHtml(subcategory.title)}">
+      </div>
+      <div class="subcategory-overlay"></div>
+      <div class="subcategory-content">
+        <div class="subcategory-count">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          ${productCount} ${productCount === 1 ? 'product' : 'producten'}
+        </div>
+        <h3>${escapeHtml(subcategory.title)}</h3>
+        <span class="subcategory-link-text">
+          Bekijk categorie
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </div>
+    </a>
+  `;
 }
 
 /**

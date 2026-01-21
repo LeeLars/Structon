@@ -161,6 +161,12 @@
 
           <!-- Main Content -->
           <div class="category-content">
+            <!-- Category Header (Dynamic) - MOVED ABOVE SUBCATEGORIES -->
+            <div id="category-header" class="category-header" style="display: none;">
+              <h2 class="category-header-title" id="category-header-title"></h2>
+              <p class="category-header-description" id="category-header-description"></p>
+            </div>
+
             <!-- Subcategories (Integrated) -->
             <div id="subcategories-section" style="display: none; margin-bottom: 40px;">
               <h2 class="subcategories-title" style="text-align: left; font-size: 1.5rem; margin-bottom: 24px;">Subcategorieën</h2>
@@ -193,12 +199,6 @@
                   <option value="title_desc">Naam Z-A</option>
                 </select>
               </div>
-            </div>
-
-            <!-- Category Header (Dynamic) -->
-            <div id="category-header" class="category-header" style="display: none;">
-              <h2 class="category-header-title" id="category-header-title"></h2>
-              <p class="category-header-description" id="category-header-description"></p>
             </div>
 
             <!-- Products List (vloeiend met borders) -->

@@ -205,6 +205,45 @@ function createSubcategoryCard(subcategory) {
 }
 
 /**
+ * Unique category descriptions
+ */
+const CATEGORY_DESCRIPTIONS = {
+  'graafbakken': 'Professionele graafbakken voor alle grondwerkzaamheden. Van standaard graafwerk tot gespecialiseerde toepassingen zoals drainage, rioleringen en funderingen. Onze graafbakken zijn vervaardigd uit hoogwaardig Hardox staal voor maximale slijtvastheid en een lange levensduur. Verkrijgbaar in diverse breedtes en voor alle tonnageklassen, van minigraver tot zware graafmachine.',
+  'sloop-sorteergrijpers': 'Robuuste sloop- en sorteergrijpers voor afbraak, recycling en materiaalverwerking. Speciaal ontworpen voor het efficiënt sorteren van puin, hout, metaal en andere bouwmaterialen. Onze grijpers combineren krachtige hydrauliek met precisie voor optimale productiviteit op recyclingparken, sloopwerven en overslaglocaties.',
+  'adapters': 'Snelwissels, adapterplaten en rotators voor flexibel machinegebruik. Wissel moeiteloos tussen verschillende aanbouwdelen zonder gereedschap. Onze adaptersystemen zijn compatibel met alle gangbare merken en verhogen de veelzijdigheid van uw graafmachine aanzienlijk. Verkrijgbaar in mechanische en hydraulische uitvoeringen.',
+  'overige': 'Gespecialiseerde aanbouwdelen voor specifieke toepassingen. Van hydraulische hamers voor breekwerk tot egaliseerbalken voor afwerking. Ons assortiment aanvullende aanbouwdelen maakt uw graafmachine geschikt voor vrijwel elke klus in de grond-, weg- en waterbouw.'
+};
+
+/**
+ * Unique subcategory descriptions
+ */
+const SUBCATEGORY_DESCRIPTIONS = {
+  // Graafbakken subcategorieën
+  'slotenbakken': 'Slotenbakken zijn gespecialiseerde smalle graafbakken voor het graven van sleuven en leidingsloten. Perfect voor drainage, kabels, leidingen en funderingen. De smalle constructie (vanaf 200mm) zorgt voor minimale grondverzet en nauwkeurig graafwerk. Standaard voorzien van tanden voor penetratie in harde grond en versterkingen op slijtgevoelige punten.',
+  'dieplepelbakken': 'Dieplepelbakken zijn extra diepe graafbakken voor het uitgraven van vijvers, watergangen en diepe funderingen. De verlengde constructie biedt een groter bereik en volume dan standaard graafbakken. Ideaal voor baggerwerk, vijveraanleg en situaties waar u dieper moet graven dan de standaard graafdiepte van uw machine toelaat.',
+  'sleuvenbakken': 'Sleuvenbakken combineren smalle breedte met extra diepte voor het graven van diepe, smalle sleuven. Essentieel voor rioleringen, drainage en kabeltrajecten waar minimale grondinname vereist is. De versterkte zijwanden en bodemconstructie garanderen stabiliteit bij diep graafwerk in moeilijke grondsoorten.',
+  'kantelbakken': 'Kantelbakken beschikken over een hydraulisch kantelbare bak voor het werken op taluds en in moeilijk bereikbare hoeken. Ideaal voor het afwerken van hellingen, het graven langs muren en het egaliseren van ongelijke terreinen. De hydraulische kantelfunctie biedt tot 45 graden bewegingsvrijheid zonder de machine te verplaatsen.',
+  'rioolbakken': 'Rioolbakken zijn speciaal gevormde bakken met afgeronde bodem voor het graven van rioolsleuven. De gebogen bodemvorm komt overeen met de diameter van rioolbuizen en zorgt voor een perfect passend tracé. Verkrijgbaar in verschillende bodemradii passend bij gangbare buisdiameters van 200mm tot 800mm.',
+  'trapezium-bakken': 'Trapezium bakken hebben een trapeziumvormig profiel voor het graven van stabiele sleuven met schuine wanden. De schuin aflopende zijkanten voorkomen instorting bij graafwerk in losse grondsoorten. Ideaal voor drainage, watergangen en situaties waar geen beschoeiing mogelijk is. Voldoet aan veiligheidsnormen voor sleufgraafwerk.',
+  
+  // Sloop- en Sorteergrijpers subcategorieën
+  'sorteergrijpers': 'Sorteergrijpers zijn hydraulische grijpers voor het efficiënt sorteren en verplaatsen van bouw- en sloopafval. De krachtige bekken met getande binnenzijde grijpen stevig vast in puin, hout en andere materialen. Perfect voor recyclingparken, overslagstations en sloopwerven waar materiaalscheiding essentieel is voor hergebruik.',
+  'sloopgrijpers': 'Sloopgrijpers zijn extra zware grijpers speciaal ontworpen voor afbraakwerk. Voorzien van verstevigde bekken en slijtvaste tanden voor het slopen van beton, metselwerk en andere constructies. De robuuste hydrauliek genereert enorme krachten voor het breken en verwijderen van hardnekkige bouwmaterialen.',
+  'puingrijpers': 'Puingrijpers zijn veelzijdige grijpers voor het laden en sorteren van puin en grof materiaal. De brede bekopening en getande binnenzijde zorgen voor optimale grip op losse materialen. Ideaal voor het ruimen van slooppuin, het laden van containers en het sorteren van recyclingmateriaal op bouw- en slooplocaties.',
+  
+  // Adapters subcategorieën
+  'snelwissels': 'Snelwissels maken het mogelijk om binnen seconden van aanbouwdeel te wisselen zonder uit de cabine te stappen. Verkrijgbaar in mechanische en volledig hydraulische uitvoering. Compatibel met alle gangbare CW-koppelingen en S-systemen. Verhoogt de productiviteit en flexibiliteit van uw graafmachine aanzienlijk.',
+  'adapterplaten': 'Adapterplaten verbinden aanbouwdelen met verschillende koppelingssystemen aan uw graafmachine. Essentieel wanneer u bakken of grijpers met een ander systeem wilt gebruiken dan de standaardkoppeling van uw machine. Verkrijgbaar voor alle gangbare combinaties van CW, S-systeem en merkspecifieke koppelingen.',
+  'rotators': 'Hydraulische rotators maken 360 graden rotatie van aanbouwdelen mogelijk. Ideaal voor sorteergrijpers, kantelbakken en andere aanbouwdelen waar positionering cruciaal is. De continue rotatie verhoogt de efficiëntie bij laden, sorteren en precisiewerk. Verkrijgbaar in verschillende tonnageklassen met variabele rotatiesnelheid.',
+  
+  // Overige subcategorieën
+  'ripper-tanden': 'Ripper tanden zijn krachtige breektanden voor het openbreken van verhardingen, bevroren grond en rotsachtige bodems. De versterkte constructie en scherpe punt penetreren moeiteloos in harde ondergronden. Onmisbaar voor grondwerk in moeilijke omstandigheden waar standaard graaftanden tekortschieten.',
+  'hydraulische-hamers': 'Hydraulische hamers zijn slagkrachtige breekhamers voor het slopen van beton, asfalt en rotsformaties. Aangedreven door de hydrauliek van uw graafmachine leveren ze enorme slagkracht voor efficiënt breekwerk. Verkrijgbaar in verschillende gewichtsklassen passend bij uw machinegrootte, van minigraver tot zware graafmachine.',
+  'egaliseerbalken': 'Egaliseerbalken zijn precisie-afwerkingsgereedschap voor het egaliseren en afwerken van terreinen. De brede, vlakke constructie creëert perfecte vlakke oppervlakken voor funderingen, terrassen en sportvelden. Vaak voorzien van verstelbare schoenen voor nauwkeurige hoogte-instelling en laser-compatibiliteit.',
+  'verdichtingsplaten': 'Hydraulische verdichtingsplaten voor het verdichten van grond, zand en grind. De trilplaat genereert hoogfrequente trillingen voor optimale verdichting van ophogingen, sleufvullingen en funderingen. Essentieel voor het bereiken van de vereiste draagkracht volgens bouwvoorschriften. Verkrijgbaar in verschillende breedtes en trilfrequenties.'
+};
+
+/**
  * Update category header with dynamic title and description
  */
 function updateCategoryHeader() {
@@ -224,7 +263,10 @@ function updateCategoryHeader() {
       const subcat = data.subcategories?.find(s => s.slug === subcategoryParam);
       if (subcat) {
         headerTitle.textContent = subcat.title.toUpperCase();
-        headerDescription.textContent = `Ontdek ons assortiment ${subcat.title.toLowerCase()} bij Structon. Professionele ${subcat.title.toLowerCase()} voor alle toepassingen. Scherpe prijzen, snelle levering en deskundig advies.`;
+        // Use unique description or fallback to generic
+        const description = SUBCATEGORY_DESCRIPTIONS[subcategoryParam] || 
+          `Ontdek ons assortiment ${subcat.title.toLowerCase()} bij Structon. Professionele ${subcat.title.toLowerCase()} voor alle toepassingen. Scherpe prijzen, snelle levering en deskundig advies.`;
+        headerDescription.textContent = description;
         headerSection.style.display = 'block';
       }
     });
@@ -232,7 +274,10 @@ function updateCategoryHeader() {
   // If viewing a main category
   else if (categoryParam && currentCategory) {
     headerTitle.textContent = currentCategory.title.toUpperCase();
-    headerDescription.textContent = `Ontdek ons complete assortiment ${currentCategory.title.toLowerCase()} bij Structon. Hoogwaardige ${currentCategory.title.toLowerCase()} voor professioneel gebruik. Scherpe prijzen, snelle levering en deskundig advies.`;
+    // Use unique description or fallback to generic
+    const description = CATEGORY_DESCRIPTIONS[categoryParam] || 
+      `Ontdek ons complete assortiment ${currentCategory.title.toLowerCase()} bij Structon. Hoogwaardige ${currentCategory.title.toLowerCase()} voor professioneel gebruik. Scherpe prijzen, snelle levering en deskundig advies.`;
+    headerDescription.textContent = description;
     headerSection.style.display = 'block';
   }
   // Hide header when viewing all products

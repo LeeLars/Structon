@@ -97,40 +97,11 @@ function normalizeProductsResponse(data) {
  * Show user-friendly error message
  */
 function showApiError(endpoint, error) {
+  // Only log to console, never show error message to end users
   console.error(`❌ API Error [${endpoint}]:`, error.message);
   
-  // Show user-friendly message (only once per session)
-  if (sessionStorage.getItem('api-error-shown')) return;
-  sessionStorage.setItem('api-error-shown', 'true');
-  
-  const message = document.createElement('div');
-  message.className = 'api-error-toast';
-  message.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #ef4444;
-    color: white;
-    padding: 16px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    max-width: 400px;
-  `;
-  message.innerHTML = `
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="12" y1="8" x2="12" y2="12"></line>
-      <line x1="12" y1="16" x2="12.01" y2="16"></line>
-    </svg>
-    <span>Kan geen verbinding maken met CMS. Probeer later opnieuw.</span>
-  `;
-  
-  document.body.appendChild(message);
-  setTimeout(() => message.remove(), 5000);
+  // Error messages are disabled in production - users should never see CMS connection errors
+  // The site will gracefully fall back to cached data or show empty states
 }
 
 /**

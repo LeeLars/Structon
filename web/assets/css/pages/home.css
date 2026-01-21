@@ -173,90 +173,108 @@
   flex-shrink: 0;
 }
 
-/* Scroll Down Indicator */
+/* Scroll Down Indicator - Modern Vertical Right */
 .hero-scroll-indicator {
   position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 0;
+  right: 5vw;
+  left: auto;
+  transform: none;
+  height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 20px;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s ease;
   z-index: 10;
   cursor: pointer;
+  padding-bottom: 50px;
+  mix-blend-mode: overlay; /* Cool effect blending with bg */
 }
 
 .hero-scroll-indicator:hover {
-  color: white;
-  transform: translateX(-50%) translateY(-5px);
+  opacity: 1;
+  padding-bottom: 40px; /* Slight movement up */
+}
+
+/* Vertical Line connecting to bottom */
+.hero-scroll-indicator::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+  transform: translateX(-50%);
+  z-index: -1;
 }
 
 .scroll-text {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.9;
+  letter-spacing: 0.3em;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  color: white;
+  opacity: 0.8;
+  transition: all 0.3s ease;
 }
 
-.scroll-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: bounce 2s infinite;
+.hero-scroll-indicator:hover .scroll-text {
+  opacity: 1;
+  letter-spacing: 0.35em;
 }
 
-.scroll-arrow svg {
-  width: 24px;
-  height: 24px;
+.scroll-track {
+  width: 2px;
+  height: 50px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
+.scroll-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: #fff;
+  border-radius: 4px;
+  animation: scroll-drop 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+@keyframes scroll-drop {
+  0% { top: -100%; opacity: 0; }
+  20% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@media (max-width: 1024px) {
+  .hero-scroll-indicator {
+    right: 30px;
+    padding-bottom: 40px;
   }
 }
 
 @media (max-width: 768px) {
-  .hero {
-    min-height: auto;
-    padding: 80px 0 60px;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-search-btn span {
-    display: none; /* Hide text on mobile button */
-  }
-  
-  .hero-search-btn {
-    padding: 0 16px;
-  }
-  
   .hero-scroll-indicator {
-    bottom: 20px;
+    right: 20px;
+    height: 120px;
+    padding-bottom: 30px;
   }
   
   .scroll-text {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
   }
   
-  .scroll-arrow svg {
-    width: 20px;
-    height: 20px;
-  }
+  /* Keep simple vertical layout on mobile too */
 }
 
 /* ============================================

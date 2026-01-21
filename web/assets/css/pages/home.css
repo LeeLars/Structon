@@ -2,153 +2,220 @@
    HOME PAGE SPECIFIC STYLES
    ============================================ */
 
-/* Hero Section Enhancement */
+/* Hero Section Enhancement - INDUSTRIAL REDESIGN */
 .hero {
-  background-color: var(--color-white);
-  padding: var(--space-16) 0 var(--space-4);
-  text-align: center; /* Gecentreerd */
+  position: relative;
+  min-height: 85vh; /* Taller, impactful hero */
+  display: flex;
+  align-items: center;
+  background-color: var(--color-gray-900); /* Fallback */
+  color: white;
+  padding: 0; /* Remove padding to allow full bleed */
+  overflow: hidden;
+}
+
+/* Background Image with Parallax-like effect */
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Gradient Overlay for Text Readability */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(22, 58, 66, 0.95) 0%, 
+    rgba(35, 103, 115, 0.8) 40%, 
+    rgba(35, 103, 115, 0.4) 100%);
+  z-index: 2;
 }
 
 .hero-content {
-  width: 100%; /* Use full container width */
-  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 800px; /* Limit width for readability */
+  padding: var(--space-8) 0;
 }
 
-/* Configurator Badge */
+/* Configurator Badge - Transparent/White style */
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
-  padding: 10px 20px;
+  padding: 8px 20px;
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-6);
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(35, 103, 115, 0.3);
 }
 
 .hero-badge:hover {
+  background: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(35, 103, 115, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .hero-badge svg {
-  animation: spin-slow 4s linear infinite;
+  color: var(--color-accent); /* Yellow/Gold accent */
 }
 
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+/* Typography - Industrial & Bold */
 .hero-title {
-  font-size: 3.5rem;
-  font-weight: var(--font-black);
-  margin-bottom: 20px; /* Increased margin */
-  color: var(--color-primary-dark);
-  line-height: 1.2;
-  text-align: center; /* Center align */
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 6vw, 5rem); /* Responsive huge text */
+  font-weight: 900; /* Black weight */
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-title span {
+  color: var(--color-accent); /* Highlight specific words */
 }
 
 .hero-subtitle-text {
   font-size: 1.25rem;
-  color: var(--color-text);
-  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-8);
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: 400;
+  font-weight: 300;
+  line-height: 1.6;
 }
 
-.hero-search-form {
-  display: flex;
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 4px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.hero-search-form:focus-within {
-  border-color: #236773;
-  box-shadow: 0 4px 20px rgba(35, 103, 115, 0.15);
-}
-
-.search-input-wrapper {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding-left: 12px;
-}
-
-.search-icon {
-  width: 20px;
-  height: 20px;
-  color: #9ca3af;
-  margin-right: 10px;
-}
-
-.hero-search-form input {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  color: var(--color-text);
-  padding: 12px 0;
-  background: transparent;
-  font-family: var(--font-body);
-}
-
-.hero-search-form input::placeholder {
-  color: #9ca3af;
-}
-
-.search-btn {
-  background-color: #236773;
-  color: white;
-  border: none;
-  padding: 0 24px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-family: var(--font-body);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.search-btn:hover {
-  background-color: #1c525c;
-}
-
+/* Hero Actions - Left Aligned */
 .hero-cta-wrapper {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: flex-start; /* Left align */
 }
 
-.hero-subtitle {
-  display: none; /* Subtitle is verwijderd uit HTML, maar voor zekerheid */
+/* Primary Hero Button */
+.btn-hero-primary {
+  background-color: var(--color-accent);
+  color: var(--color-gray-900);
+  padding: 16px 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px; /* Slightly sharper corners for industrial look */
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+  border: 2px solid var(--color-accent);
 }
 
-.hero-actions {
-  display: none; /* Actions zijn verwijderd uit HTML */
+.btn-hero-primary:hover {
+  background-color: white;
+  color: var(--color-gray-900);
+  border-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Secondary Hero Button */
+.btn-hero-secondary {
+  background-color: transparent;
+  color: white;
+  padding: 16px 32px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-hero-secondary:hover {
+  background-color: white;
+  color: var(--color-primary-dark);
+  border-color: white;
+  transform: translateY(-2px);
+}
+
+/* Stats/Features Row in Hero */
+.hero-features {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.hero-feature {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-feature strong {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  display: block;
+}
+
+.hero-feature span {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 60px 0; /* Consistent padding top and bottom for mobile */
+    min-height: auto;
+    padding: 120px 0 80px; /* Space for fixed header */
   }
+  
   .hero-title {
-    font-size: 2.2rem; /* Slightly smaller for better fit */
-    padding: 0 15px; /* Ensure text doesn't touch edges */
+    font-size: 2.5rem;
   }
-  .hero-subtitle-text {
-    font-size: 1.1rem;
-    padding: 0 20px;
+  
+  .hero-features {
+    display: none; /* Hide features on mobile to save space */
+  }
+  
+  .hero-cta-wrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn-hero-primary, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -156,49 +223,53 @@
    4 MAIN CATEGORIES BLOCKS (Clean Design)
    ============================================ */
 .section-categories {
-  padding: var(--space-8) 0 var(--space-16);
+  padding: var(--space-16) 0;
   background-color: var(--color-white);
+  position: relative;
+  z-index: 10;
+  margin-top: -60px; /* Overlap with hero */
 }
 
-.section-header.text-center {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.section-subtitle {
-  font-size: 1.1rem;
-  color: var(--color-text-light);
-  margin-top: 10px;
+/* Container refinement */
+.section-categories .container {
+  max-width: 1400px;
 }
 
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px; /* Strakkere grid */
+  grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+  gap: var(--space-6);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
   .category-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 for tablets */
+  }
+}
+
+@media (max-width: 640px) {
+  .category-grid {
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: var(--space-4);
   }
 }
 
 .category-block {
   position: relative;
-  height: 350px; /* Iets compacter */
+  height: 450px; /* Tall, elegant blocks */
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none; /* Voor als het een link wordt */
+  align-items: flex-end; /* Text at bottom */
+  text-decoration: none;
+  background-color: var(--color-gray-900);
 }
 
 .category-block:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(35, 103, 115, 0.2);
 }
 
 .category-image {
@@ -214,6 +285,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.7s ease;
 }
 
@@ -221,69 +293,78 @@
   transform: scale(1.1);
 }
 
-/* Overlay Fade Effect (Petrol Gradient) - Lichter voor betere shop ervaring */
+/* Overlay Fade Effect (Petrol Gradient) */
 .category-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /* Gradient van Petrol (#236773) onderaan naar transparant bovenaan */
-  background: linear-gradient(to top, rgba(35, 103, 115, 0.8) 0%, rgba(35, 103, 115, 0.3) 50%, rgba(35, 103, 115, 0) 100%);
+  /* Gradient from solid petrol bottom to transparent top */
+  background: linear-gradient(to top, 
+    rgba(35, 103, 115, 0.95) 0%, 
+    rgba(35, 103, 115, 0.6) 40%, 
+    rgba(35, 103, 115, 0.1) 100%);
   transition: opacity 0.3s ease;
   z-index: 2;
+  opacity: 0.9;
 }
 
 .category-block:hover .category-overlay {
-  /* Iets donkerder/intenser bij hover */
-  background: linear-gradient(to top, rgba(35, 103, 115, 0.9) 0%, rgba(35, 103, 115, 0.5) 60%, rgba(35, 103, 115, 0.1) 100%);
+  opacity: 1;
+  background: linear-gradient(to top, 
+    rgba(35, 103, 115, 1) 0%, 
+    rgba(35, 103, 115, 0.7) 50%, 
+    rgba(35, 103, 115, 0.2) 100%);
 }
 
 .category-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 24px; /* Iets meer padding */
+  position: relative;
   z-index: 3;
-  text-align: left; /* Links uitgelijnd */
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  width: 100%;
+  padding: var(--space-8);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.category-block:hover .category-content {
+  transform: translateY(-5px);
 }
 
 .category-content h2 {
   font-family: var(--font-heading);
-  font-size: 1.8rem; /* Slightly smaller for better hierarchy */
+  font-size: 2rem;
   color: white;
-  margin: 0;
-  text-transform: none; /* Geen all-caps */
-  letter-spacing: 0.5px;
+  margin: 0 0 var(--space-2);
+  text-transform: uppercase;
+  line-height: 1;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  line-height: 1.2;
 }
 
-/* View All Link Style */
-.btn-link-arrow {
+.category-link-text {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-primary);
-  text-decoration: none;
+  color: var(--color-accent);
   font-weight: 600;
-  font-size: 1rem;
-  transition: color 0.2s ease;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
 }
 
-.btn-link-arrow:hover {
-  color: var(--color-primary-dark);
+.category-block:hover .category-link-text {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.btn-link-arrow svg {
+.category-link-text svg {
   transition: transform 0.2s ease;
 }
 
-.btn-link-arrow:hover svg {
+.category-block:hover .category-link-text svg {
   transform: translateX(4px);
 }
 

@@ -32,10 +32,10 @@ export async function initSitemap() {
       <li class="sitemap-section">
         <h5 class="sitemap-heading">Algemeen</h5>
         <ul class="sitemap-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/over-ons/">Over Ons</a></li>
-          <li><a href="/contact/">Contact</a></li>
-          <li><a href="/login/">Klant Login</a></li>
+          <li><a href="../../">Home</a></li>
+          <li><a href="../../over-ons/">Over Ons</a></li>
+          <li><a href="../../contact/">Contact</a></li>
+          <li><a href="../../login/">Klant Login</a></li>
         </ul>
       </li>
     `;
@@ -48,7 +48,7 @@ export async function initSitemap() {
           <ul class="sitemap-links">
             ${categories.map(cat => `
               <li>
-                <a href="/${cat.slug}/" class="sitemap-cat-link">${cat.title}</a>
+                <a href="../../${cat.slug}/" class="sitemap-cat-link">${cat.title}</a>
               </li>
             `).join('')}
           </ul>
@@ -66,11 +66,11 @@ export async function initSitemap() {
       <li class="sitemap-section">
         <h5 class="sitemap-heading">Navigatie</h5>
         <ul class="sitemap-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/over-ons/">Over Ons</a></li>
-          <li><a href="/contact/">Contact</a></li>
-          <li><a href="/kraanbakken/">Kraanbakken</a></li>
-          <li><a href="/slotenbakken/">Slotenbakken</a></li>
+          <li><a href="../../">Home</a></li>
+          <li><a href="../../over-ons/">Over Ons</a></li>
+          <li><a href="../../contact/">Contact</a></li>
+          <li><a href="../../kraanbakken/">Kraanbakken</a></li>
+          <li><a href="../../slotenbakken/">Slotenbakken</a></li>
         </ul>
       </li>
     `;

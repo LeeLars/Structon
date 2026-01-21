@@ -29,6 +29,44 @@ let currentPage = 1;
 let itemsPerPage = 20;
 let selectedProducts = new Set();
 let editingProductId = null;
+let isPopulatingForm = false;
+
+/**
+ * Autosave status toggles in modal
+ */
+async function handleStatusToggleChange(field) {
+  // Prevent autosave while form is being populated
+  if (isPopulatingForm) return;
+
+  // Only autosave when editing an existing product
+  if (!editingProductId) return;
+
+  const activeEl = document.getElementById('product-active');
+  const featuredEl = document.getElementById('product-featured');
+  if (!activeEl || !featuredEl) return;
+
+  const patch = {
+    is_active: !!activeEl.checked,
+    is_featured: !!featuredEl.checked
+  };
+
+  try {
+    console.log(`⚡ [PRODUCTS] Autosaving status for ${editingProductId}:`, patch);
+    await auth.patch(`/admin/products/${editingProductId}`, patch);
+    showToast('Status opgeslagen', 'success');
+
+    // Update local cache & UI without forcing user to click save
+    const idx = products.findIndex(p => p.id === editingProductId);
+    if (idx !== -1) {
+      products[idx] = { ...products[idx], ...patch };
+    }
+    applyFilters();
+    updateStats();
+  } catch (error) {
+    console.error('❌ [PRODUCTS] Failed to autosave status:', error);
+    showToast('Fout bij status opslaan', 'error');
+  }
+}
 
 // Initialize
 console.log('📌 [PRODUCTS] Setting up DOMContentLoaded listener...');
@@ -277,6 +315,14 @@ function setupEventListeners() {
   // Category change - load subcategories
   document.getElementById('product-category')?.addEventListener('change', (e) => {
     populateSubcategoryDropdown(e.target.value);
+  });
+
+  // Status autosave (1 click = direct save)
+  document.getElementById('product-active')?.addEventListener('change', () => {
+    handleStatusToggleChange('is_active');
+  });
+  document.getElementById('product-featured')?.addEventListener('change', () => {
+    handleStatusToggleChange('is_featured');
   });
   
   // Image upload
@@ -616,6 +662,7 @@ function closeProductModal() {
  * Populate form with product data
  */
 function populateForm(product) {
+  isPopulatingForm = true;
   document.getElementById('product-title').value = product.title || '';
   document.getElementById('product-slug').value = product.slug || '';
   document.getElementById('product-description').value = product.description || '';
@@ -705,6 +752,11 @@ function populateForm(product) {
     window.uploadedImages = product.cloudinary_images;
     renderImagePreviews();
   }
+
+  // Ensure change events during populate don't trigger autosave
+  setTimeout(() => {
+    isPopulatingForm = false;
+  }, 0);
 }
 
 /**

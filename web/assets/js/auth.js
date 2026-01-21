@@ -18,10 +18,25 @@ export async function checkAuth() {
 
   try {
     const response = await auth.me();
+    
+    // Handle null response (user not logged in)
+    if (!response || !response.user) {
+      currentUser = null;
+      updateAuthUI(false);
+      return null;
+    }
+    
     currentUser = response.user;
+    
+    // Store token if provided (for API requests)
+    if (response.token) {
+      localStorage.setItem('auth_token', response.token);
+    }
+    
     updateAuthUI(true);
     return currentUser;
   } catch (error) {
+    console.log('Auth check: not logged in');
     currentUser = null;
     updateAuthUI(false);
     return null;
@@ -112,6 +127,96 @@ function createAccountDropdown() {
   const loginBtn = document.getElementById('login-btn');
   if (!loginBtn) return;
   
+  // Inject CSS if not already present
+  if (!document.getElementById('account-dropdown-styles')) {
+    const style = document.createElement('style');
+    style.id = 'account-dropdown-styles';
+    style.textContent = `
+      .account-dropdown {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        min-width: 280px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.2s ease;
+        z-index: 9999;
+      }
+      .account-dropdown.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .account-dropdown-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .account-avatar {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #236773 0%, #2d7f8d 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .account-avatar svg {
+        width: 24px;
+        height: 24px;
+        stroke: #fff;
+      }
+      .account-info { flex: 1; min-width: 0; }
+      .account-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .account-role { font-size: 12px; color: #6b7280; }
+      .account-dropdown-divider { height: 1px; background: #e5e7eb; }
+      .account-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        background: none;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .account-dropdown-item:hover {
+        background: #f9fafb;
+        color: #236773;
+      }
+      .account-dropdown-item svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        flex-shrink: 0;
+      }
+      .account-dropdown-item:last-child { border-radius: 0 0 8px 8px; }
+      .top-nav { position: relative; }
+      .top-nav a { position: relative; }
+    `;
+    document.head.appendChild(style);
+  }
+  
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   
   const dropdown = document.createElement('div');
@@ -181,18 +286,32 @@ function updateAuthUI(isAuthenticated) {
     if (isAuthenticated) {
       loginBtn.innerHTML = `<span>Mijn Account</span>`;
       loginBtn.href = '#';
-      // Remove old listeners
+      loginBtn.classList.remove('login-trigger');
+      // Remove old listeners by cloning
       const newBtn = loginBtn.cloneNode(true);
+      newBtn.id = 'login-btn';
       loginBtn.parentNode.replaceChild(newBtn, loginBtn);
-      // Add new listener
+      // Add account dropdown listener
       newBtn.addEventListener('click', handleAccountClick);
     } else {
       loginBtn.innerHTML = `<span>Inloggen</span>`;
-      const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-      loginBtn.href = `${basePath}/login/`;
-      // Remove click handler
+      loginBtn.href = '#';
+      loginBtn.classList.add('login-trigger');
+      // Remove old listeners by cloning
       const newBtn = loginBtn.cloneNode(true);
+      newBtn.id = 'login-btn';
       loginBtn.parentNode.replaceChild(newBtn, loginBtn);
+      // Add login modal trigger
+      newBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof window.openLoginModal === 'function') {
+          window.openLoginModal();
+        } else {
+          // Fallback: redirect to login page
+          const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+          window.location.href = `${basePath}/login/`;
+        }
+      });
     }
   }
 
@@ -226,17 +345,6 @@ function updatePriceVisibility(isAuthenticated) {
   });
 }
 
-/**
- * Handle account button click
- */
-function handleAccountClick(e) {
-  e.preventDefault();
-  
-  // Simple dropdown or redirect to account page
-  if (confirm('Wilt u uitloggen?')) {
-    logout();
-  }
-}
 
 /**
  * Initialize auth on page load

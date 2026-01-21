@@ -11,7 +11,7 @@
   justify-content: center;
   background: linear-gradient(135deg, #1a4f59 0%, #236773 100%); /* Deep Petrol Gradient */
   color: white;
-  padding: var(--space-12) 0;
+  padding: var(--space-20) 0;
   overflow: hidden;
 }
 
@@ -61,13 +61,13 @@
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 50px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -84,7 +84,7 @@
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1.1;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
   color: white;
 }
 
@@ -95,7 +95,7 @@
 .hero-subtitle-text {
   font-size: 1.25rem;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
   max-width: 700px;
   font-weight: 300;
   line-height: 1.6;
@@ -151,24 +151,26 @@
 /* Quick USPs below search */
 .hero-quick-usps {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-8);
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: var(--space-4);
 }
 
 .hero-quick-usp {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
   font-weight: 500;
 }
 
 .hero-quick-usp svg {
   color: white;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

@@ -203,38 +203,38 @@
    PRODUCTS PAGE SPECIFIC STYLES
    ============================================ */
 
-/* Subcategories Section */
-.subcategories-section {
-  padding: var(--space-16) 0;
-  background-color: var(--color-gray-50);
+/* Subcategories Section (Integrated) */
+#subcategories-section {
+  /* No special background or padding, flows with content */
+  width: 100%;
 }
 
 .subcategories-title {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 1.5rem; /* Smaller to fit in content flow */
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-primary);
-  text-align: center;
-  margin-bottom: var(--space-12);
-  letter-spacing: 0.05em;
+  color: var(--color-gray-900); /* Dark gray instead of primary for header */
+  text-align: left; /* Left aligned */
+  margin-bottom: var(--space-6);
+  letter-spacing: 0.02em;
 }
 
 .subcategories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-6);
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Smaller cards */
+  gap: var(--space-4);
+  width: 100%;
+  margin-bottom: var(--space-8);
 }
 
 .subcategory-card {
   position: relative;
-  height: 320px;
-  border-radius: var(--radius-lg);
+  height: 200px; /* Shorter cards */
+  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-items: flex-end;
   text-decoration: none;
@@ -242,8 +242,8 @@
 }
 
 .subcategory-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(35, 103, 115, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(35, 103, 115, 0.15);
 }
 
 .subcategory-image {
@@ -264,7 +264,7 @@
 }
 
 .subcategory-card:hover .subcategory-image img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .subcategory-overlay {
@@ -274,40 +274,31 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(to top, 
-    rgba(35, 103, 115, 0.95) 0%, 
-    rgba(35, 103, 115, 0.6) 40%, 
-    rgba(35, 103, 115, 0.1) 100%);
+    rgba(35, 103, 115, 0.9) 0%, 
+    rgba(35, 103, 115, 0.4) 50%, 
+    rgba(35, 103, 115, 0) 100%);
   transition: opacity 0.3s ease;
   z-index: 2;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .subcategory-card:hover .subcategory-overlay {
-  opacity: 1;
-  background: linear-gradient(to top, 
-    rgba(35, 103, 115, 1) 0%, 
-    rgba(35, 103, 115, 0.7) 50%, 
-    rgba(35, 103, 115, 0.2) 100%);
+  opacity: 0.95;
 }
 
 .subcategory-content {
   position: relative;
   z-index: 3;
   width: 100%;
-  padding: var(--space-6);
+  padding: var(--space-4);
   transform: translateY(0);
-  transition: transform 0.3s ease;
-}
-
-.subcategory-card:hover .subcategory-content {
-  transform: translateY(-5px);
 }
 
 .subcategory-content h3 {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: white;
-  margin: 0 0 var(--space-2);
+  margin: 0;
   text-transform: uppercase;
   line-height: 1.2;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -316,52 +307,35 @@
 .subcategory-count {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
+.subcategory-count svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Hide link text to make it cleaner */
 .subcategory-link-text {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: white;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-}
-
-.subcategory-card:hover .subcategory-link-text {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.subcategory-link-text svg {
-  transition: transform 0.2s ease;
-}
-
-.subcategory-card:hover .subcategory-link-text svg {
-  transform: translateX(4px);
+  display: none;
 }
 
 @media (max-width: 768px) {
   .subcategories-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: var(--space-3);
   }
   
   .subcategory-card {
-    height: 280px;
+    height: 160px;
   }
   
-  .subcategories-title {
-    font-size: 1.5rem;
+  .subcategory-content h3 {
+    font-size: 0.9rem;
   }
 }
 

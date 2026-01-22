@@ -1009,6 +1009,45 @@ async function compressImage(file, maxWidth = 1600, maxHeight = 1600, quality = 
 }
 
 /**
+ * Show loading overlay on upload area
+ */
+function showUploadLoading(message = 'Uploaden...') {
+  const uploadArea = document.getElementById('image-upload-area');
+  if (!uploadArea) return;
+  
+  // Create loading overlay if it doesn't exist
+  let overlay = uploadArea.querySelector('.upload-loading-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'upload-loading-overlay';
+    overlay.innerHTML = `
+      <div class="upload-spinner"></div>
+      <p class="upload-loading-text">${message}</p>
+    `;
+    uploadArea.appendChild(overlay);
+  } else {
+    overlay.querySelector('.upload-loading-text').textContent = message;
+  }
+  
+  overlay.style.display = 'flex';
+  uploadArea.style.pointerEvents = 'none';
+}
+
+/**
+ * Hide loading overlay
+ */
+function hideUploadLoading() {
+  const uploadArea = document.getElementById('image-upload-area');
+  if (!uploadArea) return;
+  
+  const overlay = uploadArea.querySelector('.upload-loading-overlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+  }
+  uploadArea.style.pointerEvents = 'auto';
+}
+
+/**
  * Handle image select
  */
 async function handleImageSelect(e) {
@@ -1018,7 +1057,8 @@ async function handleImageSelect(e) {
   
   console.log('📷 Selected files:', files.map(f => f.name));
   
-  // Show compressing status
+  // Show loading overlay
+  showUploadLoading(`${files.length} afbeelding(en) verwerken...`);
   showToast(`${files.length} afbeelding(en) verwerken...`, 'info');
   
   // Compress images before upload
@@ -1028,6 +1068,7 @@ async function handleImageSelect(e) {
       // Only compress if file is larger than 1MB
       if (file.size > 1024 * 1024) {
         console.log(`🗜️ Compressing ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)...`);
+        showUploadLoading(`Comprimeren: ${file.name}...`);
         const compressedBlob = await compressImage(file);
         // Create a new File object with the original name
         const compressedFile = new File([compressedBlob], file.name, { type: compressedBlob.type });
@@ -1046,6 +1087,7 @@ async function handleImageSelect(e) {
   compressedFiles.forEach(file => formData.append('images', file));
   
   try {
+    showUploadLoading('Uploaden naar server...');
     showToast('Afbeeldingen uploaden naar server...', 'info');
     console.log('📤 Uploading to:', '/admin/upload/images');
     
@@ -1069,8 +1111,14 @@ async function handleImageSelect(e) {
         imageInput.value = '';
       }
     }
+    
+    // Hide loading overlay on success
+    hideUploadLoading();
   } catch (error) {
     console.error('❌ Upload error:', error.message);
+    
+    // Hide loading overlay on error
+    hideUploadLoading();
     
     // Reset file input
     const imageInput = document.getElementById('image-input');

@@ -461,6 +461,21 @@ h6 { font-size: var(--text-base); }
   padding: 0 var(--container-padding);
 }
 
+ .top-bar .top-nav {
+   order: 1;
+ }
+
+ .top-bar .language-switcher--topbar {
+   order: 2;
+   margin-left: 12px;
+   margin-right: 0;
+ }
+
+ .top-bar .language-switcher--topbar .lang-dropdown {
+   left: auto;
+   right: 0;
+ }
+
 .tagline {
   display: none;
   font-size: 0.875rem;
@@ -482,7 +497,7 @@ h6 { font-size: var(--text-base); }
   display: flex;
   gap: 16px;
   margin-left: auto;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
 }
 

@@ -331,6 +331,14 @@ function setupEventListeners() {
   
   imageUploadArea?.addEventListener('click', () => imageInput.click());
   imageInput?.addEventListener('change', handleImageSelect);
+
+  // Tonnage -> attachment options
+  document.querySelectorAll('input[name="tonnage"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const selectedTonnage = Array.from(document.querySelectorAll('input[name="tonnage"]:checked')).map(x => x.value);
+      updateAttachmentOptionsFromTonnage(selectedTonnage);
+    });
+  });
   
   // Pagination
   document.getElementById('prev-page')?.addEventListener('click', () => changePage(-1));
@@ -626,6 +634,8 @@ function openProductModal(product = null) {
   
   // Uncheck all tonnage checkboxes
   document.querySelectorAll('input[name="tonnage"]').forEach(cb => cb.checked = false);
+
+  updateAttachmentOptionsFromTonnage([]);
   
   // Always initialize uploadedImages array
   window.uploadedImages = [];
@@ -671,13 +681,13 @@ function closeProductModal() {
  */
 function populateForm(product) {
   isPopulatingForm = true;
+  const desiredAttachment = product.attachment_type || '';
   document.getElementById('product-title').value = product.title || '';
   document.getElementById('product-slug').value = product.slug || '';
   document.getElementById('product-description').value = product.description || '';
   document.getElementById('product-width').value = product.width || '';
   document.getElementById('product-volume').value = product.volume || '';
   document.getElementById('product-weight').value = product.weight || '';
-  document.getElementById('product-attachment').value = product.attachment_type || '';
   document.getElementById('product-stock').value = product.stock_quantity || 0;
   document.getElementById('product-active').checked = product.is_active;
   const featuredCheckbox = document.getElementById('product-featured');
@@ -752,6 +762,16 @@ function populateForm(product) {
       document.querySelector('input[name="tonnage"][value="25-40"]').checked = true;
     } else if (min === 40) {
       document.querySelector('input[name="tonnage"][value="40+"]').checked = true;
+    }
+  }
+
+  const selectedTonnage = Array.from(document.querySelectorAll('input[name="tonnage"]:checked')).map(cb => cb.value);
+  updateAttachmentOptionsFromTonnage(selectedTonnage);
+  const attachmentSelect = document.getElementById('product-attachment');
+  if (attachmentSelect) {
+    attachmentSelect.value = desiredAttachment;
+    if (desiredAttachment) {
+      updateAttachmentOptionsFromTonnage(selectedTonnage);
     }
   }
   
@@ -1249,6 +1269,42 @@ function showError(message) {
 // ==========================================
 
 let importedProducts = [];
+
+const TONNAGE_TO_ATTACHMENTS = {
+  '1.5-3': ['CW05', 'S40'],
+  '3-8': ['CW05', 'CW10', 'S40', 'S50'],
+  '8-15': ['CW10', 'CW20', 'S50', 'S60'],
+  '15-25': ['CW20', 'CW30', 'S60', 'S70'],
+  '25-40': ['CW30', 'CW40', 'S70', 'S80'],
+  '40+': ['CW40', 'CW45', 'S80']
+};
+
+function getAllowedAttachmentsFromTonnage(selectedTonnage) {
+  const allowed = new Set();
+  (selectedTonnage || []).forEach(range => {
+    (TONNAGE_TO_ATTACHMENTS[range] || []).forEach(a => allowed.add(a));
+  });
+  return allowed;
+}
+
+function updateAttachmentOptionsFromTonnage(selectedTonnage) {
+  const select = document.getElementById('product-attachment');
+  if (!select) return;
+
+  const allowed = getAllowedAttachmentsFromTonnage(selectedTonnage);
+  const hasFilter = allowed.size > 0;
+
+  Array.from(select.options).forEach(opt => {
+    if (!opt.value) return;
+    const isAllowed = !hasFilter || allowed.has(opt.value);
+    opt.disabled = !isAllowed;
+    opt.hidden = !isAllowed;
+  });
+
+  if (select.value && hasFilter && !allowed.has(select.value)) {
+    select.value = '';
+  }
+}
 
 /**
  * Open import modal

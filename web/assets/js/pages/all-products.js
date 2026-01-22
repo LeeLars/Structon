@@ -993,7 +993,7 @@ function injectProStyles() {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 48px;
-      align-items: start;
+      /* Removed align-items: start to allow equal height columns */
     }
 
     .subsection-title {
@@ -1008,12 +1008,23 @@ function injectProStyles() {
       gap: 12px;
     }
 
-    /* Specs Table */
-    .details-col-specs {
+    /* Specs & Content Columns (Yin & Yang Balance) */
+    .details-col-specs,
+    .details-col-content {
       background-color: #f8fafc;
       padding: 32px;
       border-radius: 12px;
       border: 1px solid var(--pro-border);
+      height: 100%; /* Equal height visual if grid stretches */
+    }
+
+    /* Make compatibility box blend better inside the column */
+    .compatibility-box {
+      background-color: white; /* White contrast against grey column */
+      border: 1px solid #bbf7d0; /* Keep green accent border */
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 16px;
     }
 
     .pro-specs-table {
@@ -1063,12 +1074,7 @@ function injectProStyles() {
       margin-top: 32px;
     }
 
-    .compatibility-box {
-      background-color: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 12px;
-      padding: 24px;
-    }
+    /* .compatibility-box is defined above with white background */
 
     .compatibility-box:has(.brand-tag-universal) {
       background-color: #f0f9ff;

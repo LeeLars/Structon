@@ -27,6 +27,13 @@
    text-transform: uppercase;
    letter-spacing: -0.02em;
    line-height: 1.2;
+   /* Hide the title text */
+   font-size: 0;
+   line-height: 0;
+   height: 0;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
  }
 
 .category-header-description {
@@ -43,10 +50,6 @@
   }
   
   .category-header-title {
-    font-size: 1.5rem;
-  }
-
-  .subcategories-title {
     font-size: 1.5rem;
   }
   

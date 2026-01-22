@@ -97,10 +97,9 @@ router.post('/debug/seed', async (req, res) => {
       return res.json({ error: 'Database already has data. Seed skipped.', categories: existing.rows[0].count });
     }
     
-    // Create categories
+    // Create categories (alleen hoofdcategorieën - Slotenbakken is subcategorie van Graafbakken)
     const categories = [
       { title: 'Graafbakken', slug: 'graafbakken', description: 'Professionele graafbakken voor alle graafmachines.' },
-      { title: 'Slotenbakken', slug: 'slotenbakken', description: 'Smalle bakken voor het graven van sloten.' },
       { title: 'Sloop- en sorteergrijpers', slug: 'sloop-sorteergrijpers', description: 'Grijpers voor sloop en recycling.' },
       { title: 'Overige', slug: 'overige', description: 'Overige aanbouwdelen.' }
     ];

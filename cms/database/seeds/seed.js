@@ -31,52 +31,36 @@ async function seed() {
     `, [customerPassword]);
 
     // Create categories with SEO content
+    // HOOFDCATEGORIEËN: Graafbakken, Sloop- en sorteergrijpers, Overige
+    // Slotenbakken en Dieplepelbakken zijn SUBCATEGORIEËN van Graafbakken
     console.log('📁 Creating categories...');
     const categories = [
       { 
-        title: 'Kraanbakken', 
-        slug: 'kraanbakken', 
-        description: 'Professionele kraanbakken voor alle graafmachines.',
-        seo_title: 'Kraanbak Kopen | Graafbakken voor Minigraver & Kraan',
-        seo_description: 'Kraanbak kopen? Structon levert graafbakken voor minigravers en graafmachines. CW00 t/m CW40. Belgische productie, Hardox staal.',
-        seo_h1: 'Kraanbak Kopen voor Jouw Graafmachine',
-        seo_intro: 'Structon produceert hoogwaardige kraanbakken voor minigravers en graafmachines van 0.8 tot 40 ton. Alle CW-aansluitingen beschikbaar.'
+        title: 'Graafbakken', 
+        slug: 'graafbakken', 
+        description: 'Professionele graafbakken voor alle graafmachines.',
+        seo_title: 'Graafbak Kopen | Graafbakken voor Minigraver & Kraan',
+        seo_description: 'Graafbak kopen? Structon levert graafbakken voor minigravers en graafmachines. CW00 t/m CW40. Belgische productie, Hardox staal.',
+        seo_h1: 'Graafbak Kopen voor Jouw Graafmachine',
+        seo_intro: 'Structon produceert hoogwaardige graafbakken voor minigravers en graafmachines van 0.8 tot 40 ton. Alle CW-aansluitingen beschikbaar.'
       },
       { 
-        title: 'Slotenbakken', 
-        slug: 'slotenbakken', 
-        description: 'Smalle bakken voor het graven van sloten en kabelsleufjes.',
-        seo_title: 'Slotenbak Kopen | Slotenbakken voor Minigraver & Kraan',
-        seo_description: 'Slotenbak kopen? Structon levert slotenbakken voor minigravers en graafmachines. CW00 t/m CW40. Belgische productie, Hardox staal.',
-        seo_h1: 'Slotenbak Kopen voor Jouw Graafmachine',
-        seo_intro: 'Een slotenbak is ideaal voor egalisatiewerk, lichte graafwerken en slotenonderhoud. Structon produceert slotenbakken voor minigravers vanaf 1T tot grote rupskranen van 40T.'
-      },
-      { 
-        title: 'Dieplepelbakken', 
-        slug: 'dieplepelbakken', 
-        description: 'Standaard graafbakken voor algemeen graafwerk.',
-        seo_title: 'Dieplepelbak Kopen | Graafbakken voor Kraan',
-        seo_description: 'Dieplepelbak kopen? Structon levert dieplepelbakken voor alle graafmachines. Hardox staal, alle CW-aansluitingen.',
-        seo_h1: 'Dieplepelbak Kopen',
-        seo_intro: 'De dieplepelbak is de standaard graafbak voor algemeen graafwerk. Geschikt voor grondverzet, funderingswerk en bouwprojecten.'
-      },
-      { 
-        title: 'Sorteergrijpers', 
-        slug: 'sorteergrijpers', 
-        description: 'Sorteergrijpers voor sloop- en sorteerwerk.',
+        title: 'Sloop- en sorteergrijpers', 
+        slug: 'sloop-sorteergrijpers', 
+        description: 'Sorteergrijpers en sloopgrijpers voor sloop- en sorteerwerk.',
         seo_title: 'Sorteergrijper Kopen | Sloopgrijpers voor Kraan',
         seo_description: 'Sorteergrijper kopen? Structon levert sorteergrijpers en sloopgrijpers voor minigravers en graafmachines. CW05, CW10, CW20.',
         seo_h1: 'Sorteergrijper Kopen voor Sloop & Sorteerwerk',
         seo_intro: 'Sorteergrijpers zijn onmisbaar voor sloopwerk, sorteren en recycling. Geschikt voor het oppakken en verplaatsen van puin, hout en metaal.'
       },
       { 
-        title: 'Sloophamers', 
-        slug: 'sloophamers', 
-        description: 'Hydraulische sloophamers voor afbraakwerk.',
-        seo_title: 'Sloophamer Kopen | Hydraulische Sloophamers voor Kraan',
-        seo_description: 'Sloophamer kopen? Structon levert hydraulische sloophamers voor minigravers en graafmachines. Krachtig en betrouwbaar.',
-        seo_h1: 'Sloophamer Kopen - Hydraulische Breekhamers',
-        seo_intro: 'Hydraulische sloophamers voor het breken van beton, asfalt en steen. Geschikt voor sloopwerk, wegenbouw en renovatieprojecten.'
+        title: 'Overige', 
+        slug: 'overige', 
+        description: 'Overige aanbouwdelen en accessoires.',
+        seo_title: 'Overige Aanbouwdelen | Accessoires voor Kraan',
+        seo_description: 'Overige aanbouwdelen en accessoires voor graafmachines. Tanden, slijtdelen, hydrauliek en meer.',
+        seo_h1: 'Overige Aanbouwdelen & Accessoires',
+        seo_intro: 'Naast graafbakken en grijpers levert Structon ook tanden, slijtdelen, hydraulische onderdelen en accessoires.'
       }
     ];
 
@@ -134,43 +118,27 @@ async function seed() {
     catResult.rows.forEach(row => categoryMap[row.slug] = row.id);
 
     // Create subcategories with tonnage ranges
+    // Graafbakken subcategorieën: Slotenbakken, Dieplepelbakken, Sleuvenbakken, Kantelbakken
+    // Sloop- en sorteergrijpers subcategorieën: Sorteergrijpers, Sloopgrijpers, Betonscharen, Pulverisers
     console.log('📂 Creating subcategories...');
     const subcategories = [
-      // Kraanbakken subcategorieën
-      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
-      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
-      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
-      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
-      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 },
-      { category_slug: 'kraanbakken', title: 'Kraanbakken voor kranen van 25t+', slug: '25t-plus', tonnage_min: 25.0, tonnage_max: null, sort_order: 6 },
+      // Graafbakken subcategorieën (producttypen)
+      { category_slug: 'graafbakken', title: 'Slotenbakken', slug: 'slotenbakken', tonnage_min: null, tonnage_max: null, sort_order: 1 },
+      { category_slug: 'graafbakken', title: 'Dieplepelbakken', slug: 'dieplepelbakken', tonnage_min: null, tonnage_max: null, sort_order: 2 },
+      { category_slug: 'graafbakken', title: 'Sleuvenbakken', slug: 'sleuvenbakken', tonnage_min: null, tonnage_max: null, sort_order: 3 },
+      { category_slug: 'graafbakken', title: 'Kantelbakken', slug: 'kantelbakken', tonnage_min: null, tonnage_max: null, sort_order: 4 },
       
-      // Slotenbakken subcategorieën
-      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
-      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
-      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
-      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
-      { category_slug: 'slotenbakken', title: 'Slotenbakken voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 },
+      // Sloop- en sorteergrijpers subcategorieën
+      { category_slug: 'sloop-sorteergrijpers', title: 'Sorteergrijpers', slug: 'sorteergrijpers', tonnage_min: null, tonnage_max: null, sort_order: 1 },
+      { category_slug: 'sloop-sorteergrijpers', title: 'Sloopgrijpers', slug: 'sloopgrijpers', tonnage_min: null, tonnage_max: null, sort_order: 2 },
+      { category_slug: 'sloop-sorteergrijpers', title: 'Betonscharen', slug: 'betonscharen', tonnage_min: null, tonnage_max: null, sort_order: 3 },
+      { category_slug: 'sloop-sorteergrijpers', title: 'Pulverisers', slug: 'pulverisers', tonnage_min: null, tonnage_max: null, sort_order: 4 },
       
-      // Dieplepelbakken subcategorieën
-      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
-      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
-      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
-      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
-      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 },
-      { category_slug: 'dieplepelbakken', title: 'Dieplepelbakken voor kranen van 25t+', slug: '25t-plus', tonnage_min: 25.0, tonnage_max: null, sort_order: 6 },
-      
-      // Sorteergrijpers subcategorieën
-      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 1 },
-      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 2 },
-      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 3 },
-      { category_slug: 'sorteergrijpers', title: 'Sorteergrijpers voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 4 },
-      
-      // Sloophamers subcategorieën
-      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 1t - 2,5t', slug: '1t-2-5t', tonnage_min: 1.0, tonnage_max: 2.5, sort_order: 1 },
-      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 2,5t - 5t', slug: '2-5t-5t', tonnage_min: 2.5, tonnage_max: 5.0, sort_order: 2 },
-      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 5t - 10t', slug: '5t-10t', tonnage_min: 5.0, tonnage_max: 10.0, sort_order: 3 },
-      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 10t - 15t', slug: '10t-15t', tonnage_min: 10.0, tonnage_max: 15.0, sort_order: 4 },
-      { category_slug: 'sloophamers', title: 'Sloophamers voor kranen van 15t - 25t', slug: '15t-25t', tonnage_min: 15.0, tonnage_max: 25.0, sort_order: 5 }
+      // Overige subcategorieën
+      { category_slug: 'overige', title: 'Tanden & Slijtdelen', slug: 'tanden-slijtdelen', tonnage_min: null, tonnage_max: null, sort_order: 1 },
+      { category_slug: 'overige', title: 'Hydraulische Onderdelen', slug: 'hydrauliek', tonnage_min: null, tonnage_max: null, sort_order: 2 },
+      { category_slug: 'overige', title: 'Smeermiddelen', slug: 'smeermiddelen', tonnage_min: null, tonnage_max: null, sort_order: 3 },
+      { category_slug: 'overige', title: 'Accessoires', slug: 'accessoires', tonnage_min: null, tonnage_max: null, sort_order: 4 }
     ];
 
     for (const subcat of subcategories) {
@@ -186,13 +154,14 @@ async function seed() {
     }
 
     // Create products
+    // Alle graafbakken (slotenbakken, dieplepelbakken) vallen onder hoofdcategorie 'graafbakken'
     console.log('📦 Creating products...');
     const products = [
       {
         title: 'Slotenbak 300mm CW10',
         slug: 'slotenbak-300mm-cw10',
         description: 'Smalle slotenbak voor het graven van kabelsleufjes en smalle sloten. Vervaardigd uit Hardox 450 voor maximale slijtvastheid.',
-        category_slug: 'slotenbakken',
+        category_slug: 'graafbakken',
         excavator_weight_min: 3000,
         excavator_weight_max: 8000,
         width: 300,
@@ -205,7 +174,7 @@ async function seed() {
         title: 'Slotenbak 400mm CW10',
         slug: 'slotenbak-400mm-cw10',
         description: 'Veelzijdige slotenbak voor drainage en kabelsleufjes. Geschikt voor 3-8 ton graafmachines.',
-        category_slug: 'slotenbakken',
+        category_slug: 'graafbakken',
         excavator_weight_min: 3000,
         excavator_weight_max: 8000,
         width: 400,
@@ -218,7 +187,7 @@ async function seed() {
         title: 'Slotenbak 600mm CW20',
         slug: 'slotenbak-600mm-cw20',
         description: 'Brede slotenbak voor grotere sloten en rioleringswerkzaamheden.',
-        category_slug: 'slotenbakken',
+        category_slug: 'graafbakken',
         excavator_weight_min: 8000,
         excavator_weight_max: 15000,
         width: 600,
@@ -231,7 +200,7 @@ async function seed() {
         title: 'Dieplepelbak 600mm CW10',
         slug: 'dieplepelbak-600mm-cw10',
         description: 'Standaard dieplepelbak voor algemeen graafwerk. Robuuste constructie met Hardox slijtplaten.',
-        category_slug: 'dieplepelbakken',
+        category_slug: 'graafbakken',
         excavator_weight_min: 3000,
         excavator_weight_max: 8000,
         width: 600,
@@ -244,7 +213,7 @@ async function seed() {
         title: 'Dieplepelbak 800mm CW20',
         slug: 'dieplepelbak-800mm-cw20',
         description: 'Grote dieplepelbak voor zwaardere graafwerkzaamheden.',
-        category_slug: 'dieplepelbakken',
+        category_slug: 'graafbakken',
         excavator_weight_min: 8000,
         excavator_weight_max: 15000,
         width: 800,
@@ -257,7 +226,7 @@ async function seed() {
         title: 'Dieplepelbak 1000mm CW30',
         slug: 'dieplepelbak-1000mm-cw30',
         description: 'Extra brede dieplepelbak voor grote graafprojecten.',
-        category_slug: 'dieplepelbakken',
+        category_slug: 'graafbakken',
         excavator_weight_min: 15000,
         excavator_weight_max: 25000,
         width: 1000,
@@ -267,30 +236,30 @@ async function seed() {
         is_featured: false
       },
       {
-        title: 'Puinbak 1200mm CW30',
-        slug: 'puinbak-1200mm-cw30',
-        description: 'Versterkte puinbak voor het laden van puin, stenen en grof materiaal.',
-        category_slug: 'puinbakken',
-        excavator_weight_min: 15000,
-        excavator_weight_max: 25000,
-        width: 1200,
-        volume: 800,
-        weight: 450,
-        attachment_type: 'CW30',
+        title: 'Sorteergrijper 5-10t',
+        slug: 'sorteergrijper-5-10t',
+        description: 'Sorteergrijper voor het oppakken en sorteren van puin, hout en metaal.',
+        category_slug: 'sloop-sorteergrijpers',
+        excavator_weight_min: 5000,
+        excavator_weight_max: 10000,
+        width: 800,
+        volume: null,
+        weight: 320,
+        attachment_type: 'CW20',
         is_featured: true
       },
       {
-        title: 'Puinbak 1500mm CW40',
-        slug: 'puinbak-1500mm-cw40',
-        description: 'Extra grote puinbak voor zware sloopwerkzaamheden.',
-        category_slug: 'puinbakken',
-        excavator_weight_min: 25000,
-        excavator_weight_max: 40000,
-        width: 1500,
-        volume: 1200,
-        weight: 680,
-        attachment_type: 'CW40',
-        is_featured: false
+        title: 'Sloopgrijper 10-20t',
+        slug: 'sloopgrijper-10-20t',
+        description: 'Krachtige sloopgrijper voor afbraakwerk en recycling.',
+        category_slug: 'sloop-sorteergrijpers',
+        excavator_weight_min: 10000,
+        excavator_weight_max: 20000,
+        width: 1000,
+        volume: null,
+        weight: 580,
+        attachment_type: 'CW30',
+        is_featured: true
       }
     ];
 

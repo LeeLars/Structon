@@ -1,6 +1,7 @@
 /**
  * Header Loader Component
  * Dynamically loads the unified header with mega menus on all pages
+ * Supports multilanguage with locale prefixes (be-nl, nl-nl, be-fr, de-de)
  * 
  * Usage: Add <div id="header-placeholder"></div> at start of <body>
  *        Then include this script
@@ -9,29 +10,80 @@
 (function() {
   'use strict';
 
-  // Determine base path based on current page location
+  // Supported locales
+  const SUPPORTED_LOCALES = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+  const DEFAULT_LOCALE = 'be-nl';
+
+  // Detect current locale from URL path
+  function getCurrentLocale() {
+    const path = window.location.pathname;
+    for (const locale of SUPPORTED_LOCALES) {
+      // Match /locale/ or /Structon/locale/
+      if (path.includes('/' + locale + '/')) {
+        return locale;
+      }
+    }
+    return null; // Not in a locale path
+  }
+
+  // Get the locale base path (e.g., '/be-nl/' or '/Structon/be-nl/')
+  function getLocaleBasePath() {
+    const path = window.location.pathname;
+    const locale = getCurrentLocale();
+    
+    if (!locale) {
+      // Not in a locale path, return empty (legacy behavior)
+      return '';
+    }
+    
+    // Check if on GitHub Pages with /Structon/ prefix
+    if (path.includes('/Structon/')) {
+      return '/Structon/' + locale + '/';
+    }
+    
+    return '/' + locale + '/';
+  }
+
+  // Determine base path based on current page location (relative to locale root)
   function getBasePath() {
     const path = window.location.pathname;
+    const locale = getCurrentLocale();
     
-    // Root-level folders that need '../' to get back to site root
+    // If we're in a locale path, calculate relative path back to locale root
+    if (locale) {
+      // Find the position after the locale in the path
+      const localeIndex = path.indexOf('/' + locale + '/');
+      if (localeIndex !== -1) {
+        const pathAfterLocale = path.substring(localeIndex + locale.length + 2); // +2 for the slashes
+        const depth = pathAfterLocale.split('/').filter(p => p && !p.includes('.html')).length;
+        
+        if (depth === 0) {
+          // At locale root (e.g., /be-nl/index.html)
+          return '';
+        } else if (depth === 1) {
+          // One level deep (e.g., /be-nl/contact/)
+          return '../';
+        } else {
+          // Two or more levels deep (e.g., /be-nl/kraanbakken/caterpillar/)
+          return '../'.repeat(depth);
+        }
+      }
+    }
+    
+    // Legacy behavior for non-locale paths
     const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina', 'account', 'offerte-aanvragen'];
     
-    // Check for root-level folders FIRST (works for both local and GitHub Pages)
-    // This handles /producten/, /over-ons/, /Structon/producten/, etc.
     for (const folder of rootFolders) {
       if (path.includes('/' + folder + '/') || path.endsWith('/' + folder)) {
         return '../';
       }
     }
     
-    // Producten folder (/producten/)
     if (path.includes('/producten/')) {
       return '../';
     }
     
-    // Brand pages (/kraanbakken/brand/) or Industry pages (/industrieen/industry/)
     if (path.includes('/kraanbakken/') || path.includes('/industrieen/') || path.includes('/kennisbank/') || path.includes('/sectoren/')) {
-      // Check depth - if we're in a subfolder
       const parts = path.split('/').filter(p => p && !p.includes('.html'));
       if (parts.length >= 2) {
         return '../../';
@@ -39,18 +91,86 @@
       return '../';
     }
     
-    // Slotenbakken landing page
     if (path.includes('/slotenbakken/')) {
       return '../';
     }
     
-    // Root level (index.html or /) - no prefix needed
     if (path === '/' || path.endsWith('/index.html') || path.match(/^\/[^\/]+\/?$/)) {
       return '';
     }
     
-    // Default fallback
     return '';
+  }
+  
+  // Get path to assets (always relative to web root, not locale root)
+  function getAssetsPath() {
+    const path = window.location.pathname;
+    const locale = getCurrentLocale();
+    
+    if (locale) {
+      // In a locale path - assets are one level up from locale root
+      const basePath = getBasePath();
+      // basePath gets us to locale root, then we need one more ../ to get to web root
+      return basePath + '../assets/';
+    }
+    
+    // Legacy: not in locale path
+    return getBasePath() + 'assets/';
+  }
+
+  // Get current page path (relative to locale root)
+  function getCurrentPagePath() {
+    const path = window.location.pathname;
+    const locale = getCurrentLocale();
+    
+    if (locale) {
+      const localeIndex = path.indexOf('/' + locale + '/');
+      if (localeIndex !== -1) {
+        return path.substring(localeIndex + locale.length + 2);
+      }
+    }
+    return '';
+  }
+
+  // Generate language switcher HTML
+  function getLanguageSwitcher() {
+    const currentLocale = getCurrentLocale();
+    const pagePath = getCurrentPagePath();
+    
+    // If not in a locale path, don't show switcher
+    if (!currentLocale) {
+      return '';
+    }
+    
+    const localeNames = {
+      'be-nl': { flag: '🇧🇪', name: 'NL', full: 'Nederlands (BE)' },
+      'nl-nl': { flag: '🇳🇱', name: 'NL', full: 'Nederlands (NL)' },
+      'be-fr': { flag: '🇧🇪', name: 'FR', full: 'Français (BE)' },
+      'de-de': { flag: '🇩🇪', name: 'DE', full: 'Deutsch' }
+    };
+    
+    const current = localeNames[currentLocale] || localeNames[DEFAULT_LOCALE];
+    const basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+    
+    let dropdownItems = '';
+    for (const locale of SUPPORTED_LOCALES) {
+      const info = localeNames[locale];
+      const isActive = locale === currentLocale ? ' class="active"' : '';
+      dropdownItems += `<a href="${basePath}${locale}/${pagePath}"${isActive}>${info.flag} ${info.full}</a>`;
+    }
+    
+    return `
+      <div class="language-switcher">
+        <button class="lang-toggle" id="lang-toggle" aria-label="Taal wijzigen">
+          <span class="lang-flag">${current.flag}</span>
+          <span class="lang-code">${current.name}</span>
+          <span class="lang-arrow">▼</span>
+        </button>
+        <div class="lang-dropdown" id="lang-dropdown">
+          ${dropdownItems}
+        </div>
+      </div>
+    `;
   }
 
   // Get the header HTML with correct paths
@@ -296,6 +416,7 @@
         </div>
         
         <div class="nav-actions">
+          ${getLanguageSwitcher()}
           <a href="${basePath}producten/" class="cta-button">Bekijk alles</a>
         </div>
         
@@ -354,6 +475,42 @@
       navMobileClose.addEventListener('click', function() {
         navMobile.classList.remove('active');
         document.body.style.overflow = '';
+      });
+    }
+    
+    // Initialize language switcher
+    initLanguageSwitcher();
+  }
+  
+  // Initialize language switcher dropdown
+  function initLanguageSwitcher() {
+    const langToggle = document.getElementById('lang-toggle');
+    const langDropdown = document.getElementById('lang-dropdown');
+    
+    if (langToggle && langDropdown) {
+      langToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        langDropdown.classList.toggle('active');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove('active');
+        }
+      });
+      
+      // Save preference when clicking a language
+      langDropdown.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          const href = this.getAttribute('href');
+          const match = href.match(/\/(be-nl|nl-nl|be-fr|de-de)\//);
+          if (match) {
+            try {
+              localStorage.setItem('structon_locale', match[1]);
+            } catch (e) {}
+          }
+        });
       });
     }
   }

@@ -1,0 +1,116 @@
+{
+  "locale": "de-de",
+  "lang": "de",
+  "region": "DE",
+  "name": "Deutsch (Deutschland)",
+  "flag": "🇩🇪",
+  
+  "meta": {
+    "title_suffix": "| Structon Deutschland",
+    "site_name": "Structon",
+    "description": "Baggerlöffel und Anbaugeräte für Bagger. Belgische Produktion, schnelle Lieferung.",
+    "keywords": "Baggerlöffel, Grabenräumlöffel, Tieflöffel, Sortiergreifer, CW-Anschluss"
+  },
+  
+  "nav": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "all_products": "Alle Produkte",
+    "graafbakken": "Baggerlöffel",
+    "slotenbakken": "Grabenräumlöffel",
+    "sloop_sorteergrijpers": "Sortier- und Abbruchgreifer",
+    "overige": "Sonstiges",
+    "contact": "Kontakt",
+    "about": "Über uns",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "configurator": "Konfigurator",
+    "dealer": "Händler werden",
+    "login": "Anmelden",
+    "account": "Mein Konto",
+    "cart": "Warenkorb",
+    "quote": "Angebot anfordern"
+  },
+  
+  "common": {
+    "read_more": "Mehr lesen",
+    "view_all": "Alle anzeigen",
+    "view_products": "Produkte ansehen",
+    "add_to_cart": "In den Warenkorb",
+    "request_quote": "Angebot anfordern",
+    "contact_us": "Kontaktieren Sie uns",
+    "learn_more": "Mehr erfahren",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "search": "Suchen",
+    "search_placeholder": "Produkte suchen...",
+    "loading": "Laden...",
+    "no_results": "Keine Ergebnisse gefunden",
+    "in_stock": "Auf Lager",
+    "out_of_stock": "Nicht auf Lager",
+    "price_on_request": "Preis auf Anfrage",
+    "from": "Ab",
+    "incl_vat": "inkl. MwSt.",
+    "excl_vat": "zzgl. MwSt."
+  },
+  
+  "hero": {
+    "badge": "Belgische Produktion",
+    "title": "BAGGERLÖFFEL & ANBAUGERÄTE",
+    "subtitle": "Professionelle Baggerlöffel, Grabenräumlöffel und Sortiergreifer. Hergestellt in Belgien, geliefert nach Deutschland.",
+    "cta_primary": "Zum Webshop",
+    "cta_secondary": "Angebot anfordern"
+  },
+  
+  "categories": {
+    "graafbakken": {
+      "title": "Baggerlöffel",
+      "description": "Professionelle Baggerlöffel für alle Erdarbeiten"
+    },
+    "sloop_sorteergrijpers": {
+      "title": "Sortier- & Abbruchgreifer",
+      "description": "Robuste Greifer für Abbruch und Recycling"
+    },
+    "overige": {
+      "title": "Sonstiges",
+      "description": "Spezialisierte Anbaugeräte"
+    }
+  },
+  
+  "usp": {
+    "title": "WAS MACHT STRUCTON EINZIGARTIG?",
+    "intro": "Wir fertigen Baggerlöffel für Bagger aller Marken. Mit welchem Bagger arbeiten Sie? Ein Case, ein Hitachi, ein Volvo... Egal welche Marke, wir fertigen Ihren Baggerlöffel! Wir machen alles selbst in Beernem, Belgien.",
+    "description": "Über unseren Webshop können Sie ganz einfach den perfekten Baggerlöffel für Ihren Bagger finden. Und indem Sie einfach den richtigen Baggerlöffel in Ihren Warenkorb legen, kann er zu Ihnen nach Hause oder zu Ihrer Werkstatt geliefert werden!"
+  },
+  
+  "contact": {
+    "title": "KONTAKT",
+    "subtitle": "Kontaktieren Sie uns",
+    "name": "Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "company": "Firmenname",
+    "message": "Nachricht",
+    "send": "Senden",
+    "success": "Vielen Dank für Ihre Nachricht! Wir werden uns so schnell wie möglich bei Ihnen melden.",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "address_title": "Adresse",
+    "phone_title": "Telefon",
+    "email_title": "E-Mail"
+  },
+  
+  "footer": {
+    "tagline": "Spezialist für Baggerlöffel und Anbaugeräte.",
+    "copyright": "© 2024 Structon. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "sitemap": "Sitemap",
+    "made_by": "Erstellt von"
+  },
+  
+  "language_switcher": {
+    "title": "Sprache",
+    "current": "Deutsch (Deutschland)"
+  }
+}

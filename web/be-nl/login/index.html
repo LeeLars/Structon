@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inloggen - Structon B2B Klantportaal">
+  <title>Inloggen | Structon</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/pages/login.css">
+
+  <!-- Hreflang tags for multilanguage SEO -->
+  <link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/login/">
+  <link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/login/">
+  <link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/login/">
+  <link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/login/">
+  <link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/login/">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="login-header">
+        <a href="../index.html" class="logo">
+          <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon Logo" class="logo-image">
+        </a>
+        <h1 class="login-title">Klant Login</h1>
+        <p class="login-subtitle">Log in om prijzen te bekijken en bestellingen te plaatsen.</p>
+      </div>
+
+      <!-- Alert Container -->
+      <div id="login-alert" class="alert" style="display: none;"></div>
+
+      <form class="login-form" id="login-form">
+        <div class="form-group">
+          <label for="email" class="form-label">E-mailadres</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            placeholder="uw@email.nl"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Wachtwoord</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="form-input" 
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" id="login-submit">
+          <span class="btn-text">Inloggen</span>
+          <span class="btn-loading" style="display: none;">
+            <span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span>
+          </span>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <a href="#" id="forgot-password-link">Wachtwoord vergeten?</a>
+      </div>
+
+      <div class="login-info">
+        <p>
+          <strong>Nog geen klant?</strong><br>
+          Neem contact met ons op om een account aan te vragen.
+        </p>
+        <a href="/contact/" class="btn btn-secondary btn-sm">Contact Opnemen</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal" id="forgot-password-modal" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <h2 class="modal-title">Wachtwoord Vergeten</h2>
+      <p class="modal-text">
+        Voer uw e-mailadres in en wij sturen u een link om uw wachtwoord opnieuw in te stellen.
+      </p>
+      
+      <div id="forgot-alert" class="alert" style="display: none;"></div>
+      
+      <form id="forgot-password-form">
+        <div class="form-group">
+          <label for="forgot-email" class="form-label">E-mailadres</label>
+          <input 
+            type="email" 
+            id="forgot-email" 
+            name="email" 
+            class="form-input" 
+            placeholder="uw@email.nl"
+            required
+          >
+        </div>
+        <button type="submit" class="btn btn-primary">Verstuur Link</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="../../assets/js/pages/login.js"></script>
+</body>
+</html>

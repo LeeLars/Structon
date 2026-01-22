@@ -1,0 +1,116 @@
+{
+  "locale": "be-fr",
+  "lang": "fr",
+  "region": "BE",
+  "name": "Français (Belgique)",
+  "flag": "🇧🇪",
+  
+  "meta": {
+    "title_suffix": "| Structon Belgique",
+    "site_name": "Structon",
+    "description": "Godets et accessoires pour pelles mécaniques. Production belge, livraison rapide.",
+    "keywords": "godet, godet tranchée, godet de terrassement, grappin de tri, raccord CW"
+  },
+  
+  "nav": {
+    "home": "Accueil",
+    "products": "Produits",
+    "all_products": "Tous les Produits",
+    "graafbakken": "Godets",
+    "slotenbakken": "Godets tranchée",
+    "sloop_sorteergrijpers": "Grappins de tri et démolition",
+    "overige": "Autres",
+    "contact": "Contact",
+    "about": "À propos",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "configurator": "Configurateur",
+    "dealer": "Devenir revendeur",
+    "login": "Connexion",
+    "account": "Mon compte",
+    "cart": "Panier",
+    "quote": "Demander un devis"
+  },
+  
+  "common": {
+    "read_more": "Lire la suite",
+    "view_all": "Voir tout",
+    "view_products": "Voir les produits",
+    "add_to_cart": "Ajouter au panier",
+    "request_quote": "Demander un devis",
+    "contact_us": "Contactez-nous",
+    "learn_more": "En savoir plus",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "search_placeholder": "Rechercher des produits...",
+    "loading": "Chargement...",
+    "no_results": "Aucun résultat trouvé",
+    "in_stock": "En stock",
+    "out_of_stock": "Rupture de stock",
+    "price_on_request": "Prix sur demande",
+    "from": "À partir de",
+    "incl_vat": "TVA incl.",
+    "excl_vat": "hors TVA"
+  },
+  
+  "hero": {
+    "badge": "Production Belge",
+    "title": "GODETS & ACCESSOIRES",
+    "subtitle": "Godets professionnels, godets tranchée et grappins de tri. Fabriqués en Belgique, livrés dans le Benelux.",
+    "cta_primary": "Voir notre boutique",
+    "cta_secondary": "Demander un devis"
+  },
+  
+  "categories": {
+    "graafbakken": {
+      "title": "Godets",
+      "description": "Godets professionnels pour tous travaux de terrassement"
+    },
+    "sloop_sorteergrijpers": {
+      "title": "Grappins de tri & démolition",
+      "description": "Grappins robustes pour démolition et recyclage"
+    },
+    "overige": {
+      "title": "Autres",
+      "description": "Accessoires spécialisés"
+    }
+  },
+  
+  "usp": {
+    "title": "QU'EST-CE QUI REND STRUCTON UNIQUE?",
+    "intro": "Nous fabriquons des godets pour pelles mécaniques de toutes marques. Alors, avec quelle pelle travaillez-vous? Une Case, une Hitachi, une Volvo... Peu importe la marque, nous fabriquons votre godet! Nous le faisons entièrement nous-mêmes à Beernem.",
+    "description": "Via notre boutique en ligne, vous pouvez facilement trouver le godet parfait pour votre pelle mécanique. Et en ajoutant simplement le bon godet à votre panier, il peut être livré chez vous ou à votre entrepôt!"
+  },
+  
+  "contact": {
+    "title": "CONTACT",
+    "subtitle": "Contactez-nous",
+    "name": "Nom",
+    "email": "Adresse e-mail",
+    "phone": "Numéro de téléphone",
+    "company": "Nom de l'entreprise",
+    "message": "Message",
+    "send": "Envoyer",
+    "success": "Merci pour votre message! Nous vous contacterons dès que possible.",
+    "error": "Une erreur s'est produite. Veuillez réessayer.",
+    "address_title": "Adresse",
+    "phone_title": "Téléphone",
+    "email_title": "E-mail"
+  },
+  
+  "footer": {
+    "tagline": "Spécialiste en godets et accessoires pour pelles mécaniques.",
+    "copyright": "© 2024 Structon. Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "sitemap": "Plan du site",
+    "made_by": "Réalisé par"
+  },
+  
+  "language_switcher": {
+    "title": "Langue",
+    "current": "Français (Belgique)"
+  }
+}

@@ -217,3 +217,114 @@
     display: none; /* Hide mega menu on mobile, use mobile nav instead */
   }
 }
+
+/* ============================================
+   LANGUAGE SWITCHER
+   ============================================ */
+.language-switcher {
+  position: relative;
+  margin-right: 16px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-gray-900);
+  transition: all 0.2s ease;
+}
+
+.lang-toggle:hover {
+  border-color: var(--color-primary);
+  background: #f8fafb;
+}
+
+.lang-flag {
+  font-size: 16px;
+}
+
+.lang-code {
+  font-weight: 500;
+}
+
+.lang-arrow {
+  font-size: 10px;
+  opacity: 0.6;
+  transition: transform 0.2s ease;
+}
+
+.lang-dropdown.active + .lang-toggle .lang-arrow,
+.language-switcher:has(.lang-dropdown.active) .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+  z-index: 1001;
+}
+
+.lang-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  color: var(--color-gray-900);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s ease;
+}
+
+.lang-dropdown a:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.lang-dropdown a:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.lang-dropdown a:hover {
+  background: #f3f4f6;
+}
+
+.lang-dropdown a.active {
+  background: #f0f9ff;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    margin-right: 8px;
+  }
+  
+  .lang-toggle {
+    padding: 6px 10px;
+  }
+  
+  .lang-code {
+    display: none;
+  }
+}

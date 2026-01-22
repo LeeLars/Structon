@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lees onze blog over kraanbakken, graafmachines en tips voor de bouwsector.">
+  <title>Blog | Structon</title>
+  
+  <!-- Fonts - Custom Arthouse -->
+  <link rel="preload" href="../../assets/css/fonts.css" as="style">
+  <link rel="stylesheet" href="../../assets/css/fonts.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../assets/css/global.css?v=6">
+  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../../assets/css/pages/blog.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../../assets/images/static/favicon.svg">
+
+  <!-- Hreflang tags for multilanguage SEO -->
+  <link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/blog/">
+  <link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/blog/">
+  <link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/blog/">
+  <link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/blog/">
+  <link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/blog/">
+</head>
+<body>
+  <!-- Header Wrapper (Sticky) -->
+  <!-- Header loaded dynamically -->
+  <div id="header-placeholder"></div>
+<!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Kruimelpad">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <span aria-current="page">Blog</span>
+      </nav>
+      
+      <div class="page-hero-content">
+        <div class="page-hero-text">
+          <h1 class="page-title">Blog</h1>
+          <p class="page-subtitle">Nieuws, tips en inzichten uit de wereld van kraanbakken en graafmachines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <main class="blog-section" style="padding: var(--space-12) 0;">
+    <div class="container">
+      <div class="blog-grid" id="blog-grid">
+        <!-- Blog posts loaded via JS -->
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <p>Artikelen laden...</p>
+        </div>
+      </div>
+      
+      <!-- Empty State (Hidden by default) -->
+      <div id="blog-empty-state" style="display: none; text-align: center; padding: 4rem 0;">
+        <h3>Nog geen artikelen</h3>
+        <p style="color: var(--color-gray-600); margin-top: 1rem;">Er zijn momenteel nog geen blogartikelen beschikbaar. Kom later terug voor updates!</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <a href="../index.html" class="footer-logo">
+            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" width="120">
+          </a>
+          <p class="footer-tagline">
+            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
+          </p>
+        </div>
+
+        <div class="footer-sitemap-col">
+          <ul id="footer-sitemap" class="sitemap-grid">
+            <li class="sitemap-loading">Navigatie laden...</li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4 class="footer-heading">Contact</h4>
+          <address class="footer-address">
+            <p><strong>Structon</strong></p>
+            <p>Industrieweg 123</p>
+            <p>8730 Beernem, België</p>
+            <p class="mt-2"><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
+            <p><a href="mailto:info@structon.be">info@structon.be</a></p>
+          </address>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
+          <div class="legal-links">
+            <a href="../sitemap-pagina/">Sitemap</a>
+            <span class="separator">•</span>
+            <a href="../privacy/">Privacy</a>
+            <span class="separator">•</span>
+            <a href="../voorwaarden/">Voorwaarden</a>
+          </div>
+        </div>
+        
+        <div class="footer-creator">
+          <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
+          <span class="creator-separator">•</span>
+          <a href="https://structon-production.up.railway.app/cms/" class="cms-lock-link" target="_blank" rel="noopener" title="CMS Login">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/components/header-loader.js"></script>
+  <script type="module" src="../../assets/js/pages/blog.js"></script>
+  <script src="../../assets/js/components/login-modal.js"></script>
+</body>
+</html>

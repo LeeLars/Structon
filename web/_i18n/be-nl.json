@@ -1,0 +1,116 @@
+{
+  "locale": "be-nl",
+  "lang": "nl",
+  "region": "BE",
+  "name": "Nederlands (België)",
+  "flag": "🇧🇪",
+  
+  "meta": {
+    "title_suffix": "| Structon België",
+    "site_name": "Structon",
+    "description": "Kraanbakken en graafmachine aanbouwdelen. Belgische productie, snelle levering.",
+    "keywords": "kraanbak, slotenbak, graafbak, sorteergrijper, CW-aansluiting"
+  },
+  
+  "nav": {
+    "home": "Home",
+    "products": "Producten",
+    "all_products": "Alle Producten",
+    "graafbakken": "Graafbakken",
+    "slotenbakken": "Slotenbakken",
+    "sloop_sorteergrijpers": "Sloop- en sorteergrijpers",
+    "overige": "Overige",
+    "contact": "Contact",
+    "about": "Over ons",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "configurator": "Configurator",
+    "dealer": "Dealer worden",
+    "login": "Inloggen",
+    "account": "Mijn account",
+    "cart": "Winkelwagen",
+    "quote": "Offerte aanvragen"
+  },
+  
+  "common": {
+    "read_more": "Lees meer",
+    "view_all": "Bekijk alles",
+    "view_products": "Bekijk aanbod",
+    "add_to_cart": "In winkelwagen",
+    "request_quote": "Offerte aanvragen",
+    "contact_us": "Neem contact op",
+    "learn_more": "Meer info",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "search": "Zoeken",
+    "search_placeholder": "Zoek producten...",
+    "loading": "Laden...",
+    "no_results": "Geen resultaten gevonden",
+    "in_stock": "Op voorraad",
+    "out_of_stock": "Niet op voorraad",
+    "price_on_request": "Prijs op aanvraag",
+    "from": "Vanaf",
+    "incl_vat": "incl. BTW",
+    "excl_vat": "excl. BTW"
+  },
+  
+  "hero": {
+    "badge": "Belgische Productie",
+    "title": "KRAANBAKKEN & AANBOUWDELEN",
+    "subtitle": "Professionele graafbakken, slotenbakken en sorteergrijpers. Vervaardigd in België, geleverd in de Benelux.",
+    "cta_primary": "Bekijk onze webshop",
+    "cta_secondary": "Offerte aanvragen"
+  },
+  
+  "categories": {
+    "graafbakken": {
+      "title": "Graafbakken",
+      "description": "Professionele graafbakken voor alle grondwerkzaamheden"
+    },
+    "sloop_sorteergrijpers": {
+      "title": "Sloop & Sorteergrijpers",
+      "description": "Robuuste grijpers voor afbraak en recycling"
+    },
+    "overige": {
+      "title": "Overige",
+      "description": "Gespecialiseerde aanbouwdelen"
+    }
+  },
+  
+  "usp": {
+    "title": "WAT MAAKT STRUCTON UNIEK?",
+    "intro": "We maken kraanbakken voor graafmachines van eender welk merk. Dus met welke graafmachine werk jij? Een Case kraan, een Hitachi kraan, een Volvo kraan,... Het maakt niet uit welk merk, wij maken jullie graafbak! We doen dit volledig zelf in Beernem.",
+    "description": "Via onze webshop kan je zo eenvoudig mogelijk op zoek gaan naar de perfecte kraanbak voor jullie graafmachine. En door simpelweg de juiste kraanbak in jullie winkelmandje te doen kan de kraanbak bij jullie thuis of aan de loods geleverd worden!"
+  },
+  
+  "contact": {
+    "title": "CONTACT",
+    "subtitle": "Neem contact met ons op",
+    "name": "Naam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "company": "Bedrijfsnaam",
+    "message": "Bericht",
+    "send": "Verstuur",
+    "success": "Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.",
+    "error": "Er is iets misgegaan. Probeer het opnieuw.",
+    "address_title": "Adres",
+    "phone_title": "Telefoon",
+    "email_title": "E-mail"
+  },
+  
+  "footer": {
+    "tagline": "Specialist in kraanbakken en graafmachine aanbouwdelen.",
+    "copyright": "© 2024 Structon. Alle rechten voorbehouden.",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden",
+    "sitemap": "Sitemap",
+    "made_by": "Gemaakt door"
+  },
+  
+  "language_switcher": {
+    "title": "Taal",
+    "current": "Nederlands (België)"
+  }
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Kennisbank | Alles over Kraanbakken & Graafmachines | Structon</title>
+  <meta name="description" content="Kennisbank over kraanbakken, CW-aansluitingen en graafmachine aanbouwdelen. Handige artikelen en gidsen voor professionals.">
+  <meta name="keywords" content="kennisbank kraanbakken, CW aansluiting uitleg, graafbak kiezen, slotenbak vs dieplepelbak">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://structon.be/kennisbank/">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kennisbank | Structon">
+  <meta property="og:description" content="Alles wat je moet weten over kraanbakken en graafmachine aanbouwdelen.">
+  <meta property="og:url" content="https://structon.be/kennisbank/">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
+  
+  <style>
+    .kb-hero {
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+      color: white;
+      padding: var(--space-16) 0;
+    }
+    
+    .kb-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-4);
+    }
+    
+    .kb-hero p {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+    
+    .kb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    
+    .kb-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .kb-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .kb-card-image {
+      height: 180px;
+      background: var(--color-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .kb-card-image svg {
+      width: 64px;
+      height: 64px;
+      color: var(--color-primary);
+    }
+    
+    .kb-card-content {
+      padding: var(--space-6);
+    }
+    
+    .kb-card-category {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      color: var(--color-primary);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+    
+    .kb-card-title {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-2);
+      color: var(--color-gray-900);
+    }
+    
+    .kb-card-excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-gray-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+    
+    .kb-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    
+    .kb-card-link svg {
+      transition: transform 0.2s ease;
+    }
+    
+    .kb-card:hover .kb-card-link svg {
+      transform: translateX(4px);
+    }
+    
+    .kb-categories {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-top: var(--space-6);
+    }
+    
+    .kb-category-tag {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-gray-100);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--color-gray-700);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    
+    .kb-category-tag:hover {
+      background: var(--color-primary);
+      color: white;
+    }
+  </style>
+
+  <!-- Hreflang tags for multilanguage SEO -->
+  <link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/kennisbank/">
+  <link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/kennisbank/">
+  <link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/kennisbank/">
+  <link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/kennisbank/">
+  <link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/kennisbank/">
+</head>
+<body>
+  <!-- Header loaded dynamically -->
+  <div id="header-placeholder"></div>
+
+<main>
+    <section class="kb-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Kruimelpad" style="margin-bottom: var(--space-4);">
+          <a href="/" style="color: rgba(255,255,255,0.8);">Home</a>
+          <span style="color: rgba(255,255,255,0.5);">/</span>
+          <span style="color: white;">Kennisbank</span>
+        </nav>
+        <h1>KENNISBANK</h1>
+        <p>
+          Alles wat je moet weten over kraanbakken, CW-aansluitingen en graafmachine aanbouwdelen. 
+          Praktische gidsen en artikelen voor professionals.
+        </p>
+        
+        <div class="kb-categories">
+          <a href="#aansluitingen" class="kb-category-tag">Aansluitingen</a>
+          <a href="#bakken" class="kb-category-tag">Bakken Vergelijken</a>
+          <a href="#onderhoud" class="kb-category-tag">Onderhoud</a>
+          <a href="#keuzehulp" class="kb-category-tag">Keuzehulp</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--color-gray-50);">
+      <div class="container">
+        <h2 class="section-title">POPULAIRE ARTIKELEN</h2>
+        
+        <div class="kb-grid">
+          
+          <a href="/kennisbank/wat-is-een-cw-aansluiting/" class="kb-card" id="aansluitingen">
+            <div class="kb-card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div class="kb-card-content">
+              <span class="kb-card-category">Aansluitingen</span>
+              <h3 class="kb-card-title">Wat is een CW-Aansluiting?</h3>
+              <p class="kb-card-excerpt">
+                Alles over CW-snelwissels: van CW00 tot CW40. Welke past bij jouw graafmachine en hoe werkt het systeem?
+              </p>
+              <span class="kb-card-link">
+                Lees artikel
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+          
+          <a href="/kennisbank/slotenbak-vs-dieplepelbak/" class="kb-card" id="bakken">
+            <div class="kb-card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </div>
+            <div class="kb-card-content">
+              <span class="kb-card-category">Bakken Vergelijken</span>
+              <h3 class="kb-card-title">Slotenbak vs Dieplepelbak</h3>
+              <p class="kb-card-excerpt">
+                Wat is het verschil tussen een slotenbak en een dieplepelbak? Wanneer kies je welke bak?
+              </p>
+              <span class="kb-card-link">
+                Lees artikel
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+          
+          <a href="/kennisbank/welke-kraanbak-heb-ik-nodig/" class="kb-card" id="keuzehulp">
+            <div class="kb-card-image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="kb-card-content">
+              <span class="kb-card-category">Keuzehulp</span>
+              <h3 class="kb-card-title">Welke Kraanbak Heb Ik Nodig?</h3>
+              <p class="kb-card-excerpt">
+                Een complete gids om de juiste kraanbak te kiezen voor jouw toepassing en graafmachine.
+              </p>
+              <span class="kb-card-link">
+                Lees artikel
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-content text-center">
+          <h2 class="cta-title">VRAAG NIET BEANTWOORD?</h2>
+          <p class="cta-text">
+            Neem contact op met onze specialisten. Wij helpen je graag met advies op maat.
+          </p>
+          <a href="/contact/" class="btn btn-white btn-lg btn-arrow">
+            Contact Opnemen
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col"><h4 class="footer-col-title">Structon</h4><p class="footer-about">Belgische producent van kraanbakken.</p></div>
+        <div class="footer-col"><h4 class="footer-col-title">Producten</h4><nav class="footer-links"><a href="/kraanbakken/" class="footer-link">Kraanbakken</a><a href="/slotenbakken/" class="footer-link">Slotenbakken</a><a href="/sorteergrijpers/" class="footer-link">Sorteergrijpers</a></nav></div>
+        <div class="footer-col"><h4 class="footer-col-title">Info</h4><nav class="footer-links"><a href="/over-ons/" class="footer-link">Over Ons</a><a href="/contact/" class="footer-link">Contact</a><a href="/faq/" class="footer-link">FAQ</a></nav></div>
+        <div class="footer-col"><h4 class="footer-col-title">Contact</h4><p>📞 +32 (0)50 12 34 56</p><p>✉️ info@structon.be</p></div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2024 Structon. Alle rechten voorbehouden.</p>
+        <nav class="footer-legal">
+          <a href="../privacy/">Privacy</a>
+          <a href="../voorwaarden/">Voorwaarden</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/components/header-loader.js"></script>
+  <script type="module" src="../../assets/js/main.js"></script>
+</body>
+</html>

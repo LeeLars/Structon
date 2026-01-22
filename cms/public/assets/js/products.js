@@ -627,15 +627,23 @@ function openProductModal(product = null) {
   // Uncheck all tonnage checkboxes
   document.querySelectorAll('input[name="tonnage"]').forEach(cb => cb.checked = false);
   
+  // Always initialize uploadedImages array
+  window.uploadedImages = [];
+  
+  // Clear any existing image previews
+  const previewContainer = document.getElementById('image-preview-container');
+  if (previewContainer) {
+    previewContainer.innerHTML = '';
+    previewContainer.style.display = 'none';
+  }
+  
   if (product) {
     title.textContent = 'Product Bewerken';
-    populateForm(product);
     editingProductId = product.id;
+    populateForm(product);
   } else {
     title.textContent = 'Nieuw Product';
     editingProductId = null;
-    // Initialize empty images array for new product
-    window.uploadedImages = [];
     // Set default active state
     document.getElementById('product-active').checked = true;
   }
@@ -747,11 +755,27 @@ function populateForm(product) {
     }
   }
   
-  // Set existing images
-  if (product.cloudinary_images && product.cloudinary_images.length > 0) {
-    window.uploadedImages = product.cloudinary_images;
-    renderImagePreviews();
+  // Set existing images (handle both array and JSON string from database)
+  let images = product.cloudinary_images || [];
+  
+  // Parse if it's a JSON string
+  if (typeof images === 'string') {
+    try {
+      images = JSON.parse(images);
+    } catch (e) {
+      console.warn('Could not parse cloudinary_images:', e);
+      images = [];
+    }
   }
+  
+  // Ensure it's an array
+  if (!Array.isArray(images)) {
+    images = [];
+  }
+  
+  window.uploadedImages = images;
+  renderImagePreviews();
+  console.log('📷 Loaded', images.length, 'existing images for product');
 
   // Ensure change events during populate don't trigger autosave
   setTimeout(() => {
@@ -983,12 +1007,17 @@ async function handleImageSelect(e) {
 function renderImagePreviews() {
   // Get the preview container (exists in HTML)
   const previewContainer = document.getElementById('image-preview-container');
-  if (!previewContainer) return;
+  if (!previewContainer) {
+    console.warn('⚠️ image-preview-container not found');
+    return;
+  }
   
   // Clear existing previews
   previewContainer.innerHTML = '';
   
   const images = window.uploadedImages || [];
+  
+  console.log('🖼️ renderImagePreviews called with', images.length, 'images');
   
   // Hide container if no images
   if (images.length === 0) {
@@ -996,7 +1025,7 @@ function renderImagePreviews() {
     return;
   }
   
-  // Show container
+  // Show container with grid layout
   previewContainer.style.display = 'grid';
   
   images.forEach((img, index) => {

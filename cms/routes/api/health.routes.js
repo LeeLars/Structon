@@ -388,6 +388,46 @@ router.get('/debug/cloudinary', async (req, res) => {
   });
 });
 
+// Test cloudinary upload with a tiny test image
+router.get('/debug/cloudinary-test', async (req, res) => {
+  const { env } = await import('../../config/env.js');
+  const { v2: cloudinary } = await import('cloudinary');
+  
+  // Configure cloudinary
+  cloudinary.config({
+    cloud_name: env.cloudinary.cloudName,
+    api_key: env.cloudinary.apiKey,
+    api_secret: env.cloudinary.apiSecret
+  });
+  
+  try {
+    // Upload a tiny 1x1 pixel test image (base64 encoded PNG)
+    const testImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    
+    const result = await cloudinary.uploader.upload(testImage, {
+      folder: 'structon/test',
+      public_id: 'test-upload-' + Date.now()
+    });
+    
+    // Delete the test image immediately
+    await cloudinary.uploader.destroy(result.public_id);
+    
+    res.json({
+      success: true,
+      message: 'Cloudinary upload test successful!',
+      testUrl: result.secure_url
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      error: error.message,
+      errorName: error.name,
+      httpCode: error.http_code,
+      details: JSON.stringify(error)
+    });
+  }
+});
+
 // Debug product creation endpoint
 router.post('/debug/test-product', async (req, res) => {
   try {

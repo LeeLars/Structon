@@ -124,22 +124,32 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res) 
       count: images.length
     });
   } catch (error) {
-    console.error('❌ Image upload error:', error.message);
+    console.error('❌ Image upload error:', error);
+    console.error('❌ Error details:', {
+      message: error.message,
+      name: error.name,
+      http_code: error.http_code,
+      stack: error.stack?.split('\n').slice(0, 5)
+    });
     
-    // Return user-friendly error
+    // Return detailed error for debugging
     let errorMessage = 'Er is een fout opgetreden bij het uploaden.';
+    let errorDetails = error.message || 'Unknown error';
     
-    if (error.message?.includes('Invalid')) {
+    if (error.message?.includes('Invalid') || error.message?.includes('invalid')) {
       errorMessage = 'Ongeldige Cloudinary configuratie. Controleer de API credentials.';
-    } else if (error.message?.includes('File size')) {
+    } else if (error.message?.includes('File size') || error.message?.includes('too large')) {
       errorMessage = 'Bestand is te groot. Maximum is 5MB.';
-    } else if (error.http_code === 401) {
+    } else if (error.http_code === 401 || error.message?.includes('401')) {
       errorMessage = 'Cloudinary authenticatie mislukt. Controleer API key en secret.';
+    } else if (error.message?.includes('Must supply')) {
+      errorMessage = 'Cloudinary configuratie ontbreekt. Controleer environment variabelen.';
     }
     
     return res.status(500).json({
       error: errorMessage,
-      details: error.message
+      details: errorDetails,
+      cloudinaryConfigured: isCloudinaryConfigured()
     });
   }
 });

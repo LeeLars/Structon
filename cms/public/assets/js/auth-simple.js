@@ -219,8 +219,12 @@ class SimpleAuth {
       }
 
       if (!response.ok) {
-        // Extract meaningful error message
-        const errorMsg = data.message || data.error || 'Upload failed';
+        // Extract meaningful error message with details
+        let errorMsg = data.error || data.message || 'Upload failed';
+        if (data.details) {
+          errorMsg += ` (${data.details})`;
+        }
+        console.error('Upload failed:', { status: response.status, data });
         throw new Error(errorMsg);
       }
 

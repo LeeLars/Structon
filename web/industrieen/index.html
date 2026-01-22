@@ -1,293 +1,50 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta Tags -->
-  <title>Kraanbakken per Industrie | Structon</title>
-  <meta name="description" content="Kraanbakken voor elke industrie. Grondwerkers, sloopbedrijven, tuinaanleggers, wegenbouw, recycling, verhuur, loonwerk en baggerwerken. Belgische kwaliteit.">
-  <meta name="keywords" content="kraanbak industrie, graafbak sector, slotenbak bedrijf, kraanbak per branche">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://structon.be/industrieen/">
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Kraanbakken per Industrie | Structon">
-  <meta property="og:description" content="Kraanbakken voor elke industrie. Belgische kwaliteit.">
-  <meta property="og:url" content="https://structon.be/industrieen/">
-  
-  <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/global.css">
-  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
-  <link rel="stylesheet" href="../assets/css/pages/category.css">
-  <link rel="stylesheet" href="../assets/css/pages/industry.css">
-  
-  <style>
-    .industries-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-8);
-    }
-    
-    .industry-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: var(--space-6);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-    
-    .industry-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .industry-card-icon {
-      width: 48px;
-      height: 48px;
-      color: var(--color-primary);
-      margin-bottom: var(--space-4);
-    }
-    
-    .industry-card-title {
-      font-size: var(--text-xl);
-      margin-bottom: var(--space-2);
-    }
-    
-    .industry-card-text {
-      font-size: var(--text-sm);
-      color: var(--color-gray-600);
-      margin-bottom: var(--space-4);
-      line-height: 1.6;
-    }
-    
-    .industry-card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      font-size: var(--text-sm);
-      font-weight: 600;
-      color: var(--color-primary);
-    }
-    
-    .industry-card-link svg {
-      transition: transform 0.2s ease;
-    }
-    
-    .industry-card:hover .industry-card-link svg {
-      transform: translateX(4px);
-    }
-  </style>
+  <meta name="robots" content="noindex, nofollow">
+  <title>Redirecting...</title>
+  <script>
+    (function() {
+      var locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+      var defaultLocale = 'be-nl';
+      var targetPage = 'industrieen/';
+      
+      function getStoredLocale() {
+        try {
+          var stored = localStorage.getItem('structon_locale');
+          if (stored && locales.indexOf(stored) !== -1) return stored;
+        } catch (e) {}
+        return null;
+      }
+      
+      function detectLocale() {
+        var languages = navigator.languages || [navigator.language || ''];
+        var mapping = {
+          'nl-be': 'be-nl', 'nl-nl': 'nl-nl', 'nl': 'be-nl',
+          'fr-be': 'be-fr', 'fr': 'be-fr',
+          'de-de': 'de-de', 'de': 'de-de',
+          'en': 'be-nl'
+        };
+        for (var i = 0; i < languages.length; i++) {
+          var lang = languages[i].toLowerCase();
+          if (mapping[lang]) return mapping[lang];
+          var langOnly = lang.split('-')[0];
+          if (mapping[langOnly]) return mapping[langOnly];
+        }
+        return defaultLocale;
+      }
+      
+      var locale = getStoredLocale() || detectLocale();
+      var basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+      window.location.replace(basePath + locale + '/' + targetPage);
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/be-nl/industrieen/">
+  </noscript>
 </head>
 <body>
-  <!-- Header Wrapper (Sticky) -->
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
-
-<main>
-    <section class="page-header" style="background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-200) 100%); padding: var(--space-12) 0;">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
-          <a href="../../">Home</a><span>/</span><span aria-current="page">Industrieën</span>
-        </nav>
-        <h1 class="page-title">Kraanbakken per Industrie</h1>
-        <p class="page-subtitle" style="max-width: 700px;">
-          Elke sector heeft specifieke behoeften. Ontdek welke kraanbakken het beste passen 
-          bij uw industrie. Van grondwerk tot recycling, van tuinaanleg tot baggerwerk.
-        </p>
-      </div>
-    </section>
-
-    <section class="section" style="background: var(--color-gray-50);">
-      <div class="container">
-        <div class="industries-grid">
-          
-          <a href="../grondwerkers/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16"/>
-            </svg>
-            <h2 class="industry-card-title">Grondwerkers</h2>
-            <p class="industry-card-text">
-              Graafbakken, slotenbakken en rioolbakken voor grondverzet en uitgraafwerk. 
-              Hardox kwaliteit voor dagelijks intensief gebruik.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../afbraak-sloop/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-              <polyline points="17 21 17 13 7 13 7 21"/>
-            </svg>
-            <h2 class="industry-card-title">Afbraak & Sloop</h2>
-            <p class="industry-card-text">
-              Sorteergrijpers, puinbakken en sloophamers voor demolition werk. 
-              Extra versterkte constructie voor de zwaarste klussen.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../tuinaanleggers/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 22c4-4 8-7.5 8-12a8 8 0 1 0-16 0c0 4.5 4 8 8 12z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <h2 class="industry-card-title">Tuinaanleggers</h2>
-            <p class="industry-card-text">
-              Compacte graafbakken en slotenbakken voor tuinaanleg en groenvoorziening. 
-              Lichtgewicht constructie voor minigravers.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../wegenbouw/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
-              <line x1="4" y1="22" x2="4" y2="15"/>
-            </svg>
-            <h2 class="industry-card-title">Wegenbouw</h2>
-            <p class="industry-card-text">
-              Graafbakken, slotenbakken en rioolbakken voor infrastructuurprojecten. 
-              Robuust materiaal voor wegenbouw en nutsvoorzieningen.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../recycling/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-              <line x1="12" y1="22.08" x2="12" y2="12"/>
-            </svg>
-            <h2 class="industry-card-title">Recycling</h2>
-            <p class="industry-card-text">
-              Sorteergrijpers, zeefbakken en puinbakken voor afvalverwerking. 
-              Bestand tegen abrasieve materialen en intensief gebruik.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../verhuur/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="1" y="3" width="15" height="13"/>
-              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-              <circle cx="5.5" cy="18.5" r="2.5"/>
-              <circle cx="18.5" cy="18.5" r="2.5"/>
-            </svg>
-            <h2 class="industry-card-title">Verhuurbedrijven</h2>
-            <p class="industry-card-text">
-              Duurzame bakken voor uw verhuurvloot. Extra versterkt voor wisselende 
-              operators. Volumekorting bij grotere afnames.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../loonwerk-landbouw/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 22c4-4 8-7.5 8-12a8 8 0 1 0-16 0c0 4.5 4 8 8 12z"/>
-              <path d="M12 2v4M12 18v4"/>
-            </svg>
-            <h2 class="industry-card-title">Loonwerk & Landbouw</h2>
-            <p class="industry-card-text">
-              Veelzijdige bakken voor agrarisch werk. Van drainage tot mestputten. 
-              Robuust en betrouwbaar voor loonwerkers.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-          <a href="../baggerwerken/" class="industry-card">
-            <svg class="industry-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M2 12h20"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-            <h2 class="industry-card-title">Baggerwerken</h2>
-            <p class="industry-card-text">
-              Baggerbakken en slotenbakken voor waterbouw. Extra grote inhoud met 
-              optionele perforatie voor waterafvoer.
-            </p>
-            <span class="industry-card-link">
-              Bekijk producten
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </a>
-          
-        </div>
-      </div>
-    </section>
-
-    <section class="section industry-cta-section">
-      <div class="container">
-        <div class="cta-content text-center">
-          <h2 class="cta-title">Uw Industrie Niet Gevonden?</h2>
-          <p class="cta-text">
-            Neem contact op met onze specialisten. Wij adviseren u graag over de juiste bakken voor uw specifieke toepassing.
-          </p>
-          <a href="/contact/" class="btn btn-white btn-lg btn-arrow">
-            Contact Opnemen
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col"><h4 class="footer-col-title">Structon</h4><p class="footer-about">Belgische producent van kraanbakken.</p></div>
-        <div class="footer-col"><h4 class="footer-col-title">Producten</h4><nav class="footer-links"><a href="/kraanbakken/" class="footer-link">Kraanbakken</a><a href="/slotenbakken/" class="footer-link">Slotenbakken</a><a href="/sorteergrijpers/" class="footer-link">Sorteergrijpers</a></nav></div>
-        <div class="footer-col"><h4 class="footer-col-title">Industrieën</h4><nav class="footer-links"><a href="../grondwerkers/" class="footer-link">Grondwerkers</a><a href="../wegenbouw/" class="footer-link">Wegenbouw</a><a href="../afbraak-sloop/" class="footer-link">Afbraak & Sloop</a></nav></div>
-        <div class="footer-col"><h4 class="footer-col-title">Contact</h4><p>📞 +32 (0)9 123 45 67</p><p>✉️ info@structon.be</p></div>
-      </div>
-      <div class="footer-bottom"><p class="footer-copyright">© 2024 Structon. Alle rechten voorbehouden.</p></div>
-    </div>
-  </footer>
-
-  <script type="module" src="../assets/js/main.js"></script>
-  <script src="../assets/js/components/header-loader.js"></script>
+  <p>Redirecting...</p>
 </body>
 </html>

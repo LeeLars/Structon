@@ -1,412 +1,50 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta Tags -->
-  <title>Kraanbak voor Hyundai | Graafbakken Hyundai Graafmachine | Structon</title>
-  <meta name="description" content="Kraanbak voor Hyundai graafmachine? Structon levert graafbakken passend voor alle Hyundai HX modellen. ✓ CW-aansluiting ✓ Hardox staal">
-  <meta name="keywords" content="kraanbak hyundai, graafbak hyundai, slotenbak hyundai, kraanbak HX220, kraanbak HX300">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://structon.be/kraanbakken/hyundai/">
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Kraanbak voor Hyundai | Structon">
-  <meta property="og:description" content="Professionele kraanbakken passend voor Hyundai graafmachines.">
-  <meta property="og:url" content="https://structon.be/kraanbakken/hyundai/">
-  
-  <!-- Fonts -->
-  <link rel="preload" href="../../assets/css/fonts.css" as="style">
-  <link rel="stylesheet" href="../../assets/css/fonts.css">
-  
-  <!-- Styles -->
-  <link rel="stylesheet" href="../../assets/css/global.css?v=8">
-  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
-  <link rel="stylesheet" href="../../assets/css/pages/category.css">
-  <link rel="stylesheet" href="../../assets/css/pages/brand_clean.css">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../../assets/images/static/favicon.svg">
-  
-  <!-- Structured Data: BreadcrumbList -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://structon.be/"},
-      {"@type": "ListItem", "position": 2, "name": "Kraanbakken", "item": "https://structon.be/kraanbakken/"},
-      {"@type": "ListItem", "position": 3, "name": "Hyundai", "item": "https://structon.be/kraanbakken/hyundai/"}
-    ]
-  }
+  <meta name="robots" content="noindex, nofollow">
+  <title>Redirecting...</title>
+  <script>
+    (function() {
+      var locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+      var defaultLocale = 'be-nl';
+      var targetPage = 'kraanbakken/hyundai/';
+      
+      function getStoredLocale() {
+        try {
+          var stored = localStorage.getItem('structon_locale');
+          if (stored && locales.indexOf(stored) !== -1) return stored;
+        } catch (e) {}
+        return null;
+      }
+      
+      function detectLocale() {
+        var languages = navigator.languages || [navigator.language || ''];
+        var mapping = {
+          'nl-be': 'be-nl', 'nl-nl': 'nl-nl', 'nl': 'be-nl',
+          'fr-be': 'be-fr', 'fr': 'be-fr',
+          'de-de': 'de-de', 'de': 'de-de',
+          'en': 'be-nl'
+        };
+        for (var i = 0; i < languages.length; i++) {
+          var lang = languages[i].toLowerCase();
+          if (mapping[lang]) return mapping[lang];
+          var langOnly = lang.split('-')[0];
+          if (mapping[langOnly]) return mapping[langOnly];
+        }
+        return defaultLocale;
+      }
+      
+      var locale = getStoredLocale() || detectLocale();
+      var basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+      window.location.replace(basePath + locale + '/' + targetPage);
+    })();
   </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/be-nl/kraanbakken/hyundai/">
+  </noscript>
 </head>
 <body>
-  <!-- Header Wrapper (Sticky) -->
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
-
-<main data-brand="hyundai">
-    <!-- Clean Hero Section -->
-    <section class="brand-hero-clean">
-      <div class="container">
-        <div class="brand-hero-grid">
-          <div class="brand-hero-content">
-            <nav class="brand-breadcrumbs" aria-label="Kruimelpad">
-              <a href="../../">Home</a>
-              <span style="margin: 0 8px;">/</span>
-              <a href="../">Kraanbakken</a>
-              <span style="margin: 0 8px;">/</span>
-              <span aria-current="page" style="color: var(--color-gray-900); font-weight: 600;">Hyundai</span>
-            </nav>
-            
-            <h1 class="brand-title-large">Kraanbak voor Hyundai</h1>
-            <p class="brand-description">
-              Structon levert hoogwaardige kraanbakken passend voor alle Hyundai graafmachines. HX/HW-serie, focus op onderhoud, comfort, veiligheid, productiviteit.</p>
-          </div>
-          
-          <div class="brand-hero-image-wrapper">
-            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768832040/hyuandai_n9ovee.jpg" alt="Hyundai graafmachine aan het werk" width="800" height="600" loading="lazy">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Banner -->
-    <section class="brand-cta-banner">
-      <div class="container">
-        <div class="brand-cta-content">
-          <div class="brand-cta-text-wrapper">
-            <h2 class="brand-cta-banner-title">Vraag een offerte aan voor uw Hyundai – binnen 24u antwoord</h2>
-            <p class="brand-cta-banner-subtitle">Persoonlijk advies van onze specialisten. Scherpe prijzen voor professionals.</p>
-          </div>
-          <div class="brand-cta-button-wrapper">
-            <a href="../../contact/?brand=hyundai" class="btn-split usp-btn">
-              <span class="btn-split-text">Offerte Aanvragen</span>
-              <span class="btn-split-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Model Selector Section -->
-    <section class="model-selector-section section-white">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Zoek op Hyundai Model</h2>
-          <p class="section-subtitle">HX/HW-serie - Hi MATE telematica</p>
-        </div>
-        
-        <div class="model-cards-grid">
-          <!-- Minigravers -->
-          <div class="model-card">
-            <h3 class="model-card-title">Minigravers (< 10 ton)</h3>
-            <p class="model-card-subtitle">CW05 - CW10 snelwissels</p>
-            <div class="model-buttons">
-              <a href="../../producten/?model=HX10A" class="model-btn" data-tonnage="1.0" data-cw="CW05">HX10A</a>
-              <a href="../../producten/?model=HX17A" class="model-btn" data-tonnage="1.7" data-cw="CW05">HX17A</a>
-              <a href="../../producten/?model=HX19A" class="model-btn" data-tonnage="1.9" data-cw="CW05">HX19A</a>
-              <a href="../../producten/?model=HX27Z" class="model-btn" data-tonnage="2.7" data-cw="CW05">HX27Z</a>
-              <a href="../../producten/?model=HX35A" class="model-btn" data-tonnage="3.5" data-cw="CW05">HX35A</a>
-              <a href="../../producten/?model=HX55A" class="model-btn" data-tonnage="5.5" data-cw="CW10">HX55A</a>
-              <a href="../../producten/?model=HX60A" class="model-btn" data-tonnage="6.0" data-cw="CW10">HX60A</a>
-              <a href="../../producten/?model=HX85A" class="model-btn" data-tonnage="8.5" data-cw="CW10">HX85A</a>
-            </div>
-          </div>
-          
-          <!-- Middenklasse -->
-          <div class="model-card">
-            <h3 class="model-card-title">Middenklasse (10-30 ton)</h3>
-            <p class="model-card-subtitle">CW20 - CW40 snelwissels</p>
-            <div class="model-buttons">
-              <a href="../../producten/?model=HX140L" class="model-btn" data-tonnage="14" data-cw="CW20">HX140L</a>
-              <a href="../../producten/?model=HX160L" class="model-btn" data-tonnage="16" data-cw="CW30">HX160L</a>
-              <a href="../../producten/?model=HX180L" class="model-btn" data-tonnage="18" data-cw="CW30">HX180L</a>
-              <a href="../../producten/?model=HX220L" class="model-btn" data-tonnage="22" data-cw="CW40">HX220L</a>
-              <a href="../../producten/?model=HX300L" class="model-btn" data-tonnage="30" data-cw="CW40">HX300L</a>
-            </div>
-          </div>
-          
-          <!-- Zware Klasse -->
-          <div class="model-card">
-            <h3 class="model-card-title">Zware Klasse (> 30 ton)</h3>
-            <p class="model-card-subtitle">CW45 snelwissels</p>
-            <div class="model-buttons">
-              <a href="../../producten/?model=HX350L" class="model-btn" data-tonnage="35" data-cw="CW45">HX350L</a>
-              <a href="../../producten/?model=HX380L" class="model-btn" data-tonnage="38" data-cw="CW45">HX380L</a>
-            </div>
-          </div>
-          
-          <!-- Mobiel -->
-          <div class="model-card">
-            <h3 class="model-card-title">Mobiel</h3>
-            <p class="model-card-subtitle">CW30 snelwissels</p>
-            <div class="model-buttons">
-              <a href="../../producten/?model=HW160" class="model-btn" data-tonnage="16" data-cw="CW30">HW160</a>
-              <a href="../../producten/?model=HW170" class="model-btn" data-tonnage="17" data-cw="CW30">HW170</a>
-            </div>
-          </div>
-        
-        
-        </div>
-      </div>
-    </section>
-
-    <!-- Category Filter Bar (Sticky) -->
-    <div class="category-bar-wrapper">
-      <div class="container">
-        <div class="category-pills">
-          <button class="category-pill active" data-category="graafbakken">
-            Graafbakken <span class="pill-count" id="count-graafbakken">-</span>
-          </button>
-          <button class="category-pill" data-category="slotenbakken">
-            Slotenbakken <span class="pill-count" id="count-slotenbakken">-</span>
-          </button>
-          <button class="category-pill" data-category="rioolbakken">
-            Rioolbakken <span class="pill-count" id="count-rioolbakken">-</span>
-          </button>
-          <button class="category-pill" data-category="sorteergrijpers">
-            Sorteergrijpers <span class="pill-count" id="count-sorteergrijpers">-</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Products Section -->
-    <section class="section-gray brand-products-section">
-      <div class="container products-container">
-        <!-- Category Intro Box -->
-        <div class="category-description-box" id="category-intro">
-          <h3 class="category-description-title">Graafbakken voor Hyundai</h3>
-          <p class="category-description-text">
-            Professionele graafbakken voor alle grondwerkzaamheden met uw Hyundai graafmachine. 
-            Van lichte tuinwerkzaamheden tot zware grondverzet projecten. Alle bakken zijn vervaardigd 
-            met Hardox 450 slijtplaten voor maximale levensduur.
-          </p>
-        </div>
-        
-        <!-- Filter Summary & Results -->
-        <div id="filter-summary" style="margin-bottom: 20px;"></div>
-        
-        <!-- Products Grid -->
-        <div class="products-list" id="products-grid">
-          <div class="loading">
-            <div class="spinner"></div>
-          </div>
-        </div>
-        
-        <!-- Pagination -->
-        <div class="pagination" id="pagination" style="margin-top: 40px;"></div>
-      </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="brand-benefits">
-      <div class="container">
-        <h2 class="section-title text-center">Waarom Structon voor Hyundai?</h2>
-        
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            <h3 class="benefit-title">Perfecte Pasvorm</h3>
-            <p class="benefit-text">Ontworpen voor optimale prestaties met Hyundai machines. Elke bak past perfect op uw snelwissel.</p>
-          </div>
-          
-          <div class="benefit-card">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-              <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-            <h3 class="benefit-title">Hardox Kwaliteit</h3>
-            <p class="benefit-text">Slijtplaten van Hardox 450 voor maximale levensduur, zelfs bij intensief gebruik.</p>
-          </div>
-          
-          <div class="benefit-card">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-            <h3 class="benefit-title">Snelle Levering</h3>
-            <p class="benefit-text">Grote voorraad, direct leverbaar uit België. Spoedleveringen mogelijk.</p>
-          </div>
-          
-          <div class="benefit-card">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            <h3 class="benefit-title">2 Jaar Garantie</h3>
-            <p class="benefit-text">Volledige garantie op constructiefouten. Betrouwbare kwaliteit waar u op kunt vertrouwen.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SEO Content Section -->
-    <section class="brand-seo-content">
-      <div class="container">
-        <div class="brand-seo-grid">
-          <div class="brand-seo-main">
-            <h2>Kraanbakken voor Hyundai Graafmachines</h2>
-            <p>
-              Structon levert hoogwaardige kraanbakken speciaal ontworpen voor Hyundai graafmachines. 
-              Wij hebben de juiste bak voor elke machine en toepassing, van minigravers tot zware rupskranen.
-            </p>
-            
-            <h3>Snelwisselsysteem</h3>
-            <p>
-              Alle Structon kraanbakken zijn standaard uitgerust met de juiste snelwissel-aansluiting 
-              voor uw Hyundai machine. Compatibel met alle gangbare systemen.
-            </p>
-            
-            <h3>Hardox Slijtplaten</h3>
-            <p>
-              Alle Structon kraanbakken worden vervaardigd met Hardox 450 slijtplaten. Dit Zweedse 
-              slijtvaststaal biedt een uitstekende balans tussen hardheid en taaiheid, waardoor uw 
-              kraanbak langer meegaat en minder onderhoud nodig heeft.
-            </p>
-          </div>
-          
-          <div class="brand-seo-sidebar">
-            <div class="expert-box">
-              <div class="expert-header">
-                <div class="expert-avatar">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                </div>
-                <div class="expert-info">
-                  <strong>Arno Vermeersch</strong>
-                  <span>External Sales</span>
-                </div>
-              </div>
-              <p class="expert-text">Twijfel je over de juiste ophanging of maat? Neem contact op met onze specialist.</p>
-              <a href="tel:+32469702138" class="expert-phone">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                </svg>
-                +32 469 70 21 38
-              </a>
-              <a href="mailto:arno.vermeersch@structon.be" class="expert-email">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                arno.vermeersch@structon.be
-              </a>
-            </div>
-            
-            <div class="brand-related-card">
-              <h4>Andere Merken</h4>
-              <div class="brand-related-links">
-                <a href="../../kraanbakken/case/">Case</a>
-                <a href="../../kraanbakken/caterpillar/">Caterpillar</a>
-                <a href="../../kraanbakken/develon/">Develon</a>
-                <a href="../../kraanbakken/hitachi/">Hitachi</a>
-                <a href="../../kraanbakken/jcb/">JCB</a>
-                <a href="../../kraanbakken/kobelco/">Kobelco</a>
-                <a href="../../kraanbakken/komatsu/">Komatsu</a>
-                <a href="../../kraanbakken/kubota/">Kubota</a>
-                <a href="../../kraanbakken/liebherr/">Liebherr</a>
-                <a href="../../kraanbakken/sany/">Sany</a>
-                <a href="../../kraanbakken/takeuchi/">Takeuchi</a>
-                <a href="../../kraanbakken/volvo/">Volvo</a>
-                <a href="../../kraanbakken/wacker-neuson/">Wacker Neuson</a>
-                <a href="../../kraanbakken/yanmar/">Yanmar</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA kraanbakken -->
-    <section class="about-section" style="padding-top: 0;">
-      <div class="container">
-        <div class="cta-box">
-          <h2 class="cta-title">KRAANBAK VOOR JOUW HYUNDAI KRAAN NODIG?</h2>
-          <p class="cta-text">Vraag vandaag nog een vrijblijvende offerte aan. Binnen 24 uur ontvangt u ons antwoord van onze specialisten.</p>
-          
-          <a href="/offerte-aanvragen/" class="btn-split">
-            <span class="btn-split-text">Offerte aanvragen</span>
-            <span class="btn-split-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand-col">
-          <a href="../../index.html" class="footer-logo">
-            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" width="140">
-          </a>
-          <p class="footer-tagline">
-            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
-          </p>
-        </div>
-
-        <div class="footer-sitemap-col">
-          <ul id="footer-sitemap" class="sitemap-grid">
-            <li class="sitemap-loading">Navigatie laden...</li>
-          </ul>
-        </div>
-
-        <div class="footer-contact-col">
-          <h4 class="footer-heading">Contact</h4>
-          <address class="footer-address">
-            <p><strong>Structon</strong></p>
-            <p>Industrieweg 123</p>
-            <p>8730 Beernem, België</p>
-            <p class="mt-2"><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
-            <p><a href="mailto:info@structon.be">info@structon.be</a></p>
-          </address>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <div class="footer-legal">
-          <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
-          <div class="legal-links">
-            <a href="../../sitemap-pagina/">Sitemap</a>
-            <span class="separator">•</span>
-            <a href="../../privacy/">Privacy</a>
-            <span class="separator">•</span>
-            <a href="../../voorwaarden/">Voorwaarden</a>
-          </div>
-        </div>
-        
-        <div class="footer-creator">
-          <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../../assets/js/components/header-loader.js"></script>
-  <script type="module" src="../../assets/js/main.js"></script>
-  <script type="module" src="../../assets/js/pages/home.js"></script>
-  <script type="module" src="../../assets/js/pages/brand.js"></script>
-  <script type="module">
-    import { initBrandTemplate } from '../../assets/js/pages/brand-template.js';
-    // Initialize brand template on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      initBrandTemplate();
-    });
-  </script>
-  <script src="../../assets/js/components/login-modal.js"></script>
+  <p>Redirecting...</p>
 </body>
 </html>

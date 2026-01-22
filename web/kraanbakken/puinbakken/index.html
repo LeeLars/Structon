@@ -1,209 +1,50 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta Tags -->
-  <title>Puinbakken | Versterkte Graafbakken voor Sloopwerk | Structon</title>
-  <meta name="description" content="Puinbakken voor graafmachines. Extra versterkte bakken voor het laden van puin, stenen en sloopafval. ✓ Hardox staal ✓ Belgische kwaliteit">
-  <meta name="keywords" content="puinbak, puinbak graafmachine, versterkte graafbak, sloopbak">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://structon.be/kraanbakken/puinbakken/">
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Puinbakken | Structon">
-  <meta property="og:description" content="Extra versterkte puinbakken voor sloopwerk.">
-  <meta property="og:url" content="https://structon.be/kraanbakken/puinbakken/">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
-  <link rel="stylesheet" href="../../assets/css/global.css">
-  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
-  <link rel="stylesheet" href="../../assets/css/pages/category.css">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Redirecting...</title>
+  <script>
+    (function() {
+      var locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+      var defaultLocale = 'be-nl';
+      var targetPage = 'kraanbakken/puinbakken/';
+      
+      function getStoredLocale() {
+        try {
+          var stored = localStorage.getItem('structon_locale');
+          if (stored && locales.indexOf(stored) !== -1) return stored;
+        } catch (e) {}
+        return null;
+      }
+      
+      function detectLocale() {
+        var languages = navigator.languages || [navigator.language || ''];
+        var mapping = {
+          'nl-be': 'be-nl', 'nl-nl': 'nl-nl', 'nl': 'be-nl',
+          'fr-be': 'be-fr', 'fr': 'be-fr',
+          'de-de': 'de-de', 'de': 'de-de',
+          'en': 'be-nl'
+        };
+        for (var i = 0; i < languages.length; i++) {
+          var lang = languages[i].toLowerCase();
+          if (mapping[lang]) return mapping[lang];
+          var langOnly = lang.split('-')[0];
+          if (mapping[langOnly]) return mapping[langOnly];
+        }
+        return defaultLocale;
+      }
+      
+      var locale = getStoredLocale() || detectLocale();
+      var basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+      window.location.replace(basePath + locale + '/' + targetPage);
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/be-nl/kraanbakken/puinbakken/">
+  </noscript>
 </head>
 <body>
-  <div id="header-placeholder"></div>
-
-<main>
-    <section class="page-header">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
-          <a href="../../">Home</a>
-          <span>/</span>
-          <a href="../">Kraanbakken</a>
-          <span>/</span>
-          <span aria-current="page">Puinbakken</span>
-        </nav>
-        <h1 class="page-title">PUINBAKKEN</h1>
-        <p class="page-subtitle">
-          Puinbakken zijn extra versterkte graafbakken voor het laden van puin, stenen en sloopafval. 
-          Met Hardox slijtplaten en een robuuste constructie zijn ze gebouwd voor de zwaarste omstandigheden.
-        </p>
-        
-        <ul class="page-usps">
-          <li>✓ Extra versterkte constructie</li>
-          <li>✓ Hardox 450 slijtplaten</li>
-          <li>✓ Beschikbaar met CW20, CW30, CW40</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section category-section">
-      <div class="container">
-        <div class="category-layout">
-          <aside class="filters-sidebar" id="filters-sidebar">
-            <div class="filters-header">
-              <h3 class="filters-title">Filters</h3>
-              <button class="btn btn-ghost btn-sm" id="clear-filters">Wissen</button>
-            </div>
-            
-            <div class="filters">
-              <div class="filter-group">
-                <h4 class="filter-title">CW-Aansluiting</h4>
-                <div class="filter-options" id="attachment-filters">
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="attachment" value="CW20">
-                    <span>CW20 (8-15T)</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="attachment" value="CW30">
-                    <span>CW30 (15-25T)</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="attachment" value="CW40">
-                    <span>CW40 (25-40T)</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="filter-group">
-                <h4 class="filter-title">Inhoud</h4>
-                <div class="filter-options" id="volume-filters">
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="volume" value="500-1000">
-                    <span>500 - 1000 liter</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="volume" value="1000-1500">
-                    <span>1000 - 1500 liter</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="volume" value="1500-2000">
-                    <span>1500 - 2000 liter</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <button class="btn btn-primary btn-block" id="apply-filters">
-              Filters Toepassen
-            </button>
-          </aside>
-
-          <div class="products-container">
-            <div class="products-toolbar">
-              <div class="products-count">
-                <span id="products-count">0</span> puinbakken gevonden
-              </div>
-              
-              <div class="products-sort">
-                <label for="sort-select">Sorteren:</label>
-                <select id="sort-select" class="form-input">
-                  <option value="newest">Nieuwste eerst</option>
-                  <option value="title_asc">Naam A-Z</option>
-                  <option value="title_desc">Naam Z-A</option>
-                </select>
-              </div>
-
-              <button class="btn btn-ghost btn-sm hide-desktop" id="toggle-filters">
-                Filters
-              </button>
-            </div>
-
-            <div class="products-grid grid grid-3" id="products-grid">
-              <div class="loading">
-                <div class="spinner"></div>
-              </div>
-            </div>
-
-            <div class="pagination" id="pagination"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section seo-content bg-gray">
-      <div class="container">
-        <div class="seo-content-grid">
-          <article class="seo-article">
-            <h2>Wat is een Puinbak?</h2>
-            <p>
-              Een puinbak is een extra versterkte graafbak, speciaal ontworpen voor het laden van 
-              zwaar en abrasief materiaal zoals puin, stenen, beton en sloopafval. De constructie 
-              is zwaarder dan een standaard graafbak.
-            </p>
-          </article>
-          
-          <article class="seo-article">
-            <h2>Kenmerken</h2>
-            <ul>
-              <li>Hardox 450 slijtplaten</li>
-              <li>Versterkte zijwanden</li>
-              <li>Extra dikke bodem</li>
-              <li>Robuuste graaftanden</li>
-              <li>Versterkte ophanging</li>
-            </ul>
-          </article>
-          
-          <article class="seo-article">
-            <h2>Toepassingen</h2>
-            <ul>
-              <li>Sloopwerk en afbraak</li>
-              <li>Laden van puin en beton</li>
-              <li>Recycling van bouwmaterialen</li>
-              <li>Graven in stenige grond</li>
-              <li>Laden van grof materiaal</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section cta-section">
-      <div class="container">
-        <div class="cta-content text-center">
-          <h2 class="cta-title">PUINBAK OP MAAT?</h2>
-          <p class="cta-text">
-            Wij produceren ook puinbakken op maat. Neem contact op voor een vrijblijvende offerte.
-          </p>
-          <a href="/offerte-aanvragen/" class="btn btn-white btn-lg btn-arrow">Offerte Aanvragen</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col"><h4 class="footer-col-title">Structon</h4><p class="footer-about">Belgische producent van kraanbakken.</p></div>
-        <div class="footer-col"><h4 class="footer-col-title">Producten</h4><nav class="footer-links"><a href="../" class="footer-link">Kraanbakken</a><a href="/slotenbakken/" class="footer-link">Slotenbakken</a><a href="/sorteergrijpers/" class="footer-link">Sorteergrijpers</a></nav></div>
-        <div class="footer-col"><h4 class="footer-col-title">Contact</h4><p>📞 +32 (0)50 12 34 56</p><p>✉️ info@structon.be</p></div>
-      </div>
-      <div class="footer-bottom">
-        <p class="footer-copyright">© 2024 Structon. Alle rechten voorbehouden.</p>
-        <nav class="footer-legal"><a href="../../privacy/">Privacy</a><a href="../../voorwaarden/">Voorwaarden</a></nav>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../../assets/js/components/header-loader.js"></script>
-  <script type="module" src="../../assets/js/main.js"></script>
-  <script type="module" src="../../assets/js/pages/category.js"></script>
+  <p>Redirecting...</p>
 </body>
 </html>

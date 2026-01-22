@@ -1,256 +1,50 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta Tags -->
-  <title>Kraanbakken voor Grondwerkers | Graafbakken Grondverzet | Structon</title>
-  <meta name="description" content="Kraanbakken voor grondwerkers en grondverzet. Structon levert slotenbakken, dieplepelbakken en puinbakken voor professioneel grondwerk. ✓ Belgische kwaliteit">
-  <meta name="keywords" content="kraanbak grondwerkers, graafbak grondverzet, slotenbak grondwerk, kraanbak voor grondwerken">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://structon.be/sectoren/grondwerkers/">
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Kraanbakken voor Grondwerkers | Structon">
-  <meta property="og:description" content="Professionele kraanbakken voor grondverzet en grondwerk.">
-  <meta property="og:url" content="https://structon.be/sectoren/grondwerkers/">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
-  <link rel="stylesheet" href="../../assets/css/global.css">
-  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
-  <link rel="stylesheet" href="../../assets/css/pages/sector.css">
-  
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://structon.be/"},
-      {"@type": "ListItem", "position": 2, "name": "Sectoren", "item": "https://structon.be/sectoren/"},
-      {"@type": "ListItem", "position": 3, "name": "Grondwerkers", "item": "https://structon.be/sectoren/grondwerkers/"}
-    ]
-  }
+  <meta name="robots" content="noindex, nofollow">
+  <title>Redirecting...</title>
+  <script>
+    (function() {
+      var locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+      var defaultLocale = 'be-nl';
+      var targetPage = 'sectoren/grondwerkers/';
+      
+      function getStoredLocale() {
+        try {
+          var stored = localStorage.getItem('structon_locale');
+          if (stored && locales.indexOf(stored) !== -1) return stored;
+        } catch (e) {}
+        return null;
+      }
+      
+      function detectLocale() {
+        var languages = navigator.languages || [navigator.language || ''];
+        var mapping = {
+          'nl-be': 'be-nl', 'nl-nl': 'nl-nl', 'nl': 'be-nl',
+          'fr-be': 'be-fr', 'fr': 'be-fr',
+          'de-de': 'de-de', 'de': 'de-de',
+          'en': 'be-nl'
+        };
+        for (var i = 0; i < languages.length; i++) {
+          var lang = languages[i].toLowerCase();
+          if (mapping[lang]) return mapping[lang];
+          var langOnly = lang.split('-')[0];
+          if (mapping[langOnly]) return mapping[langOnly];
+        }
+        return defaultLocale;
+      }
+      
+      var locale = getStoredLocale() || detectLocale();
+      var basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+      window.location.replace(basePath + locale + '/' + targetPage);
+    })();
   </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/be-nl/sectoren/grondwerkers/">
+  </noscript>
 </head>
 <body>
-  <!-- Header Wrapper (Sticky) -->
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
-
-<main>
-    <!-- Sector Hero -->
-    <section class="sector-hero">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
-          <a href="/">Home</a>
-          <span>/</span>
-          <a href="/sectoren/">Sectoren</a>
-          <span>/</span>
-          <span aria-current="page">Grondwerkers</span>
-        </nav>
-        
-        <div class="sector-hero-content">
-          <div class="sector-hero-text">
-            <h1 class="sector-title">Kraanbakken voor Grondwerkers</h1>
-            <p class="sector-subtitle">
-              Als grondwerker heb je betrouwbaar gereedschap nodig dat elke dag presteert. 
-              Structon levert kraanbakken die gebouwd zijn voor de zwaarste omstandigheden 
-              in grondverzet, funderingswerk en infrastructuurprojecten.
-            </p>
-            <div class="sector-cta">
-              <a href="#producten" class="btn btn-primary btn-lg btn-arrow">Bekijk Producten</a>
-              <a href="/offerte-aanvragen/" class="btn btn-secondary btn-lg">
-                Offerte Aanvragen
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="sector-hero-image">
-            <img src="../../assets/images/sectors/grondwerkers-hero.jpg" alt="Graafmachine met kraanbak bij grondwerk" loading="lazy" onerror="this.parentElement.style.background='var(--color-gray-300)'">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Recommended Products -->
-    <section class="section" id="producten">
-      <div class="container">
-        <h2 class="section-title">Aanbevolen voor Grondwerkers</h2>
-        <p class="section-subtitle">De meest gebruikte kraanbakken in de grondverzetbranche.</p>
-        
-        <div class="product-recommendations">
-          <article class="recommendation-card">
-            <div class="recommendation-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-            </div>
-            <h3 class="recommendation-title">Dieplepelbakken</h3>
-            <p class="recommendation-desc">
-              De standaard graafbak voor algemeen grondverzet. Ideaal voor het graven van 
-              funderingssleuven, vijvers en bouwputten.
-            </p>
-            <ul class="recommendation-features">
-              <li>Grote inhoud voor efficiënt werken</li>
-              <li>Hardox slijtplaten</li>
-              <li>CW10 t/m CW40</li>
-            </ul>
-            <a href="/kraanbakken/dieplepelbakken/" class="btn btn-primary">Bekijk Dieplepelbakken</a>
-          </article>
-          
-          <article class="recommendation-card">
-            <div class="recommendation-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z" />
-              </svg>
-            </div>
-            <h3 class="recommendation-title">Slotenbakken</h3>
-            <p class="recommendation-desc">
-              Voor het graven van kabelsleufjes, drainagesloten en smalle funderingen. 
-              Precies werken met minimale grondverplaatsing.
-            </p>
-            <ul class="recommendation-features">
-              <li>Breedtes van 300mm tot 1200mm</li>
-              <li>Ideaal voor leidingwerk</li>
-              <li>CW00 t/m CW30</li>
-            </ul>
-            <a href="/slotenbakken/" class="btn btn-primary">Bekijk Slotenbakken</a>
-          </article>
-          
-          <article class="recommendation-card">
-            <div class="recommendation-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-            </div>
-            <h3 class="recommendation-title">Puinbakken</h3>
-            <p class="recommendation-desc">
-              Versterkte bakken voor het laden van puin, stenen en grof materiaal. 
-              Onmisbaar bij grondwerk met veel obstakels.
-            </p>
-            <ul class="recommendation-features">
-              <li>Extra versterkte constructie</li>
-              <li>Grote inhoud</li>
-              <li>CW20 t/m CW40</li>
-            </ul>
-            <a href="/kraanbakken/puinbakken/" class="btn btn-primary">Bekijk Puinbakken</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why Structon -->
-    <section class="section bg-gray">
-      <div class="container">
-        <h2 class="section-title text-center">Waarom Grondwerkers Kiezen voor Structon</h2>
-        
-        <div class="benefits-grid">
-          <div class="benefit-item">
-            <div class="benefit-icon">⚡</div>
-            <h3 class="benefit-title">Snelle Levering</h3>
-            <p class="benefit-desc">Grote voorraad, snel leverbaar. Geen stilstand op de bouwplaats.</p>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">🛡️</div>
-            <h3 class="benefit-title">Hardox Kwaliteit</h3>
-            <p class="benefit-desc">Slijtplaten van Hardox 450 voor maximale levensduur.</p>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">🔧</div>
-            <h3 class="benefit-title">Maatwerk</h3>
-            <p class="benefit-desc">Speciale afmetingen of aanpassingen? Wij maken het.</p>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">🇧🇪</div>
-            <h3 class="benefit-title">Belgische Productie</h3>
-            <p class="benefit-desc">Lokaal geproduceerd, korte lijnen, persoonlijke service.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Other Sectors -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title text-center">Andere Sectoren</h2>
-        <div class="sector-links">
-          <a href="/sectoren/sloop-afbraak/" class="sector-link">
-            <span class="sector-link-title">Sloop & Afbraak</span>
-            <span class="sector-link-desc">Sorteergrijpers, sloophamers</span>
-          </a>
-          <a href="/sectoren/verhuurbedrijven/" class="sector-link">
-            <span class="sector-link-title">Verhuurbedrijven</span>
-            <span class="sector-link-desc">Complete sets, volume korting</span>
-          </a>
-          <a href="/sectoren/wegenbouw/" class="sector-link">
-            <span class="sector-link-title">Wegenbouw</span>
-            <span class="sector-link-desc">Infrastructuur gereedschap</span>
-          </a>
-          <a href="/sectoren/recycling/" class="sector-link">
-            <span class="sector-link-title">Recycling</span>
-            <span class="sector-link-desc">Sorteer- en breekgereedschap</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section cta-section">
-      <div class="container">
-        <div class="cta-content text-center">
-          <h2 class="cta-title">Advies voor Jouw Project?</h2>
-          <p class="cta-text">
-            Onze specialisten helpen je graag met het samenstellen van de juiste set kraanbakken.
-          </p>
-          <a href="/offerte-aanvragen/" class="btn btn-white btn-lg btn-arrow">Neem Contact Op</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4 class="footer-col-title">Structon</h4>
-          <p class="footer-about">Belgische producent van kraanbakken.</p>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-col-title">Sectoren</h4>
-          <nav class="footer-links">
-            <a href="/sectoren/grondwerkers/" class="footer-link">Grondwerkers</a>
-            <a href="/sectoren/sloop-afbraak/" class="footer-link">Sloop & Afbraak</a>
-            <a href="/sectoren/verhuurbedrijven/" class="footer-link">Verhuurbedrijven</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-col-title">Contact</h4>
-          <p>📞 +32 (0)9 123 45 67</p>
-          <p>✉️ info@structon.be</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p class="footer-copyright">© 2024 Structon</p>
-      </div>
-    </div>
-  </footer>
-
-  <script type="module" src="../../assets/js/main.js"></script>
-  <script src="../../assets/js/components/header-loader.js"></script>
+  <p>Redirecting...</p>
 </body>
 </html>

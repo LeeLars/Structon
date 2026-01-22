@@ -123,22 +123,32 @@ async function loadSubcategories(categorySlug) {
     const subcategoriesWithCounts = await Promise.all(
       categorySubcategories.map(async (subcat) => {
         try {
+          // Use subcategory_slug for filtering (more reliable than id)
           const productsData = await products.getAll({ 
-            subcategory_id: subcat.id,
+            subcategory_slug: subcat.slug,
             limit: 1 
           });
           
+          console.log(`📦 Subcategory ${subcat.slug} products:`, productsData);
+          
           let firstProductImage = null;
-          if (productsData.products && productsData.products.length > 0) {
-            const product = productsData.products[0];
+          const productsList = productsData.items || productsData.products || [];
+          
+          if (productsList.length > 0) {
+            const product = productsList[0];
+            // Check multiple image sources
             if (product.cloudinary_images && product.cloudinary_images.length > 0) {
               firstProductImage = product.cloudinary_images[0].url;
+            } else if (product.image_url) {
+              firstProductImage = product.image_url;
+            } else if (product.images && product.images.length > 0) {
+              firstProductImage = product.images[0];
             }
           }
 
           return {
             ...subcat,
-            product_count: productsData.total || 0,
+            product_count: productsData.total || productsList.length || 0,
             first_product_image: firstProductImage
           };
         } catch (error) {

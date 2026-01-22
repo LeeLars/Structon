@@ -882,7 +882,6 @@ main[data-industry] {
 }
 
 .cta-box .btn-split {
-  background: white;
   color: var(--color-primary);
   display: inline-flex;
   margin-top: var(--space-4);

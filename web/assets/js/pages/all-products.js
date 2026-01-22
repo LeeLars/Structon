@@ -47,17 +47,14 @@ async function initPage() {
         // It's a main category - load its subcategories
         await loadSubcategories(categoryParam);
       } else {
-        // It's a subcategory - update page title
+        // It's a subcategory - update page title only (no description)
         const subcat = subcategoriesData.subcategories.find(s => s.slug === categoryParam);
         if (subcat) {
           const pageTitle = document.querySelector('.page-title');
           const pageSubtitle = document.querySelector('.page-subtitle');
           if (pageTitle) pageTitle.textContent = subcat.title.toUpperCase();
-          if (pageSubtitle) {
-            const description = SUBCATEGORY_DESCRIPTIONS[categoryParam] || 
-              `Bekijk ons assortiment ${subcat.title.toLowerCase()}`;
-            pageSubtitle.textContent = description;
-          }
+          // Hide subtitle for subcategory pages - only show title
+          if (pageSubtitle) pageSubtitle.style.display = 'none';
         }
       }
     }

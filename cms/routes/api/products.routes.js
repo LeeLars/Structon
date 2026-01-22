@@ -12,16 +12,20 @@ const router = Router();
 router.get('/', cacheMiddleware(5 * 60 * 1000), async (req, res, next) => {
   try {
     const {
-      category, category_id, subcategory_id, brand_id, attachment_type,
+      category, category_slug, category_id, 
+      subcategory_slug, subcategory_id, 
+      brand_id, brand_slug, attachment_type,
       excavator_weight, volume_min, volume_max, width,
       search, sort, limit, offset, featured
     } = req.query;
 
     const filters = {
-      category_slug: category,
+      category_slug: category_slug || category, // Support both param names
       category_id,
+      subcategory_slug, // Add subcategory_slug support
       subcategory_id,
       brand_id,
+      brand_slug,
       attachment_type,
       excavator_weight: excavator_weight ? parseInt(excavator_weight) : undefined,
       volume_min: volume_min ? parseInt(volume_min) : undefined,

@@ -52,15 +52,24 @@ router.use(authenticate, requireAdmin);
  */
 router.post('/images', apiLimiter, upload.array('images', 10), async (req, res) => {
   console.log('📤 Upload request received');
+  console.log('📤 Request headers:', {
+    contentType: req.headers['content-type'],
+    authorization: req.headers['authorization'] ? 'Bearer ***' : 'MISSING'
+  });
+  console.log('📤 Files received:', req.files?.length || 0);
   
   try {
     // Check if files were received
     if (!req.files || req.files.length === 0) {
       console.log('❌ No files in request');
+      console.log('❌ Request body keys:', Object.keys(req.body || {}));
       return res.status(400).json({ error: 'No images provided' });
     }
 
     console.log(`📷 Processing ${req.files.length} file(s)`);
+    req.files.forEach((file, i) => {
+      console.log(`  File ${i + 1}: ${file.originalname} (${file.mimetype}, ${file.size} bytes)`);
+    });
 
     // Check if Cloudinary is configured
     if (!isCloudinaryConfigured()) {

@@ -7,24 +7,25 @@ import { env } from '../../config/env.js';
 
 const router = Router();
 
-// Check Cloudinary configuration at startup
-const cloudinaryConfigured = !!(env.cloudinary.cloudName && env.cloudinary.apiKey && env.cloudinary.apiSecret);
+// Configure Cloudinary at startup (will use env vars)
+cloudinary.config({
+  cloud_name: env.cloudinary.cloudName,
+  api_key: env.cloudinary.apiKey,
+  api_secret: env.cloudinary.apiSecret
+});
 
-if (cloudinaryConfigured) {
-  // Configure Cloudinary
-  cloudinary.config({
-    cloud_name: env.cloudinary.cloudName,
-    api_key: env.cloudinary.apiKey,
-    api_secret: env.cloudinary.apiSecret
-  });
-  console.log('✅ Cloudinary configured successfully');
-} else {
-  console.warn('⚠️ Cloudinary NOT configured - image uploads will fail');
-  console.warn('   Missing:', {
-    cloudName: !env.cloudinary.cloudName,
-    apiKey: !env.cloudinary.apiKey,
-    apiSecret: !env.cloudinary.apiSecret
-  });
+// Log configuration status
+console.log('☁️ Cloudinary config:', {
+  cloudName: env.cloudinary.cloudName || 'NOT SET',
+  apiKey: env.cloudinary.apiKey ? '***' + env.cloudinary.apiKey.slice(-4) : 'NOT SET',
+  apiSecret: env.cloudinary.apiSecret ? '***' : 'NOT SET'
+});
+
+/**
+ * Check if Cloudinary is configured (runtime check)
+ */
+function isCloudinaryConfigured() {
+  return !!(env.cloudinary.cloudName && env.cloudinary.apiKey && env.cloudinary.apiSecret);
 }
 
 // Configure multer for memory storage
@@ -62,7 +63,7 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res) 
     console.log(`📷 Processing ${req.files.length} file(s)`);
 
     // Check if Cloudinary is configured
-    if (!cloudinaryConfigured) {
+    if (!isCloudinaryConfigured()) {
       console.error('❌ Cloudinary not configured');
       return res.status(503).json({ 
         error: 'Cloudinary niet geconfigureerd',

@@ -977,24 +977,26 @@ async function handleImageSelect(e) {
       }
     }
   } catch (error) {
-    console.error('❌ Upload error:', error);
+    console.error('❌ Upload error:', error.message);
     
-    // Update preview to show error
-    const previewContainer = document.getElementById('image-preview-container');
-    if (previewContainer) {
-      const previews = previewContainer.querySelectorAll('div > div');
-      previews.forEach(div => {
-        div.style.background = '#ef4444';
-        div.textContent = 'Upload failed';
-      });
+    // Reset file input
+    const imageInput = document.getElementById('image-input');
+    if (imageInput) {
+      imageInput.value = '';
     }
     
-    // Show specific error message
-    if (error.message.includes('Unauthorized') || error.message.includes('Session expired')) {
+    // Show specific error message based on error type
+    const errorMsg = error.message.toLowerCase();
+    
+    if (errorMsg.includes('unauthorized') || errorMsg.includes('session expired') || errorMsg.includes('401')) {
       showToast('Sessie verlopen - log opnieuw in', 'error');
       setTimeout(() => auth.logout(), 2000);
-    } else if (error.message.includes('Cloudinary') || error.message.includes('niet geconfigureerd')) {
-      showToast('⚠️ Afbeeldingen uploaden is tijdelijk niet beschikbaar. Je kunt het product wel opslaan zonder afbeeldingen.', 'warning');
+    } else if (errorMsg.includes('cloudinary') || errorMsg.includes('niet geconfigureerd') || errorMsg.includes('503')) {
+      showToast('⚠️ Afbeeldingen uploaden is tijdelijk niet beschikbaar. Configureer Cloudinary in de server settings.', 'warning');
+    } else if (errorMsg.includes('te groot') || errorMsg.includes('file size')) {
+      showToast('Bestand is te groot. Maximum is 5MB.', 'error');
+    } else if (errorMsg.includes('verbinding') || errorMsg.includes('network')) {
+      showToast('Geen verbinding met server. Controleer je internet.', 'error');
     } else {
       showToast(`Upload fout: ${error.message}`, 'error');
     }

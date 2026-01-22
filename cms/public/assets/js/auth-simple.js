@@ -194,12 +194,18 @@ class SimpleAuth {
       }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
+        // Extract meaningful error message
+        const errorMsg = data.message || data.error || 'Upload failed';
+        throw new Error(errorMsg);
       }
 
       return data;
     } catch (error) {
       console.error('Upload error:', error);
+      // Re-throw with cleaner message if it's a network error
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new Error('Kan geen verbinding maken met de server. Controleer je internetverbinding.');
+      }
       throw error;
     }
   }

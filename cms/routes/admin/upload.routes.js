@@ -7,12 +7,25 @@ import { env } from '../../config/env.js';
 
 const router = Router();
 
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: env.cloudinary.cloudName,
-  api_key: env.cloudinary.apiKey,
-  api_secret: env.cloudinary.apiSecret
-});
+// Check Cloudinary configuration at startup
+const cloudinaryConfigured = !!(env.cloudinary.cloudName && env.cloudinary.apiKey && env.cloudinary.apiSecret);
+
+if (cloudinaryConfigured) {
+  // Configure Cloudinary
+  cloudinary.config({
+    cloud_name: env.cloudinary.cloudName,
+    api_key: env.cloudinary.apiKey,
+    api_secret: env.cloudinary.apiSecret
+  });
+  console.log('✅ Cloudinary configured successfully');
+} else {
+  console.warn('⚠️ Cloudinary NOT configured - image uploads will fail');
+  console.warn('   Missing:', {
+    cloudName: !env.cloudinary.cloudName,
+    apiKey: !env.cloudinary.apiKey,
+    apiSecret: !env.cloudinary.apiSecret
+  });
+}
 
 // Configure multer for memory storage
 const upload = multer({
@@ -36,26 +49,31 @@ router.use(authenticate, requireAdmin);
  * POST /api/admin/upload/images
  * Upload images to Cloudinary
  */
-router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, next) => {
+router.post('/images', apiLimiter, upload.array('images', 10), async (req, res) => {
+  console.log('📤 Upload request received');
+  
   try {
+    // Check if files were received
     if (!req.files || req.files.length === 0) {
+      console.log('❌ No files in request');
       return res.status(400).json({ error: 'No images provided' });
     }
 
+    console.log(`📷 Processing ${req.files.length} file(s)`);
+
     // Check if Cloudinary is configured
-    if (!env.cloudinary.cloudName || !env.cloudinary.apiKey || !env.cloudinary.apiSecret) {
-      console.error('❌ Cloudinary not configured:', {
-        hasCloudName: !!env.cloudinary.cloudName,
-        hasApiKey: !!env.cloudinary.apiKey,
-        hasApiSecret: !!env.cloudinary.apiSecret
-      });
-      return res.status(500).json({ 
-        error: 'Cloudinary niet geconfigureerd. Afbeeldingen uploaden is tijdelijk niet beschikbaar. Neem contact op met de beheerder om Cloudinary credentials in te stellen.'
+    if (!cloudinaryConfigured) {
+      console.error('❌ Cloudinary not configured');
+      return res.status(503).json({ 
+        error: 'Cloudinary niet geconfigureerd',
+        message: 'Afbeeldingen uploaden is tijdelijk niet beschikbaar. Configureer CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY en CLOUDINARY_API_SECRET in de environment variabelen.'
       });
     }
 
     // Upload each image to Cloudinary
-    const uploadPromises = req.files.map(file => {
+    const uploadPromises = req.files.map((file, index) => {
+      console.log(`📤 Uploading file ${index + 1}: ${file.originalname} (${file.size} bytes)`);
+      
       return new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
@@ -68,8 +86,10 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
           },
           (error, result) => {
             if (error) {
+              console.error(`❌ Cloudinary upload error for file ${index + 1}:`, error.message);
               reject(error);
             } else {
+              console.log(`✅ File ${index + 1} uploaded: ${result.public_id}`);
               resolve({
                 url: result.secure_url,
                 public_id: result.public_id,
@@ -86,36 +106,30 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res, 
 
     const images = await Promise.all(uploadPromises);
 
+    console.log(`✅ All ${images.length} images uploaded successfully`);
+
     res.json({
       success: true,
       images,
       count: images.length
     });
   } catch (error) {
-    console.error('❌ Image upload error:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name,
-      code: error.code,
-      http_code: error.http_code,
-      cloudinaryConfig: {
-        hasCloudName: !!env.cloudinary.cloudName,
-        hasApiKey: !!env.cloudinary.apiKey,
-        hasApiSecret: !!env.cloudinary.apiSecret,
-        cloudName: env.cloudinary.cloudName ? `${env.cloudinary.cloudName.substring(0, 4)}...` : 'missing'
-      }
-    });
+    console.error('❌ Image upload error:', error.message);
     
-    // Don't call next(error) - handle error directly to bypass global error handler
+    // Return user-friendly error
+    let errorMessage = 'Er is een fout opgetreden bij het uploaden.';
+    
+    if (error.message?.includes('Invalid')) {
+      errorMessage = 'Ongeldige Cloudinary configuratie. Controleer de API credentials.';
+    } else if (error.message?.includes('File size')) {
+      errorMessage = 'Bestand is te groot. Maximum is 5MB.';
+    } else if (error.http_code === 401) {
+      errorMessage = 'Cloudinary authenticatie mislukt. Controleer API key en secret.';
+    }
+    
     return res.status(500).json({
-      error: `Upload error: ${error.message}`,
-      details: {
-        name: error.name,
-        code: error.code,
-        http_code: error.http_code,
-        message: error.message,
-        cloudinaryConfigured: !!(env.cloudinary.cloudName && env.cloudinary.apiKey && env.cloudinary.apiSecret)
-      }
+      error: errorMessage,
+      details: error.message
     });
   }
 });

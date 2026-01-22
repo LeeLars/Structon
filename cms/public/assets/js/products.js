@@ -936,6 +936,59 @@ async function handleProductSubmit(e) {
 }
 
 /**
+ * Compress/resize image before upload
+ * @param {File} file - Original image file
+ * @param {number} maxWidth - Maximum width (default 1600px)
+ * @param {number} maxHeight - Maximum height (default 1600px)
+ * @param {number} quality - JPEG quality 0-1 (default 0.85)
+ * @returns {Promise<Blob>} - Compressed image blob
+ */
+async function compressImage(file, maxWidth = 1600, maxHeight = 1600, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    img.onload = () => {
+      let { width, height } = img;
+      
+      // Calculate new dimensions while maintaining aspect ratio
+      if (width > maxWidth || height > maxHeight) {
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+      
+      canvas.width = width;
+      canvas.height = height;
+      
+      // Draw image on canvas
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Convert to blob (JPEG for better compression, PNG for transparency)
+      const outputType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+      const outputQuality = file.type === 'image/png' ? undefined : quality;
+      
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            console.log(`📦 Compressed ${file.name}: ${(file.size / 1024).toFixed(1)}KB → ${(blob.size / 1024).toFixed(1)}KB`);
+            resolve(blob);
+          } else {
+            reject(new Error('Failed to compress image'));
+          }
+        },
+        outputType,
+        outputQuality
+      );
+    };
+    
+    img.onerror = () => reject(new Error('Failed to load image'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/**
  * Handle image select
  */
 async function handleImageSelect(e) {
@@ -945,12 +998,32 @@ async function handleImageSelect(e) {
   
   console.log('📷 Selected files:', files.map(f => f.name));
   
-  // Show uploading status
-  showToast(`${files.length} afbeelding(en) uploaden...`, 'info');
+  // Show compressing status
+  showToast(`${files.length} afbeelding(en) verwerken...`, 'info');
+  
+  // Compress images before upload
+  const compressedFiles = [];
+  for (const file of files) {
+    try {
+      // Only compress if file is larger than 1MB
+      if (file.size > 1024 * 1024) {
+        console.log(`🗜️ Compressing ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)...`);
+        const compressedBlob = await compressImage(file);
+        // Create a new File object with the original name
+        const compressedFile = new File([compressedBlob], file.name, { type: compressedBlob.type });
+        compressedFiles.push(compressedFile);
+      } else {
+        compressedFiles.push(file);
+      }
+    } catch (err) {
+      console.warn(`⚠️ Could not compress ${file.name}, using original:`, err);
+      compressedFiles.push(file);
+    }
+  }
   
   // Try to upload to Cloudinary
   const formData = new FormData();
-  files.forEach(file => formData.append('images', file));
+  compressedFiles.forEach(file => formData.append('images', file));
   
   try {
     showToast('Afbeeldingen uploaden naar server...', 'info');

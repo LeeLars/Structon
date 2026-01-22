@@ -1,265 +1,50 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sitemap van Structon - Overzicht van alle pagina's op onze website.">
-  <title>Sitemap | Structon</title>
-  
-  <!-- Fonts -->
-  <link rel="preload" href="../assets/css/fonts.css" as="style">
-  <link rel="stylesheet" href="../assets/css/fonts.css">
-  
-  <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/global.css">
-  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../assets/images/static/favicon.svg">
-  
-  <style>
-    .sitemap-page {
-      padding: 40px 0 80px;
-      min-height: 60vh;
-    }
-    
-    .page-header {
-      background-color: var(--color-gray-100);
-      padding: var(--space-12) 0;
-      margin-bottom: var(--space-8);
-      text-align: center;
-    }
-    
-    .sitemap-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 48px;
-    }
-    
-    .sitemap-column h2 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--color-primary);
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--color-primary);
-    }
-    
-    .sitemap-column ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    
-    .sitemap-column li {
-      margin-bottom: 8px;
-    }
-    
-    .sitemap-column a {
-      color: #374151;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-    
-    .sitemap-column a:hover {
-      color: var(--color-primary);
-      text-decoration: underline;
-    }
-    
-    /* Child items */
-    .sitemap-column ul ul {
-      margin-left: 20px;
-      margin-top: 8px;
-      border-left: 1px solid #e5e7eb;
-      padding-left: 16px;
-    }
-    
-    .sitemap-column ul ul a {
-      color: #6b7280;
-      font-size: 0.9rem;
-    }
-  </style>
+  <meta name="robots" content="noindex, nofollow">
+  <title>Redirecting...</title>
+  <script>
+    (function() {
+      var locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+      var defaultLocale = 'be-nl';
+      var targetPage = 'sitemap-pagina/';
+      
+      function getStoredLocale() {
+        try {
+          var stored = localStorage.getItem('structon_locale');
+          if (stored && locales.indexOf(stored) !== -1) return stored;
+        } catch (e) {}
+        return null;
+      }
+      
+      function detectLocale() {
+        var languages = navigator.languages || [navigator.language || ''];
+        var mapping = {
+          'nl-be': 'be-nl', 'nl-nl': 'nl-nl', 'nl': 'be-nl',
+          'fr-be': 'be-fr', 'fr': 'be-fr',
+          'de-de': 'de-de', 'de': 'de-de',
+          'en': 'be-nl'
+        };
+        for (var i = 0; i < languages.length; i++) {
+          var lang = languages[i].toLowerCase();
+          if (mapping[lang]) return mapping[lang];
+          var langOnly = lang.split('-')[0];
+          if (mapping[langOnly]) return mapping[langOnly];
+        }
+        return defaultLocale;
+      }
+      
+      var locale = getStoredLocale() || detectLocale();
+      var basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+      window.location.replace(basePath + locale + '/' + targetPage);
+    })();
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/be-nl/sitemap-pagina/">
+  </noscript>
 </head>
 <body>
-  <!-- Header Wrapper (Sticky) -->
-  <!-- Header loaded dynamically -->
-  <div id="header-placeholder"></div>
-<main class="sitemap-page">
-    <!-- Page Header -->
-    <section class="page-header">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Kruimelpad">
-          <a href="../index.html">Home</a>
-          <span>/</span>
-          <span aria-current="page">Sitemap</span>
-        </nav>
-        <h1 class="page-title">Sitemap</h1>
-        <p class="page-subtitle">Overzicht van alle pagina's op structon.be</p>
-      </div>
-    </section>
-
-    <div class="container">
-      <div class="sitemap-content" id="sitemap-content">
-        <!-- Wordt dynamisch geladen -->
-        <div class="sitemap-column">
-          <h2>Hoofdpagina's</h2>
-          <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="../over-ons/">Over Ons</a></li>
-            <li><a href="../contact/">Contact</a></li>
-            <li><a href="../blog/">Blog</a></li>
-            <li><a href="../faq/">Veelgestelde Vragen</a></li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Industrieën</h2>
-          <ul>
-            <li><a href="../industrieen/grondwerkers/">Grondwerkers</a></li>
-            <li><a href="../industrieen/afbraak-sloop/">Afbraak & Sloop</a></li>
-            <li><a href="../industrieen/tuinaanleggers/">Tuinaanleggers</a></li>
-            <li><a href="../industrieen/wegenbouw/">Wegenbouw</a></li>
-            <li><a href="../industrieen/recycling/">Recycling</a></li>
-            <li><a href="../industrieen/verhuur/">Verhuurbedrijven</a></li>
-            <li><a href="../industrieen/loonwerk-landbouw/">Loonwerk & Landbouw</a></li>
-            <li><a href="../industrieen/baggerwerken/">Baggerwerken</a></li>
-          </ul>
-        </div>
-
-        <div class="sitemap-column">
-          <h2>Merken</h2>
-          <ul>
-            <li><a href="../kraanbakken/caterpillar/">Caterpillar</a></li>
-            <li><a href="../kraanbakken/komatsu/">Komatsu</a></li>
-            <li><a href="../kraanbakken/volvo/">Volvo</a></li>
-            <li><a href="../kraanbakken/hitachi/">Hitachi</a></li>
-            <li><a href="../kraanbakken/liebherr/">Liebherr</a></li>
-            <li><a href="../kraanbakken/jcb/">JCB</a></li>
-            <li><a href="../kraanbakken/kubota/">Kubota</a></li>
-            <li><a href="../kraanbakken/doosan/">Doosan</a></li>
-            <li><a href="../kraanbakken/hyundai/">Hyundai</a></li>
-            <li><a href="../kraanbakken/case/">Case</a></li>
-            <li><a href="../kraanbakken/new-holland/">New Holland</a></li>
-            <li><a href="../kraanbakken/takeuchi/">Takeuchi</a></li>
-            <li><a href="../kraanbakken/yanmar/">Yanmar</a></li>
-            <li><a href="../kraanbakken/bobcat/">Bobcat</a></li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Producten</h2>
-          <ul>
-            <li><a href="../producten/">Alle Producten</a></li>
-            <li><a href="../producten/?cat=graafbakken">Graafbakken</a>
-              <ul>
-                <li><a href="../producten/?cat=slotenbakken">Slotenbakken</a></li>
-                <li><a href="../producten/?cat=dieplepelbakken">Dieplepelbakken</a></li>
-                <li><a href="../producten/?cat=sleuvenbakken">Sleuvenbakken</a></li>
-                <li><a href="../producten/?cat=kantelbakken">Kantelbakken</a></li>
-                <li><a href="../producten/?cat=rioolbakken">Rioolbakken</a></li>
-                <li><a href="../producten/?cat=trapezium-bakken">Trapezium Bakken</a></li>
-              </ul>
-            </li>
-            <li><a href="../producten/?cat=sloop-sorteergrijpers">Sloop- en Sorteergrijpers</a>
-              <ul>
-                <li><a href="../producten/?cat=sorteergrijpers">Sorteergrijpers</a></li>
-                <li><a href="../producten/?cat=sloopgrijpers">Sloopgrijpers</a></li>
-                <li><a href="../producten/?cat=puingrijpers">Puingrijpers</a></li>
-              </ul>
-            </li>
-            <li><a href="../producten/?cat=overige">Overige</a>
-              <ul>
-                <li><a href="../producten/?cat=ripper-tanden">Ripper Tanden</a></li>
-                <li><a href="../producten/?cat=hydraulische-hamers">Hydraulische Hamers</a></li>
-                <li><a href="../producten/?cat=egaliseerbalken">Egaliseerbalken</a></li>
-                <li><a href="../producten/?cat=verdichtingsplaten">Verdichtingsplaten</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Diensten</h2>
-          <ul>
-            <li><a href="../configurator/">Product Configurator</a></li>
-            <li><a href="../dealer/">Dealer Worden</a></li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Overig</h2>
-          <ul>
-            <li><a href="#" class="login-trigger">Klant Login</a></li>
-            <li><a href="../privacy/">Privacybeleid</a></li>
-            <li><a href="../voorwaarden/">Algemene Voorwaarden</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer (zelfde als homepage) -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand-col">
-          <a href="../index.html" class="footer-logo">
-            <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" width="120">
-          </a>
-          <p class="footer-tagline">
-            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
-          </p>
-        </div>
-
-        <div class="footer-sitemap-col">
-          <ul id="footer-sitemap" class="sitemap-grid">
-            <li class="sitemap-loading">Navigatie laden...</li>
-          </ul>
-        </div>
-
-        <div class="footer-contact-col">
-          <h4 class="footer-heading">Contact</h4>
-          <address class="footer-address">
-            <p><strong>Structon</strong></p>
-            <p>Industrieweg 123</p>
-            <p>8730 Beernem, België</p>
-            <p class="mt-2"><a href="tel:+3250123456">+32 (0)50 12 34 56</a></p>
-            <p><a href="mailto:info@structon.be">info@structon.be</a></p>
-          </address>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <div class="footer-legal">
-          <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
-          <div class="legal-links">
-            <a href="../sitemap-pagina/">Sitemap</a>
-            <span class="separator">•</span>
-            <a href="../privacy/">Privacy</a>
-            <span class="separator">•</span>
-            <a href="../voorwaarden/">Voorwaarden</a>
-          </div>
-        </div>
-        
-        <div class="footer-creator">
-          <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
-          <span class="creator-separator">•</span>
-          <a href="https://structon-production.up.railway.app/cms/" class="cms-lock-link" target="_blank" rel="noopener" title="CMS Login">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="../assets/js/components/header-loader.js"></script>
-  <script type="module" src="../assets/js/main.js"></script>
-  <script type="module" src="../assets/js/pages/home.js"></script> <!-- For sticky header -->
-  <script src="../assets/js/components/login-modal.js"></script>
+  <p>Redirecting...</p>
 </body>
 </html>

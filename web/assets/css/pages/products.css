@@ -18,6 +18,17 @@
   line-height: 1.2;
 }
 
+ .subcategories-title {
+   font-family: var(--font-heading);
+   font-size: clamp(1.75rem, 3vw, 2.25rem);
+   font-weight: 700;
+   color: var(--color-primary);
+   margin-bottom: var(--space-4);
+   text-transform: uppercase;
+   letter-spacing: -0.02em;
+   line-height: 1.2;
+ }
+
 .category-header-description {
   font-size: var(--text-lg);
   line-height: 1.6;
@@ -32,6 +43,10 @@
   }
   
   .category-header-title {
+    font-size: 1.5rem;
+  }
+
+  .subcategories-title {
     font-size: 1.5rem;
   }
   

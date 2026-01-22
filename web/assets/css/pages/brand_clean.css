@@ -7,6 +7,21 @@ main[data-brand] {
   background-color: white;
 }
 
+/* View All Products Button */
+.view-all-products-wrapper {
+  margin-top: var(--space-8);
+  text-align: center;
+  padding-top: var(--space-6);
+  border-top: 1px solid #e0e0e0;
+}
+
+.view-all-products-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+}
+
 .section-clean {
   padding: var(--space-12) 0;
   position: relative;

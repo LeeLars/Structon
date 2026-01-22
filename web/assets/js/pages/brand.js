@@ -18,6 +18,7 @@ let activeModelFilter = null;
 let activeCategory = null;
 let currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
+const PREVIEW_PRODUCTS_LIMIT = 4; // Max products to show as preview
 
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
@@ -439,39 +440,65 @@ function updateCategoryTabCounts(productsForCounts) {
 
 /**
  * Render products with inline display (no external links)
+ * Shows max 4 products as preview with link to all products
  */
 function renderProducts() {
   const container = document.getElementById('products-grid');
   if (!container) return;
   
   if (filteredProducts.length === 0) {
-    showNoResults(container, 'Geen producten gevonden met de geselecteerde filters.');
+    showNoResults(container, 'Geen producten gevonden voor dit merk.');
     renderPagination(0);
     return;
   }
   
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
-  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-  const endIndex = startIndex + PRODUCTS_PER_PAGE;
-  const pageProducts = filteredProducts.slice(startIndex, endIndex);
+  // Show max 4 products as preview
+  const previewProducts = filteredProducts.slice(0, PREVIEW_PRODUCTS_LIMIT);
+  const hasMoreProducts = filteredProducts.length > PREVIEW_PRODUCTS_LIMIT;
   
-  // Render products using horizontal cards (inline, no external webshop links)
+  // Render products using horizontal cards
   container.className = 'products-list brand-products-list';
-  container.innerHTML = pageProducts.map(product => 
+  container.innerHTML = previewProducts.map(product => 
     createProductCardHorizontal(product, isLoggedIn)
   ).join('');
   
-  // Render pagination
-  renderPagination(totalPages);
+  // Add "View all products" link if there are more than 4 products
+  if (hasMoreProducts) {
+    const basePath = getBasePath();
+    const viewAllLink = document.createElement('div');
+    viewAllLink.className = 'view-all-products-wrapper';
+    viewAllLink.innerHTML = `
+      <a href="${basePath}producten/?brand_slug=${currentBrand}" class="btn-split view-all-products-btn">
+        <span class="btn-split-text">Bekijk alle ${filteredProducts.length} ${currentBrandTitle || currentBrand} producten</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+    `;
+    container.appendChild(viewAllLink);
+  }
   
-  // Scroll to products section on page change
-  if (currentPage > 1) {
-    const productsSection = document.querySelector('.brand-products-section');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Hide pagination for preview mode
+  renderPagination(0);
+}
+
+/**
+ * Get base path for correct URL generation
+ */
+function getBasePath() {
+  const path = window.location.pathname;
+  if (path.includes('/kraanbakken/')) {
+    const parts = path.split('/').filter(p => p && !p.includes('.html'));
+    const kraanbakkenIndex = parts.indexOf('kraanbakken');
+    if (kraanbakkenIndex !== -1 && parts[kraanbakkenIndex + 1]) {
+      const levelsUp = parts.length - kraanbakkenIndex;
+      return '../'.repeat(levelsUp);
     }
   }
+  return '';
 }
 
 /**

@@ -4,5 +4,11 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://leelars.github.io/Structon/sitemap.xml
+# Sitemap index met alle locale sitemaps
+Sitemap: https://structon.be/sitemap.xml
+
+# Individuele locale sitemaps
+Sitemap: https://structon.be/sitemap-be-nl.xml
+Sitemap: https://structon.be/sitemap-nl-nl.xml
+Sitemap: https://structon.be/sitemap-be-fr.xml
+Sitemap: https://structon.be/sitemap-de-de.xml

@@ -469,11 +469,13 @@ h6 { font-size: var(--text-base); }
    order: 2;
    margin-left: 12px;
    margin-right: 0;
+   position: relative;
  }
 
  .top-bar .language-switcher--topbar .lang-dropdown {
    left: auto;
    right: 0;
+   top: calc(100% + 12px);
  }
 
 .tagline {

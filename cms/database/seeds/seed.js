@@ -77,15 +77,6 @@ async function seed() {
         seo_description: 'Sloophamer kopen? Structon levert hydraulische sloophamers voor minigravers en graafmachines. Krachtig en betrouwbaar.',
         seo_h1: 'Sloophamer Kopen - Hydraulische Breekhamers',
         seo_intro: 'Hydraulische sloophamers voor het breken van beton, asfalt en steen. Geschikt voor sloopwerk, wegenbouw en renovatieprojecten.'
-      },
-      { 
-        title: 'Adapters', 
-        slug: 'adapters', 
-        description: 'Snelwissels en adapters voor alle merken.',
-        seo_title: 'Adapter Kopen | CW Adapters & Snelwissels',
-        seo_description: 'CW adapter kopen? Structon levert adapters en snelwissels voor alle CW-aansluitingen. CW05 naar CW10, CW10 naar CW20.',
-        seo_h1: 'Adapters & Snelwissels',
-        seo_intro: 'Met onze adapters koppel je aanbouwdelen met verschillende CW-aansluitingen aan jouw graafmachine. Universeel inzetbaar.'
       }
     ];
 

@@ -230,7 +230,6 @@ function createSubcategoryCard(subcategory) {
 const CATEGORY_DESCRIPTIONS = {
   'graafbakken': 'Professionele graafbakken voor alle grondwerkzaamheden. Van standaard graafwerk tot gespecialiseerde toepassingen zoals drainage, rioleringen en funderingen. Onze graafbakken zijn vervaardigd uit hoogwaardig Hardox staal voor maximale slijtvastheid en een lange levensduur. Verkrijgbaar in diverse breedtes en voor alle tonnageklassen, van minigraver tot zware graafmachine.',
   'sloop-sorteergrijpers': 'Robuuste sloop- en sorteergrijpers voor afbraak, recycling en materiaalverwerking. Speciaal ontworpen voor het efficiënt sorteren van puin, hout, metaal en andere bouwmaterialen. Onze grijpers combineren krachtige hydrauliek met precisie voor optimale productiviteit op recyclingparken, sloopwerven en overslaglocaties.',
-  'adapters': 'Snelwissels, adapterplaten en rotators voor flexibel machinegebruik. Wissel moeiteloos tussen verschillende aanbouwdelen zonder gereedschap. Onze adaptersystemen zijn compatibel met alle gangbare merken en verhogen de veelzijdigheid van uw graafmachine aanzienlijk. Verkrijgbaar in mechanische en hydraulische uitvoeringen.',
   'overige': 'Gespecialiseerde aanbouwdelen voor specifieke toepassingen. Van hydraulische hamers voor breekwerk tot egaliseerbalken voor afwerking. Ons assortiment aanvullende aanbouwdelen maakt uw graafmachine geschikt voor vrijwel elke klus in de grond-, weg- en waterbouw.'
 };
 
@@ -250,11 +249,6 @@ const SUBCATEGORY_DESCRIPTIONS = {
   'sorteergrijpers': 'Sorteergrijpers zijn hydraulische grijpers voor het efficiënt sorteren en verplaatsen van bouw- en sloopafval. De krachtige bekken met getande binnenzijde grijpen stevig vast in puin, hout en andere materialen. Perfect voor recyclingparken, overslagstations en sloopwerven waar materiaalscheiding essentieel is voor hergebruik.',
   'sloopgrijpers': 'Sloopgrijpers zijn extra zware grijpers speciaal ontworpen voor afbraakwerk. Voorzien van verstevigde bekken en slijtvaste tanden voor het slopen van beton, metselwerk en andere constructies. De robuuste hydrauliek genereert enorme krachten voor het breken en verwijderen van hardnekkige bouwmaterialen.',
   'puingrijpers': 'Puingrijpers zijn veelzijdige grijpers voor het laden en sorteren van puin en grof materiaal. De brede bekopening en getande binnenzijde zorgen voor optimale grip op losse materialen. Ideaal voor het ruimen van slooppuin, het laden van containers en het sorteren van recyclingmateriaal op bouw- en slooplocaties.',
-  
-  // Adapters subcategorieën
-  'snelwissels': 'Snelwissels maken het mogelijk om binnen seconden van aanbouwdeel te wisselen zonder uit de cabine te stappen. Verkrijgbaar in mechanische en volledig hydraulische uitvoering. Compatibel met alle gangbare CW-koppelingen en S-systemen. Verhoogt de productiviteit en flexibiliteit van uw graafmachine aanzienlijk.',
-  'adapterplaten': 'Adapterplaten verbinden aanbouwdelen met verschillende koppelingssystemen aan uw graafmachine. Essentieel wanneer u bakken of grijpers met een ander systeem wilt gebruiken dan de standaardkoppeling van uw machine. Verkrijgbaar voor alle gangbare combinaties van CW, S-systeem en merkspecifieke koppelingen.',
-  'rotators': 'Hydraulische rotators maken 360 graden rotatie van aanbouwdelen mogelijk. Ideaal voor sorteergrijpers, kantelbakken en andere aanbouwdelen waar positionering cruciaal is. De continue rotatie verhoogt de efficiëntie bij laden, sorteren en precisiewerk. Verkrijgbaar in verschillende tonnageklassen met variabele rotatiesnelheid.',
   
   // Overige subcategorieën
   'ripper-tanden': 'Ripper tanden zijn krachtige breektanden voor het openbreken van verhardingen, bevroren grond en rotsachtige bodems. De versterkte constructie en scherpe punt penetreren moeiteloos in harde ondergronden. Onmisbaar voor grondwerk in moeilijke omstandigheden waar standaard graaftanden tekortschieten.',

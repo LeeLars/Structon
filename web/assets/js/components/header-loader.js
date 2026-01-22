@@ -228,75 +228,6 @@
           </div>
           
           <div class="menu-item">
-            <a href="${pagesPrefix}?cat=adapters">
-              Adapterstukken <span class="dropdown-arrow">▼</span>
-            </a>
-            
-            <!-- Mega Menu Dropdown - Adapters -->
-            <div class="menu-dropdown">
-              <div class="menu-dropdown-container">
-                <div class="menu-dropdown-content" style="width: 100%;">
-                  <div class="menu-dropdown-header">
-                    <h3 class="menu-dropdown-title">Adapterstukken</h3>
-                    <a href="${pagesPrefix}?cat=adapters" class="menu-dropdown-view-all"><span>Bekijk alles</span></a>
-                  </div>
-                  
-                  <div class="menu-dropdown-grid">
-                    <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=adapters&subcat=cw-snelwissels" class="menu-column-title">CW Snelwissels</a>
-                      <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=adapters&subcat=cw-snelwissels&type=cw05" class="menu-tonnage-link"><span>•</span> <span>CW05 Snelwissels (1-2 ton)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=cw-snelwissels&type=cw10" class="menu-tonnage-link"><span>•</span> <span>CW10 Snelwissels (2-5 ton)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=cw-snelwissels&type=cw20" class="menu-tonnage-link"><span>•</span> <span>CW20 Snelwissels (5-10 ton)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=cw-snelwissels&type=cw30" class="menu-tonnage-link"><span>•</span> <span>CW30 Snelwissels (10-15 ton)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=cw-snelwissels&type=cw40" class="menu-tonnage-link"><span>•</span> <span>CW40 Snelwissels (15-25 ton)</span></a>
-                      </div>
-                    </div>
-                    
-                    <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=adapters&subcat=s-systemen" class="menu-column-title">S-Systemen</a>
-                      <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=adapters&subcat=s-systemen&type=s45" class="menu-tonnage-link"><span>•</span> <span>S45 Snelwissels (5-10 ton)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=s-systemen&type=s60" class="menu-tonnage-link"><span>•</span> <span>S60 Snelwissels (10-15 ton)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=s-systemen&type=s70" class="menu-tonnage-link"><span>•</span> <span>S70 Snelwissels (15-25 ton)</span></a>
-                      </div>
-                    </div>
-                    
-                    <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=adapters&subcat=pennen-bussen" class="menu-column-title">Pennen & Bussen</a>
-                      <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=adapters&subcat=pennen-bussen&type=pennen" class="menu-tonnage-link"><span>•</span> <span>Pennen (diverse maten)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=pennen-bussen&type=bussen" class="menu-tonnage-link"><span>•</span> <span>Bussen (diverse maten)</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=pennen-bussen&type=borgpennen" class="menu-tonnage-link"><span>•</span> <span>Borgpennen</span></a>
-                      </div>
-                    </div>
-                    
-                    <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=adapters&subcat=adapterplaten" class="menu-column-title">Adapterplaten</a>
-                      <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=adapters&subcat=adapterplaten&type=cw-naar-s" class="menu-tonnage-link"><span>•</span> <span>CW naar S-systeem</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=adapterplaten&type=s-naar-cw" class="menu-tonnage-link"><span>•</span> <span>S naar CW-systeem</span></a>
-                        <a href="${pagesPrefix}?cat=adapters&subcat=adapterplaten&type=vast" class="menu-tonnage-link"><span>•</span> <span>Vaste adapterplaten</span></a>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="menu-cta-box">
-                    <div class="menu-cta-content">
-                      <h4 class="menu-cta-title">HULP NODIG?</h4>
-                      <p class="menu-cta-text">Weet u niet zeker welke aansluiting u nodig heeft? Onze specialisten helpen u graag met het juiste adapterstuk.</p>
-                    </div>
-                    <a href="${basePath}contact/" class="btn-split">
-                      <span class="btn-split-text">Neem contact op</span>
-                      <span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="menu-item">
             <a href="${pagesPrefix}?cat=overige">
               Overige <span class="dropdown-arrow">▼</span>
             </a>
@@ -384,7 +315,6 @@
     <a href="${pagesPrefix}?cat=graafbakken" class="nav-link">Graafbakken</a>
     <a href="${pagesPrefix}?cat=slotenbakken" class="nav-link">Slotenbakken</a>
     <a href="${pagesPrefix}?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
-    <a href="${pagesPrefix}?cat=adapters" class="nav-link">Adapterstukken</a>
     <a href="${basePath}blog/" class="nav-link">Blog</a>
     <hr>
     <a href="${basePath}over-ons/" class="nav-link">Over ons</a>

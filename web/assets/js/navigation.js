@@ -89,12 +89,6 @@ const FALLBACK_MENU_STRUCTURE = {
       ]
     }
   ],
-  'adapters': [
-    { title: 'CW05', slug: 'cw05', tonnages: [] },
-    { title: 'CW10', slug: 'cw10', tonnages: [] },
-    { title: 'CW20', slug: 'cw20', tonnages: [] },
-    { title: 'CW30', slug: 'cw30', tonnages: [] }
-  ], 
   'overige': [
     { title: 'Bosbouw', slug: 'bosbouw', tonnages: [] },
     { title: 'Landbouw', slug: 'landbouw', tonnages: [] }

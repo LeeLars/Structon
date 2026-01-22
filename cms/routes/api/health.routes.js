@@ -102,7 +102,6 @@ router.post('/debug/seed', async (req, res) => {
       { title: 'Graafbakken', slug: 'graafbakken', description: 'Professionele graafbakken voor alle graafmachines.' },
       { title: 'Slotenbakken', slug: 'slotenbakken', description: 'Smalle bakken voor het graven van sloten.' },
       { title: 'Sloop- en sorteergrijpers', slug: 'sloop-sorteergrijpers', description: 'Grijpers voor sloop en recycling.' },
-      { title: 'Adapterstukken', slug: 'adapters', description: 'Snelwissels en adapters.' },
       { title: 'Overige', slug: 'overige', description: 'Overige aanbouwdelen.' }
     ];
     
@@ -183,13 +182,6 @@ router.post('/debug/seed-subcategories', async (req, res) => {
       { title: 'Puingrijpers', slug: 'puingrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 3 },
       { title: 'Houtgrijpers', slug: 'houtgrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 4 },
       { title: 'Steengrijpers', slug: 'steengrijpers', category_slug: 'sloop-sorteergrijpers', sort_order: 5 },
-      
-      // Adapters subcategories
-      { title: 'Snelwissels', slug: 'snelwissels', category_slug: 'adapters', sort_order: 1 },
-      { title: 'Adapterplaten', slug: 'adapterplaten', category_slug: 'adapters', sort_order: 2 },
-      { title: 'Rotators', slug: 'rotators', category_slug: 'adapters', sort_order: 3 },
-      { title: 'Tiltrotators', slug: 'tiltrotators', category_slug: 'adapters', sort_order: 4 },
-      { title: 'Kantelstukken', slug: 'kantelstukken', category_slug: 'adapters', sort_order: 5 },
       
       // Overige subcategories
       { title: 'Ripper Tanden', slug: 'ripper-tanden', category_slug: 'overige', sort_order: 1 },

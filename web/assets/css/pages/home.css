@@ -281,7 +281,7 @@
 }
 
 /* ============================================
-   4 MAIN CATEGORIES BLOCKS (Clean Design)
+   3 MAIN CATEGORIES BLOCKS (Clean Design)
    ============================================ */
 .section-categories {
   padding: var(--space-16) 0;
@@ -298,7 +298,7 @@
 
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
   gap: var(--space-6);
 }
 

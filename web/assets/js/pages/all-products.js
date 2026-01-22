@@ -659,10 +659,6 @@ function renderProductDetail(product, container) {
             </a>
           </div>
         </div>
-
-        <!-- 3. Sidebar Column (Expert & Trust) -->
-        <div class="pro-col-sidebar">
-        </div>
       </div>
 
       <!-- Full Specs & Details Section -->
@@ -908,8 +904,8 @@ function injectProStyles() {
     /* Grid Layout */
     .pro-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: 3fr 2fr;
+      gap: 48px;
       margin-bottom: 64px;
       max-width: 100%;
     }
@@ -958,9 +954,8 @@ function injectProStyles() {
     .icon-btn { display: flex; align-items: center; justify-content: flex-start; gap: 8px; }
     #btn-request-quote { justify-content: flex-start !important; }
 
-    /* Column 3: Sidebar */
-    .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-    .expert-box { background: #f8fafc; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; }
+    /* Expert Box */
+    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; }
     .expert-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
     .expert-avatar { width: 48px; height: 48px; background: #e0f2f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .expert-info { display: flex; flex-direction: column; }
@@ -1184,7 +1179,6 @@ function injectProStyles() {
     /* Responsive */
     @media (max-width: 1200px) {
       .pro-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
-      .pro-col-sidebar { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     }
     @media (max-width: 900px) {
       .details-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -1192,7 +1186,6 @@ function injectProStyles() {
     }
     @media (max-width: 768px) {
       .pro-grid { grid-template-columns: 1fr; gap: 24px; }
-      .pro-col-sidebar { grid-template-columns: 1fr; }
       .pro-title { font-size: 1.8rem; }
       .key-specs-grid { grid-template-columns: 1fr; }
       .main-image-wrapper { height: 300px; }

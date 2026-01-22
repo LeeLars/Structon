@@ -17,6 +17,16 @@ let currentCategory = null;
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
 
+/**
+ * Get current locale from URL path
+ * @returns {string} Locale code (e.g., 'be-nl', 'nl-nl', 'be-fr', 'de-de')
+ */
+function getCurrentLocale() {
+  const path = window.location.pathname;
+  const localeMatch = path.match(/\/(be-nl|nl-nl|be-fr|de-de)\//);
+  return localeMatch ? localeMatch[1] : 'be-nl';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initPage();
 });

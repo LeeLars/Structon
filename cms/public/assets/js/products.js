@@ -921,39 +921,8 @@ async function handleImageSelect(e) {
   
   console.log('📷 Selected files:', files.map(f => f.name));
   
-  // Show local preview first (await all previews)
-  const uploadArea = document.getElementById('image-upload-area');
-  if (uploadArea) {
-    // Create preview container if it doesn't exist
-    let previewContainer = document.getElementById('image-preview-container');
-    if (!previewContainer) {
-      previewContainer = document.createElement('div');
-      previewContainer.id = 'image-preview-container';
-      previewContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;';
-      uploadArea.parentNode.insertBefore(previewContainer, uploadArea.nextSibling);
-    }
-    
-    // Show local previews (wait for all to load) - append to existing previews
-    const previewPromises = files.map(file => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const div = document.createElement('div');
-          div.style.cssText = 'position: relative; width: 100px; height: 100px;';
-          div.innerHTML = `
-            <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 2px solid #ddd;">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; font-size: 10px; padding: 2px; text-align: center; border-radius: 0 0 8px 8px;">Uploading...</div>
-          `;
-          previewContainer.appendChild(div);
-          resolve();
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-    
-    // Wait for all previews to render
-    await Promise.all(previewPromises);
-  }
+  // Show uploading status
+  showToast(`${files.length} afbeelding(en) uploaden...`, 'info');
   
   // Try to upload to Cloudinary
   const formData = new FormData();
@@ -1012,37 +981,42 @@ async function handleImageSelect(e) {
  * Render image previews for existing images
  */
 function renderImagePreviews() {
-  const uploadArea = document.getElementById('image-upload-area');
-  if (!uploadArea) return;
+  // Get the preview container (exists in HTML)
+  const previewContainer = document.getElementById('image-preview-container');
+  if (!previewContainer) return;
   
-  // Create or get preview container
-  let previewContainer = document.getElementById('image-preview-container');
-  if (!previewContainer) {
-    previewContainer = document.createElement('div');
-    previewContainer.id = 'image-preview-container';
-    previewContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;';
-    uploadArea.parentNode.insertBefore(previewContainer, uploadArea.nextSibling);
-  }
-  
+  // Clear existing previews
   previewContainer.innerHTML = '';
   
   const images = window.uploadedImages || [];
+  
+  // Hide container if no images
+  if (images.length === 0) {
+    previewContainer.style.display = 'none';
+    return;
+  }
+  
+  // Show container
+  previewContainer.style.display = 'grid';
+  
   images.forEach((img, index) => {
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'position: relative; width: 100px; height: 100px;';
     
     const imgEl = document.createElement('img');
     imgEl.src = img.url;
     imgEl.alt = img.alt || 'Product afbeelding';
-    imgEl.style.cssText = 'width: 100%; height: 100%; object-fit: cover; border-radius: 8px;';
+    imgEl.loading = 'lazy';
     
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.innerHTML = '×';
-    removeBtn.style.cssText = 'position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #ef4444; color: white; border: none; cursor: pointer; font-size: 16px; line-height: 1;';
-    removeBtn.onclick = () => {
+    removeBtn.title = 'Verwijder afbeelding';
+    removeBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       window.uploadedImages.splice(index, 1);
       renderImagePreviews();
+      showToast('Afbeelding verwijderd', 'info');
     };
     
     wrapper.appendChild(imgEl);

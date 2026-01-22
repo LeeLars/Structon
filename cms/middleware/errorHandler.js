@@ -14,13 +14,23 @@ export function errorHandler(err, req, res, next) {
   const isProduction = process.env.NODE_ENV === 'production';
   const statusCode = err.status || err.statusCode || 500;
   
-  // Generic error messages for production
+  // Build error response
   const errorResponse = {
     error: isProduction && statusCode === 500 
       ? 'Er is een fout opgetreden. Probeer het later opnieuw.' 
       : err.message || 'Interne serverfout',
     statusCode
   };
+  
+  // Always include details if available (for debugging upload issues)
+  if (err.details) {
+    errorResponse.details = err.details;
+  }
+  
+  // Add cloudinaryConfigured status if available
+  if (err.cloudinaryConfigured !== undefined) {
+    errorResponse.cloudinaryConfigured = err.cloudinaryConfigured;
+  }
   
   // Add stack trace in development only
   if (!isProduction && err.stack) {

@@ -132,24 +132,29 @@ router.post('/images', apiLimiter, upload.array('images', 10), async (req, res) 
       stack: error.stack?.split('\n').slice(0, 5)
     });
     
-    // Return detailed error for debugging
-    let errorMessage = 'Er is een fout opgetreden bij het uploaden.';
-    let errorDetails = error.message || 'Unknown error';
+    // Create error object with details
+    const uploadError = new Error('Er is een fout opgetreden bij het uploaden.');
+    uploadError.details = error.message || 'Unknown error';
+    uploadError.cloudinaryConfigured = isCloudinaryConfigured();
+    uploadError.statusCode = 500;
     
+    // Set more specific error message based on error type
     if (error.message?.includes('Invalid') || error.message?.includes('invalid')) {
-      errorMessage = 'Ongeldige Cloudinary configuratie. Controleer de API credentials.';
+      uploadError.message = 'Ongeldige Cloudinary configuratie. Controleer de API credentials.';
     } else if (error.message?.includes('File size') || error.message?.includes('too large')) {
-      errorMessage = 'Bestand is te groot. Maximum is 5MB.';
+      uploadError.message = 'Bestand is te groot. Maximum is 5MB.';
     } else if (error.http_code === 401 || error.message?.includes('401')) {
-      errorMessage = 'Cloudinary authenticatie mislukt. Controleer API key en secret.';
+      uploadError.message = 'Cloudinary authenticatie mislukt. Controleer API key en secret.';
     } else if (error.message?.includes('Must supply')) {
-      errorMessage = 'Cloudinary configuratie ontbreekt. Controleer environment variabelen.';
+      uploadError.message = 'Cloudinary configuratie ontbreekt. Controleer environment variabelen.';
     }
     
+    // Pass to error handler middleware
     return res.status(500).json({
-      error: errorMessage,
-      details: errorDetails,
-      cloudinaryConfigured: isCloudinaryConfigured()
+      error: uploadError.message,
+      details: uploadError.details,
+      cloudinaryConfigured: uploadError.cloudinaryConfigured,
+      statusCode: 500
     });
   }
 });

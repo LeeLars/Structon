@@ -652,10 +652,11 @@ function renderProductDetail(product, container) {
 
         <!-- 3. Sidebar Column (Expert & Trust) -->
         <div class="pro-col-sidebar">
-          <!-- Expert Box -->
-          ${createExpertBox()}
         </div>
       </div>
+
+      <!-- Expert Box (Full Width) -->
+      ${createExpertBox()}
 
       <!-- Full Specs & Details Section -->
       <div id="full-specs" class="pro-details-section">
@@ -696,27 +697,30 @@ function renderProductDetail(product, container) {
                   
                   <div class="brands-grid">
                     ${(() => {
+                      const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+                      const locale = getCurrentLocale() || 'be-nl';
+                      
                       if (product.compatible_brand_titles === 'all') {
                         return `
-                          <div class="brand-tag brand-tag-universal">
+                          <a href="${basePath}/${locale}/kraanbakken/" class="brand-tag brand-tag-universal">
                             <span class="tag-icon">✓</span>
                             <span class="tag-text">Universeel / Alle Merken</span>
-                          </div>
+                          </a>
                           <p class="brand-universal-note">Geschikt voor alle graafmachines met de juiste CW-aansluiting.</p>
                         `;
                       }
                       if (Array.isArray(product.compatible_brand_titles) && product.compatible_brand_titles.length > 0) {
                         return product.compatible_brand_titles.map(t => `
-                          <div class="brand-tag">
+                          <span class="brand-tag">
                             ${escapeHtml(t)}
-                          </div>
+                          </span>
                         `).join('');
                       }
                       if (product.brand_title) {
                         return `
-                          <div class="brand-tag">
+                          <span class="brand-tag">
                             ${escapeHtml(product.brand_title)}
-                          </div>
+                          </span>
                         `;
                       }
                       return '';
@@ -901,7 +905,7 @@ function injectProStyles() {
     /* Column 1: Gallery */
     .pro-col-gallery { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
     .main-image-wrapper { 
-      background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; 
+      background: transparent; border: none; border-radius: 0; padding: 0; 
       position: relative; width: 100%; height: 500px; display: flex; align-items: center; justify-content: center;
     }
     .main-image-wrapper img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
@@ -944,7 +948,7 @@ function injectProStyles() {
 
     /* Column 3: Sidebar */
     .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto 48px; }
     .expert-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
     .expert-avatar { width: 48px; height: 48px; background: #e0f2f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .expert-info { display: flex; flex-direction: column; }
@@ -1071,82 +1075,93 @@ function injectProStyles() {
 
     /* Brand Compatibility Box */
     .brands-compatibility-section {
-      margin-top: 32px;
+      margin-top: 24px;
     }
 
     /* .compatibility-box is defined above with white background */
 
     .compatibility-box:has(.brand-tag-universal) {
-      background-color: #f0f9ff;
-      border-color: #bae6fd;
+      background-color: #f8fafc;
+      border-color: #e2e8f0;
     }
 
     .compatibility-intro {
-      font-weight: 600;
-      color: var(--color-gray-800);
-      margin-bottom: 16px;
-      font-size: 0.95rem;
+      font-weight: 500;
+      color: #475569;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
     }
 
     .brands-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 8px;
+      margin-bottom: 16px;
     }
 
     .brands-grid .brand-tag {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background-color: #fff;
       border: 1px solid #cbd5e1;
       color: #334155;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
       transition: all 0.2s ease;
+      text-decoration: none;
     }
 
     .brands-grid .brand-tag:hover {
       border-color: var(--color-primary);
+      background-color: #f0f9ff;
       color: var(--color-primary);
-      transform: translateY(-1px);
     }
 
     .brand-tag-universal {
       background-color: var(--color-primary) !important;
       border-color: var(--color-primary) !important;
       color: #fff !important;
-      padding: 8px 16px !important;
+      padding: 8px 14px !important;
+      cursor: pointer;
+      text-decoration: none;
     }
 
     .brand-tag-universal:hover {
-      opacity: 0.9;
+      opacity: 0.85;
+      transform: none;
+    }
+
+    .brand-tag:not(.brand-tag-universal) {
+      cursor: default;
+      pointer-events: none;
     }
 
     .brand-universal-note {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #64748b;
-      margin-top: 8px;
-      font-style: italic;
+      margin-top: 4px;
+      font-style: normal;
+      line-height: 1.5;
     }
 
     .compatibility-disclaimer {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      font-size: 0.85rem;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
       color: #64748b;
+      line-height: 1.5;
     }
 
     .compatibility-disclaimer svg {
       flex-shrink: 0;
-      margin-top: 2px;
+      margin-top: 1px;
+      opacity: 0.6;
     }
 
     /* Related Section */

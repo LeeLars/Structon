@@ -93,8 +93,12 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
   const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
   
   // Use absolute path with dynamic base for GitHub Pages compatibility
+  // Include current locale in the URL (e.g., /be-nl/producten/)
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
+  const currentPath = window.location.pathname;
+  const localeMatch = currentPath.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); 
+  const locale = localeMatch ? localeMatch[1] : 'be-nl';
+  const productUrl = `${basePath}/${locale}/producten/?id=${product.slug || product.id}`;
 
   // Build specs list (Develon Style: Clean Label | Value list)
   const specsHtml = `
@@ -163,8 +167,12 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
   const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
   
   // Use absolute path with dynamic base for GitHub Pages compatibility
+  // Include current locale in the URL (e.g., /be-nl/producten/)
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
+  const currentPath = window.location.pathname;
+  const localeMatch = currentPath.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); 
+  const locale = localeMatch ? localeMatch[1] : 'be-nl';
+  const productUrl = `${basePath}/${locale}/producten/?id=${product.slug || product.id}`;
 
   // Build quote URL with pre-filled data
   const quoteParams = new URLSearchParams();
@@ -301,8 +309,12 @@ export function createProductCard(product, isLoggedIn = false) {
     || STOCK_PHOTOS[stockIndex];
   
   // Use absolute path with dynamic base for GitHub Pages compatibility
+  // Include current locale in the URL (e.g., /be-nl/producten/)
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-  const productUrl = `${basePath}/producten/?id=${product.slug || product.id}`;
+  const currentPath = window.location.pathname;
+  const localeMatch = currentPath.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); 
+  const locale = localeMatch ? localeMatch[1] : 'be-nl';
+  const productUrl = `${basePath}/${locale}/producten/?id=${product.slug || product.id}`;
 
   // Stock status logic
   const stock = product.stock || 0;

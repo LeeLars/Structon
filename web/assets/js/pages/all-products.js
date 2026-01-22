@@ -652,60 +652,79 @@ function renderProductDetail(product, container) {
 
       <!-- Full Specs & Details Section -->
       <div id="full-specs" class="pro-details-section">
-        <div class="tabs-header">
-          <button class="tab-btn active" data-target="specs">Specificaties</button>
-          <button class="tab-btn" data-target="desc">Omschrijving</button>
-        </div>
-        
-        <div id="tab-specs" class="tab-content active">
-          <h3 class="specs-title">Technische Specificaties</h3>
-          <table class="pro-specs-table">
-            <tbody>
-              ${allSpecs.map((s, i) => `
-                <tr class="${i % 2 === 0 ? 'bg-gray' : ''}">
-                  <th>${s.label}</th>
-                  <td>${s.value}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-
-        <div id="tab-desc" class="tab-content" style="display: none;">
-          <h3 class="specs-title">Product Omschrijving</h3>
-          <div class="pro-description-content">
-            <p>${escapeHtml(product.description || 'Geen omschrijving beschikbaar.')}</p>
+        <div class="pro-details-container">
+          <div class="details-header">
+            <h2 class="details-title">Product Specificaties</h2>
+            <div class="details-divider"></div>
           </div>
           
-          ${(product.compatible_brand_titles || product.brand_title) ? `
-          <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--pro-border);">
-            <h3 class="specs-title">Geschikt voor merken</h3>
-            <div class="pro-description-content">
-              <p style="margin-bottom: 16px;">Deze kraanbak is geschikt voor gebruik met de volgende merken:</p>
-              <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-                ${(() => {
-                  if (product.compatible_brand_titles === 'all') {
-                    return `<span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">Alle merken</span>`;
-                  }
-                  if (Array.isArray(product.compatible_brand_titles) && product.compatible_brand_titles.length > 0) {
-                    return product.compatible_brand_titles.map(t => `
-                      <span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">
-                        ${escapeHtml(t)}
-                      </span>
-                    `).join('');
-                  }
-                  if (product.brand_title) {
-                    return `<span style="display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 8px 20px; border-radius: 24px; font-weight: 600; font-size: 1rem;">${escapeHtml(product.brand_title)}</span>`;
-                  }
-                  return '';
-                })()}
+          <div class="details-grid">
+            <!-- Left: Technical Specs Table -->
+            <div class="details-col-specs">
+              <h3 class="subsection-title">Technische Gegevens</h3>
+              <table class="pro-specs-table">
+                <tbody>
+                  ${allSpecs.map((s, i) => `
+                    <tr>
+                      <th>${s.label}</th>
+                      <td>${s.value}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Right: Description & Brands -->
+            <div class="details-col-content">
+              <h3 class="subsection-title">Omschrijving</h3>
+              <div class="pro-description-content">
+                <p>${escapeHtml(product.description || 'Geen omschrijving beschikbaar.')}</p>
               </div>
-              <p style="margin-top: 16px; color: #64748b; font-size: 0.9rem;">
-                <strong>Let op:</strong> Controleer altijd de specificaties van uw machine om te zorgen voor een perfecte pasvorm. Neem bij twijfel contact op met onze specialisten.
-              </p>
+              
+              ${(product.compatible_brand_titles || product.brand_title) ? `
+              <div class="brands-compatibility-section">
+                <h3 class="subsection-title">Compatibiliteit</h3>
+                <div class="compatibility-box">
+                  <p class="compatibility-intro">Deze kraanbak is geschikt voor de volgende machinemerken:</p>
+                  
+                  <div class="brands-grid">
+                    ${(() => {
+                      if (product.compatible_brand_titles === 'all') {
+                        return `
+                          <div class="brand-tag brand-tag-universal">
+                            <span class="tag-icon">✓</span>
+                            <span class="tag-text">Universeel / Alle Merken</span>
+                          </div>
+                          <p class="brand-universal-note">Geschikt voor alle graafmachines met de juiste CW-aansluiting.</p>
+                        `;
+                      }
+                      if (Array.isArray(product.compatible_brand_titles) && product.compatible_brand_titles.length > 0) {
+                        return product.compatible_brand_titles.map(t => `
+                          <div class="brand-tag">
+                            ${escapeHtml(t)}
+                          </div>
+                        `).join('');
+                      }
+                      if (product.brand_title) {
+                        return `
+                          <div class="brand-tag">
+                            ${escapeHtml(product.brand_title)}
+                          </div>
+                        `;
+                      }
+                      return '';
+                    })()}
+                  </div>
+                  
+                  <div class="compatibility-disclaimer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>Controleer altijd de specificaties van uw machine (tonnage & ophanging) voor een perfecte pasvorm.</span>
+                  </div>
+                </div>
+              </div>
+              ` : ''}
             </div>
           </div>
-          ` : ''}
         </div>
       </div>
 
@@ -848,7 +867,7 @@ function injectProStyles() {
       transition: color 0.2s;
     }
     .pro-breadcrumbs a:hover {
-      color: var(--pro-primary);
+      color: var(--color-primary);
     }
     .pro-breadcrumbs .separator {
       color: #cbd5e1;
@@ -860,21 +879,20 @@ function injectProStyles() {
 
     /* Header */
     .pro-header { margin-bottom: 32px; }
-    .back-link { display: none; } /* Hidden in favor of breadcrumbs */
-    .pro-title { font-size: 2.5rem; font-weight: 800; color: var(--pro-text-dark); margin: 0; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
+    .back-link { display: none; }
+    .pro-title { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 800; color: var(--pro-text-dark); margin: 0; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
 
     /* Grid Layout */
     .pro-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr; /* 3 Column Layout - equal flexible columns */
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 24px;
       margin-bottom: 64px;
       max-width: 100%;
-      overflow: hidden;
     }
 
     /* Column 1: Gallery */
-    .pro-col-gallery { display: flex; flex-direction: column; gap: 16px; min-width: 0; max-width: 100%; }
+    .pro-col-gallery { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
     .main-image-wrapper { 
       background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; 
       position: relative; width: 100%; height: 500px; display: flex; align-items: center; justify-content: center;
@@ -886,30 +904,30 @@ function injectProStyles() {
       width: 80px; height: 80px; border: 2px solid var(--pro-border); border-radius: 8px; 
       padding: 4px; background: white; cursor: pointer; transition: all 0.2s; flex-shrink: 0;
     }
-    .thumb-btn:hover, .thumb-btn.active { border-color: var(--pro-primary); }
+    .thumb-btn:hover, .thumb-btn.active { border-color: var(--color-primary); }
     .thumb-btn img { width: 100%; height: 100%; object-fit: contain; }
 
     /* Column 2: Details */
-    .pro-col-details { display: flex; flex-direction: column; gap: 24px; min-width: 0; max-width: 100%; overflow: hidden; }
+    .pro-col-details { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
     .price-block { border-bottom: 1px solid var(--pro-border); padding-bottom: 20px; }
-    .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--pro-primary); }
+    .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--color-primary); }
     .price-suffix { font-size: 0.9rem; color: #64748b; margin-left: 4px; }
     .price-request { font-size: 1.5rem; font-weight: 600; color: var(--pro-text-dark); }
     
-    .key-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 100%; }
-    .key-spec-item { background: var(--pro-bg-light); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow: hidden; }
-    .spec-icon { color: var(--pro-primary); display: flex; align-items: center; margin-bottom: 4px; }
+    .key-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .key-spec-item { background: var(--pro-bg-light); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .spec-icon { color: var(--color-primary); display: flex; align-items: center; margin-bottom: 4px; }
     .spec-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
-    .spec-value { font-weight: 600; color: var(--pro-text-dark); font-size: 0.95rem; word-break: break-word; overflow-wrap: break-word; }
+    .spec-value { font-weight: 600; color: var(--pro-text-dark); font-size: 0.95rem; }
 
-    .pro-description p { color: #475569; line-height: 1.6; font-size: 0.95rem; margin-bottom: 8px; word-break: break-word; overflow-wrap: break-word; }
-    .read-more-link { color: var(--pro-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; border-bottom: 1px dashed var(--pro-primary); }
+    .pro-description p { color: #475569; line-height: 1.6; font-size: 0.95rem; margin-bottom: 8px; }
+    .read-more-link { color: var(--color-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600; border-bottom: 1px dashed var(--color-primary); }
     
-    /* Brand Compatibility */
-    .brand-compatibility { background: var(--pro-bg-light); padding: 20px; border-radius: 12px; border-left: 4px solid var(--pro-primary); }
+    /* Brand Compatibility (Top Summary) */
+    .brand-compatibility { background: var(--pro-bg-light); padding: 20px; border-radius: 12px; border-left: 4px solid var(--color-primary); }
     .compatibility-title { font-size: 0.85rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
     .compatibility-brands { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-    .brand-tag { display: inline-block; background: white; border: 2px solid var(--pro-primary); color: var(--pro-primary); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+    .brand-tag { display: inline-block; background: white; border: 2px solid var(--color-primary); color: var(--color-primary); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
     .compatibility-note { font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5; }
     
     .pro-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 0; }
@@ -918,42 +936,219 @@ function injectProStyles() {
     #btn-request-quote { justify-content: flex-start !important; }
 
     /* Column 3: Sidebar */
-    .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; min-width: 0; max-width: 100%; }
-    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; }
+    .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     .expert-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
     .expert-avatar { width: 48px; height: 48px; background: #e0f2f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .expert-info { display: flex; flex-direction: column; }
     .expert-info strong { font-size: 1.1rem; color: var(--pro-text-dark); }
     .expert-info span { font-size: 0.9rem; color: #64748b; }
     .expert-text { font-size: 0.9rem; color: #475569; margin-bottom: 16px; line-height: 1.5; }
-    .expert-phone, .expert-email { display: flex; text-decoration: none; color: var(--pro-primary); font-weight: 600; margin-bottom: 8px; align-items: center; gap: 8px; transition: opacity 0.2s; word-break: break-word; overflow-wrap: break-word; }
+    .expert-phone, .expert-email { display: flex; text-decoration: none; color: var(--color-primary); font-weight: 600; margin-bottom: 8px; align-items: center; gap: 8px; transition: opacity 0.2s; }
     .expert-phone:hover, .expert-email:hover { opacity: 0.8; }
 
-    /* Bottom Section */
-    .pro-details-section { border-top: 1px solid var(--pro-border); padding-top: 48px; margin-bottom: 64px; }
-    .tabs-header { display: flex; gap: 24px; border-bottom: 2px solid var(--pro-border); margin-bottom: 32px; }
-    .tab-btn { background: none; border: none; padding: 0 0 16px 0; font-size: 1.1rem; font-weight: 500; color: #64748b; cursor: pointer; position: relative; }
-    .tab-btn.active { color: var(--pro-primary); font-weight: 700; }
-    .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: var(--pro-primary); }
-    
-    .specs-title { margin-bottom: 24px; font-size: 1.5rem; color: var(--pro-text-dark); }
-    .pro-specs-table { width: 100%; max-width: 800px; border-collapse: collapse; }
-    .pro-specs-table tr { border-bottom: 1px solid var(--pro-border); }
-    .pro-specs-table tr.bg-gray { background: #f8fafc; }
-    .pro-specs-table th { text-align: left; padding: 12px 16px; color: #64748b; font-weight: 500; width: 40%; }
-    .pro-specs-table td { padding: 12px 16px; color: var(--pro-text-dark); font-weight: 600; }
-    
-    .pro-description-content { max-width: 800px; line-height: 1.8; color: #334155; }
+    /* Full Specs & Details Section (New Design) */
+    .pro-details-section {
+      padding: 64px 0;
+      background-color: #fff;
+      border-top: 1px solid var(--color-gray-200);
+      margin-top: 64px;
+    }
 
-    /* Featured Products */
+    .pro-details-container {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .details-header {
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .details-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--color-gray-900);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .details-divider {
+      width: 60px;
+      height: 4px;
+      background-color: var(--color-primary);
+      border-radius: 2px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .subsection-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Specs Table */
+    .details-col-specs {
+      background-color: #f8fafc;
+      padding: 32px;
+      border-radius: 12px;
+      border: 1px solid var(--pro-border);
+    }
+
+    .pro-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pro-specs-table tr {
+      border-bottom: 1px solid var(--pro-border);
+    }
+
+    .pro-specs-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .pro-specs-table th {
+      text-align: left;
+      padding: 16px 0;
+      font-weight: 600;
+      color: #64748b;
+      width: 40%;
+      font-size: 0.95rem;
+    }
+
+    .pro-specs-table td {
+      text-align: right;
+      padding: 16px 0;
+      font-weight: 500;
+      color: var(--pro-text-dark);
+      font-size: 1rem;
+    }
+
+    /* Content Column */
+    .pro-description-content {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #334155;
+      margin-bottom: 40px;
+    }
+
+    .pro-description-content p {
+      margin-bottom: 1em;
+    }
+
+    /* Brand Compatibility Box */
+    .brands-compatibility-section {
+      margin-top: 32px;
+    }
+
+    .compatibility-box {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .compatibility-box:has(.brand-tag-universal) {
+      background-color: #f0f9ff;
+      border-color: #bae6fd;
+    }
+
+    .compatibility-intro {
+      font-weight: 600;
+      color: var(--color-gray-800);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+
+    .brands-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .brands-grid .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #fff;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+    }
+
+    .brands-grid .brand-tag:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    .brand-tag-universal {
+      background-color: var(--color-primary) !important;
+      border-color: var(--color-primary) !important;
+      color: #fff !important;
+      padding: 8px 16px !important;
+    }
+
+    .brand-tag-universal:hover {
+      opacity: 0.9;
+    }
+
+    .brand-universal-note {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .compatibility-disclaimer {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .compatibility-disclaimer svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Related Section */
     .related-section { border-top: 1px solid var(--pro-border); padding-top: 48px; margin-top: 48px; }
-    .related-title { font-size: 1.8rem; margin-bottom: 32px; color: var(--pro-text-dark); font-weight: 700; text-transform: uppercase; }
+    .related-title { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 32px; color: var(--pro-text-dark); font-weight: 700; text-transform: uppercase; }
     .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; }
 
     /* Responsive */
     @media (max-width: 1200px) {
       .pro-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
       .pro-col-sidebar { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    }
+    @media (max-width: 900px) {
+      .details-grid { grid-template-columns: 1fr; gap: 32px; }
+      .details-col-specs { order: 2; }
     }
     @media (max-width: 768px) {
       .pro-grid { grid-template-columns: 1fr; gap: 24px; }

@@ -665,9 +665,6 @@ function renderProductDetail(product, container) {
         </div>
       </div>
 
-      <!-- Expert Box (Full Width) -->
-      ${createExpertBox()}
-
       <!-- Full Specs & Details Section -->
       <div id="full-specs" class="pro-details-section">
         <div class="pro-details-container">
@@ -744,6 +741,11 @@ function renderProductDetail(product, container) {
                 </div>
               </div>
               ` : ''}
+              
+              <!-- Expert Box (Inside Description Column) -->
+              <div class="expert-box-container" style="margin-top: 32px;">
+                ${createExpertBox()}
+              </div>
             </div>
           </div>
         </div>
@@ -958,7 +960,7 @@ function injectProStyles() {
 
     /* Column 3: Sidebar */
     .pro-col-sidebar { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-    .expert-box { background: white; border: 1px solid var(--pro-border); border-radius: 12px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto 48px; }
+    .expert-box { background: #f8fafc; border: 1px solid var(--pro-border); border-radius: 12px; padding: 24px; }
     .expert-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
     .expert-avatar { width: 48px; height: 48px; background: #e0f2f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .expert-info { display: flex; flex-direction: column; }

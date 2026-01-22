@@ -133,9 +133,11 @@
   }
 
   // Generate language switcher HTML
-  function getLanguageSwitcher() {
+  function getLanguageSwitcher(options = {}) {
     const currentLocale = getCurrentLocale();
     const pagePath = getCurrentPagePath();
+    const showFlag = options.showFlag !== false;
+    const variantClass = options.variant ? ` language-switcher--${options.variant}` : '';
     
     // If not in a locale path, don't show switcher
     if (!currentLocale) {
@@ -156,13 +158,13 @@
     for (const locale of SUPPORTED_LOCALES) {
       const info = localeNames[locale];
       const isActive = locale === currentLocale ? ' class="active"' : '';
-      dropdownItems += `<a href="${basePath}${locale}/${pagePath}"${isActive}>${info.flag} ${info.full}</a>`;
+      dropdownItems += `<a href="${basePath}${locale}/${pagePath}"${isActive}>${info.full}</a>`;
     }
     
     return `
-      <div class="language-switcher">
+      <div class="language-switcher${variantClass}">
         <button class="lang-toggle" id="lang-toggle" aria-label="Taal wijzigen">
-          <span class="lang-flag">${current.flag}</span>
+          ${showFlag ? `<span class="lang-flag">${current.flag}</span>` : ''}
           <span class="lang-code">${current.name}</span>
           <span class="lang-arrow">▼</span>
         </button>
@@ -184,6 +186,7 @@
     <!-- Top bar -->
     <div class="top-bar">
       <div class="container">
+        ${getLanguageSwitcher({ showFlag: false, variant: 'topbar' })}
         <nav class="top-nav">
           <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
           <a href="${basePath}over-ons/">Over</a>
@@ -416,7 +419,6 @@
         </div>
         
         <div class="nav-actions">
-          ${getLanguageSwitcher()}
           <a href="${basePath}producten/" class="cta-button">Bekijk alles</a>
         </div>
         

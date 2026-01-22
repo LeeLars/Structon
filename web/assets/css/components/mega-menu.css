@@ -315,6 +315,39 @@
   font-weight: 500;
 }
 
+ .language-switcher--topbar {
+   margin-right: 12px;
+   display: inline-flex;
+   align-items: center;
+ }
+
+ .language-switcher--topbar .lang-toggle {
+   padding: 2px 8px;
+   border: 0;
+   background: transparent;
+   color: #fff;
+   font-size: 12px;
+   line-height: 1;
+ }
+
+ .language-switcher--topbar .lang-toggle:hover {
+   background: rgba(255, 255, 255, 0.08);
+   border-color: transparent;
+ }
+
+ .language-switcher--topbar .lang-code {
+   font-weight: 500;
+ }
+
+ .language-switcher--topbar .lang-arrow {
+   opacity: 0.85;
+ }
+
+ .language-switcher--topbar .lang-dropdown {
+   right: auto;
+   left: 0;
+ }
+
 @media (max-width: 768px) {
   .language-switcher {
     margin-right: 8px;

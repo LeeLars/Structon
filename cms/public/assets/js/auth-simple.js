@@ -35,6 +35,29 @@ class SimpleAuth {
   }
 
   /**
+   * Get stored user data
+   */
+  getUser() {
+    try {
+      const userData = localStorage.getItem('structon_user');
+      return userData ? JSON.parse(userData) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Store user data
+   */
+  setUser(user) {
+    if (user) {
+      localStorage.setItem('structon_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('structon_user');
+    }
+  }
+
+  /**
    * Login
    */
   async login(email, password) {
@@ -55,8 +78,9 @@ class SimpleAuth {
         throw new Error('Geen admin rechten');
       }
 
-      // Store token
+      // Store token and user data
       this.setToken(data.token);
+      this.setUser(data.user);
 
       return {
         success: true,
@@ -73,6 +97,7 @@ class SimpleAuth {
    */
   logout() {
     this.setToken(null);
+    this.setUser(null);
     window.location.href = '/cms/login.html';
   }
 

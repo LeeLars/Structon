@@ -46,69 +46,48 @@ async function loadDashboardStats() {
     }
   }
 
-  // Load all stats in parallel
-  const [productsData, quotesData, usersData, ordersData] = await Promise.all([
-    fetchAPI('/admin/products?limit=1'),
-    fetchAPI('/admin/quotes'),
-    fetchAPI('/admin/users'),
-    fetchAPI('/admin/orders')
-  ]);
+  // Use the dedicated sales/stats endpoint for dashboard data
+  const statsData = await fetchAPI('/sales/stats');
+  
+  console.log('📊 Stats data received:', statsData);
 
-  // Update Products stat
-  if (productsData) {
-    const total = productsData.total || productsData.products?.length || 0;
-    document.getElementById('stat-products').textContent = total;
-  } else {
-    document.getElementById('stat-products').textContent = '0';
-  }
+  if (statsData) {
+    // Update Products stat
+    const productsEl = document.getElementById('stat-products');
+    if (productsEl) {
+      productsEl.textContent = statsData.products || 0;
+    }
 
-  // Update Quotes stat
-  if (quotesData) {
-    const quotes = quotesData.quotes || quotesData || [];
-    const total = Array.isArray(quotes) ? quotes.length : (quotesData.total || 0);
-    const newQuotes = Array.isArray(quotes) ? quotes.filter(q => q.status === 'new' || q.status === 'pending').length : 0;
-    
-    document.getElementById('stat-quotes').textContent = total;
-    document.getElementById('stat-quotes-badge').textContent = newQuotes > 0 ? `${newQuotes} nieuw` : 'Geen';
-    document.getElementById('stat-quotes-change').innerHTML = newQuotes > 0 
-      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg> ${newQuotes} wachtend op reactie`
-      : 'Alle offertes afgehandeld';
-  } else {
-    document.getElementById('stat-quotes').textContent = '0';
-    document.getElementById('stat-quotes-badge').textContent = '-';
-    document.getElementById('stat-quotes-change').textContent = 'Geen data';
-  }
+    // Update Quotes stat
+    const quotesEl = document.getElementById('stat-quotes');
+    const quotesBadge = document.getElementById('stat-quotes-badge');
+    const quotesChange = document.getElementById('stat-quotes-change');
+    if (quotesEl) quotesEl.textContent = statsData.quotes || 0;
+    if (quotesBadge) quotesBadge.textContent = statsData.quotes > 0 ? `${statsData.quotes} nieuw` : 'Geen';
+    if (quotesChange) quotesChange.textContent = statsData.quotes > 0 ? 'Laatste 30 dagen' : 'Geen nieuwe offertes';
 
-  // Update Users stat
-  if (usersData) {
-    const users = usersData.users || usersData || [];
-    const total = Array.isArray(users) ? users.length : (usersData.total || 0);
-    const activeUsers = Array.isArray(users) ? users.filter(u => u.is_active).length : total;
-    
-    document.getElementById('stat-users').textContent = total;
-    document.getElementById('stat-users-badge').textContent = `${activeUsers} actief`;
-    document.getElementById('stat-users-change').textContent = `${activeUsers} actieve accounts`;
-  } else {
-    document.getElementById('stat-users').textContent = '0';
-    document.getElementById('stat-users-badge').textContent = '-';
-    document.getElementById('stat-users-change').textContent = 'Geen data';
-  }
+    // Update Orders stat
+    const ordersEl = document.getElementById('stat-orders');
+    const ordersBadge = document.getElementById('stat-orders-badge');
+    const ordersChange = document.getElementById('stat-orders-change');
+    if (ordersEl) ordersEl.textContent = statsData.orders || 0;
+    if (ordersBadge) ordersBadge.textContent = statsData.orders > 0 ? `${statsData.orders} nieuw` : 'Geen';
+    if (ordersChange) ordersChange.textContent = statsData.orders > 0 ? 'Laatste 30 dagen' : 'Geen nieuwe bestellingen';
 
-  // Update Orders stat
-  if (ordersData) {
-    const orders = ordersData.orders || ordersData || [];
-    const total = Array.isArray(orders) ? orders.length : (ordersData.total || 0);
-    const pendingOrders = Array.isArray(orders) ? orders.filter(o => o.status === 'pending' || o.status === 'processing').length : 0;
-    
-    document.getElementById('stat-orders').textContent = total;
-    document.getElementById('stat-orders-badge').textContent = pendingOrders > 0 ? `${pendingOrders} open` : 'Geen';
-    document.getElementById('stat-orders-change').innerHTML = pendingOrders > 0
-      ? `${pendingOrders} in behandeling`
-      : 'Alle bestellingen verwerkt';
+    // Update Users/Customers stat
+    const usersEl = document.getElementById('stat-users');
+    const usersBadge = document.getElementById('stat-users-badge');
+    const usersChange = document.getElementById('stat-users-change');
+    if (usersEl) usersEl.textContent = statsData.customers || 0;
+    if (usersBadge) usersBadge.textContent = 'Uniek';
+    if (usersChange) usersChange.textContent = 'Unieke klanten';
   } else {
-    document.getElementById('stat-orders').textContent = '0';
-    document.getElementById('stat-orders-badge').textContent = '-';
-    document.getElementById('stat-orders-change').textContent = 'Geen data';
+    // Set all to 0 if no data
+    const elements = ['stat-products', 'stat-quotes', 'stat-orders', 'stat-users'];
+    elements.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '0';
+    });
   }
 
   console.log('✅ Dashboard statistics loaded');
@@ -121,13 +100,15 @@ async function loadRecentActivity() {
   const activityList = document.querySelector('.activity-list');
   if (!activityList) return;
 
-  // Fetch recent quotes as activity
-  const quotesData = await fetchAPI('/admin/quotes?limit=5&sort=created_at:desc');
+  // Fetch recent quotes as activity using the sales endpoint
+  const quotes = await fetchAPI('/sales/quotes');
   
-  if (quotesData && quotesData.quotes && quotesData.quotes.length > 0) {
-    const quotes = quotesData.quotes.slice(0, 4);
+  console.log('📋 Recent quotes:', quotes);
+  
+  if (quotes && Array.isArray(quotes) && quotes.length > 0) {
+    const recentQuotes = quotes.slice(0, 4);
     
-    activityList.innerHTML = quotes.map(quote => {
+    activityList.innerHTML = recentQuotes.map(quote => {
       const timeAgo = getTimeAgo(new Date(quote.created_at));
       return `
         <div class="activity-item">
@@ -137,12 +118,29 @@ async function loadRecentActivity() {
             </svg>
           </div>
           <div class="activity-content">
-            <p><strong>${quote.customer_name || 'Klant'}</strong> heeft een offerte aangevraagd</p>
+            <p><strong>${quote.customer_name || quote.customer_email || 'Klant'}</strong> heeft een offerte aangevraagd${quote.product_title ? ` voor ${quote.product_title}` : ''}</p>
             <span>${timeAgo}</span>
           </div>
         </div>
       `;
     }).join('');
+  } else {
+    // Show empty state
+    activityList.innerHTML = `
+      <div class="activity-item">
+        <div class="activity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="activity-content">
+          <p>Nog geen recente activiteit</p>
+          <span>Offertes en bestellingen verschijnen hier</span>
+        </div>
+      </div>
+    `;
   }
 }
 

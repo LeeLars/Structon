@@ -466,7 +466,7 @@ window.saveQuoteStatus = async (id, newStatus) => {
   openQuoteDrawer(quote); // Refreshes content
   
   try {
-    await api.put(`/sales/quotes/${id}`, { status: newStatus });
+    await api.put(`/quotes/${id}`, { status: newStatus });
     
     if (window.showToast) {
       window.showToast('Status bijgewerkt', 'success');

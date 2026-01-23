@@ -319,6 +319,7 @@ function updateCategoryIntro(categorySlug) {
 
 /**
  * Load products for current brand
+ * Falls back to all products if no brand-specific products exist
  */
 async function loadBrandProducts(categorySlug = null) {
   const container = document.getElementById('products-grid');
@@ -327,22 +328,30 @@ async function loadBrandProducts(categorySlug = null) {
   showLoading(container);
   
   try {
-    // Build filters
-    const filters = {
-      limit: 200 // Load all for client-side filtering
-    };
-
-    // Use brand_slug for filtering (backend supports this)
+    // First try to load brand-specific products
+    let data;
+    
     if (currentBrand) {
-      filters.brand_slug = currentBrand;
+      console.log('🔍 Loading brand products with brand_slug:', currentBrand);
+      data = await products.getAll({ brand_slug: currentBrand, limit: 200 });
+      allProducts = data.items || [];
+      
+      // If no brand-specific products, load ALL products as fallback
+      // Products with compatible_brand_ids: "all" work for any brand
+      if (allProducts.length === 0) {
+        console.log('⚠️ No brand-specific products found, loading all compatible products...');
+        data = await products.getAll({ limit: 200 });
+        allProducts = data.items || [];
+        console.log(`✅ Fallback: Loaded ${allProducts.length} products (all brands)`);
+      } else {
+        console.log(`✅ Loaded ${allProducts.length} products for brand: ${currentBrand}`);
+      }
+    } else {
+      // No brand specified, load all products
+      data = await products.getAll({ limit: 200 });
+      allProducts = data.items || [];
+      console.log(`✅ Loaded ${allProducts.length} products (no brand filter)`);
     }
-    
-    console.log('🔍 Loading brand products with brand_slug:', filters);
-    
-    const data = await products.getAll(filters);
-    allProducts = data.items || [];
-    
-    console.log(`✅ Loaded ${allProducts.length} products for brand: ${currentBrand}`);
 
     // If user hasn't selected any filters yet, pick a sensible default bucket type
     // so the page shows suggestions immediately (like industry pages).

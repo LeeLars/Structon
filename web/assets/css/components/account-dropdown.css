@@ -5,17 +5,19 @@
 
 .account-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 12px);
   right: 0;
-  background: var(--color-white);
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
   min-width: 280px;
+  max-width: 320px;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
-  transition: all 0.2s ease;
-  z-index: 1000;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+  border: 1px solid #e5e7eb;
 }
 
 .account-dropdown.active {
@@ -28,25 +30,29 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
-  border-bottom: 1px solid var(--color-gray-200);
+  padding: 20px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f9fafb;
+  border-radius: 12px 12px 0 0;
 }
 
 .account-avatar {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  background: linear-gradient(135deg, #236773 0%, #2d7f8d 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
 }
 
 .account-avatar svg {
   width: 24px;
   height: 24px;
-  stroke: var(--color-white);
+  stroke: #ffffff;
+  stroke-width: 2;
 }
 
 .account-info {
@@ -56,23 +62,25 @@
 
 .account-name {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--color-gray-900);
+  font-weight: 700;
+  color: #111827;
   margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  letter-spacing: 0.01em;
 }
 
 .account-role {
   font-size: 12px;
-  color: var(--color-gray-500);
+  color: #6b7280;
+  font-weight: 500;
 }
 
 .account-dropdown-divider {
   height: 1px;
-  background: var(--color-gray-200);
-  margin: 0;
+  background: #e0e0e0;
+  margin: 8px 0;
 }
 
 .account-dropdown-item {
@@ -83,17 +91,22 @@
   padding: 12px 16px;
   border: none;
   background: none;
-  color: var(--color-gray-700);
+  color: #374151;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  text-align: left;
 }
 
 .account-dropdown-item:hover {
-  background: var(--color-gray-50);
-  color: var(--color-primary);
+  background: #f3f4f6;
+  color: #236773;
+}
+
+.account-dropdown-item:active {
+  background: #e5e7eb;
 }
 
 .account-dropdown-item svg {
@@ -104,7 +117,7 @@
 }
 
 .account-dropdown-item:last-child {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 12px 12px;
 }
 
 /* Ensure parent has position relative */
@@ -114,4 +127,20 @@
 
 .top-nav a {
   position: relative;
+}
+
+/* Prevent dropdown from being cut off */
+.top-nav,
+.top-nav > * {
+  overflow: visible !important;
+}
+
+/* Add backdrop blur effect on hover */
+.account-dropdown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  border-radius: inherit;
+  z-index: -1;
 }

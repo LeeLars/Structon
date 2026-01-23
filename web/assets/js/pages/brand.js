@@ -14,6 +14,7 @@ let currentBrandTitle = null;
 let allProducts = [];
 let filteredProducts = [];
 let activeTonnageFilters = [];
+let activeBucketTypeFilters = [];
 let activeModelFilter = null;
 let activeCategory = null;
 let currentPage = 1;
@@ -50,18 +51,11 @@ export async function initBrandPage() {
     currentBrandTitle = null;
   }
 
-  // Determine initial active category from the active tab
-  const activeTab = document.querySelector('.category-tab.active');
-  activeCategory = activeTab?.dataset.category || 'graafbakken';
-  
   // Setup tonnage filter listeners
   setupTonnageFilters();
 
-  // Setup model selector listeners
-  setupModelSelector();
-  
-  // Setup category tab listeners
-  setupCategoryTabs();
+  // Setup bucket type filter listeners
+  setupBucketTypeFilters();
   
   // Load initial products
   loadBrandProducts();
@@ -114,6 +108,31 @@ function setupTonnageFilters() {
   
   // Parse initial filters from URL
   parseUrlFilters();
+}
+
+/**
+ * Setup bucket type filter checkboxes
+ */
+function setupBucketTypeFilters() {
+  const bucketTypeCheckboxes = document.querySelectorAll('.bucket-type-filter input[type="checkbox"]');
+  
+  bucketTypeCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', (e) => {
+      const bucketType = e.target.value;
+      
+      if (e.target.checked) {
+        if (!activeBucketTypeFilters.includes(bucketType)) {
+          activeBucketTypeFilters.push(bucketType);
+        }
+      } else {
+        activeBucketTypeFilters = activeBucketTypeFilters.filter(t => t !== bucketType);
+      }
+      
+      currentPage = 1;
+      updateUrlWithFilters();
+      filterAndRenderProducts();
+    });
+  });
 }
 
 /**
@@ -183,6 +202,16 @@ function parseUrlFilters() {
     });
   }
   
+  // Bucket type filters
+  const bucketType = params.get('type');
+  if (bucketType) {
+    activeBucketTypeFilters = bucketType.split(',');
+    activeBucketTypeFilters.forEach(t => {
+      const checkbox = document.querySelector(`.bucket-type-filter input[value="${t}"]`);
+      if (checkbox) checkbox.checked = true;
+    });
+  }
+  
   // Model filter (from model selector links)
   const model = params.get('model');
   if (model) {
@@ -206,6 +235,12 @@ function updateUrlWithFilters() {
     params.set('tonnage', activeTonnageFilters.join(','));
   } else {
     params.delete('tonnage');
+  }
+  
+  if (activeBucketTypeFilters.length > 0) {
+    params.set('type', activeBucketTypeFilters.join(','));
+  } else {
+    params.delete('type');
   }
 
   if (activeModelFilter?.model) {
@@ -317,15 +352,15 @@ async function loadBrandProducts(categorySlug = null) {
 }
 
 /**
- * Filter products by tonnage and render
+ * Filter products by tonnage, bucket type and render
  */
 function filterAndRenderProducts() {
   // Start with all loaded brand products
-  let base = [...allProducts];
+  filteredProducts = [...allProducts];
 
-  // Apply tonnage filters (optional UI on other brand pages)
+  // Apply tonnage filters
   if (activeTonnageFilters.length > 0) {
-    base = base.filter(product => {
+    filteredProducts = filteredProducts.filter(product => {
       return activeTonnageFilters.some(tonnage => {
         const range = parseTonnageRange(tonnage);
         if (!range) return false;
@@ -338,12 +373,20 @@ function filterAndRenderProducts() {
     });
   }
 
-  // Apply model filter (Volvo model selector)
+  // Apply bucket type filters
+  if (activeBucketTypeFilters.length > 0) {
+    filteredProducts = filteredProducts.filter(product => {
+      const productCategory = product.category_slug || '';
+      return activeBucketTypeFilters.some(type => productCategory === type);
+    });
+  }
+
+  // Apply model filter (Volvo model selector - if still present on some pages)
   if (activeModelFilter?.model) {
     const modelWeight = activeModelFilter.tonnageKg;
     const modelCw = activeModelFilter.cw;
 
-    base = base.filter(product => {
+    filteredProducts = filteredProducts.filter(product => {
       const productMin = product.excavator_weight_min || 0;
       const productMax = product.excavator_weight_max || 100000;
 
@@ -352,16 +395,6 @@ function filterAndRenderProducts() {
 
       return weightOk && cwOk;
     });
-  }
-
-  // Update tab counts based on base filters (brand + model + tonnage)
-  updateCategoryTabCounts(base);
-
-  // Apply active category
-  if (activeCategory) {
-    filteredProducts = base.filter(p => p.category_slug === activeCategory);
-  } else {
-    filteredProducts = base;
   }
   
   // Update product count
@@ -402,15 +435,15 @@ function updateProductCount(count) {
   if (summaryEl) {
     const parts = [];
 
-    if (activeModelFilter?.model) {
-      const modelParts = [`Model: ${activeModelFilter.model}`];
-      if (activeModelFilter.cw) modelParts.push(activeModelFilter.cw);
-      if (activeModelFilter.tonnageKg) modelParts.push(`${(activeModelFilter.tonnageKg / 1000).toFixed(1).replace('.', ',')} ton`);
-      parts.push(modelParts.join(' • '));
-    }
-
     if (activeTonnageFilters.length > 0) {
       parts.push(`Tonnage: ${activeTonnageFilters.map(t => `${t} ton`).join(', ')}`);
+    }
+
+    if (activeBucketTypeFilters.length > 0) {
+      const typeNames = activeBucketTypeFilters.map(t => {
+        return t.charAt(0).toUpperCase() + t.slice(0, -2); // Remove 'en' and capitalize
+      });
+      parts.push(`Type: ${typeNames.join(', ')}`);
     }
 
     summaryEl.innerHTML = parts.length > 0
@@ -566,13 +599,18 @@ function renderPagination(totalPages) {
 }
 
 /**
- * Clear all tonnage filters
+ * Clear all filters
  */
 export function clearTonnageFilters() {
   activeTonnageFilters = [];
+  activeBucketTypeFilters = [];
   
   // Uncheck all checkboxes
   document.querySelectorAll('.tonnage-filter input[type="checkbox"]').forEach(cb => {
+    cb.checked = false;
+  });
+  
+  document.querySelectorAll('.bucket-type-filter input[type="checkbox"]').forEach(cb => {
     cb.checked = false;
   });
   

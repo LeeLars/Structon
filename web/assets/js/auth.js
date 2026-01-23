@@ -103,20 +103,33 @@ export async function logout() {
 }
 
 /**
- * Handle account menu click
+ * Handle account menu hover
  */
-function handleAccountClick(e) {
-  e.preventDefault();
-  
+function handleAccountHover() {
   // Check if dropdown already exists
   let dropdown = document.getElementById('account-dropdown');
   
-  if (dropdown) {
-    // Toggle visibility
-    dropdown.classList.toggle('active');
-  } else {
+  if (!dropdown) {
     // Create dropdown
     createAccountDropdown();
+  } else {
+    // Show dropdown
+    dropdown.classList.add('active');
+  }
+}
+
+/**
+ * Handle account menu leave
+ */
+function handleAccountLeave() {
+  const dropdown = document.getElementById('account-dropdown');
+  if (dropdown) {
+    // Hide dropdown after small delay
+    setTimeout(() => {
+      if (!dropdown.matches(':hover')) {
+        dropdown.classList.remove('active');
+      }
+    }, 100);
   }
 }
 
@@ -236,13 +249,54 @@ function createAccountDropdown() {
       </div>
     </div>
     <div class="account-dropdown-divider"></div>
-    <a href="${basePath}/account/" class="account-dropdown-item">
+    <a href="${basePath}/account/#dashboard" class="account-dropdown-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>Dashboard</span>
+    </a>
+    <a href="${basePath}/account/#bestellingen" class="account-dropdown-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span>Bestellingen</span>
+    </a>
+    <a href="${basePath}/account/#offertes" class="account-dropdown-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <span>Offertes</span>
+    </a>
+    <a href="${basePath}/account/#favorieten" class="account-dropdown-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+      <span>Favorieten</span>
+    </a>
+    <div class="account-dropdown-divider"></div>
+    <a href="${basePath}/account/#profiel" class="account-dropdown-item">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
         <circle cx="12" cy="7" r="4"></circle>
       </svg>
-      <span>Mijn Account</span>
+      <span>Profiel</span>
     </a>
+    <a href="${basePath}/account/#instellingen" class="account-dropdown-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
+      </svg>
+      <span>Instellingen</span>
+    </a>
+    <div class="account-dropdown-divider"></div>
     <button class="account-dropdown-item" id="logout-btn">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -260,20 +314,14 @@ function createAccountDropdown() {
   const logoutBtn = dropdown.querySelector('#logout-btn');
   logoutBtn.addEventListener('click', logout);
   
-  // Close dropdown when clicking outside
-  setTimeout(() => {
-    document.addEventListener('click', function closeDropdown(e) {
-      if (!dropdown.contains(e.target) && e.target !== loginBtn) {
-        dropdown.classList.remove('active');
-        setTimeout(() => {
-          if (dropdown.parentNode) {
-            dropdown.parentNode.removeChild(dropdown);
-          }
-        }, 200);
-        document.removeEventListener('click', closeDropdown);
-      }
-    });
-  }, 100);
+  // Add hover handlers to keep dropdown open
+  dropdown.addEventListener('mouseenter', () => {
+    dropdown.classList.add('active');
+  });
+  
+  dropdown.addEventListener('mouseleave', () => {
+    dropdown.classList.remove('active');
+  });
 }
 
 /**
@@ -291,8 +339,15 @@ function updateAuthUI(isAuthenticated) {
       const newBtn = loginBtn.cloneNode(true);
       newBtn.id = 'login-btn';
       loginBtn.parentNode.replaceChild(newBtn, loginBtn);
-      // Add account dropdown listener
-      newBtn.addEventListener('click', handleAccountClick);
+      // Add account dropdown hover listeners
+      newBtn.addEventListener('mouseenter', handleAccountHover);
+      newBtn.addEventListener('mouseleave', handleAccountLeave);
+      newBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // On click, navigate to account page
+        const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+        window.location.href = `${basePath}/account/`;
+      });
     } else {
       loginBtn.innerHTML = `<span>Inloggen</span>`;
       loginBtn.href = '#';

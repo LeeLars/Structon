@@ -168,8 +168,18 @@ function getTimeAgo(date) {
 function setupLogout() {
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      auth.logout();
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('🚪 Logging out...');
+      
+      // Clear all possible auth tokens
+      localStorage.removeItem('structon_auth_token');
+      localStorage.removeItem('structon_user');
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('cms_token');
+      
+      // Redirect to login
       window.location.href = '/cms/login.html';
     });
   }

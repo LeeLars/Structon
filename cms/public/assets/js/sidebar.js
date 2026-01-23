@@ -84,7 +84,40 @@ export function initSidebar(activePage) {
   const container = document.getElementById('sidebar-container');
   if (container) {
     container.innerHTML = renderSidebar(activePage);
+    
+    // Setup logout handler
+    setupLogoutHandler();
   }
+}
+
+/**
+ * Setup logout button handler
+ */
+function setupLogoutHandler() {
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleLogout();
+    });
+  }
+}
+
+/**
+ * Handle logout - clear all auth data and redirect to login
+ */
+function handleLogout() {
+  console.log('🚪 Logging out...');
+  
+  // Clear all possible auth tokens
+  localStorage.removeItem('structon_auth_token');
+  localStorage.removeItem('structon_user');
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('cms_token');
+  
+  // Redirect to login page
+  window.location.href = '/cms/login.html';
 }
 
 /**

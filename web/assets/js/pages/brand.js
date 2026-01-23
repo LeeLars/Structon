@@ -358,17 +358,39 @@ async function loadBrandProducts(categorySlug = null) {
 }
 
 function ensureDefaultBrandSuggestions() {
+  // Only auto-select if user hasn't chosen any filters yet
   if (activeTonnageFilters.length > 0) return;
   if (activeBucketTypeFilters.length > 0) return;
   if (activeModelFilter?.model) return;
   if (!Array.isArray(allProducts) || allProducts.length === 0) return;
 
-  const preferredOrder = ['graafbakken', 'slotenbakken', 'rioolbakken', 'sorteergrijpers'];
-  const available = new Set(allProducts.map(p => p.category_slug).filter(Boolean));
+  // Count products per category to prioritize categories with most products
+  const categoryCounts = {};
+  allProducts.forEach(p => {
+    const slug = p.category_slug;
+    if (slug) {
+      categoryCounts[slug] = (categoryCounts[slug] || 0) + 1;
+    }
+  });
 
-  const chosen = preferredOrder.find(slug => available.has(slug)) || Array.from(available)[0];
+  // Preferred order, but only if they have products
+  const preferredOrder = ['graafbakken', 'slotenbakken', 'rioolbakken', 'sorteergrijpers'];
+  
+  // Find first preferred category that has products
+  let chosen = preferredOrder.find(slug => categoryCounts[slug] > 0);
+  
+  // If no preferred category has products, choose category with most products
+  if (!chosen) {
+    const sorted = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]);
+    if (sorted.length > 0) {
+      chosen = sorted[0][0];
+    }
+  }
+  
   if (!chosen) return;
 
+  console.log(`✅ Auto-selecting default category: ${chosen} (${categoryCounts[chosen]} products)`);
+  
   activeBucketTypeFilters = [chosen];
   const checkbox = document.querySelector(`.bucket-type-filter input[value="${chosen}"]`);
   if (checkbox) checkbox.checked = true;

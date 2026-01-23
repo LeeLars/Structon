@@ -408,19 +408,39 @@ function filterAndRenderProducts() {
 
 /**
  * Parse tonnage filter value to weight range in kg
+ * Supports CMS tonnage ranges: 1.5-3, 3-8, 8-15, 15-25, 25-40, 40+
+ * Also supports brand-specific tonnages (exact values)
  */
 function parseTonnageRange(tonnage) {
   const ranges = {
+    // CMS tonnage ranges (in kg)
+    '1.5-3': { min: 1500, max: 3000 },
+    '3-8': { min: 3000, max: 8000 },
+    '8-15': { min: 8000, max: 15000 },
+    '15-25': { min: 15000, max: 25000 },
+    '25-40': { min: 25000, max: 40000 },
+    '40+': { min: 40000, max: 100000 },
+    // Legacy ranges for backwards compatibility
     '0-2': { min: 0, max: 2000 },
     '2-5': { min: 2000, max: 5000 },
     '5-10': { min: 5000, max: 10000 },
-    '10-15': { min: 10000, max: 15000 },
-    '15-25': { min: 15000, max: 25000 },
-    '25-40': { min: 25000, max: 40000 },
-    '40+': { min: 40000, max: 100000 }
+    '10-15': { min: 10000, max: 15000 }
   };
   
-  return ranges[tonnage] || null;
+  // Check if it's a predefined range
+  if (ranges[tonnage]) {
+    return ranges[tonnage];
+  }
+  
+  // Handle brand-specific exact tonnage values (e.g., "1.7", "12.5", "37")
+  const exactTonnage = parseFloat(tonnage);
+  if (!isNaN(exactTonnage)) {
+    const tonnageKg = exactTonnage * 1000;
+    // Create a small range around the exact value (±500kg)
+    return { min: tonnageKg - 500, max: tonnageKg + 500 };
+  }
+  
+  return null;
 }
 
 /**

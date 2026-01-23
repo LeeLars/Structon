@@ -343,6 +343,10 @@ async function loadBrandProducts(categorySlug = null) {
     allProducts = data.items || [];
     
     console.log(`✅ Loaded ${allProducts.length} products for brand: ${currentBrand}`);
+
+    // If user hasn't selected any filters yet, pick a sensible default bucket type
+    // so the page shows suggestions immediately (like industry pages).
+    ensureDefaultBrandSuggestions();
     
     // Apply filters and render
     filterAndRenderProducts();
@@ -351,6 +355,24 @@ async function loadBrandProducts(categorySlug = null) {
     console.error('Error loading brand products:', error);
     showError(container, 'Kon producten niet laden. Probeer het later opnieuw.');
   }
+}
+
+function ensureDefaultBrandSuggestions() {
+  if (activeTonnageFilters.length > 0) return;
+  if (activeBucketTypeFilters.length > 0) return;
+  if (activeModelFilter?.model) return;
+  if (!Array.isArray(allProducts) || allProducts.length === 0) return;
+
+  const preferredOrder = ['graafbakken', 'slotenbakken', 'rioolbakken', 'sorteergrijpers'];
+  const available = new Set(allProducts.map(p => p.category_slug).filter(Boolean));
+
+  const chosen = preferredOrder.find(slug => available.has(slug)) || Array.from(available)[0];
+  if (!chosen) return;
+
+  activeBucketTypeFilters = [chosen];
+  const checkbox = document.querySelector(`.bucket-type-filter input[value="${chosen}"]`);
+  if (checkbox) checkbox.checked = true;
+  updateCategoryIntro(chosen);
 }
 
 /**

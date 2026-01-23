@@ -44,6 +44,10 @@ export const Product = {
       query += ` AND p.brand_id = $${paramCount++}`;
       values.push(filters.brand_id);
     }
+    if (filters.brand_slug) {
+      query += ` AND b.slug = $${paramCount++}`;
+      values.push(filters.brand_slug);
+    }
 
     // Attachment type filter
     if (filters.attachment_type) {

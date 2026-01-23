@@ -295,11 +295,12 @@ async function loadBrandProducts(categorySlug = null) {
       limit: 200 // Load all for client-side filtering
     };
 
-    if (currentBrandId) {
-      filters.brand_id = currentBrandId;
+    // Use brand_slug for filtering (backend supports this)
+    if (currentBrand) {
+      filters.brand_slug = currentBrand;
     }
     
-    console.log('🔍 Loading brand products:', filters);
+    console.log('🔍 Loading brand products with brand_slug:', filters);
     
     const data = await products.getAll(filters);
     allProducts = data.items || [];

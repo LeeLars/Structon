@@ -17,10 +17,62 @@ let userData = null;
  * Admins should use /cms/ for backend management
  */
 async function init() {
-  // Check authentication - redirect to login if not authenticated
+  console.log('🔐 Initializing account page...');
+  
+  // First check localStorage immediately (for popup login)
+  const storedUser = localStorage.getItem('user');
+  const storedToken = localStorage.getItem('auth_token');
+  
+  if (storedUser && storedToken) {
+    console.log('✅ Found stored credentials, attempting to use them');
+    try {
+      userData = JSON.parse(storedUser);
+      
+      // Check if user is admin - admins should use CMS, not customer account
+      if (userData.role === 'admin') {
+        console.log('👤 Admin user detected, redirecting to CMS');
+        window.location.href = 'https://structon-production.up.railway.app/cms/';
+        return;
+      }
+      
+      // User is a customer, continue with page initialization
+      console.log('✅ Customer user authenticated from localStorage:', userData.email);
+      updateUserInfo();
+      setupNavigation();
+      setupLogout();
+      
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        switchSection(hash);
+      } else {
+        switchSection('dashboard');
+      }
+      
+      setupForms();
+      
+      // Verify with API in background (don't block page load)
+      checkAuth().then(apiUser => {
+        if (apiUser) {
+          console.log('✅ API verification successful');
+          userData = apiUser;
+          updateUserInfo(); // Update with fresh data
+        }
+      }).catch(err => {
+        console.log('⚠️ API verification failed, but localStorage auth is valid');
+      });
+      
+      return;
+    } catch (e) {
+      console.error('❌ Error parsing stored user:', e);
+    }
+  }
+  
+  // No localStorage credentials, try API check
+  console.log('🔍 No localStorage credentials, checking API...');
   userData = await checkAuth();
   
   if (!userData) {
+    console.log('❌ Not authenticated, redirecting to login');
     // Redirect to login
     const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
     const currentPath = window.location.pathname;
@@ -30,7 +82,7 @@ async function init() {
   
   // Check if user is admin - admins should use CMS, not customer account
   if (userData.role === 'admin') {
-    // Redirect admin to CMS
+    console.log('👤 Admin user detected, redirecting to CMS');
     window.location.href = 'https://structon-production.up.railway.app/cms/';
     return;
   }

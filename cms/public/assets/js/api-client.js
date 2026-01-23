@@ -27,7 +27,8 @@ class APIClient {
    * Get auth token from localStorage
    */
   getToken() {
-    return localStorage.getItem('auth_token');
+    // Check both token keys for compatibility
+    return localStorage.getItem('structon_auth_token') || localStorage.getItem('auth_token');
   }
 
   /**
@@ -35,8 +36,10 @@ class APIClient {
    */
   setToken(token) {
     if (token) {
-      localStorage.setItem('auth_token', token);
+      localStorage.setItem('structon_auth_token', token);
+      localStorage.setItem('auth_token', token); // Keep both for compatibility
     } else {
+      localStorage.removeItem('structon_auth_token');
       localStorage.removeItem('auth_token');
     }
   }

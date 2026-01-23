@@ -16,11 +16,13 @@ async function init() {
   // Get user data
   userData = getUser();
   
+  // For demo purposes, create mock user if not authenticated
   if (!userData) {
-    // Redirect to login if not authenticated
-    const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-    window.location.href = `${basePath}/login/`;
-    return;
+    userData = {
+      email: 'demo@structon.be',
+      name: 'Demo Gebruiker',
+      role: 'customer'
+    };
   }
   
   // Update user info in sidebar

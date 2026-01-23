@@ -336,18 +336,124 @@ export const navigation = {
 export const quotes = {
   /**
    * Submit a new quote request
-   * @param {Object} quoteData - Quote data
-   * @param {string} quoteData.customer_name - Customer name (required)
-   * @param {string} quoteData.customer_email - Customer email (required)
-   * @param {string} [quoteData.customer_phone] - Customer phone
-   * @param {string} [quoteData.product_id] - Product UUID
-   * @param {string} [quoteData.product_name] - Product name
-   * @param {string} [quoteData.message] - Additional message
    */
   async submit(quoteData) {
     return request('/quotes', {
       method: 'POST',
       body: JSON.stringify(quoteData)
+    });
+  },
+
+  /**
+   * Get quotes for current user (customer account)
+   */
+  async getMyQuotes(filters = {}) {
+    const params = new URLSearchParams(filters).toString();
+    return request(`/account/quotes${params ? `?${params}` : ''}`);
+  }
+};
+
+/**
+ * Orders API - Customer account orders
+ */
+export const orders = {
+  /**
+   * Get orders for current user
+   */
+  async getMyOrders(filters = {}) {
+    const params = new URLSearchParams(filters).toString();
+    return request(`/account/orders${params ? `?${params}` : ''}`);
+  },
+
+  /**
+   * Get single order by ID
+   */
+  async getById(orderId) {
+    return request(`/account/orders/${orderId}`);
+  }
+};
+
+/**
+ * Favorites API - Customer saved products
+ */
+export const favorites = {
+  /**
+   * Get favorites for current user
+   */
+  async getMyFavorites() {
+    return request('/account/favorites');
+  },
+
+  /**
+   * Add product to favorites
+   */
+  async add(productId) {
+    return request('/account/favorites', {
+      method: 'POST',
+      body: JSON.stringify({ product_id: productId })
+    });
+  },
+
+  /**
+   * Remove product from favorites
+   */
+  async remove(productId) {
+    return request(`/account/favorites/${productId}`, {
+      method: 'DELETE'
+    });
+  }
+};
+
+/**
+ * Addresses API - Customer addresses
+ */
+export const addresses = {
+  /**
+   * Get addresses for current user
+   */
+  async getMyAddresses() {
+    return request('/account/addresses');
+  },
+
+  /**
+   * Update address
+   */
+  async update(addressType, addressData) {
+    return request(`/account/addresses/${addressType}`, {
+      method: 'PUT',
+      body: JSON.stringify(addressData)
+    });
+  }
+};
+
+/**
+ * Account API - Customer profile
+ */
+export const account = {
+  /**
+   * Get account dashboard stats
+   */
+  async getDashboard() {
+    return request('/account/dashboard');
+  },
+
+  /**
+   * Update profile
+   */
+  async updateProfile(profileData) {
+    return request('/account/profile', {
+      method: 'PUT',
+      body: JSON.stringify(profileData)
+    });
+  },
+
+  /**
+   * Change password
+   */
+  async changePassword(currentPassword, newPassword) {
+    return request('/account/password', {
+      method: 'PUT',
+      body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })
     });
   }
 };
@@ -376,5 +482,9 @@ export default {
   sectors,
   navigation,
   quotes,
+  orders,
+  favorites,
+  addresses,
+  account,
   blogs
 };

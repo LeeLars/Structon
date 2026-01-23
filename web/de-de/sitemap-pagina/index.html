@@ -17,17 +17,12 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/images/static/favicon.svg">
   
+  <link rel="stylesheet" href="../../assets/css/pages/about.css">
+  
   <style>
     .sitemap-page {
-      padding: 40px 0 80px;
+      padding: 0 0 80px;
       min-height: 60vh;
-    }
-    
-    .page-header {
-      background-color: var(--color-gray-100);
-      padding: var(--space-12) 0;
-      margin-bottom: var(--space-8);
-      text-align: center;
     }
     
     .sitemap-content {
@@ -93,21 +88,30 @@
   <!-- Header loaded dynamically -->
   <div id="header-placeholder"></div>
 <main class="sitemap-page">
-    <!-- Page Header -->
-    <section class="page-header">
+    <!-- Page Hero -->
+    <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
-          <a href="../index.html">Startseite</a>
+          <a href="../">Home</a>
           <span>/</span>
           <span aria-current="page">Sitemap</span>
         </nav>
-        <h1 class="page-title">Sitemap</h1>
-        <p class="page-subtitle">Overzicht van alle pagina's op structon.be</p>
+        
+        <div class="page-hero-content">
+          <div class="page-hero-text">
+            <h1 class="page-title">SITEMAP</h1>
+            <p class="page-subtitle">Übersicht aller Seiten und Produkte auf structon.be</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="container">
       <div class="sitemap-content" id="sitemap-content">
+        <!-- Dynamisch geladen via sitemap-page.js -->
+        <div class="sitemap-column">
+          <p>Sitemap wird geladen...</p>
+        </div>
         <!-- Wordt dynamisch geladen -->
         <div class="sitemap-column">
           <h2>Hoofdpagina's</h2>
@@ -266,7 +270,7 @@
   <!-- Scripts -->
   <script src="../../assets/js/components/header-loader.js"></script>
   <script type="module" src="../../assets/js/main.js"></script>
-  <script type="module" src="../../assets/js/pages/home.js"></script> <!-- For sticky header -->
+  <script type="module" src="../../assets/js/pages/sitemap-page.js"></script>
   <script src="../../assets/js/components/login-modal.js"></script>
 </body>
 </html>

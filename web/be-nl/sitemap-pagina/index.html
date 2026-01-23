@@ -17,17 +17,12 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../../assets/images/static/favicon.svg">
   
+  <link rel="stylesheet" href="../../assets/css/pages/about.css">
+  
   <style>
     .sitemap-page {
-      padding: 40px 0 80px;
+      padding: 0 0 80px;
       min-height: 60vh;
-    }
-    
-    .page-header {
-      background-color: var(--color-gray-100);
-      padding: var(--space-12) 0;
-      margin-bottom: var(--space-8);
-      text-align: center;
     }
     
     .sitemap-content {
@@ -93,114 +88,29 @@
   <!-- Header loaded dynamically -->
   <div id="header-placeholder"></div>
 <main class="sitemap-page">
-    <!-- Page Header -->
-    <section class="page-header">
+    <!-- Page Hero -->
+    <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
-          <a href="../index.html">Home</a>
+          <a href="../">Home</a>
           <span>/</span>
           <span aria-current="page">Sitemap</span>
         </nav>
-        <h1 class="page-title">Sitemap</h1>
-        <p class="page-subtitle">Overzicht van alle pagina's op structon.be</p>
+        
+        <div class="page-hero-content">
+          <div class="page-hero-text">
+            <h1 class="page-title">SITEMAP</h1>
+            <p class="page-subtitle">Overzicht van alle pagina's en producten op structon.be</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="container">
       <div class="sitemap-content" id="sitemap-content">
-        <!-- Wordt dynamisch geladen -->
+        <!-- Wordt dynamisch geladen via sitemap-page.js -->
         <div class="sitemap-column">
-          <h2>Hoofdpagina's</h2>
-          <ul>
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="../over-ons/">Over Ons</a></li>
-            <li><a href="../contact/">Contact</a></li>
-            <li><a href="../blog/">Blog</a></li>
-            <li><a href="../faq/">Veelgestelde Vragen</a></li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Industrieën</h2>
-          <ul>
-            <li><a href="../industrieen/grondwerkers/">Grondwerkers</a></li>
-            <li><a href="../industrieen/afbraak-sloop/">Afbraak & Sloop</a></li>
-            <li><a href="../industrieen/tuinaanleggers/">Tuinaanleggers</a></li>
-            <li><a href="../industrieen/wegenbouw/">Wegenbouw</a></li>
-            <li><a href="../industrieen/recycling/">Recycling</a></li>
-            <li><a href="../industrieen/verhuur/">Verhuurbedrijven</a></li>
-            <li><a href="../industrieen/loonwerk-landbouw/">Loonwerk & Landbouw</a></li>
-            <li><a href="../industrieen/baggerwerken/">Baggerwerken</a></li>
-          </ul>
-        </div>
-
-        <div class="sitemap-column">
-          <h2>Merken</h2>
-          <ul>
-            <li><a href="../kraanbakken/caterpillar/">Caterpillar</a></li>
-            <li><a href="../kraanbakken/komatsu/">Komatsu</a></li>
-            <li><a href="../kraanbakken/volvo/">Volvo</a></li>
-            <li><a href="../kraanbakken/hitachi/">Hitachi</a></li>
-            <li><a href="../kraanbakken/liebherr/">Liebherr</a></li>
-            <li><a href="../kraanbakken/jcb/">JCB</a></li>
-            <li><a href="../kraanbakken/kubota/">Kubota</a></li>
-            <li><a href="../kraanbakken/doosan/">Doosan</a></li>
-            <li><a href="../kraanbakken/hyundai/">Hyundai</a></li>
-            <li><a href="../kraanbakken/case/">Case</a></li>
-            <li><a href="../kraanbakken/new-holland/">New Holland</a></li>
-            <li><a href="../kraanbakken/takeuchi/">Takeuchi</a></li>
-            <li><a href="../kraanbakken/yanmar/">Yanmar</a></li>
-            <li><a href="../kraanbakken/bobcat/">Bobcat</a></li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Producten</h2>
-          <ul>
-            <li><a href="../producten/">Alle Producten</a></li>
-            <li><a href="../producten/?cat=graafbakken">Graafbakken</a>
-              <ul>
-                <li><a href="../producten/?cat=slotenbakken">Slotenbakken</a></li>
-                <li><a href="../producten/?cat=dieplepelbakken">Dieplepelbakken</a></li>
-                <li><a href="../producten/?cat=sleuvenbakken">Sleuvenbakken</a></li>
-                <li><a href="../producten/?cat=kantelbakken">Kantelbakken</a></li>
-                <li><a href="../producten/?cat=rioolbakken">Rioolbakken</a></li>
-                <li><a href="../producten/?cat=trapezium-bakken">Trapezium Bakken</a></li>
-              </ul>
-            </li>
-            <li><a href="../producten/?cat=sloop-sorteergrijpers">Sloop- en Sorteergrijpers</a>
-              <ul>
-                <li><a href="../producten/?cat=sorteergrijpers">Sorteergrijpers</a></li>
-                <li><a href="../producten/?cat=sloopgrijpers">Sloopgrijpers</a></li>
-                <li><a href="../producten/?cat=puingrijpers">Puingrijpers</a></li>
-              </ul>
-            </li>
-            <li><a href="../producten/?cat=overige">Overige</a>
-              <ul>
-                <li><a href="../producten/?cat=ripper-tanden">Ripper Tanden</a></li>
-                <li><a href="../producten/?cat=hydraulische-hamers">Hydraulische Hamers</a></li>
-                <li><a href="../producten/?cat=egaliseerbalken">Egaliseerbalken</a></li>
-                <li><a href="../producten/?cat=verdichtingsplaten">Verdichtingsplaten</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Diensten</h2>
-          <ul>
-            <li><a href="../configurator/">Product Configurator</a></li>
-            <li><a href="../dealer/">Dealer Worden</a></li>
-          </ul>
-        </div>
-        
-        <div class="sitemap-column">
-          <h2>Overig</h2>
-          <ul>
-            <li><a href="#" class="login-trigger">Klant Login</a></li>
-            <li><a href="../privacy/">Privacybeleid</a></li>
-            <li><a href="../voorwaarden/">Algemene Voorwaarden</a></li>
-          </ul>
+          <p>Sitemap laden...</p>
         </div>
       </div>
     </div>
@@ -266,7 +176,7 @@
   <!-- Scripts -->
   <script src="../../assets/js/components/header-loader.js"></script>
   <script type="module" src="../../assets/js/main.js"></script>
-  <script type="module" src="../../assets/js/pages/home.js"></script> <!-- For sticky header -->
+  <script type="module" src="../../assets/js/pages/sitemap-page.js"></script>
   <script src="../../assets/js/components/login-modal.js"></script>
 </body>
 </html>

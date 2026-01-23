@@ -13,6 +13,8 @@ let userData = null;
 
 /**
  * Initialize account page
+ * NOTE: This is the CUSTOMER account page - NOT for admins
+ * Admins should use /cms/ for backend management
  */
 async function init() {
   // Check authentication - redirect to login if not authenticated
@@ -23,6 +25,13 @@ async function init() {
     const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
     const currentPath = window.location.pathname;
     window.location.href = `${basePath}/login/?redirect=${encodeURIComponent(currentPath)}`;
+    return;
+  }
+  
+  // Check if user is admin - admins should use CMS, not customer account
+  if (userData.role === 'admin') {
+    // Redirect admin to CMS
+    window.location.href = 'https://structon-production.up.railway.app/cms/';
     return;
   }
   

@@ -231,11 +231,10 @@ function createAccountDropdown() {
   }
   
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  const isAdmin = currentUser?.role === 'admin';
   
-  const dropdown = document.createElement('div');
-  dropdown.id = 'account-dropdown';
-  dropdown.className = 'account-dropdown active';
-  dropdown.innerHTML = `
+  // Different dropdown content for admin vs customer
+  const adminDropdownContent = `
     <div class="account-dropdown-header">
       <div class="account-avatar">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -244,8 +243,55 @@ function createAccountDropdown() {
         </svg>
       </div>
       <div class="account-info">
-        <div class="account-name">${currentUser?.email || 'Gebruiker'}</div>
-        <div class="account-role">${currentUser?.role === 'admin' ? 'Administrator' : 'Klant'}</div>
+        <div class="account-name">${currentUser?.email || 'Admin'}</div>
+        <div class="account-role">Administrator</div>
+      </div>
+    </div>
+    <div class="account-dropdown-divider"></div>
+    <a href="https://structon-production.up.railway.app/cms/" class="account-dropdown-item" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span>CMS Dashboard</span>
+    </a>
+    <a href="https://structon-production.up.railway.app/cms/products" class="account-dropdown-item" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      </svg>
+      <span>Producten Beheren</span>
+    </a>
+    <a href="https://structon-production.up.railway.app/cms/quotes" class="account-dropdown-item" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+      </svg>
+      <span>Offertes Beheren</span>
+    </a>
+    <div class="account-dropdown-divider"></div>
+    <button class="account-dropdown-item" id="logout-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+      <span>Uitloggen</span>
+    </button>
+  `;
+  
+  const customerDropdownContent = `
+    <div class="account-dropdown-header">
+      <div class="account-avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div class="account-info">
+        <div class="account-name">${currentUser?.email || 'Klant'}</div>
+        <div class="account-role">Klant</div>
       </div>
     </div>
     <div class="account-dropdown-divider"></div>
@@ -289,13 +335,6 @@ function createAccountDropdown() {
       </svg>
       <span>Profiel</span>
     </a>
-    <a href="${basePath}/account/#instellingen" class="account-dropdown-item">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
-      </svg>
-      <span>Instellingen</span>
-    </a>
     <div class="account-dropdown-divider"></div>
     <button class="account-dropdown-item" id="logout-btn">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -306,6 +345,11 @@ function createAccountDropdown() {
       <span>Uitloggen</span>
     </button>
   `;
+  
+  const dropdown = document.createElement('div');
+  dropdown.id = 'account-dropdown';
+  dropdown.className = 'account-dropdown active';
+  dropdown.innerHTML = isAdmin ? adminDropdownContent : customerDropdownContent;
   
   // Insert after login button
   loginBtn.parentNode.insertBefore(dropdown, loginBtn.nextSibling);
@@ -344,9 +388,13 @@ function updateAuthUI(isAuthenticated) {
       newBtn.addEventListener('mouseleave', handleAccountLeave);
       newBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        // On click, navigate to account page
-        const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-        window.location.href = `${basePath}/account/`;
+        // Admin goes to CMS, customer goes to /account
+        if (currentUser?.role === 'admin') {
+          window.location.href = 'https://structon-production.up.railway.app/cms/';
+        } else {
+          const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+          window.location.href = `${basePath}/account/`;
+        }
       });
     } else {
       loginBtn.innerHTML = `<span>Inloggen</span>`;

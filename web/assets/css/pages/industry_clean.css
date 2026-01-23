@@ -475,7 +475,7 @@ main[data-industry] {
    PRODUCTS SECTION
    ============================================ */
 .industry-products-section {
-  padding: var(--space-16) 0;
+  padding: 0 0 var(--space-16) 0; /* No top padding - connects directly to filters */
   background: white;
 }
 

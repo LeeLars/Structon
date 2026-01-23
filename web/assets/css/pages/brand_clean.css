@@ -35,6 +35,11 @@ main[data-brand] {
   background-color: #F9FAFB;
 }
 
+/* Remove top padding from products section - connects directly to filters */
+.section-gray.brand-products-section {
+  padding-top: 0;
+}
+
 /* Typography Overrides */
 .text-center { text-align: center; }
 .text-left { text-align: left; }

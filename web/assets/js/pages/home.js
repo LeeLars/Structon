@@ -109,7 +109,8 @@ function initFaqAccordion() {
 }
 
 /**
- * Load featured products (Random selection)
+ * Load featured products (Auto-selection from all products)
+ * No longer requires CMS 'is_featured' flag - automatically selects diverse products
  */
 async function loadFeaturedProducts() {
   const container = document.getElementById('featured-products-wrapper');
@@ -124,18 +125,16 @@ async function loadFeaturedProducts() {
   let selected = [];
 
   try {
-    // Fetch featured products
-    const data = await products.getFeatured(12); // Get more to shuffle
+    // Fetch ALL products (not just featured) - auto-select diverse mix
+    const data = await products.getAll({ limit: 50 });
     
     if (data.items && data.items.length > 0) {
-      // Shuffle products randomly
-      const shuffled = data.items.sort(() => 0.5 - Math.random());
-      // Take first 8 for slider
-      selected = shuffled.slice(0, 8);
+      // Smart selection: pick diverse products from different categories
+      selected = selectDiverseProducts(data.items, 8);
+      console.log(`✅ Auto-selected ${selected.length} featured products from ${data.items.length} total`);
     }
   } catch (error) {
     console.error('Error loading featured products:', error);
-    // No fallback - show empty state if API fails
   }
 
   if (selected.length > 0) {
@@ -154,6 +153,50 @@ async function loadFeaturedProducts() {
       </div>
     `;
   }
+}
+
+/**
+ * Select diverse products from different categories
+ * Ensures a good mix of product types for the featured section
+ */
+function selectDiverseProducts(allProducts, count) {
+  if (!allProducts || allProducts.length === 0) return [];
+  
+  // Group products by category
+  const byCategory = {};
+  allProducts.forEach(p => {
+    const cat = p.category_slug || 'other';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(p);
+  });
+  
+  // Shuffle products within each category
+  Object.keys(byCategory).forEach(cat => {
+    byCategory[cat].sort(() => 0.5 - Math.random());
+  });
+  
+  // Pick products round-robin from each category for diversity
+  const categories = Object.keys(byCategory);
+  const selected = [];
+  let catIndex = 0;
+  
+  while (selected.length < count && categories.length > 0) {
+    const cat = categories[catIndex % categories.length];
+    const catProducts = byCategory[cat];
+    
+    if (catProducts.length > 0) {
+      selected.push(catProducts.shift());
+    } else {
+      // Remove empty category
+      categories.splice(catIndex % categories.length, 1);
+      if (categories.length === 0) break;
+      continue;
+    }
+    catIndex++;
+  }
+  
+  // Final shuffle to mix categories in display
+  return selected.sort(() => 0.5 - Math.random());
 }
 
 function initSwiper() {

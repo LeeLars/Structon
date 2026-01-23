@@ -108,7 +108,24 @@
   text-align: left;
 }
 
+/* Override generic header link styles (e.g. .top-nav a) for dropdown items */
+.account-dropdown .account-dropdown-item,
+.account-dropdown .account-dropdown-item:visited {
+  color: #374151;
+}
+
+.account-dropdown .account-dropdown-item span {
+  color: currentColor;
+}
+
 .account-dropdown-item:hover {
+  background: #f3f4f6;
+  color: #236773;
+}
+
+.account-dropdown .account-dropdown-item:focus-visible {
+  outline: 2px solid rgba(35, 103, 115, 0.45);
+  outline-offset: 2px;
   background: #f3f4f6;
   color: #236773;
 }
@@ -117,19 +134,17 @@
   background: #e5e7eb;
 }
 
-.account-dropdown-item svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  flex-shrink: 0;
-}
-
 .account-dropdown-item:last-child {
   border-radius: 0 0 8px 8px;
 }
 
 /* Logout button special styling */
 .account-dropdown-item#logout-btn {
+  color: #dc2626;
+}
+
+.account-dropdown .account-dropdown-item#logout-btn,
+.account-dropdown .account-dropdown-item#logout-btn:visited {
   color: #dc2626;
 }
 

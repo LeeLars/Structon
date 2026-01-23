@@ -245,7 +245,18 @@ function createAccountDropdown() {
         cursor: pointer;
         transition: all 0.2s ease;
       }
+      .account-dropdown .account-dropdown-item,
+      .account-dropdown .account-dropdown-item:visited {
+        color: #374151;
+      }
+      .account-dropdown .account-dropdown-item span { color: currentColor; }
       .account-dropdown-item:hover {
+        background: #f9fafb;
+        color: #236773;
+      }
+      .account-dropdown-item:focus-visible {
+        outline: 2px solid rgba(35, 103, 115, 0.45);
+        outline-offset: 2px;
         background: #f9fafb;
         color: #236773;
       }

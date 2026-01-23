@@ -126,21 +126,23 @@ async function loadPopularProducts() {
 }
 
 /**
- * Setup tonnage filter checkboxes
+ * Setup tonnage filter buttons (model-btn style)
  */
 function setupTonnageFilters() {
-  const tonnageCheckboxes = document.querySelectorAll('.tonnage-filter input[type="checkbox"]');
+  const tonnageButtons = document.querySelectorAll('.model-btn[data-tonnage]');
   
-  tonnageCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', (e) => {
-      const tonnageValue = e.target.value;
+  tonnageButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tonnageValue = e.currentTarget.dataset.tonnage;
       
-      if (e.target.checked) {
-        if (!activeTonnageFilters.includes(tonnageValue)) {
-          activeTonnageFilters.push(tonnageValue);
-        }
-      } else {
+      // Toggle active state
+      if (activeTonnageFilters.includes(tonnageValue)) {
         activeTonnageFilters = activeTonnageFilters.filter(t => t !== tonnageValue);
+        button.classList.remove('active');
+      } else {
+        activeTonnageFilters.push(tonnageValue);
+        button.classList.add('active');
       }
       
       currentPage = 1;
@@ -187,8 +189,8 @@ function parseUrlFilters() {
   if (tonnage) {
     activeTonnageFilters = tonnage.split(',');
     activeTonnageFilters.forEach(t => {
-      const checkbox = document.querySelector(`.tonnage-filter input[value="${t}"]`);
-      if (checkbox) checkbox.checked = true;
+      const button = document.querySelector(`.model-btn[data-tonnage="${t}"]`);
+      if (button) button.classList.add('active');
     });
   }
   
@@ -489,8 +491,8 @@ export function clearIndustryFilters() {
   activeTonnageFilters = [];
   activeBucketTypeFilters = [];
   
-  document.querySelectorAll('.tonnage-filter input[type="checkbox"]').forEach(cb => {
-    cb.checked = false;
+  document.querySelectorAll('.model-btn[data-tonnage]').forEach(btn => {
+    btn.classList.remove('active');
   });
   
   document.querySelectorAll('.bucket-type-filter input[type="checkbox"]').forEach(cb => {

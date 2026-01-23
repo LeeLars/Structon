@@ -72,27 +72,29 @@ function getBrandFromUrl() {
 }
 
 /**
- * Setup tonnage filter checkboxes
+ * Setup tonnage filter buttons (model-btn style)
  */
 function setupTonnageFilters() {
-  const tonnageCheckboxes = document.querySelectorAll('.tonnage-filter input[type="checkbox"]');
+  const tonnageButtons = document.querySelectorAll('.model-btn[data-tonnage]');
 
-  if (tonnageCheckboxes.length === 0) {
+  if (tonnageButtons.length === 0) {
     // Still parse model filter from URL even if tonnage UI is not present
     parseUrlFilters();
     return;
   }
   
-  tonnageCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', (e) => {
-      const tonnageValue = e.target.value;
+  tonnageButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tonnageValue = e.currentTarget.dataset.tonnage;
       
-      if (e.target.checked) {
-        if (!activeTonnageFilters.includes(tonnageValue)) {
-          activeTonnageFilters.push(tonnageValue);
-        }
-      } else {
+      // Toggle active state
+      if (activeTonnageFilters.includes(tonnageValue)) {
         activeTonnageFilters = activeTonnageFilters.filter(t => t !== tonnageValue);
+        button.classList.remove('active');
+      } else {
+        activeTonnageFilters.push(tonnageValue);
+        button.classList.add('active');
       }
       
       // Reset to page 1 when filters change
@@ -190,15 +192,15 @@ function setActiveModelFromLink(linkEl) {
 function parseUrlFilters() {
   const params = new URLSearchParams(window.location.search);
   
-  // Tonnage filters
+  // Tonnage filters - now using model-btn elements
   const tonnage = params.get('tonnage');
   if (tonnage) {
     activeTonnageFilters = tonnage.split(',');
     
-    // Check the corresponding checkboxes
+    // Add active class to corresponding buttons
     activeTonnageFilters.forEach(t => {
-      const checkbox = document.querySelector(`.tonnage-filter input[value="${t}"]`);
-      if (checkbox) checkbox.checked = true;
+      const button = document.querySelector(`.model-btn[data-tonnage="${t}"]`);
+      if (button) button.classList.add('active');
     });
   }
   
@@ -605,11 +607,12 @@ export function clearTonnageFilters() {
   activeTonnageFilters = [];
   activeBucketTypeFilters = [];
   
-  // Uncheck all checkboxes
-  document.querySelectorAll('.tonnage-filter input[type="checkbox"]').forEach(cb => {
-    cb.checked = false;
+  // Remove active class from all tonnage buttons
+  document.querySelectorAll('.model-btn[data-tonnage]').forEach(btn => {
+    btn.classList.remove('active');
   });
   
+  // Uncheck all bucket type checkboxes
   document.querySelectorAll('.bucket-type-filter input[type="checkbox"]').forEach(cb => {
     cb.checked = false;
   });

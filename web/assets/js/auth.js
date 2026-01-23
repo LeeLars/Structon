@@ -17,10 +17,24 @@ export async function checkAuth() {
   isChecking = true;
 
   try {
+    // First try API call
     const response = await auth.me();
     
     // Handle null response (user not logged in)
     if (!response || !response.user) {
+      // Check localStorage as fallback (for when cookies don't work cross-domain)
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          currentUser = JSON.parse(storedUser);
+          console.log('✅ User loaded from localStorage:', currentUser.email);
+          updateAuthUI(true);
+          return currentUser;
+        } catch (e) {
+          console.log('Invalid stored user data');
+        }
+      }
+      
       currentUser = null;
       updateAuthUI(false);
       return null;
@@ -28,15 +42,33 @@ export async function checkAuth() {
     
     currentUser = response.user;
     
-    // Store token if provided (for API requests)
+    // Store token and user if provided
     if (response.token) {
       localStorage.setItem('auth_token', response.token);
     }
+    if (response.user) {
+      localStorage.setItem('user', JSON.stringify(response.user));
+    }
     
+    console.log('✅ User authenticated via API:', currentUser.email);
     updateAuthUI(true);
     return currentUser;
   } catch (error) {
-    console.log('Auth check: not logged in');
+    console.log('Auth check API failed, checking localStorage...');
+    
+    // Check localStorage as fallback
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        currentUser = JSON.parse(storedUser);
+        console.log('✅ User loaded from localStorage:', currentUser.email);
+        updateAuthUI(true);
+        return currentUser;
+      } catch (e) {
+        console.log('Invalid stored user data');
+      }
+    }
+    
     currentUser = null;
     updateAuthUI(false);
     return null;

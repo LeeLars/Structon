@@ -112,14 +112,23 @@ function closeLoginModal() {
 async function handleLoginSubmit(e) {
   e.preventDefault();
   
-  const email = document.getElementById('login-email').value;
+  const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
   const submitBtn = document.getElementById('login-modal-submit');
   const alertEl = document.getElementById('login-modal-alert');
   
+  // Validate
+  if (!email || !password) {
+    alertEl.className = 'login-modal-alert error';
+    alertEl.textContent = 'Vul alle velden in.';
+    alertEl.style.display = 'block';
+    return;
+  }
+  
   // Disable button
   submitBtn.disabled = true;
   submitBtn.textContent = 'Bezig...';
+  alertEl.style.display = 'none';
   
   try {
     // Determine API base URL
@@ -127,6 +136,8 @@ async function handleLoginSubmit(e) {
     const apiBase = (hostname === 'localhost' || hostname === '127.0.0.1')
       ? 'http://localhost:4000/api'
       : 'https://structon-production.up.railway.app/api';
+    
+    console.log('🔐 Attempting login to:', apiBase);
     
     const response = await fetch(`${apiBase}/auth/login`, {
       method: 'POST',
@@ -138,14 +149,15 @@ async function handleLoginSubmit(e) {
     });
     
     const data = await response.json();
+    console.log('📦 Login response:', response.status, data);
     
-    if (response.ok) {
-      // Success
+    if (response.ok && data.user) {
+      // Success!
       alertEl.className = 'login-modal-alert success';
       alertEl.textContent = 'Succesvol ingelogd! Pagina wordt herladen...';
       alertEl.style.display = 'block';
       
-      // Store token if provided
+      // Store token and user data
       if (data.token) {
         localStorage.setItem('auth_token', data.token);
       }
@@ -153,20 +165,24 @@ async function handleLoginSubmit(e) {
         localStorage.setItem('user', JSON.stringify(data.user));
       }
       
-      // Reload page after short delay
+      // Close modal and reload after short delay
       setTimeout(() => {
+        closeLoginModal();
         window.location.reload();
       }, 1000);
+      
     } else {
-      // Error
+      // Error from server
+      console.error('❌ Login failed:', data);
       alertEl.className = 'login-modal-alert error';
-      alertEl.textContent = data.message || 'Ongeldige inloggegevens';
+      alertEl.textContent = data.error || data.message || 'Ongeldige inloggegevens. Controleer uw e-mail en wachtwoord.';
       alertEl.style.display = 'block';
     }
+    
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('❌ Login error:', error);
     alertEl.className = 'login-modal-alert error';
-    alertEl.textContent = 'Er ging iets mis. Probeer het later opnieuw.';
+    alertEl.textContent = 'Kan geen verbinding maken met de server. Probeer het later opnieuw.';
     alertEl.style.display = 'block';
   } finally {
     submitBtn.disabled = false;

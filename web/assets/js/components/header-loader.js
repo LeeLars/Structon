@@ -434,15 +434,66 @@
   <!-- Mobile Navigation -->
   <nav class="nav-mobile" id="nav-mobile" aria-label="Mobiele navigatie">
     <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Menu sluiten">×</button>
-    <a href="${basePath}producten/" class="nav-link">Alle Producten</a>
-    <a href="${pagesPrefix}?cat=graafbakken" class="nav-link">Graafbakken</a>
-    <a href="${pagesPrefix}?cat=slotenbakken" class="nav-link">Slotenbakken</a>
-    <a href="${pagesPrefix}?cat=sloop-sorteergrijpers" class="nav-link">Sloop- en sorteergrijpers</a>
-    <a href="${basePath}blog/" class="nav-link">Blog</a>
-    <hr>
-    <a href="${basePath}over-ons/" class="nav-link">Over ons</a>
-    <a href="${basePath}contact/" class="nav-link">Contact</a>
-    <a href="${basePath}login/" class="btn btn-primary">Inloggen</a>
+    
+    <!-- Quick Actions -->
+    <div class="mobile-menu-section">
+      <a href="${basePath}producten/" class="nav-link nav-link-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Alle Producten
+      </a>
+      <a href="${basePath}offerte-aanvragen/" class="nav-link nav-link-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Offerte Aanvragen
+      </a>
+    </div>
+
+    <!-- Product Categories -->
+    <div class="mobile-menu-section">
+      <div class="menu-section-title">PRODUCTCATEGORIEËN</div>
+      <a href="${pagesPrefix}?cat=graafbakken" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Graafbakken
+      </a>
+      <a href="${pagesPrefix}?cat=slotenbakken" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Slotenbakken
+      </a>
+      <a href="${pagesPrefix}?cat=sloop-sorteergrijpers" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Sloop- en Sorteergrijpers
+      </a>
+      <a href="${pagesPrefix}?cat=adapters" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Adapters
+      </a>
+    </div>
+
+    <!-- Browse by Brand -->
+    <div class="mobile-menu-section">
+      <div class="menu-section-title">MERKEN</div>
+      <a href="${basePath}kraanbakken/caterpillar/" class="nav-link nav-link-compact">Caterpillar</a>
+      <a href="${basePath}kraanbakken/komatsu/" class="nav-link nav-link-compact">Komatsu</a>
+      <a href="${basePath}kraanbakken/volvo/" class="nav-link nav-link-compact">Volvo</a>
+      <a href="${basePath}kraanbakken/hitachi/" class="nav-link nav-link-compact">Hitachi</a>
+      <a href="${basePath}producten/" class="nav-link-more">Alle merken →</a>
+    </div>
+
+    <!-- Company Info -->
+    <div class="mobile-menu-section">
+      <div class="menu-section-title">BEDRIJF</div>
+      <a href="${basePath}over-ons/" class="nav-link nav-link-compact">Over Ons</a>
+      <a href="${basePath}contact/" class="nav-link nav-link-compact">Contact</a>
+      <a href="${basePath}blog/" class="nav-link nav-link-compact">Blog</a>
+      <a href="${basePath}faq/" class="nav-link nav-link-compact">FAQ</a>
+    </div>
+
+    <!-- Account -->
+    <div class="mobile-menu-section">
+      <a href="${basePath}login/" class="btn btn-primary btn-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Inloggen / Registreren
+      </a>
+    </div>
   </nav>
 `;
   }

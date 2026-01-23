@@ -145,14 +145,8 @@ async function loadSectionData(sectionName) {
     case 'adressen':
       loadAddresses();
       break;
-    case 'berichten':
-      loadMessages();
-      break;
     case 'profiel':
       loadProfile();
-      break;
-    case 'instellingen':
-      loadSettings();
       break;
   }
 }
@@ -165,13 +159,6 @@ async function loadDashboard() {
   document.getElementById('total-orders').textContent = '12';
   document.getElementById('pending-quotes').textContent = '3';
   document.getElementById('total-favorites').textContent = '8';
-  document.getElementById('unread-messages').textContent = '2';
-  
-  // Update messages badge
-  const messagesBadge = document.getElementById('messages-badge');
-  if (messagesBadge) {
-    messagesBadge.textContent = '2';
-  }
   
   // Load recent orders (mock data)
   const recentOrdersContainer = document.getElementById('recent-orders');
@@ -286,14 +273,6 @@ async function loadAddresses() {
 }
 
 /**
- * Load messages
- */
-async function loadMessages() {
-  // TODO: Implement messages loading from API
-  console.log('Loading messages...');
-}
-
-/**
  * Load profile
  */
 async function loadProfile() {
@@ -316,14 +295,6 @@ async function loadProfile() {
 }
 
 /**
- * Load settings
- */
-async function loadSettings() {
-  // TODO: Load user settings from API
-  console.log('Loading settings...');
-}
-
-/**
  * Setup forms
  */
 function setupForms() {
@@ -343,21 +314,6 @@ function setupForms() {
       e.preventDefault();
       await handlePasswordChange(e.target);
     });
-  }
-  
-  // Settings form
-  const settingsForm = document.getElementById('settings-form');
-  if (settingsForm) {
-    settingsForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await handleSettingsUpdate(e.target);
-    });
-  }
-  
-  // Delete account button
-  const deleteAccountBtn = document.getElementById('delete-account-btn');
-  if (deleteAccountBtn) {
-    deleteAccountBtn.addEventListener('click', handleDeleteAccount);
   }
 }
 
@@ -393,42 +349,6 @@ async function handlePasswordChange(form) {
   // Show success message
   showNotification('Wachtwoord succesvol gewijzigd', 'success');
   form.reset();
-}
-
-/**
- * Handle settings update
- */
-async function handleSettingsUpdate(form) {
-  const formData = new FormData(form);
-  
-  // TODO: Send to API
-  console.log('Updating settings...', Object.fromEntries(formData));
-  
-  // Show success message
-  showNotification('Instellingen succesvol opgeslagen', 'success');
-}
-
-/**
- * Handle account deletion
- */
-async function handleDeleteAccount() {
-  const confirmed = confirm(
-    'Weet u zeker dat u uw account wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.'
-  );
-  
-  if (!confirmed) return;
-  
-  const doubleConfirmed = confirm(
-    'Dit is uw laatste waarschuwing. Alle gegevens worden permanent verwijderd. Doorgaan?'
-  );
-  
-  if (!doubleConfirmed) return;
-  
-  // TODO: Send to API
-  console.log('Deleting account...');
-  
-  // Logout and redirect
-  await logout();
 }
 
 /**

@@ -72,26 +72,12 @@
               </svg>
               <span>Adressen</span>
             </a>
-            <a href="#berichten" class="account-nav-item" data-section="berichten">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              <span>Berichten</span>
-              <span class="account-nav-badge" id="messages-badge">3</span>
-            </a>
             <a href="#profiel" class="account-nav-item" data-section="profiel">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               <span>Profiel</span>
-            </a>
-            <a href="#instellingen" class="account-nav-item" data-section="instellingen">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m0 6l4.2 4.2M23 12h-6m-6 0H1m18.2 5.2l-4.2-4.2m0-6l4.2-4.2"></path>
-              </svg>
-              <span>Instellingen</span>
             </a>
           </nav>
 
@@ -156,17 +142,6 @@
                 </div>
               </div>
 
-              <div class="stat-card">
-                <div class="stat-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </div>
-                <div class="stat-info">
-                  <h3 id="unread-messages">0</h3>
-                  <p>Ongelezen berichten</p>
-                </div>
-              </div>
             </div>
 
             <div class="dashboard-grid">
@@ -340,23 +315,6 @@
             </div>
           </section>
 
-          <!-- Berichten Section -->
-          <section id="section-berichten" class="account-section">
-            <div class="account-section-header">
-              <h1>BERICHTEN</h1>
-              <p>Communicatie met Structon.</p>
-            </div>
-
-            <div class="messages-list" id="messages-list">
-              <div class="empty-state">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <p>Geen berichten</p>
-              </div>
-            </div>
-          </section>
-
           <!-- Profiel Section -->
           <section id="section-profiel" class="account-section">
             <div class="account-section-header">
@@ -440,74 +398,6 @@
             </form>
           </section>
 
-          <!-- Instellingen Section -->
-          <section id="section-instellingen" class="account-section">
-            <div class="account-section-header">
-              <h1>INSTELLINGEN</h1>
-              <p>Pas uw voorkeuren aan.</p>
-            </div>
-
-            <form class="account-form" id="settings-form">
-              <div class="settings-group">
-                <h3>NOTIFICATIES</h3>
-                <div class="settings-options">
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="notify-orders" checked>
-                    <span>Bestellingupdates per e-mail</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="notify-quotes" checked>
-                    <span>Offerte notificaties</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="notify-newsletter">
-                    <span>Nieuwsbrief ontvangen</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="notify-promotions">
-                    <span>Promoties en aanbiedingen</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="settings-group">
-                <h3>PRIVACY</h3>
-                <div class="settings-options">
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="privacy-analytics" checked>
-                    <span>Analytische cookies toestaan</span>
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="privacy-marketing">
-                    <span>Marketing cookies toestaan</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="form-actions">
-                <button type="submit" class="btn-primary">
-                  <span>Instellingen opslaan</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </form>
-
-            <div class="account-divider"></div>
-
-            <div class="danger-zone">
-              <h3>GEVAARLIJKE ZONE</h3>
-              <p>Deze acties zijn permanent en kunnen niet ongedaan worden gemaakt.</p>
-              <button class="btn-danger" id="delete-account-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="3 6 5 6 21 6"></polyline>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-                <span>Account verwijderen</span>
-              </button>
-            </div>
-          </section>
         </div>
       </div>
   </main>

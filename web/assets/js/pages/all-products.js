@@ -47,15 +47,17 @@ async function initPage() {
     // Show products list
     await initFilters(handleFilterChange);
     
-    // Load subcategories only if viewing a main category (not a subcategory)
+    // Load subcategories FIRST if viewing a main category (not a subcategory)
+    // This ensures subcategories appear before products load
     if (categoryParam) {
       // Check if categoryParam is a main category or subcategory
       const subcategoriesData = await subcategories.getAll();
       const isSubcategory = subcategoriesData?.subcategories?.some(sub => sub.slug === categoryParam);
       
       if (!isSubcategory) {
-        // It's a main category - load its subcategories
+        // It's a main category - load its subcategories and WAIT for completion
         await loadSubcategories(categoryParam);
+        console.log('✅ Subcategories loaded, now loading products...');
       } else {
         // It's a subcategory - update page title only (no description)
         const subcat = subcategoriesData.subcategories.find(s => s.slug === categoryParam);
@@ -69,6 +71,7 @@ async function initPage() {
       }
     }
     
+    // Load products AFTER subcategories are fully loaded and displayed
     await loadProducts();
   }
 }

@@ -721,7 +721,7 @@ main[data-brand] {
    CTA SECTION (Matching About Page)
    ============================================ */
 .about-section {
-  padding: var(--space-16) 0;
+  padding: var(--space-16) 0 var(--space-16) 0;
 }
 
 .cta-box {

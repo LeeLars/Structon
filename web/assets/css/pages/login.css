@@ -2,6 +2,15 @@
    LOGIN PAGE STYLES
    ============================================ */
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .login-page {
   min-height: 100vh;
   display: flex;

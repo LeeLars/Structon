@@ -198,7 +198,6 @@ main[data-industry] {
    ============================================ */
 .tonnage-filter-section {
   padding: var(--space-16) 0;
-  background-color: #F9FAFB; /* Rustige lichtgrijze achtergrond */
 }
 
 .tonnage-filter-header {

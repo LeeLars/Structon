@@ -31,9 +31,6 @@ main[data-brand] {
   background-color: white;
 }
 
-.section-gray {
-  background-color: #F9FAFB;
-}
 
 /* Remove top padding from products section - connects directly to filters */
 .section-gray.brand-products-section {
@@ -145,7 +142,6 @@ main[data-brand] {
    ============================================ */
 .model-selector-section {
   padding: var(--space-16) 0;
-  background-color: #F9FAFB; /* Rustige lichtgrijze achtergrond */
 }
 
 .section-header {

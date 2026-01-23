@@ -36,6 +36,18 @@ function initLoginForm() {
 
     try {
       const response = await auth.login(email, password);
+      
+      console.log('📦 Login response:', response);
+
+      // Store token and user data in localStorage
+      if (response.token) {
+        localStorage.setItem('auth_token', response.token);
+        console.log('✅ Token stored');
+      }
+      if (response.user) {
+        localStorage.setItem('user', JSON.stringify(response.user));
+        console.log('✅ User data stored:', response.user.email);
+      }
 
       // Success
       showAlert(alert, 'Inloggen gelukt! U wordt doorgestuurd...', 'success');
@@ -44,7 +56,7 @@ function initLoginForm() {
       setTimeout(() => {
         // Check if there's a redirect URL
         const params = new URLSearchParams(window.location.search);
-        const redirect = params.get('redirect') || '../index.html';
+        const redirect = params.get('redirect') || '../account/';
         window.location.href = redirect;
       }, 1000);
 

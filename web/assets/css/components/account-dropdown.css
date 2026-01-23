@@ -1,23 +1,31 @@
 /**
  * Account Dropdown Component
  * Dropdown menu voor ingelogde gebruikers
+ * Structon Design System
  */
+
+/* Wrapper for positioning */
+.account-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
 
 .account-dropdown {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 8px);
   right: 0;
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
-  min-width: 280px;
-  max-width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 260px;
+  max-width: 300px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 9999;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
 }
 
 .account-dropdown.active {
@@ -30,27 +38,26 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px 16px;
+  padding: 16px;
   border-bottom: 1px solid #e0e0e0;
-  background: #f9fafb;
-  border-radius: 12px 12px 0 0;
+  background: linear-gradient(135deg, #236773 0%, #1d5560 100%);
 }
 
 .account-avatar {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, #236773 0%, #2d7f8d 100%);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .account-avatar svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   stroke: #ffffff;
   stroke-width: 2;
 }
@@ -62,25 +69,26 @@
 
 .account-name {
   font-size: 14px;
-  font-weight: 700;
-  color: #111827;
+  font-weight: 600;
+  color: #ffffff;
   margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  letter-spacing: 0.01em;
 }
 
 .account-role {
   font-size: 12px;
-  color: #6b7280;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .account-dropdown-divider {
   height: 1px;
   background: #e0e0e0;
-  margin: 8px 0;
+  margin: 4px 0;
 }
 
 .account-dropdown-item {
@@ -88,7 +96,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 12px 16px;
+  padding: 11px 16px;
   border: none;
   background: none;
   color: #374151;
@@ -117,7 +125,17 @@
 }
 
 .account-dropdown-item:last-child {
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Logout button special styling */
+.account-dropdown-item#logout-btn {
+  color: #dc2626;
+}
+
+.account-dropdown-item#logout-btn:hover {
+  background: #fef2f2;
+  color: #b91c1c;
 }
 
 /* Ensure parent has position relative */
@@ -135,12 +153,38 @@
   overflow: visible !important;
 }
 
-/* Add backdrop blur effect on hover */
+/* Arrow pointer at top */
 .account-dropdown::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: inherit;
-  border-radius: inherit;
-  z-index: -1;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background: #236773;
+  transform: rotate(45deg);
+  border-left: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .account-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    transform: translateY(100%);
+  }
+  
+  .account-dropdown.active {
+    transform: translateY(0);
+  }
+  
+  .account-dropdown::before {
+    display: none;
+  }
 }

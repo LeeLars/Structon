@@ -1,6 +1,7 @@
 /**
  * Dynamic Sitemap Generator
  * Fetches categories and subcategories to build a footer sitemap
+ * Hides Slotenbakken and Adapterstukken, shows their subcategories instead
  */
 
 import { API_BASE_URL } from './api/client.js';
@@ -13,16 +14,24 @@ export async function initSitemap() {
     // Show loading state
     sitemapContainer.innerHTML = '<li class="sitemap-loading">Laden...</li>';
 
-    // Fetch all categories with subcategories
-    // We use the public categories endpoint. Assuming it returns active categories.
-    // Ideally we would have an endpoint that returns the full tree for sitemap.
-    // For now, we will use the navigation data logic.
+    // Fetch categories and subcategories
+    const [categoriesResponse, subcategoriesResponse] = await Promise.all([
+      fetch(`${API_BASE_URL}/categories`),
+      fetch(`${API_BASE_URL}/subcategories`)
+    ]);
     
-    const response = await fetch(`${API_BASE_URL}/categories`);
-    if (!response.ok) throw new Error('Failed to load sitemap data');
+    if (!categoriesResponse.ok || !subcategoriesResponse.ok) {
+      throw new Error('Failed to load sitemap data');
+    }
     
-    const data = await response.json();
-    const categories = data.categories || data || [];
+    const categoriesData = await categoriesResponse.json();
+    const subcategoriesData = await subcategoriesResponse.json();
+    
+    const categories = categoriesData.categories || categoriesData || [];
+    const subcategories = subcategoriesData.subcategories || subcategoriesData || [];
+    
+    // Categories to hide (show their subcategories instead)
+    const hiddenCategories = ['slotenbakken', 'adapterstukken', 'adapters'];
     
     // Build HTML
     let sitemapHtml = '';
@@ -40,20 +49,47 @@ export async function initSitemap() {
       </li>
     `;
 
-    // 2. Products Categories
+    // 2. Products Categories (with subcategories for hidden categories)
     if (categories && categories.length > 0) {
-      sitemapHtml += `
-        <li class="sitemap-section">
-          <h5 class="sitemap-heading">Producten</h5>
-          <ul class="sitemap-links">
-            ${categories.map(cat => `
+      const productLinks = [];
+      
+      categories.forEach(cat => {
+        const catSlug = cat.slug.toLowerCase();
+        
+        // Skip hidden categories
+        if (hiddenCategories.includes(catSlug)) {
+          // Add their subcategories instead
+          const catSubcategories = subcategories.filter(sub => 
+            sub.category_id === cat.id || sub.category_slug === cat.slug
+          );
+          
+          catSubcategories.forEach(sub => {
+            productLinks.push(`
               <li>
-                <a href="../../${cat.slug}/" class="sitemap-cat-link">${cat.title}</a>
+                <a href="../../producten/?cat=${sub.slug}" class="sitemap-cat-link">${sub.title}</a>
               </li>
-            `).join('')}
-          </ul>
-        </li>
-      `;
+            `);
+          });
+        } else {
+          // Show regular category
+          productLinks.push(`
+            <li>
+              <a href="../../producten/?cat=${cat.slug}" class="sitemap-cat-link">${cat.title}</a>
+            </li>
+          `);
+        }
+      });
+      
+      if (productLinks.length > 0) {
+        sitemapHtml += `
+          <li class="sitemap-section">
+            <h5 class="sitemap-heading">Producten</h5>
+            <ul class="sitemap-links">
+              ${productLinks.join('')}
+            </ul>
+          </li>
+        `;
+      }
     }
 
     // Render

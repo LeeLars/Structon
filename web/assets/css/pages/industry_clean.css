@@ -968,7 +968,7 @@ main[data-industry] .top-nav a {
 /* Add extra bottom padding for industry pages */
 .industry-page .cta-box,
 .cta-box {
-  padding-bottom: calc(var(--space-16) + var(--space-12));
+  margin-bottom: calc(var(--space-16) + var(--space-12));
 }
 
 

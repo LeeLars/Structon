@@ -56,6 +56,9 @@ export async function initBrandPage() {
 
   // Setup bucket type filter listeners
   setupBucketTypeFilters();
+
+  // Setup category filter listeners
+  setupCategoryFilters();
   
   // Load initial products
   loadBrandProducts();
@@ -138,6 +141,93 @@ function setupBucketTypeFilters() {
 }
 
 /**
+ * Setup category filter pills
+ */
+function setupCategoryFilters() {
+  const categoryPills = document.querySelectorAll('.category-pill');
+  
+  if (categoryPills.length === 0) {
+    console.log('No category pills found');
+    return;
+  }
+  
+  categoryPills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      const category = pill.dataset.category;
+      
+      // Toggle active state
+      if (pill.classList.contains('active')) {
+        // If clicking active pill, don't deactivate (always keep one active)
+        return;
+      } else {
+        // Remove active from all pills
+        categoryPills.forEach(p => p.classList.remove('active'));
+        // Add active to clicked pill
+        pill.classList.add('active');
+        activeCategory = category;
+      }
+      
+      // Reset to page 1 when filters change
+      currentPage = 1;
+      
+      // Update URL with filters
+      updateUrlWithFilters();
+      
+      // Update category description
+      updateCategoryDescription(category);
+      
+      // Filter and render products
+      filterAndRenderProducts();
+      
+      const productsSection = document.querySelector('.brand-products-section');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // Parse initial category from URL
+  parseUrlFilters();
+}
+
+/**
+ * Update category description based on selected category
+ */
+function updateCategoryDescription(category) {
+  const categoryIntro = document.getElementById('category-intro');
+  if (!categoryIntro) return;
+  
+  const brandName = currentBrandTitle || 'dit merk';
+  
+  const descriptions = {
+    'graafbakken': {
+      title: `Graafbakken voor ${brandName}`,
+      text: `Professionele graafbakken voor alle grondwerkzaamheden met uw ${brandName} graafmachine. Van lichte tuinwerkzaamheden tot zware grondverzet projecten. Alle bakken zijn vervaardigd met Hardox 450 slijtplaten voor maximale levensduur.`
+    },
+    'slotenbakken': {
+      title: `Slotenbakken voor ${brandName}`,
+      text: `Speciale sleuvenbakken voor het graven van sleuven en fundaties met uw ${brandName} machine. Smalle uitvoeringen voor precisiewerk en brede varianten voor grotere sleuven.`
+    },
+    'rioolbakken': {
+      title: `Rioolbakken voor ${brandName}`,
+      text: `Professionele rioolbakken ontworpen voor uw ${brandName} graafmachine. Ideaal voor het graven van rioleringen, drainage en waterwerken.`
+    },
+    'sorteergrijpers': {
+      title: `Sorteergrijpers voor ${brandName}`,
+      text: `Hydraulische sorteergrijpers voor uw ${brandName} machine. Perfect voor sloop- en afvalverwerkingsprojecten. Robuust en betrouwbaar voor zwaar gebruik.`
+    }
+  };
+  
+  const desc = descriptions[category];
+  if (desc) {
+    categoryIntro.querySelector('.category-description-title').textContent = desc.title;
+    categoryIntro.querySelector('.category-description-text').textContent = desc.text;
+  }
+}
+
+/**
  * Setup Volvo model selector links
  */
 function setupModelSelector() {
@@ -214,6 +304,23 @@ function parseUrlFilters() {
     });
   }
   
+  // Category filter
+  const category = params.get('category');
+  if (category) {
+    activeCategory = category;
+    
+    // Add active class to corresponding pill
+    const pill = document.querySelector(`.category-pill[data-category="${category}"]`);
+    if (pill) {
+      // Remove active from all pills
+      document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    }
+    
+    // Update category description
+    updateCategoryDescription(category);
+  }
+  
   // Model filter (from model selector links)
   const model = params.get('model');
   if (model) {
@@ -243,6 +350,12 @@ function updateUrlWithFilters() {
     params.set('type', activeBucketTypeFilters.join(','));
   } else {
     params.delete('type');
+  }
+
+  if (activeCategory) {
+    params.set('category', activeCategory);
+  } else {
+    params.delete('category');
   }
 
   if (activeModelFilter?.model) {
@@ -357,6 +470,9 @@ async function loadBrandProducts(categorySlug = null) {
     // so the page shows suggestions immediately (like industry pages).
     ensureDefaultBrandSuggestions();
     
+    // Update category counts
+    updateCategoryCounts();
+    
     // Apply filters and render
     filterAndRenderProducts();
     
@@ -364,6 +480,21 @@ async function loadBrandProducts(categorySlug = null) {
     console.error('Error loading brand products:', error);
     showError(container, 'Kon producten niet laden. Probeer het later opnieuw.');
   }
+}
+
+/**
+ * Update category pill counts
+ */
+function updateCategoryCounts() {
+  const categories = ['graafbakken', 'slotenbakken', 'rioolbakken', 'sorteergrijpers'];
+  
+  categories.forEach(category => {
+    const count = allProducts.filter(product => product.category_slug === category).length;
+    const countEl = document.getElementById(`count-${category}`);
+    if (countEl) {
+      countEl.textContent = count;
+    }
+  });
 }
 
 function ensureDefaultBrandSuggestions() {
@@ -433,6 +564,14 @@ function filterAndRenderProducts() {
     filteredProducts = filteredProducts.filter(product => {
       const productCategory = product.category_slug || '';
       return activeBucketTypeFilters.some(type => productCategory === type);
+    });
+  }
+
+  // Apply category filter
+  if (activeCategory) {
+    filteredProducts = filteredProducts.filter(product => {
+      const productCategory = product.category_slug || '';
+      return productCategory === activeCategory;
     });
   }
 

@@ -500,7 +500,8 @@
 
   // Initialize header
   function initHeader() {
-    const placeholder = document.getElementById('header-placeholder');
+    // Support both header-placeholder and header-wrapper IDs
+    const placeholder = document.getElementById('header-placeholder') || document.getElementById('header-wrapper');
     if (placeholder) {
       const basePath = getBasePath();
       placeholder.outerHTML = getHeaderHTML(basePath);

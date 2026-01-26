@@ -856,7 +856,8 @@ main[data-industry] {
   }
   
   .benefits-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
   
   .industry-products-list {

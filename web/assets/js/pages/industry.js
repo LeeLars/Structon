@@ -15,6 +15,21 @@ let activeBucketTypeFilters = [];
 let currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
 
+ function getProductWeightRangeKg(product) {
+   const rawMin = product?.excavator_weight_min;
+   const rawMax = product?.excavator_weight_max;
+
+   const minNum = rawMin === null || rawMin === undefined || rawMin === '' ? null : Number(rawMin);
+   const maxNum = rawMax === null || rawMax === undefined || rawMax === '' ? null : Number(rawMax);
+
+   // API can return ton values as strings (e.g. "1.50") while filters use kg.
+   // Heuristic: values < 200 are treated as tons.
+   const minKg = Number.isFinite(minNum) ? (minNum < 200 ? minNum * 1000 : minNum) : 0;
+   const maxKg = Number.isFinite(maxNum) ? (maxNum < 200 ? maxNum * 1000 : maxNum) : 100000;
+
+   return { minKg, maxKg };
+ }
+
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
 
@@ -362,10 +377,9 @@ function filterAndRenderProducts() {
       return activeTonnageFilters.some(tonnage => {
         const range = parseTonnageRange(tonnage);
         if (!range) return false;
-        
-        const productMin = product.excavator_weight_min || 0;
-        const productMax = product.excavator_weight_max || 100000;
-        
+
+        const { minKg: productMin, maxKg: productMax } = getProductWeightRangeKg(product);
+
         return productMax >= range.min && productMin <= range.max;
       });
     });

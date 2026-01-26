@@ -881,8 +881,8 @@ main[data-industry] {
   padding-bottom: calc(var(--space-16) + var(--space-8));
 }
 
-/* Hide products count text on industry pages */
-.industry-products-count {
+/* Hide products title on industry pages */
+.industry-products-title {
   display: none;
 }
 

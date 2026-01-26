@@ -51,6 +51,9 @@ export async function initBrandPage() {
     currentBrandTitle = null;
   }
 
+  // Populate category pill counts
+  loadCategoryPillCounts();
+
   // Setup tonnage filter listeners
   setupTonnageFilters();
 
@@ -62,6 +65,40 @@ export async function initBrandPage() {
   
   // Load initial products
   loadBrandProducts();
+}
+
+async function loadCategoryPillCounts() {
+  const categories = ['graafbakken', 'slotenbakken', 'rioolbakken', 'sorteergrijpers'];
+
+  // Only update if the pills exist on this page
+  const hasAnyPill = categories.some(cat => document.getElementById(`count-${cat}`));
+  if (!hasAnyPill) return;
+
+  try {
+    // Detect whether this brand has any brand-specific products
+    let useAllProductsFallback = false;
+    if (currentBrand) {
+      const brandTotalProbe = await products.getAll({ brand_slug: currentBrand, limit: 1 });
+      useAllProductsFallback = (brandTotalProbe.total || 0) === 0;
+    }
+
+    await Promise.all(
+      categories.map(async (category) => {
+        const el = document.getElementById(`count-${category}`);
+        if (!el) return;
+
+        const filters = { category_slug: category, limit: 1 };
+        if (currentBrand && !useAllProductsFallback) {
+          filters.brand_slug = currentBrand;
+        }
+
+        const data = await products.getAll(filters);
+        el.textContent = String(data.total ?? 0);
+      })
+    );
+  } catch (e) {
+    // If API fails, keep existing placeholders
+  }
 }
 
 /**

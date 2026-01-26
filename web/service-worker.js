@@ -4,7 +4,7 @@
  * Optimized for fast loading and offline support
  */
 
-const CACHE_VERSION = 'structon-v14'; // Updated: Fixed footer-loader paths + brand-data.js cache bust
+const CACHE_VERSION = 'structon-v15'; // Updated: Fixed footer-loader basePath for locale pages
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const API_CACHE = `${CACHE_VERSION}-api`;

@@ -23,18 +23,21 @@
     const path = window.location.pathname;
     const locale = getCurrentLocale();
     
+    // For locale-specific pages, calculate relative path back to locale root
     if (locale) {
       const localeIndex = path.indexOf('/' + locale + '/');
       if (localeIndex !== -1) {
         const pathAfterLocale = path.substring(localeIndex + locale.length + 2);
         const depth = pathAfterLocale.split('/').filter(p => p && !p.includes('.html')).length;
         
-        if (depth === 0) return '';
+        // Return relative path to locale root
+        if (depth === 0) return './';
         else if (depth === 1) return '../';
         else return '../'.repeat(depth);
       }
     }
     
+    // For non-locale pages (legacy root pages)
     const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina', 'account', 'offerte-aanvragen'];
     
     for (const folder of rootFolders) {
@@ -49,7 +52,7 @@
       return '../';
     }
     
-    return '';
+    return './';
   }
 
   function getFooterHTML(basePath) {

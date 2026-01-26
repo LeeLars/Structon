@@ -3,7 +3,7 @@
  * Dynamically renders brand page content based on brand-data.js
  */
 
-import { BRAND_DATA, OTHER_BRANDS } from '../data/brand-data.js?v=2';
+import { BRAND_DATA, OTHER_BRANDS } from '../data/brand-data.js?v=3';
 import { createExpertBox } from '../components/expert-box.js';
 
 /**

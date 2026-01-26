@@ -876,6 +876,16 @@ main[data-industry] {
   overflow: hidden;
 }
 
+/* Add extra bottom padding for industry pages */
+.industry-page .cta-box {
+  padding-bottom: calc(var(--space-16) + var(--space-8));
+}
+
+/* Hide products count text on industry pages */
+.industry-products-count {
+  display: none;
+}
+
 .cta-box::before {
   content: '';
   position: absolute;

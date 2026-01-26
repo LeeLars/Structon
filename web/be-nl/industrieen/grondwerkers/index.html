@@ -118,35 +118,60 @@
           <p class="section-subtitle">Kies het tonnage van uw graafmachine</p>
         </div>
         
-        <div class="model-cards-grid">
-          <!-- Minigravers -->
-          <div class="model-card">
-            <h3 class="model-card-title">Minigravers (&lt; 8 ton)</h3>
-            <p class="model-card-subtitle">Compact en wendbaar</p>
-            <div class="model-buttons">
-              <a href="#" class="model-btn" data-tonnage="1.5-3">1,5 - 3 ton</a>
-              <a href="#" class="model-btn" data-tonnage="3-8">3 - 8 ton</a>
-            </div>
+        <div class="tonnage-filter-grid">
+          <div class="tonnage-filter">
+            <input type="checkbox" id="tonnage-5-10" name="tonnage" value="5-10">
+            <label for="tonnage-5-10">
+              <span class="tonnage-checkbox"></span>
+              <span class="tonnage-label">
+                <span class="tonnage-range">5 - 10 ton</span>
+                <span class="tonnage-count">Middenklasse</span>
+              </span>
+            </label>
           </div>
-          
-          <!-- Middenklasse -->
-          <div class="model-card">
-            <h3 class="model-card-title">Middenklasse (8-25 ton)</h3>
-            <p class="model-card-subtitle">Veelzijdig inzetbaar</p>
-            <div class="model-buttons">
-              <a href="#" class="model-btn" data-tonnage="8-15">8 - 15 ton</a>
-              <a href="#" class="model-btn" data-tonnage="15-25">15 - 25 ton</a>
-            </div>
+        
+          <div class="tonnage-filter">
+            <input type="checkbox" id="tonnage-10-15" name="tonnage" value="10-15">
+            <label for="tonnage-10-15">
+              <span class="tonnage-checkbox"></span>
+              <span class="tonnage-label">
+                <span class="tonnage-range">10 - 15 ton</span>
+                <span class="tonnage-count">Middenklasse</span>
+              </span>
+            </label>
           </div>
-          
-          <!-- Zware Klasse -->
-          <div class="model-card">
-            <h3 class="model-card-title">Zware Klasse (&gt; 25 ton)</h3>
-            <p class="model-card-subtitle">Voor zwaar werk</p>
-            <div class="model-buttons">
-              <a href="#" class="model-btn" data-tonnage="25-40">25 - 40 ton</a>
-              <a href="#" class="model-btn" data-tonnage="40+">40+ ton</a>
-            </div>
+        
+          <div class="tonnage-filter">
+            <input type="checkbox" id="tonnage-15-25" name="tonnage" value="15-25">
+            <label for="tonnage-15-25">
+              <span class="tonnage-checkbox"></span>
+              <span class="tonnage-label">
+                <span class="tonnage-range">15 - 25 ton</span>
+                <span class="tonnage-count">Zware klasse</span>
+              </span>
+            </label>
+          </div>
+        
+          <div class="tonnage-filter">
+            <input type="checkbox" id="tonnage-25-40" name="tonnage" value="25-40">
+            <label for="tonnage-25-40">
+              <span class="tonnage-checkbox"></span>
+              <span class="tonnage-label">
+                <span class="tonnage-range">25 - 40 ton</span>
+                <span class="tonnage-count">Zware klasse</span>
+              </span>
+            </label>
+          </div>
+        
+          <div class="tonnage-filter">
+            <input type="checkbox" id="tonnage-40+" name="tonnage" value="40+">
+            <label for="tonnage-40+">
+              <span class="tonnage-checkbox"></span>
+              <span class="tonnage-label">
+                <span class="tonnage-range">40+ ton</span>
+                <span class="tonnage-count">Extra zware klasse</span>
+              </span>
+            </label>
           </div>
         </div>
       </div>

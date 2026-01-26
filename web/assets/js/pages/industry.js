@@ -85,9 +85,12 @@ export function initIndustryPage() {
   
   // Setup category tab listeners
   setupCategoryTabs();
+
+  // Populate category tab counts
+  loadCategoryTabCounts();
   
   // Load initial products
-  loadIndustryProducts();
+  loadIndustryProducts(getActiveCategoryFromTabs());
   
   // Load popular products for sidebar
   loadPopularProducts();
@@ -231,7 +234,7 @@ function updateUrlWithFilters() {
  */
 function setupCategoryTabs() {
   const categoryTabs = document.querySelectorAll('.category-tab');
-  
+
   categoryTabs.forEach(tab => {
     tab.addEventListener('click', (e) => {
       e.preventDefault();
@@ -246,6 +249,35 @@ function setupCategoryTabs() {
       loadIndustryProducts(categorySlug);
     });
   });
+}
+
+function getActiveCategoryFromTabs() {
+  const active = document.querySelector('.category-tab.active');
+  if (active?.dataset?.category) return active.dataset.category;
+  const first = document.querySelector('.category-tab');
+  return first?.dataset?.category || null;
+}
+
+async function loadCategoryTabCounts() {
+  const categoryTabs = document.querySelectorAll('.category-tab');
+  if (categoryTabs.length === 0) return;
+
+  await Promise.all(
+    Array.from(categoryTabs).map(async (tab) => {
+      const categorySlug = tab.dataset.category;
+      const countEl = tab.querySelector('.category-tab-count');
+      if (!categorySlug || !countEl) return;
+
+      try {
+        // Fetch minimal payload but rely on API total
+        const data = await products.getAll({ category_slug: categorySlug, limit: 1 });
+        countEl.textContent = String(data.total ?? 0);
+      } catch (e) {
+        // Keep placeholder when API fails
+        countEl.textContent = '0';
+      }
+    })
+  );
 }
 
 /**
@@ -298,8 +330,7 @@ async function loadIndustryProducts(categorySlug = null) {
     const filters = {
       limit: 100
     };
-    
-    // Get industry-specific categories if no specific category selected
+
     if (categorySlug) {
       filters.category_slug = categorySlug;
     }

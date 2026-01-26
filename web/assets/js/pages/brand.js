@@ -51,9 +51,6 @@ export async function initBrandPage() {
     currentBrandTitle = null;
   }
 
-  // Populate category pill counts
-  loadCategoryPillCounts();
-
   // Setup tonnage filter listeners
   setupTonnageFilters();
 
@@ -67,39 +64,7 @@ export async function initBrandPage() {
   loadBrandProducts();
 }
 
-async function loadCategoryPillCounts() {
-  const categories = ['graafbakken', 'slotenbakken', 'rioolbakken', 'sorteergrijpers'];
-
-  // Only update if the pills exist on this page
-  const hasAnyPill = categories.some(cat => document.getElementById(`count-${cat}`));
-  if (!hasAnyPill) return;
-
-  try {
-    // Detect whether this brand has any brand-specific products
-    let useAllProductsFallback = false;
-    if (currentBrand) {
-      const brandTotalProbe = await products.getAll({ brand_slug: currentBrand, limit: 1 });
-      useAllProductsFallback = (brandTotalProbe.total || 0) === 0;
-    }
-
-    await Promise.all(
-      categories.map(async (category) => {
-        const el = document.getElementById(`count-${category}`);
-        if (!el) return;
-
-        const filters = { category_slug: category, limit: 1 };
-        if (currentBrand && !useAllProductsFallback) {
-          filters.brand_slug = currentBrand;
-        }
-
-        const data = await products.getAll(filters);
-        el.textContent = String(data.total ?? 0);
-      })
-    );
-  } catch (e) {
-    // If API fails, keep existing placeholders
-  }
-}
+// Category pill counts are now updated via updateCategoryCounts() after products load
 
 /**
  * Get brand slug from URL path
@@ -469,7 +434,7 @@ function updateCategoryIntro(categorySlug) {
 
 /**
  * Load products for current brand
- * Falls back to all products if no brand-specific products exist
+ * Fetches all products and filters client-side based on compatible_brand_ids
  */
 async function loadBrandProducts(categorySlug = null) {
   const container = document.getElementById('products-grid');
@@ -478,28 +443,56 @@ async function loadBrandProducts(categorySlug = null) {
   showLoading(container);
   
   try {
-    // First try to load brand-specific products
-    let data;
+    // Load all products from API
+    console.log('🔍 Loading all products for brand filtering...');
+    const data = await products.getAll({ limit: 500 });
+    let fetchedProducts = data.items || [];
+    console.log(`� Fetched ${fetchedProducts.length} total products`);
     
+    // Get brand ID from slug if we have a brand
+    let brandId = null;
     if (currentBrand) {
-      console.log('🔍 Loading brand products with brand_slug:', currentBrand);
-      data = await products.getAll({ brand_slug: currentBrand, limit: 200 });
-      allProducts = data.items || [];
+      try {
+        const brandData = await brands.getBySlug(currentBrand);
+        brandId = brandData?.id || brandData?.brand?.id || null;
+        console.log(`🏷️ Brand ID for ${currentBrand}:`, brandId);
+      } catch (e) {
+        console.warn('⚠️ Could not fetch brand ID, will show all-compatible products only');
+      }
+    }
+    
+    // Filter products based on compatible_brand_ids
+    if (currentBrand) {
+      allProducts = fetchedProducts.filter(product => {
+        const compatibleBrands = product.specs?.compatible_brand_ids || product.compatible_brand_ids;
+        
+        // If compatible_brand_ids is "all", product works for all brands
+        if (compatibleBrands === 'all') {
+          return true;
+        }
+        
+        // If it's an array, check if current brand ID is in it
+        if (Array.isArray(compatibleBrands) && brandId) {
+          return compatibleBrands.includes(brandId);
+        }
+        
+        // Also check if brand slug matches directly (some products may use slugs)
+        if (Array.isArray(compatibleBrands)) {
+          return compatibleBrands.includes(currentBrand);
+        }
+        
+        return false;
+      });
       
-      // If no brand-specific products, load ALL products as fallback
-      // Products with compatible_brand_ids: "all" work for any brand
+      console.log(`✅ Filtered to ${allProducts.length} products compatible with ${currentBrand}`);
+      
+      // If no compatible products found, show all products as fallback
       if (allProducts.length === 0) {
-        console.log('⚠️ No brand-specific products found, loading all compatible products...');
-        data = await products.getAll({ limit: 200 });
-        allProducts = data.items || [];
-        console.log(`✅ Fallback: Loaded ${allProducts.length} products (all brands)`);
-      } else {
-        console.log(`✅ Loaded ${allProducts.length} products for brand: ${currentBrand}`);
+        console.log('⚠️ No compatible products found, showing all products as fallback');
+        allProducts = fetchedProducts;
       }
     } else {
-      // No brand specified, load all products
-      data = await products.getAll({ limit: 200 });
-      allProducts = data.items || [];
+      allProducts = fetchedProducts;
       console.log(`✅ Loaded ${allProducts.length} products (no brand filter)`);
     }
 

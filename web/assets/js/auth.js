@@ -123,15 +123,34 @@ export async function logout() {
   currentUser = null;
   localStorage.removeItem('auth_token');
   localStorage.removeItem('user');
+  localStorage.removeItem('refresh_token');
+  
+  // Clear session storage as well
+  sessionStorage.clear();
   
   // Update UI
   updateAuthUI(false);
   
-  // Determine base path
-  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon/' : '/';
+  // Determine base path and locale
+  const path = window.location.pathname;
+  let basePath = '/';
+  let locale = 'be-nl';
   
-  // Redirect to home
-  window.location.href = basePath;
+  if (path.includes('/Structon/')) {
+    basePath = '/Structon/';
+  }
+  
+  // Detect current locale
+  const locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+  for (const loc of locales) {
+    if (path.includes('/' + loc + '/')) {
+      locale = loc;
+      break;
+    }
+  }
+  
+  // Redirect to login page
+  window.location.href = basePath + locale + '/login/';
 }
 
 /**

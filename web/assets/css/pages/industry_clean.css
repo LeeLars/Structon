@@ -8,6 +8,11 @@ main[data-industry] {
   background-color: white;
 }
 
+/* Prevent font-size conflicts with global header styles */
+main[data-industry] .top-nav a {
+  font-size: inherit !important;
+}
+
 .section-clean {
   padding: var(--space-16) 0;
   position: relative;

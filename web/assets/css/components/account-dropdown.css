@@ -12,8 +12,8 @@
 
 .account-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
+  top: calc(100% + 12px);
+  left: 0;
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -173,7 +173,7 @@
   content: '';
   position: absolute;
   top: -6px;
-  right: 20px;
+  left: 20px;
   width: 12px;
   height: 12px;
   background: #236773;

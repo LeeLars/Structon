@@ -5,7 +5,7 @@
 
 import { products, brands } from '../api/client.js';
 import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
-import { BRAND_DATA } from '../data/brand-data.js?v=3';
+import { BRAND_DATA } from '../data/brand-data.js?v=4';
 
 // Brand page state
 let currentBrand = null;

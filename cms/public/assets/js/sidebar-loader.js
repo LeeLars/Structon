@@ -133,22 +133,40 @@
     if (!token) return { quotes: 0, requests: 0, orders: 0 };
 
     try {
-      const response = await fetch(`${API_BASE}/quotes?limit=100`, {
+      // Fetch quotes
+      const quotesResponse = await fetch(`${API_BASE}/quotes?limit=100`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
 
-      if (!response.ok) return { quotes: 0, requests: 0, orders: 0 };
+      let newQuotesCount = 0;
+      if (quotesResponse.ok) {
+        const quotesData = await quotesResponse.json();
+        // Only count quotes with status 'new'
+        newQuotesCount = (quotesData.quotes || []).filter(q => q.status === 'new').length;
+      }
 
-      const data = await response.json();
-      const unviewedQuotes = (data.quotes || []).filter(q => !q.viewed).length;
+      // Fetch orders
+      const ordersResponse = await fetch(`${API_BASE}/orders?limit=100`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let newOrdersCount = 0;
+      if (ordersResponse.ok) {
+        const ordersData = await ordersResponse.json();
+        // Only count orders with status 'new'
+        newOrdersCount = (ordersData.orders || []).filter(o => o.status === 'new').length;
+      }
 
       return {
-        quotes: unviewedQuotes,
+        quotes: newQuotesCount,
         requests: 0, // TODO: Implement when requests API is ready
-        orders: 0    // TODO: Implement when orders API is ready
+        orders: newOrdersCount
       };
     } catch (error) {
       console.error('Failed to fetch notification counts:', error);

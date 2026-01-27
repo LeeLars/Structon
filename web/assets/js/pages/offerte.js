@@ -62,6 +62,21 @@ function renderCartItems() {
   }
   
   // Render items in a separate card style
+  const getLocale = () => {
+    const path = window.location.pathname;
+    if (path.includes('/nl-nl/')) return 'nl-nl';
+    if (path.includes('/be-fr/')) return 'be-fr';
+    if (path.includes('/de-de/')) return 'de-de';
+    return 'be-nl';
+  };
+
+  const buildProductUrl = (item) => {
+    const locale = getLocale();
+    if (!item || !item.slug || !item.category_slug) return null;
+    const sub = item.subcategory_slug ? `/${item.subcategory_slug}` : '';
+    return `/Structon/${locale}/producten/${item.category_slug}${sub}/${item.slug}/`;
+  };
+
   container.innerHTML = `
     <div class="quote-cart-card-header">
       <div class="quote-cart-card-title">
@@ -78,7 +93,15 @@ function renderCartItems() {
       ${items.map(item => `
         <div class="quote-cart-card-item">
           <div class="quote-cart-card-item-image">
-            ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `
+            ${item.image ? `
+              ${buildProductUrl(item) ? `
+                <a href="${buildProductUrl(item)}" style="display: flex; width: 100%; height: 100%;" aria-label="Bekijk ${item.title}">
+                  <img src="${item.image}" alt="${item.title}">
+                </a>
+              ` : `
+                <img src="${item.image}" alt="${item.title}">
+              `}
+            ` : `
               <div class="quote-cart-card-item-placeholder">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -87,7 +110,11 @@ function renderCartItems() {
             `}
           </div>
           <div class="quote-cart-card-item-info">
-            <h4>${item.title}</h4>
+            ${buildProductUrl(item) ? `
+              <h4><a href="${buildProductUrl(item)}" style="color: inherit; text-decoration: none;">${item.title}</a></h4>
+            ` : `
+              <h4>${item.title}</h4>
+            `}
             <p class="quote-cart-card-item-category">${item.category}${item.subcategory ? ' › ' + item.subcategory : ''}</p>
             ${item.specs && Object.keys(item.specs).length > 0 ? `
               <div class="quote-cart-card-item-specs">

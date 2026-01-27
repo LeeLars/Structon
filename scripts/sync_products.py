@@ -163,6 +163,8 @@ def generate_product_page(product, locale):
     cart_data = {
         'id': product.get('id', ''),
         'slug': slug,
+        'category_slug': category_slug,
+        'subcategory_slug': subcategory_slug,
         'title': title,
         'image': image_url,
         'category': category_title,

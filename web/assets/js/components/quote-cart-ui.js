@@ -259,6 +259,21 @@ class QuoteCartUI {
   renderCartItems() {
     const container = document.getElementById('quote-cart-content');
     const items = window.quoteCart.getItems();
+
+    const getLocale = () => {
+      const path = window.location.pathname;
+      if (path.includes('/nl-nl/')) return 'nl-nl';
+      if (path.includes('/be-fr/')) return 'be-fr';
+      if (path.includes('/de-de/')) return 'de-de';
+      return 'be-nl';
+    };
+
+    const buildProductUrl = (item) => {
+      const locale = getLocale();
+      if (!item || !item.slug || !item.category_slug) return null;
+      const sub = item.subcategory_slug ? `/${item.subcategory_slug}` : '';
+      return `/Structon/${locale}/producten/${item.category_slug}${sub}/${item.slug}/`;
+    };
     
     if (items.length === 0) {
       container.innerHTML = `
@@ -278,7 +293,15 @@ class QuoteCartUI {
     container.innerHTML = items.map(item => `
       <div class="quote-cart-item" data-id="${item.id}">
         <div class="quote-cart-item-image">
-          ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `
+          ${item.image ? `
+            ${buildProductUrl(item) ? `
+              <a href="${buildProductUrl(item)}" style="display: flex; width: 100%; height: 100%;" aria-label="Bekijk ${item.title}">
+                <img src="${item.image}" alt="${item.title}">
+              </a>
+            ` : `
+              <img src="${item.image}" alt="${item.title}">
+            `}
+          ` : `
             <div class="quote-cart-item-placeholder">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -289,7 +312,11 @@ class QuoteCartUI {
           `}
         </div>
         <div class="quote-cart-item-info">
-          <h4 class="quote-cart-item-title">${item.title}</h4>
+          ${buildProductUrl(item) ? `
+            <h4 class="quote-cart-item-title"><a href="${buildProductUrl(item)}" style="color: inherit; text-decoration: none;">${item.title}</a></h4>
+          ` : `
+            <h4 class="quote-cart-item-title">${item.title}</h4>
+          `}
           <p class="quote-cart-item-category">${item.category}${item.subcategory ? ' › ' + item.subcategory : ''}</p>
           ${item.specs && Object.keys(item.specs).length > 0 ? `
             <div class="quote-cart-item-specs">

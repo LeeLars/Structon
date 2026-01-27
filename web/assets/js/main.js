@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCmsLink();
   initNavigation();
   initSitemap();
+  initQuoteCart();
   
   // Register service worker for offline support and caching
   registerServiceWorker();
@@ -493,4 +494,32 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initScrollAnimations);
 } else {
   initScrollAnimations();
+}
+
+/**
+ * Initialize Quote Cart globally
+ * Loads the cart service and UI on all pages
+ */
+function initQuoteCart() {
+  // Load quote cart service script
+  const serviceScript = document.createElement('script');
+  serviceScript.src = '/Structon/assets/js/services/quote-cart-service.js';
+  serviceScript.onload = () => {
+    console.log('✅ Quote cart service loaded globally');
+    
+    // Load quote cart UI after service is loaded
+    const uiScript = document.createElement('script');
+    uiScript.src = '/Structon/assets/js/components/quote-cart-ui.js';
+    uiScript.onload = () => {
+      console.log('✅ Quote cart UI loaded globally');
+    };
+    document.head.appendChild(uiScript);
+  };
+  document.head.appendChild(serviceScript);
+  
+  // Load quote cart CSS
+  const cartCSS = document.createElement('link');
+  cartCSS.rel = 'stylesheet';
+  cartCSS.href = '/Structon/assets/css/components/quote-cart.css';
+  document.head.appendChild(cartCSS);
 }

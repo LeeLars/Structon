@@ -66,6 +66,14 @@
               </div>
             </div>
             
+            <!-- Price display (only visible for logged-in users) -->
+            <div class="product-price-container" id="product-price-container" data-product-id="11c08c8c-265d-4900-b005-046e6e3102c4" style="display: none;">
+              <div class="product-price-label">Uw prijs</div>
+              <div class="product-price" id="product-price">
+                <span class="price-loading">Prijs laden...</span>
+              </div>
+            </div>
+            
             <div class="product-actions">
               <button class="btn-split btn-split-primary" id="add-to-quote" data-product="{&quot;id&quot;: &quot;11c08c8c-265d-4900-b005-046e6e3102c4&quot;, &quot;slug&quot;: &quot;test-dieplepelbak-01&quot;, &quot;title&quot;: &quot;Test - Dieplepelbak - 01&quot;, &quot;image&quot;: &quot;https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png&quot;, &quot;category&quot;: &quot;Graafbakken&quot;, &quot;subcategory&quot;: &quot;Dieplepelbakken&quot;, &quot;specs&quot;: {&quot;width&quot;: &quot;300 mm&quot;, &quot;weight&quot;: &quot;55 kg&quot;, &quot;attachment&quot;: &quot;CW05&quot;, &quot;excavator&quot;: &quot;1.50-3.00t&quot;}}">
                 <span class="btn-split-text">Ajouter au devis</span>
@@ -155,5 +163,6 @@
   <script src="../../../../../assets/js/components/login-modal.js?v=2"></script>
   <script src="../../../../../assets/js/services/quote-cart-service.js"></script>
   <script src="../../../../../assets/js/components/quote-cart-ui.js"></script>
+  <script src="../../../../../assets/js/components/product-price.js"></script>
 </body>
 </html>

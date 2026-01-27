@@ -228,6 +228,14 @@ def generate_product_page(product, locale):
               {specs_html}
             </div>
             
+            <!-- Price display (only visible for logged-in users) -->
+            <div class="product-price-container" id="product-price-container" data-product-id="{cart_data['id']}" style="display: none;">
+              <div class="product-price-label">Uw prijs</div>
+              <div class="product-price" id="product-price">
+                <span class="price-loading">Prijs laden...</span>
+              </div>
+            </div>
+            
             <div class="product-actions">
               <button class="btn-split btn-split-primary" id="add-to-quote" data-product="{cart_data_json}">
                 <span class="btn-split-text">{labels['add_to_quote']}</span>
@@ -317,6 +325,7 @@ def generate_product_page(product, locale):
   <script src="{assets_prefix}/js/components/login-modal.js?v=2"></script>
   <script src="{assets_prefix}/js/services/quote-cart-service.js"></script>
   <script src="{assets_prefix}/js/components/quote-cart-ui.js"></script>
+  <script src="{assets_prefix}/js/components/product-price.js"></script>
 </body>
 </html>'''
 

@@ -3,6 +3,99 @@
  * Popup login form that can be triggered from any page
  */
 
+// Detect current locale from URL
+function detectLocale() {
+  const path = window.location.pathname;
+  if (path.includes('/be-nl/')) return 'be-nl';
+  if (path.includes('/nl-nl/')) return 'nl-nl';
+  if (path.includes('/be-fr/')) return 'be-fr';
+  if (path.includes('/de-de/')) return 'de-de';
+  return 'be-nl'; // default
+}
+
+// Translations for login modal
+const translations = {
+  'be-nl': {
+    title: 'Klant Login',
+    subtitle: 'Log in om prijzen te bekijken en bestellingen te plaatsen.',
+    email: 'E-mailadres',
+    password: 'Wachtwoord',
+    loginBtn: 'Inloggen',
+    loggingIn: 'Bezig...',
+    forgotPassword: 'Wachtwoord vergeten?',
+    noAccount: 'Nog geen klant?',
+    contact: 'Neem contact op',
+    showPassword: 'Wachtwoord tonen',
+    hidePassword: 'Wachtwoord verbergen',
+    errors: {
+      fillAll: 'Vul alle velden in.',
+      invalid: 'Ongeldige inloggegevens. Controleer uw e-mail en wachtwoord.',
+      connection: 'Kan geen verbinding maken met de server. Probeer het later opnieuw.',
+      success: 'Succesvol ingelogd! Pagina wordt herladen...'
+    }
+  },
+  'nl-nl': {
+    title: 'Klant Login',
+    subtitle: 'Log in om prijzen te bekijken en bestellingen te plaatsen.',
+    email: 'E-mailadres',
+    password: 'Wachtwoord',
+    loginBtn: 'Inloggen',
+    loggingIn: 'Bezig...',
+    forgotPassword: 'Wachtwoord vergeten?',
+    noAccount: 'Nog geen klant?',
+    contact: 'Neem contact op',
+    showPassword: 'Wachtwoord tonen',
+    hidePassword: 'Wachtwoord verbergen',
+    errors: {
+      fillAll: 'Vul alle velden in.',
+      invalid: 'Ongeldige inloggegevens. Controleer uw e-mail en wachtwoord.',
+      connection: 'Kan geen verbinding maken met de server. Probeer het later opnieuw.',
+      success: 'Succesvol ingelogd! Pagina wordt herladen...'
+    }
+  },
+  'be-fr': {
+    title: 'Connexion Client',
+    subtitle: 'Connectez-vous pour voir les prix et passer des commandes.',
+    email: 'Adresse e-mail',
+    password: 'Mot de passe',
+    loginBtn: 'Se connecter',
+    loggingIn: 'En cours...',
+    forgotPassword: 'Mot de passe oublié?',
+    noAccount: 'Pas encore client?',
+    contact: 'Contactez-nous',
+    showPassword: 'Afficher le mot de passe',
+    hidePassword: 'Masquer le mot de passe',
+    errors: {
+      fillAll: 'Veuillez remplir tous les champs.',
+      invalid: 'Identifiants invalides. Vérifiez votre e-mail et mot de passe.',
+      connection: 'Impossible de se connecter au serveur. Réessayez plus tard.',
+      success: 'Connexion réussie! La page va se recharger...'
+    }
+  },
+  'de-de': {
+    title: 'Kunden-Login',
+    subtitle: 'Melden Sie sich an, um Preise zu sehen und Bestellungen aufzugeben.',
+    email: 'E-Mail-Adresse',
+    password: 'Passwort',
+    loginBtn: 'Anmelden',
+    loggingIn: 'Wird geladen...',
+    forgotPassword: 'Passwort vergessen?',
+    noAccount: 'Noch kein Kunde?',
+    contact: 'Kontakt aufnehmen',
+    showPassword: 'Passwort anzeigen',
+    hidePassword: 'Passwort verbergen',
+    errors: {
+      fillAll: 'Bitte füllen Sie alle Felder aus.',
+      invalid: 'Ungültige Anmeldedaten. Überprüfen Sie Ihre E-Mail und Ihr Passwort.',
+      connection: 'Keine Verbindung zum Server möglich. Bitte versuchen Sie es später erneut.',
+      success: 'Erfolgreich angemeldet! Seite wird neu geladen...'
+    }
+  }
+};
+
+const currentLocale = detectLocale();
+const t = translations[currentLocale];
+
 // Create modal HTML
 function createLoginModal() {
   const modal = document.createElement('div');
@@ -22,15 +115,15 @@ function createLoginModal() {
         <div class="login-modal-logo">
           <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon">
         </div>
-        <h2 class="login-modal-title">Klant Login</h2>
-        <p class="login-modal-subtitle">Log in om prijzen te bekijken en bestellingen te plaatsen.</p>
+        <h2 class="login-modal-title">${t.title}</h2>
+        <p class="login-modal-subtitle">${t.subtitle}</p>
       </div>
       
       <div id="login-modal-alert" class="login-modal-alert" style="display: none;"></div>
       
       <form class="login-modal-form" id="login-modal-form">
         <div class="form-group">
-          <label for="login-email" class="form-label">E-mailadres</label>
+          <label for="login-email" class="form-label">${t.email}</label>
           <input 
             type="email" 
             id="login-email" 
@@ -43,34 +136,49 @@ function createLoginModal() {
         </div>
         
         <div class="form-group">
-          <label for="login-password" class="form-label">Wachtwoord</label>
-          <input 
-            type="password" 
-            id="login-password" 
-            name="password" 
-            class="form-input" 
-            placeholder="••••••••"
-            required
-            autocomplete="current-password"
-          >
+          <label for="login-password" class="form-label">${t.password}</label>
+          <div class="password-input-wrapper">
+            <input 
+              type="password" 
+              id="login-password" 
+              name="password" 
+              class="form-input" 
+              placeholder="••••••••"
+              required
+              autocomplete="current-password"
+            >
+            <button type="button" class="password-toggle" id="password-toggle" aria-label="${t.showPassword}">
+              <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="eye-off-icon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
         </div>
         
         <button type="submit" class="btn-login" id="login-modal-submit">
-          Inloggen
+          ${t.loginBtn}
         </button>
       </form>
       
       <div class="login-modal-footer">
-        <a href="#" id="forgot-password-modal-link">Wachtwoord vergeten?</a>
+        <a href="#" id="forgot-password-modal-link">${t.forgotPassword}</a>
       </div>
       
       <div class="login-modal-info">
-        Nog geen klant? <a href="/contact/">Neem contact op</a>
+        ${t.noAccount} <a href="/contact/">${t.contact}</a>
       </div>
     </div>
   `;
   
   document.body.appendChild(modal);
+  
+  // Setup password toggle
+  setupPasswordToggle();
   
   // Setup form submission
   const form = document.getElementById('login-modal-form');
@@ -93,6 +201,28 @@ function openLoginModal() {
       document.getElementById('login-email')?.focus();
     }, 100);
   }
+}
+
+// Setup password toggle functionality
+function setupPasswordToggle() {
+  const toggleBtn = document.getElementById('password-toggle');
+  const passwordInput = document.getElementById('login-password');
+  const eyeIcon = toggleBtn?.querySelector('.eye-icon');
+  const eyeOffIcon = toggleBtn?.querySelector('.eye-off-icon');
+  
+  if (!toggleBtn || !passwordInput) return;
+  
+  toggleBtn.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    
+    if (eyeIcon && eyeOffIcon) {
+      eyeIcon.style.display = isPassword ? 'none' : 'block';
+      eyeOffIcon.style.display = isPassword ? 'block' : 'none';
+    }
+    
+    toggleBtn.setAttribute('aria-label', isPassword ? t.hidePassword : t.showPassword);
+  });
 }
 
 // Close modal
@@ -120,14 +250,14 @@ async function handleLoginSubmit(e) {
   // Validate
   if (!email || !password) {
     alertEl.className = 'login-modal-alert error';
-    alertEl.textContent = 'Vul alle velden in.';
+    alertEl.textContent = t.errors.fillAll;
     alertEl.style.display = 'block';
     return;
   }
   
   // Disable button
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Bezig...';
+  submitBtn.textContent = t.loggingIn;
   alertEl.style.display = 'none';
   
   try {
@@ -154,7 +284,7 @@ async function handleLoginSubmit(e) {
     if (response.ok && data.user) {
       // Success!
       alertEl.className = 'login-modal-alert success';
-      alertEl.textContent = 'Succesvol ingelogd! Pagina wordt herladen...';
+      alertEl.textContent = t.errors.success;
       alertEl.style.display = 'block';
       
       // Store token and user data
@@ -175,18 +305,18 @@ async function handleLoginSubmit(e) {
       // Error from server
       console.error('❌ Login failed:', data);
       alertEl.className = 'login-modal-alert error';
-      alertEl.textContent = data.error || data.message || 'Ongeldige inloggegevens. Controleer uw e-mail en wachtwoord.';
+      alertEl.textContent = data.error || data.message || t.errors.invalid;
       alertEl.style.display = 'block';
     }
     
   } catch (error) {
     console.error('❌ Login error:', error);
     alertEl.className = 'login-modal-alert error';
-    alertEl.textContent = 'Kan geen verbinding maken met de server. Probeer het later opnieuw.';
+    alertEl.textContent = t.errors.connection;
     alertEl.style.display = 'block';
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Inloggen';
+    submitBtn.textContent = t.loginBtn;
   }
 }
 

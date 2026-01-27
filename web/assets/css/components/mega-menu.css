@@ -82,7 +82,9 @@
 }
 
 .menu-dropdown-view-all {
-  display: inline-block;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
   background-color: var(--color-primary, #236773);
   color: white;
   text-decoration: none;
@@ -91,6 +93,7 @@
   padding: 10px 20px;
   border-radius: 25px;
   transition: background-color 0.2s ease;
+  flex-shrink: 0;
 }
 
 .menu-dropdown-view-all:hover {

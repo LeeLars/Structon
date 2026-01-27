@@ -3,6 +3,9 @@
    Industriële, krachtige look met petrol accent
    ============================================ */
 
+/* Import Component Styles */
+@import url('components/account-dropdown.css');
+
 /* ============================================
    CSS CUSTOM PROPERTIES (Design Tokens)
    ============================================ */

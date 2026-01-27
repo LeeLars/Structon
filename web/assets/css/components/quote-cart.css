@@ -504,7 +504,6 @@
    OFFERTE PAGE CART ITEMS
    ============================================ */
 .quote-cart-items-section {
-  background: var(--color-gray-50);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   margin-bottom: var(--space-8);

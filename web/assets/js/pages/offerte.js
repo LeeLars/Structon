@@ -1,6 +1,7 @@
 /**
  * Structon - Contact & Quote Form JavaScript
  * Handles form submission to CMS with validation and confirmation emails
+ * Now includes quote cart integration
  */
 
 import { quotes, products } from '../api/client.js';
@@ -14,6 +15,9 @@ let isSubmitting = false;
 document.addEventListener('DOMContentLoaded', () => {
   console.log('📝 Contact page initialized');
   
+  // Render cart items if available
+  renderCartItems();
+  
   // Parse URL parameters for pre-filling
   parseUrlParameters();
   
@@ -23,6 +27,94 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup request type toggle
   setupRequestTypeToggle();
 });
+
+/**
+ * Render quote cart items above the form
+ */
+function renderCartItems() {
+  // Check if quoteCart service is available
+  if (typeof window.quoteCart === 'undefined') {
+    console.log('Quote cart service not loaded yet, retrying...');
+    setTimeout(renderCartItems, 100);
+    return;
+  }
+  
+  const items = window.quoteCart.getItems();
+  if (items.length === 0) return;
+  
+  // Find or create cart items container
+  let container = document.getElementById('quote-cart-items');
+  if (!container) {
+    // Create container before the form
+    const form = document.getElementById('quote-form');
+    if (!form) return;
+    
+    container = document.createElement('div');
+    container.id = 'quote-cart-items';
+    container.className = 'quote-cart-items-section';
+    form.parentNode.insertBefore(container, form);
+  }
+  
+  // Render items
+  container.innerHTML = `
+    <div class="cart-items-header">
+      <h2>UW GESELECTEERDE PRODUCTEN</h2>
+      <span class="cart-items-count">${items.length} product${items.length > 1 ? 'en' : ''}</span>
+    </div>
+    <div class="cart-items-list">
+      ${items.map(item => `
+        <div class="cart-item-row">
+          <div class="cart-item-image">
+            ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `
+              <div class="cart-item-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                </svg>
+              </div>
+            `}
+          </div>
+          <div class="cart-item-details">
+            <h4>${item.title}</h4>
+            <p class="cart-item-category">${item.category}${item.subcategory ? ' › ' + item.subcategory : ''}</p>
+            ${item.specs && Object.keys(item.specs).length > 0 ? `
+              <div class="cart-item-specs">
+                ${Object.entries(item.specs).filter(([k,v]) => v).map(([k,v]) => `<span>${v}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+          <div class="cart-item-qty">
+            <span>Aantal: <strong>${item.quantity || 1}</strong></span>
+          </div>
+          <button type="button" class="cart-item-remove" data-id="${item.id}" aria-label="Verwijderen">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      `).join('')}
+    </div>
+    <input type="hidden" name="cart_items_json" id="cart-items-json" value='${window.quoteCart.formatAsJSON()}'>
+    <input type="hidden" name="cart_items_text" id="cart-items-text" value="${encodeCartText()}">
+  `;
+  
+  // Bind remove buttons
+  container.querySelectorAll('.cart-item-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      window.quoteCart.removeItem(id);
+      renderCartItems();
+    });
+  });
+}
+
+/**
+ * Encode cart text for hidden field (escape special chars)
+ */
+function encodeCartText() {
+  if (typeof window.quoteCart === 'undefined') return '';
+  return encodeURIComponent(window.quoteCart.formatAsText());
+}
 
 /**
  * Parse URL parameters to pre-fill form fields

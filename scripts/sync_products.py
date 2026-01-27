@@ -159,6 +159,30 @@ def generate_product_page(product, locale):
     stock_class = 'in-stock' if stock > 0 else 'out-of-stock'
     stock_text = labels['stock'] if stock > 0 else labels['out_of_stock']
     
+    # Prepare cart data for add-to-quote button
+    cart_data = {
+        'id': product.get('id', ''),
+        'slug': slug,
+        'title': title,
+        'image': image_url,
+        'category': category_title,
+        'subcategory': subcategory_title,
+        'specs': {}
+    }
+    if width:
+        cart_data['specs']['width'] = f"{width} mm"
+    if volume:
+        cart_data['specs']['volume'] = f"{volume} L"
+    if weight:
+        cart_data['specs']['weight'] = f"{weight} kg"
+    if attachment:
+        cart_data['specs']['attachment'] = attachment
+    if excavator_min and excavator_max:
+        cart_data['specs']['excavator'] = f"{excavator_min}-{excavator_max}t"
+    
+    import html as html_module
+    cart_data_json = html_module.escape(json.dumps(cart_data, ensure_ascii=False))
+    
     return f'''<!DOCTYPE html>
 <html lang="{locale.replace('-', '_')}">
 <head>
@@ -170,6 +194,7 @@ def generate_product_page(product, locale):
   <link rel="stylesheet" href="{assets_prefix}/css/fonts.css">
   <link rel="stylesheet" href="{assets_prefix}/css/global.css?v=8">
   <link rel="stylesheet" href="{assets_prefix}/css/components/mega-menu.css">
+  <link rel="stylesheet" href="{assets_prefix}/css/components/quote-cart.css">
   <link rel="stylesheet" href="{assets_prefix}/css/pages/product.css">
   <link rel="icon" type="image/svg+xml" href="{assets_prefix}/images/static/favicon.svg">
 {canonical}
@@ -208,7 +233,7 @@ def generate_product_page(product, locale):
             </div>
             
             <div class="product-actions">
-              <button class="btn-split btn-split-primary" id="add-to-quote" data-product-id="{product.get('id', '')}">
+              <button class="btn-split btn-split-primary" id="add-to-quote" data-product="{cart_data_json}">
                 <span class="btn-split-text">{labels['add_to_quote']}</span>
                 <span class="btn-split-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -324,6 +349,8 @@ def generate_product_page(product, locale):
   <script src="{assets_prefix}/js/components/footer-loader.js"></script>
   <script type="module" src="{assets_prefix}/js/main.js?v=2"></script>
   <script src="{assets_prefix}/js/components/login-modal.js?v=2"></script>
+  <script src="{assets_prefix}/js/services/quote-cart-service.js"></script>
+  <script src="{assets_prefix}/js/components/quote-cart-ui.js"></script>
 </body>
 </html>'''
 

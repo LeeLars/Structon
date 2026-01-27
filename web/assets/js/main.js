@@ -503,6 +503,9 @@ function initQuoteCart() {
     return;
   }
 
+  // Determine base path dynamically
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+
   // Load quote cart service script
   const ensureUI = () => {
     if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
@@ -515,7 +518,7 @@ function initQuoteCart() {
     }
 
     const uiScript = document.createElement('script');
-    uiScript.src = '/Structon/assets/js/components/quote-cart-ui.js';
+    uiScript.src = `${basePath}/assets/js/components/quote-cart-ui.js`;
     document.head.appendChild(uiScript);
   };
 
@@ -525,7 +528,7 @@ function initQuoteCart() {
     const serviceAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/services/quote-cart-service.js'));
     if (!serviceAlreadyLoaded) {
       const serviceScript = document.createElement('script');
-      serviceScript.src = '/Structon/assets/js/services/quote-cart-service.js';
+      serviceScript.src = `${basePath}/assets/js/services/quote-cart-service.js`;
       serviceScript.onload = ensureUI;
       document.head.appendChild(serviceScript);
     } else {
@@ -538,7 +541,7 @@ function initQuoteCart() {
   if (!cssAlreadyLoaded) {
     const cartCSS = document.createElement('link');
     cartCSS.rel = 'stylesheet';
-    cartCSS.href = '/Structon/assets/css/components/quote-cart.css';
+    cartCSS.href = `${basePath}/assets/css/components/quote-cart.css`;
     document.head.appendChild(cartCSS);
   }
 }

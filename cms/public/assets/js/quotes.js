@@ -168,7 +168,7 @@ function renderQuotes() {
 
   tableBody.innerHTML = filtered.map((quote, index) => `
     <tr onclick="viewQuote('${quote.id}')" style="cursor: pointer;">
-      <td><strong>Aanvraag #${String(index + 1).padStart(2, '0')}</strong></td>
+      <td><strong>${quote.reference || 'Aanvraag #' + String(index + 1).padStart(2, '0')}</strong></td>
       <td>
         <div>${formatDate(quote.created_at)}</div>
         <div class="text-muted small">${formatTime(quote.created_at)}</div>
@@ -267,15 +267,32 @@ function openQuoteDrawer(quote) {
   }
   
   // Populate Drawer
+  const currentIndex = allQuotes.findIndex(q => q.id == quote.id);
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < allQuotes.length - 1;
+  
   drawer.innerHTML = `
     <div class="drawer-header">
-      <div>
-        <h2 class="drawer-title">Offerte ${quote.reference || quote.id}</h2>
-        <p class="drawer-subtitle">Aangevraagd op ${formatDate(quote.created_at)} om ${formatTime(quote.created_at)}</p>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="btn-icon" onclick="navigateQuote(${currentIndex - 1})" ${!hasPrev ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div>
+          <h2 class="drawer-title">Offerte ${quote.reference || quote.id}</h2>
+          <p class="drawer-subtitle">Aangevraagd op ${formatDate(quote.created_at)} om ${formatTime(quote.created_at)}</p>
+        </div>
+        <button class="btn-icon" onclick="navigateQuote(${currentIndex + 1})" ${!hasNext ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
-      <button class="btn-icon" onclick="closeQuoteDrawer()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-icon" onclick="deleteQuote('${quote.id}')" title="Verwijderen" style="color: var(--color-error);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        </button>
+        <button class="btn-icon" onclick="closeQuoteDrawer()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
     </div>
     
     <div class="drawer-content">
@@ -492,8 +509,11 @@ window.closeQuoteDrawer = () => {
 };
 
 window.saveQuoteStatus = async (id, newStatus) => {
-  const quote = allQuotes.find(q => q.id === id);
-  if (!quote) return;
+  const quote = allQuotes.find(q => q.id == id);
+  if (!quote) {
+    console.error('Quote not found:', id);
+    return;
+  }
   
   // Optimistic update
   const oldStatus = quote.status;
@@ -522,6 +542,43 @@ window.saveQuoteStatus = async (id, newStatus) => {
     
     if (window.showToast) {
       window.showToast('Fout bij updaten status', 'error');
+    }
+  }
+};
+
+window.navigateQuote = (index) => {
+  if (index >= 0 && index < allQuotes.length) {
+    const quote = allQuotes[index];
+    openQuoteDrawer(quote);
+  }
+};
+
+window.deleteQuote = async (id) => {
+  if (!confirm('Weet je zeker dat je deze offerte wilt verwijderen?')) {
+    return;
+  }
+  
+  try {
+    await api.delete(`/quotes/${id}`);
+    
+    // Remove from local array
+    const index = allQuotes.findIndex(q => q.id == id);
+    if (index > -1) {
+      allQuotes.splice(index, 1);
+    }
+    
+    // Close drawer and refresh table
+    closeQuoteDrawer();
+    renderQuotes();
+    updateStats();
+    
+    if (window.showToast) {
+      window.showToast('Offerte verwijderd', 'success');
+    }
+  } catch (error) {
+    console.error('Failed to delete quote:', error);
+    if (window.showToast) {
+      window.showToast('Fout bij verwijderen', 'error');
     }
   }
 };

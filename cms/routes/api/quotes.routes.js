@@ -153,6 +153,19 @@ router.get('/', authenticateToken, async (req, res) => {
     
     const result = await query(sql, params);
     
+    // Parse cart_items JSON for each quote
+    const quotes = result.rows.map(quote => {
+      if (quote.cart_items && typeof quote.cart_items === 'string') {
+        try {
+          quote.cart_items = JSON.parse(quote.cart_items);
+        } catch (e) {
+          console.warn('Failed to parse cart_items for quote', quote.id);
+          quote.cart_items = null;
+        }
+      }
+      return quote;
+    });
+    
     // Get total count
     let countSql = 'SELECT COUNT(*) FROM quotes';
     if (status) {
@@ -161,7 +174,7 @@ router.get('/', authenticateToken, async (req, res) => {
     const countResult = await query(countSql, status ? [status] : []);
     
     res.json({
-      quotes: result.rows,
+      quotes,
       total: parseInt(countResult.rows[0].count),
       limit: parseInt(limit),
       offset: parseInt(offset)

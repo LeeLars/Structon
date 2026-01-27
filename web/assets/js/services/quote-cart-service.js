@@ -216,11 +216,6 @@ class QuoteCartService {
   }
 }
 
-// Singleton instance
-const quoteCart = new QuoteCartService();
-
-// Export for ES modules
-export default quoteCart;
-
-// Also expose globally for non-module scripts
-window.quoteCart = quoteCart;
+// Singleton instance - expose globally
+window.quoteCart = new QuoteCartService();
+console.log('🛒 Quote Cart Service initialized');

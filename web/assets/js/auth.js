@@ -109,7 +109,7 @@ export async function login(email, password) {
 }
 
 /**
- * Logout user
+ * Logout user - Complete session destruction
  */
 export async function logout() {
   try {
@@ -119,14 +119,26 @@ export async function logout() {
     // Continue with logout even if API fails
   }
   
-  // Clear all auth data
+  // Clear all auth data from localStorage
   currentUser = null;
   localStorage.removeItem('auth_token');
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('structon_auth_token');
   localStorage.removeItem('user');
   localStorage.removeItem('refresh_token');
+  localStorage.removeItem('structon_user');
+  localStorage.removeItem('cms_token');
   
-  // Clear session storage as well
+  // Clear session storage completely
   sessionStorage.clear();
+  
+  // Clear all cookies related to auth
+  document.cookie.split(";").forEach(function(c) {
+    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+  });
+  
+  // Remove is-logged-in class from body
+  document.body.classList.remove('is-logged-in');
   
   // Update UI
   updateAuthUI(false);
@@ -149,8 +161,13 @@ export async function logout() {
     }
   }
   
-  // Redirect to login page
-  window.location.href = basePath + locale + '/login/';
+  const loginUrl = basePath + locale + '/login/';
+  
+  // Replace current history entry to prevent back-button returning to authenticated page
+  window.history.replaceState(null, '', loginUrl);
+  
+  // Force redirect with cache bypass
+  window.location.replace(loginUrl);
 }
 
 /**
@@ -523,6 +540,49 @@ function updatePriceVisibility(isAuthenticated) {
  */
 export function initAuth() {
   checkAuth();
+  
+  // Handle back-button navigation (bfcache)
+  // This ensures logged-out users can't access cached authenticated pages
+  window.addEventListener('pageshow', function(event) {
+    // Check if page was restored from bfcache
+    if (event.persisted) {
+      console.log('Page restored from bfcache, checking auth state...');
+      
+      // Check if user should be logged in but tokens are missing
+      const hasToken = localStorage.getItem('auth_token') || 
+                       localStorage.getItem('authToken') || 
+                       localStorage.getItem('structon_auth_token');
+      const hasUser = localStorage.getItem('user');
+      
+      // If on an account page but no auth tokens, redirect to login
+      const isAccountPage = window.location.pathname.includes('/account');
+      
+      if (isAccountPage && (!hasToken || !hasUser)) {
+        console.log('No auth tokens found on account page, redirecting to login...');
+        const path = window.location.pathname;
+        let basePath = '/';
+        let locale = 'be-nl';
+        
+        if (path.includes('/Structon/')) {
+          basePath = '/Structon/';
+        }
+        
+        const locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+        for (const loc of locales) {
+          if (path.includes('/' + loc + '/')) {
+            locale = loc;
+            break;
+          }
+        }
+        
+        window.location.replace(basePath + locale + '/login/');
+        return;
+      }
+      
+      // Re-check auth state to update UI
+      checkAuth();
+    }
+  });
 }
 
 // Auto-initialize

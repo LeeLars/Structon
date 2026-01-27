@@ -236,7 +236,10 @@ function createSubcategoryCard(subcategory) {
   // Based on previous code: const categoryUrl = `?cat=${subcategory.slug}`;
   // This seems to assume subcategories can be treated as main categories in the URL or the logic handles it.
   // Let's stick to the existing URL logic.
-  const categoryUrl = `?cat=${subcategory.slug}`;
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const productenIndex = pathParts.indexOf('producten');
+  const isCleanCategoryPage = productenIndex !== -1 && !!pathParts[productenIndex + 1] && !pathParts[productenIndex + 2];
+  const categoryUrl = isCleanCategoryPage ? `${subcategory.slug}/` : `?cat=${subcategory.slug}`;
   
   return `
     <a href="${categoryUrl}" class="subcategory-card">

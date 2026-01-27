@@ -189,6 +189,7 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
     labels = LABELS[locale]
     title = subcategory['title_translations'].get(locale, subcategory['title'])
     description = subcategory['description_translations'].get(locale, subcategory['description'])
+    long_description = subcategory.get('long_description_translations', {}).get(locale, subcategory.get('long_description', description))
     parent_title = parent['title_translations'].get(locale, parent['title'])
     assets_prefix = '../../../../assets'
     home_link = '../../../index.html'
@@ -229,13 +230,17 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
         <div class="page-hero-content">
           <div class="page-hero-text">
             <h1 class="page-title">{title.upper()}</h1>
-            <p class="page-subtitle">{description}</p>
+            <p class="page-subtitle" style="display: none;">{description}</p>
           </div>
         </div>
       </div>
     </section>
     <section class="section category-section">
       <div class="container">
+        <div id="category-header" class="category-header" style="display: block;">
+          <h2 class="category-header-title">{title.upper()}</h2>
+          <p class="category-header-description">{long_description}</p>
+        </div>
         <div class="category-layout">
           <aside class="filters-sidebar" id="filters-sidebar">
             <div class="filters-header">

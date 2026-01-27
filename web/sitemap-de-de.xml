@@ -746,4 +746,198 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/voorwaarden/"/>
   </url>
 
+
+  <!-- Category & Subcategory Pages (Clean URLs) -->
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/slotenbakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/slotenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/slotenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/slotenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/slotenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/slotenbakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/dieplepelbakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/dieplepelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/dieplepelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/dieplepelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/dieplepelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/dieplepelbakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/sleuvenbakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/sleuvenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/sleuvenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/sleuvenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/sleuvenbakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/sleuvenbakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/kantelbakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/kantelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/kantelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/kantelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/kantelbakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/kantelbakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/rioolbakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/rioolbakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/rioolbakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/rioolbakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/rioolbakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/rioolbakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/graafbakken/trapezium-bakken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/trapezium-bakken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/graafbakken/trapezium-bakken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/graafbakken/trapezium-bakken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/graafbakken/trapezium-bakken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/graafbakken/trapezium-bakken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/sloop-sorteergrijpers/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/sloop-sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/sloop-sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/sloop-sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/sloop-sorteergrijpers/sorteergrijpers/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/sloop-sorteergrijpers/sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/sloop-sorteergrijpers/sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/sloop-sorteergrijpers/sorteergrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/sorteergrijpers/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/sloop-sorteergrijpers/sloopgrijpers/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/sloopgrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/sloop-sorteergrijpers/sloopgrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/sloop-sorteergrijpers/sloopgrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/sloop-sorteergrijpers/sloopgrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/sloopgrijpers/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/sloop-sorteergrijpers/puingrijpers/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/puingrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/sloop-sorteergrijpers/puingrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/sloop-sorteergrijpers/puingrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/sloop-sorteergrijpers/puingrijpers/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/sloop-sorteergrijpers/puingrijpers/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/overige/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/overige/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/overige/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/overige/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/overige/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/overige/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/overige/ripper-tanden/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/overige/ripper-tanden/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/overige/ripper-tanden/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/overige/ripper-tanden/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/overige/ripper-tanden/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/overige/ripper-tanden/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/overige/hydraulische-hamers/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/overige/hydraulische-hamers/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/overige/hydraulische-hamers/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/overige/hydraulische-hamers/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/overige/hydraulische-hamers/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/overige/hydraulische-hamers/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/overige/egaliseerbalken/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/overige/egaliseerbalken/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/overige/egaliseerbalken/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/overige/egaliseerbalken/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/overige/egaliseerbalken/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/overige/egaliseerbalken/"/>
+  </url>
+
+  <url>
+    <loc>https://structon.be/de-de/producten/overige/verdichtingsplaten/</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/overige/verdichtingsplaten/"/>
+    <xhtml:link rel="alternate" hreflang="nl-NL" href="https://structon.be/nl-nl/producten/overige/verdichtingsplaten/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://structon.be/be-fr/producten/overige/verdichtingsplaten/"/>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://structon.be/de-de/producten/overige/verdichtingsplaten/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://structon.be/be-nl/producten/overige/verdichtingsplaten/"/>
+  </url>
+
 </urlset>

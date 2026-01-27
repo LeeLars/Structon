@@ -203,7 +203,6 @@
                   <div class="account-role">Administrator</div>
                 </div>
               </div>
-              <div class="account-dropdown-divider"></div>
               <a href="https://structon-production.up.railway.app/cms/" class="account-dropdown-item" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="7" height="7"></rect>
@@ -226,7 +225,6 @@
                 </svg>
                 <span>Offertes Beheren</span>
               </a>
-              <div class="account-dropdown-divider"></div>
               <button class="account-dropdown-item" id="logout-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>

@@ -291,8 +291,9 @@ class QuoteCartUI {
     const buildProductUrl = (item) => {
       const locale = getLocale();
       if (!item || !item.slug || !item.category_slug) return null;
+      const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
       const sub = item.subcategory_slug ? `/${item.subcategory_slug}` : '';
-      return `/Structon/${locale}/producten/${item.category_slug}${sub}/${item.slug}/`;
+      return `${basePath}/${locale}/producten/${item.category_slug}${sub}/${item.slug}/`;
     };
     
     if (items.length === 0) {

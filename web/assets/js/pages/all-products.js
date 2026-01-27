@@ -59,14 +59,24 @@ async function initPage() {
         await loadSubcategories(categoryParam);
         console.log('✅ Subcategories loaded, now loading products...');
       } else {
-        // It's a subcategory - update page title only (no description)
+        // It's a subcategory - update page title and show description
         const subcat = subcategoriesData.subcategories.find(s => s.slug === categoryParam);
         if (subcat) {
           const pageTitle = document.querySelector('.page-title');
           const pageSubtitle = document.querySelector('.page-subtitle');
           if (pageTitle) pageTitle.textContent = subcat.title.toUpperCase();
-          // Hide subtitle for subcategory pages - only show title
-          if (pageSubtitle) pageSubtitle.style.display = 'none';
+          
+          // Show description from SUBCATEGORY_DESCRIPTIONS mapping
+          if (pageSubtitle) {
+            // Get description from mapping (defined later in file)
+            const description = getSubcategoryDescription(categoryParam);
+            if (description) {
+              pageSubtitle.textContent = description;
+              pageSubtitle.style.display = 'block';
+            } else {
+              pageSubtitle.style.display = 'none';
+            }
+          }
         }
       }
     }
@@ -276,6 +286,15 @@ const SUBCATEGORY_DESCRIPTIONS = {
   'egaliseerbalken': 'Egaliseerbalken zijn precisie-afwerkingsgereedschap voor het egaliseren en afwerken van terreinen. De brede, vlakke constructie creëert perfecte vlakke oppervlakken voor funderingen, terrassen en sportvelden. Vaak voorzien van verstelbare schoenen voor nauwkeurige hoogte-instelling en laser-compatibiliteit.',
   'verdichtingsplaten': 'Hydraulische verdichtingsplaten voor het verdichten van grond, zand en grind. De trilplaat genereert hoogfrequente trillingen voor optimale verdichting van ophogingen, sleufvullingen en funderingen. Essentieel voor het bereiken van de vereiste draagkracht volgens bouwvoorschriften. Verkrijgbaar in verschillende breedtes en trilfrequenties.'
 };
+
+/**
+ * Get subcategory description from mapping
+ * @param {string} slug - Subcategory slug
+ * @returns {string|null} Description or null if not found
+ */
+function getSubcategoryDescription(slug) {
+  return SUBCATEGORY_DESCRIPTIONS[slug] || null;
+}
 
 /**
  * Update category header with dynamic title and description

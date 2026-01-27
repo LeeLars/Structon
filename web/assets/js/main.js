@@ -500,48 +500,66 @@ if (document.readyState === 'loading') {
  */
 function initQuoteCart() {
   if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
+    console.log('🛒 Quote cart already initialized');
     return;
   }
 
+  console.log('🛒 Initializing quote cart...');
+
   // Determine base path dynamically
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  console.log('🛒 Using basePath:', basePath);
 
-  // Load quote cart service script
-  const ensureUI = () => {
-    if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
-      return;
-    }
-
-    const uiAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/components/quote-cart-ui.js'));
-    if (uiAlreadyLoaded) {
-      return;
-    }
-
-    const uiScript = document.createElement('script');
-    uiScript.src = `${basePath}/assets/js/components/quote-cart-ui.js`;
-    document.head.appendChild(uiScript);
-  };
-
-  if (window.quoteCart) {
-    ensureUI();
-  } else {
-    const serviceAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/services/quote-cart-service.js'));
-    if (!serviceAlreadyLoaded) {
-      const serviceScript = document.createElement('script');
-      serviceScript.src = `${basePath}/assets/js/services/quote-cart-service.js`;
-      serviceScript.onload = ensureUI;
-      document.head.appendChild(serviceScript);
-    } else {
-      setTimeout(ensureUI, 50);
-    }
-  }
-  
-  // Load quote cart CSS
+  // Load quote cart CSS first
   const cssAlreadyLoaded = Array.from(document.styleSheets).some(s => (s.href || '').includes('/assets/css/components/quote-cart.css'));
   if (!cssAlreadyLoaded) {
     const cartCSS = document.createElement('link');
     cartCSS.rel = 'stylesheet';
     cartCSS.href = `${basePath}/assets/css/components/quote-cart.css`;
     document.head.appendChild(cartCSS);
+    console.log('🛒 Loading quote cart CSS');
+  }
+
+  // Load quote cart service script
+  const ensureUI = () => {
+    if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
+      console.log('🛒 UI already exists, skipping');
+      return;
+    }
+
+    const uiAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/components/quote-cart-ui.js'));
+    if (uiAlreadyLoaded) {
+      console.log('🛒 UI script already loaded');
+      return;
+    }
+
+    console.log('🛒 Loading quote cart UI script');
+    const uiScript = document.createElement('script');
+    uiScript.src = `${basePath}/assets/js/components/quote-cart-ui.js`;
+    uiScript.onerror = () => console.error('❌ Failed to load quote cart UI script');
+    uiScript.onload = () => console.log('✅ Quote cart UI script loaded');
+    document.head.appendChild(uiScript);
+  };
+
+  if (window.quoteCart) {
+    console.log('🛒 Quote cart service already available');
+    ensureUI();
+  } else {
+    const serviceAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/services/quote-cart-service.js'));
+    if (!serviceAlreadyLoaded) {
+      console.log('🛒 Loading quote cart service script');
+      const serviceScript = document.createElement('script');
+      serviceScript.src = `${basePath}/assets/js/services/quote-cart-service.js`;
+      serviceScript.onerror = () => console.error('❌ Failed to load quote cart service script');
+      serviceScript.onload = () => {
+        console.log('✅ Quote cart service script loaded');
+        // Wait a bit for window.quoteCart to be initialized
+        setTimeout(ensureUI, 100);
+      };
+      document.head.appendChild(serviceScript);
+    } else {
+      console.log('🛒 Service script already loaded, waiting for initialization');
+      setTimeout(ensureUI, 100);
+    }
   }
 }

@@ -417,7 +417,7 @@ function openQuoteDrawer(quote) {
                 ${item.specs ? `
                   <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
                     ${Object.entries(item.specs).filter(([k,v]) => v).map(([k,v]) => `
-                      <span style="font-size: 0.75rem; padding: 2px 8px; background: var(--col-primary-light); color: var(--col-primary); border-radius: 4px;">${v}</span>
+                      <span style="font-size: 0.75rem; padding: 2px 8px; background: var(--col-primary); color: #ffffff; border-radius: 4px;">${v}</span>
                     `).join('')}
                   </div>
                 ` : ''}

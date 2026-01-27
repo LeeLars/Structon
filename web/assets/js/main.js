@@ -461,7 +461,7 @@ function initScrollAnimations() {
   // Check if IntersectionObserver is supported
   if (!('IntersectionObserver' in window)) {
     // Fallback: maak alles direct zichtbaar
-    document.querySelectorAll('.animate-on-scroll, .animate-stagger').forEach(el => {
+    document.querySelectorAll('.animate-on-scroll, .animate-stagger, .fade-in').forEach(el => {
       el.classList.add('is-visible');
     });
     return;
@@ -483,7 +483,7 @@ function initScrollAnimations() {
   }, observerOptions);
 
   // Observeer alle elementen met animatie classes
-  document.querySelectorAll('.animate-on-scroll, .animate-stagger').forEach(el => {
+  document.querySelectorAll('.animate-on-scroll, .animate-stagger, .fade-in').forEach(el => {
     observer.observe(el);
   });
 }

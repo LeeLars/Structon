@@ -144,8 +144,19 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
     </div>
   `;
 
+  // Data attributes for client-side filtering
+  const dataAttrs = `
+    data-product-id="${product.id}"
+    data-width="${product.width || ''}"
+    data-volume="${product.volume || ''}"
+    data-attachment="${product.attachment_type || ''}"
+    data-excavator-min="${product.excavator_weight_min || ''}"
+    data-excavator-max="${product.excavator_weight_max || ''}"
+    data-brand="${product.brand_slug || ''}"
+  `.trim().replace(/\s+/g, ' ');
+
   return `
-    <article class="product-card-horizontal" data-product-id="${product.id}">
+    <article class="product-card-horizontal" ${dataAttrs}>
       <a href="${productUrl}" class="product-image">
         <img src="${imageUrl}" alt="${escapeHtml(product.title)}" loading="lazy">
       </a>

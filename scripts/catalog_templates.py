@@ -165,6 +165,7 @@ def get_category_html(category_slug, locale, CATEGORIES, SUBCATEGORIES, LABELS, 
   <script type="module" src="{assets_prefix}/js/main.js?v=2"></script>
   <script type="module" src="{assets_prefix}/js/pages/all-products.js?v=3"></script>
   <script src="{assets_prefix}/js/components/login-modal.js?v=2"></script>
+  <script src="{assets_prefix}/js/client-filters.js"></script>
   <script>
     (function() {{
       const pathParts = window.location.pathname.split('/').filter(Boolean);
@@ -318,6 +319,7 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
   <script type="module" src="{assets_prefix}/js/main.js?v=2"></script>
   <script type="module" src="{assets_prefix}/js/pages/all-products.js?v=3"></script>
   <script src="{assets_prefix}/js/components/login-modal.js?v=2"></script>
+  <script src="{assets_prefix}/js/client-filters.js"></script>
   <script>
     (function() {{
       const pathParts = window.location.pathname.split('/').filter(Boolean);

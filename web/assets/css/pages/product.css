@@ -162,7 +162,7 @@
 
 .spec-label {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-medium);
   color: var(--color-gray-600);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -170,7 +170,7 @@
 
 .spec-value {
   font-size: var(--text-xl);
-  font-weight: var(--font-black);
+  font-weight: var(--font-medium);
   color: var(--color-gray-900);
 }
 

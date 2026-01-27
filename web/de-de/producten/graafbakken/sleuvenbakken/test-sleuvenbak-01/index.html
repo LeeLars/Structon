@@ -32,35 +32,154 @@
         </nav>
       </div>
     </section>
+    
+    <!-- Product Main Section -->
     <section class="section product-section">
       <div class="container">
         <div class="product-layout">
-          <div class="product-gallery">
+          <div class="product-gallery animate-on-scroll">
             <div class="product-image-main">
               <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png" alt="Test - Sleuvenbak - 01" id="main-image">
             </div>
+            <div class="product-badges">
+              <span class="badge badge-quality">Belgische Kwaliteit</span>
+              <span class="badge badge-stock in-stock">Auf Lager</span>
+            </div>
           </div>
-          <div class="product-info">
-            <h1 class="product-title">Test - Sleuvenbak - 01</h1>
-            <div class="product-stock in-stock">Auf Lager</div>
-            <div class="product-description">
-              <h3>Beschreibung</h3>
-              <p>test slotenbak beschrijving</p>
+          <div class="product-info animate-on-scroll">
+            <h1 class="product-title">TEST - SLEUVENBAK - 01</h1>
+            <p class="product-subtitle">test slotenbak beschrijving</p>
+            
+            <div class="product-specs-grid">
+              <div class="spec-item">
+                <div class="spec-label">Breite</div>
+                <div class="spec-value">300 mm</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Inhalt</div>
+                <div class="spec-value">80 L</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Gewicht</div>
+                <div class="spec-value">45 kg</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Aufhängung</div>
+                <div class="spec-value">CW10</div>
+              </div>
+              <div class="spec-item">
+                <div class="spec-label">Bagger</div>
+                <div class="spec-value">3.00 - 8.00 ton</div>
+              </div>
             </div>
-            <div class="product-specs">
-              <h3>Spezifikationen</h3>
-              <table class="specs-table">
-              <tr><td>Breite</td><td>300 mm</td></tr>
-              <tr><td>Inhalt</td><td>80 L</td></tr>
-              <tr><td>Gewicht</td><td>45 kg</td></tr>
-              <tr><td>Aufhängung</td><td>CW10</td></tr>
-              <tr><td>Bagger</td><td>3.00 - 8.00 ton</td></tr>
-              </table>
+            
+            <div class="product-actions">
+              <button class="btn-split btn-split-primary" id="add-to-quote" data-product-id="e378e2f8-9740-40b5-bac9-b00b605d1567">
+                <span class="btn-split-text">Zum Angebot hinzufügen</span>
+                <span class="btn-split-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </button>
+              <button class="btn-split btn-split-outline" id="contact-seller">
+                <span class="btn-split-text">Contact opnemen</span>
+                <span class="btn-split-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+              </button>
             </div>
-            <button class="btn btn-primary btn-split" id="add-to-quote" data-product-id="e378e2f8-9740-40b5-bac9-b00b605d1567">
-              <span>Zum Angebot hinzufügen</span>
-              <span class="btn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
-            </button>
+            
+            <div class="product-trust-signals">
+              <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Belgische productie</span>
+              </div>
+              <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Hardox staal</span>
+              </div>
+              <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Levering mogelijk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Product Details Section -->
+    <section class="section product-details-section fade-in">
+      <div class="container">
+        <div class="product-details-layout">
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            </div>
+            <h3>Technische Specificaties</h3>
+            <p>Alle kraanbakken worden vervaardigd uit hoogwaardig Hardox staal voor maximale sterkte en duurzaamheid. Perfect afgestemd op uw graafmachine.</p>
+          </div>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <h3>Op Maat Gemaakt</h3>
+            <p>Elke kraanbak wordt op maat geproduceerd in onze werkplaats in Beernem, België. Kwaliteit en precisie gegarandeerd.</p>
+          </div>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3>Snelle Levering</h3>
+            <p>Afhalen in Beernem of levering op locatie. Neem contact op voor levertijden en mogelijkheden.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="section product-contact-section fade-in">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-content">
+            <h2>VRAGEN OVER DIT PRODUCT?</h2>
+            <p>Ons verkoopteam staat klaar om u te helpen met al uw vragen over kraanbakken, specificaties en levertijden.</p>
+            <div class="contact-info">
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <div>
+                  <strong>Telefoon</strong>
+                  <a href="tel:+3250123456">+32 50 12 34 56</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <div>
+                  <strong>Email</strong>
+                  <a href="mailto:info@structon.be">info@structon.be</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <div>
+                  <strong>Adres</strong>
+                  <span>Beernem, België</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="/Structon/contact/" class="btn-split btn-split-primary">
+              <span class="btn-split-text">Contacteer ons</span>
+              <span class="btn-split-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
+            </a>
+            <a href="/Structon/offerte-aanvragen/" class="btn-split btn-split-outline">
+              <span class="btn-split-text">Offerte aanvragen</span>
+              <span class="btn-split-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
+            </a>
           </div>
         </div>
       </div>

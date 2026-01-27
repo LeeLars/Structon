@@ -67,17 +67,13 @@ def get_category_html(category_slug, locale, CATEGORIES, SUBCATEGORIES, LABELS, 
         <div class="page-hero-content">
           <div class="page-hero-text">
             <h1 class="page-title">{title.upper()}</h1>
-            <p class="page-subtitle" style="display: none;">{description}</p>
+            <p class="page-subtitle">{description}</p>
           </div>
         </div>
       </div>
     </section>
     <section class="section category-section">
       <div class="container">
-        <div id="category-header" class="category-header" style="display: block;">
-          <h2 class="category-header-title">{title.upper()}</h2>
-          <p class="category-header-description">{description}</p>
-        </div>
         <div class="category-layout">
           <aside class="filters-sidebar" id="filters-sidebar">
             <div class="filters-header">
@@ -124,6 +120,10 @@ def get_category_html(category_slug, locale, CATEGORIES, SUBCATEGORIES, LABELS, 
             <button class="btn btn-primary btn-full" id="apply-filters" style="display: none;">{labels['apply_filters']}</button>
           </aside>
           <div class="category-content">
+            <div id="category-header" class="category-header" style="display: block;">
+              <h2 class="category-header-title">{title.upper()}</h2>
+              <p class="category-header-description">{description}</p>
+            </div>
             <div id="subcategories-section" style="display: block; margin-bottom: 40px;">
               <h2 class="subcategories-title">{labels['subcategories']}</h2>
               <div class="subcategories-grid" id="subcategories-grid">
@@ -230,17 +230,13 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
         <div class="page-hero-content">
           <div class="page-hero-text">
             <h1 class="page-title">{title.upper()}</h1>
-            <p class="page-subtitle" style="display: none;">{description}</p>
+            <p class="page-subtitle">{description}</p>
           </div>
         </div>
       </div>
     </section>
     <section class="section category-section">
       <div class="container">
-        <div id="category-header" class="category-header" style="display: block;">
-          <h2 class="category-header-title">{title.upper()}</h2>
-          <p class="category-header-description">{long_description}</p>
-        </div>
         <div class="category-layout">
           <aside class="filters-sidebar" id="filters-sidebar">
             <div class="filters-header">
@@ -287,8 +283,10 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
             <button class="btn btn-primary btn-full" id="apply-filters" style="display: none;">{labels['apply_filters']}</button>
           </aside>
           <div class="category-content">
-            <div id="category-header" class="category-header" style="display: none;"></div>
-            <div id="subcategories-section" style="display: none;"></div>
+            <div id="category-header" class="category-header" style="display: block;">
+              <h2 class="category-header-title">{title.upper()}</h2>
+              <p class="category-header-description">{long_description}</p>
+            </div>
             <div class="products-toolbar">
               <div class="toolbar-left">
                 <button class="btn-filter-toggle" id="toggle-filters">

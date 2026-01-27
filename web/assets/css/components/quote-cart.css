@@ -10,13 +10,13 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
+  display: none; /* Hidden by default, shown by JS when cart has items */
   width: 60px;
   height: 60px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   border: none;
   cursor: pointer;
-  display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 20px rgba(35, 103, 115, 0.4);

@@ -225,13 +225,19 @@ class QuoteCartUI {
   }
 
   /**
-   * Update badge count
+   * Update badge count and FAB visibility
    */
   updateBadge() {
     const count = window.quoteCart.getCount();
     const badge = document.getElementById('quote-cart-badge');
     const totalCount = document.getElementById('quote-cart-total-count');
     const footer = document.getElementById('quote-cart-footer');
+    const fab = document.getElementById('quote-cart-fab');
+    
+    // Show/hide FAB based on cart count
+    if (fab) {
+      fab.style.display = count > 0 ? 'flex' : 'none';
+    }
     
     if (badge) {
       badge.textContent = count;

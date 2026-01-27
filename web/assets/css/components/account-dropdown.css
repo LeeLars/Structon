@@ -5,6 +5,11 @@
  */
 
 /* Wrapper for positioning */
+.account-menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .account-dropdown-wrapper {
   position: relative;
   display: inline-block;
@@ -106,6 +111,12 @@
   cursor: pointer;
   transition: all 0.15s ease;
   text-align: left;
+}
+
+.account-dropdown-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* Override generic header link styles (e.g. .top-nav a) for dropdown items */

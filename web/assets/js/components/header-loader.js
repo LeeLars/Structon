@@ -188,7 +188,55 @@
       <div class="container">
         ${getLanguageSwitcher({ showFlag: false, variant: 'topbar' })}
         <nav class="top-nav">
-          <a href="#" id="login-btn" class="login-trigger">Inloggen</a>
+          <div class="account-menu-wrapper">
+            <a href="#" id="login-btn" class="login-trigger"><span>Mijn Account</span></a>
+            <div id="account-dropdown" class="account-dropdown">
+              <div class="account-dropdown-header">
+                <div class="account-avatar">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <div class="account-info">
+                  <div class="account-name">admin@structon.nl</div>
+                  <div class="account-role">Administrator</div>
+                </div>
+              </div>
+              <div class="account-dropdown-divider"></div>
+              <a href="https://structon-production.up.railway.app/cms/" class="account-dropdown-item" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>CMS Dashboard</span>
+              </a>
+              <a href="https://structon-production.up.railway.app/cms/products" class="account-dropdown-item" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+                <span>Producten Beheren</span>
+              </a>
+              <a href="https://structon-production.up.railway.app/cms/quotes" class="account-dropdown-item" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span>Offertes Beheren</span>
+              </a>
+              <div class="account-dropdown-divider"></div>
+              <button class="account-dropdown-item" id="logout-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Uitloggen</span>
+              </button>
+            </div>
+          </div>
           <a href="${basePath}over-ons/">Over</a>
           <a href="${basePath}dealer/">Dealer worden</a>
           <a href="${basePath}blog/">Blog</a>
@@ -534,6 +582,46 @@
     
     // Initialize language switcher
     initLanguageSwitcher();
+    
+    // Initialize account dropdown
+    initAccountDropdown();
+  }
+  
+  // Initialize account dropdown
+  function initAccountDropdown() {
+    const loginBtn = document.getElementById('login-btn');
+    const accountDropdown = document.getElementById('account-dropdown');
+    const logoutBtn = document.getElementById('logout-btn');
+    
+    if (loginBtn && accountDropdown) {
+      loginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        accountDropdown.classList.toggle('active');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!loginBtn.contains(e.target) && !accountDropdown.contains(e.target)) {
+          accountDropdown.classList.remove('active');
+        }
+      });
+    }
+    
+    // Logout functionality
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Clear any stored auth tokens
+        try {
+          localStorage.removeItem('structon_auth_token');
+          sessionStorage.removeItem('structon_auth_token');
+        } catch (err) {}
+        
+        // Redirect to home or show login modal
+        window.location.href = '/';
+      });
+    }
   }
   
   // Initialize language switcher dropdown

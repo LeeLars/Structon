@@ -73,23 +73,19 @@ async function initializeData() {
 function updateStats() {
   const total = allOrders.length;
   
-  // Count new orders today
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const newToday = allOrders.filter(order => {
-    const orderDate = new Date(order.created_at);
-    orderDate.setHours(0, 0, 0, 0);
-    return orderDate.getTime() === today.getTime();
-  }).length;
+  // Count new orders (status = 'new')
+  const newOrders = allOrders.filter(order => order.status === 'new').length;
   
-  // Count pending orders (pending, paid, shipped)
-  const pending = allOrders.filter(order => 
-    ['pending', 'paid', 'shipped'].includes(order.status)
+  // Count openstaand orders (not 'new', not 'completed', not 'cancelled')
+  const openOrders = allOrders.filter(order => 
+    order.status !== 'new' && 
+    order.status !== 'completed' && 
+    order.status !== 'cancelled'
   ).length;
   
   animateValue('stat-total', total);
-  animateValue('stat-new', newToday);
-  animateValue('stat-pending', pending);
+  animateValue('stat-new', newOrders);
+  animateValue('stat-pending', openOrders);
 }
 
 /**
@@ -237,11 +233,12 @@ function renderOrders() {
  */
 function getStatusColor(status) {
   const colors = {
-    pending: 'warning',
-    paid: 'info',
-    shipped: 'primary',
-    completed: 'success',
-    cancelled: 'danger'
+    new: 'success',        // Green for new orders
+    pending: 'secondary',  // White/neutral for pending
+    paid: 'secondary',     // White/neutral for paid
+    shipped: 'secondary',  // White/neutral for shipped
+    completed: 'success',  // Green for completed
+    cancelled: 'danger'    // Red for cancelled
   };
   return colors[status] || 'secondary';
 }
@@ -251,6 +248,7 @@ function getStatusColor(status) {
  */
 function getStatusLabel(status) {
   const labels = {
+    new: 'Nieuw',
     pending: 'In afwachting',
     paid: 'Betaald',
     shipped: 'Verzonden',

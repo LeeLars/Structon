@@ -65,17 +65,29 @@ function updateStats() {
   const total = allQuotes.length;
   const newQuotes = allQuotes.filter(q => q.status === 'new').length;
   const openQuotes = allQuotes.filter(q => ['new', 'processing', 'quoted'].includes(q.status)).length;
+  const unviewedCount = allQuotes.filter(q => !q.viewed).length;
   
   // Animate numbers
   animateValue('stat-total', total);
   animateValue('stat-new', newQuotes);
   animateValue('stat-open', openQuotes);
+  
+  // Update sidebar badge
+  updateSidebarBadge(unviewedCount);
 }
 
 function animateValue(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
   el.textContent = value;
+}
+
+function updateSidebarBadge(count) {
+  const badge = document.getElementById('quotes-badge');
+  if (badge) {
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'inline-flex' : 'none';
+  }
 }
 
 /**
@@ -167,8 +179,11 @@ function renderQuotes() {
   }
 
   tableBody.innerHTML = filtered.map((quote, index) => `
-    <tr onclick="viewQuote('${quote.id}')" style="cursor: pointer;">
-      <td><strong>${quote.reference || 'Aanvraag #' + String(index + 1).padStart(2, '0')}</strong></td>
+    <tr onclick="viewQuote('${quote.id}')" style="cursor: pointer; ${!quote.viewed ? 'background: #fef3c7;' : ''}">
+      <td>
+        <strong>${quote.reference || 'Aanvraag #' + String(index + 1).padStart(2, '0')}</strong>
+        ${!quote.viewed ? '<span style="display: inline-block; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; margin-left: 8px;"></span>' : ''}
+      </td>
       <td>
         <div>${formatDate(quote.created_at)}</div>
         <div class="text-muted small">${formatTime(quote.created_at)}</div>
@@ -226,10 +241,21 @@ function formatTime(dateString) {
 }
 
 // Global functions for inline onclick
-window.viewQuote = (id) => {
+window.viewQuote = async (id) => {
   // Use loose equality to handle both string and number IDs
   const quote = allQuotes.find(q => q.id == id);
   if (quote) {
+    // Mark as viewed if not already
+    if (!quote.viewed) {
+      try {
+        await api.put(`/quotes/${id}`, { viewed: true });
+        quote.viewed = true;
+        quote.viewed_at = new Date().toISOString();
+        updateStats();
+      } catch (error) {
+        console.error('Failed to mark quote as viewed:', error);
+      }
+    }
     openQuoteDrawer(quote);
   } else {
     console.error('Quote not found:', id);

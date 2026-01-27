@@ -191,24 +191,48 @@ router.get('/', authenticateToken, async (req, res) => {
 
 /**
  * PUT /api/quotes/:id (Protected - admin only)
- * Update quote status
+ * Update quote status or mark as viewed
  */
 router.put('/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, viewed } = req.body;
     
     const validStatuses = ['new', 'processing', 'quoted', 'won', 'lost'];
     if (status && !validStatuses.includes(status)) {
       return res.status(400).json({ error: 'Ongeldige status' });
     }
     
+    // Build dynamic update query
+    const updates = [];
+    const values = [];
+    let paramCount = 1;
+    
+    if (status !== undefined) {
+      updates.push(`status = $${paramCount}`);
+      values.push(status);
+      paramCount++;
+    }
+    
+    if (viewed !== undefined) {
+      updates.push(`viewed = $${paramCount}`);
+      values.push(viewed);
+      paramCount++;
+      
+      if (viewed) {
+        updates.push(`viewed_at = CURRENT_TIMESTAMP`);
+      }
+    }
+    
+    updates.push(`updated_at = CURRENT_TIMESTAMP`);
+    values.push(id);
+    
     const result = await query(`
       UPDATE quotes 
-      SET status = $1, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $2
+      SET ${updates.join(', ')}
+      WHERE id = $${paramCount}
       RETURNING *
-    `, [status, id]);
+    `, values);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Offerte niet gevonden' });

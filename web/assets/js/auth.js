@@ -434,6 +434,13 @@ function createAccountDropdown() {
  * Update UI based on auth state
  */
 function updateAuthUI(isAuthenticated) {
+  // Add/remove is-logged-in class on body for CSS-based visibility
+  if (isAuthenticated) {
+    document.body.classList.add('is-logged-in');
+  } else {
+    document.body.classList.remove('is-logged-in');
+  }
+  
   // Update login button
   const loginBtn = document.getElementById('login-btn');
   if (loginBtn) {

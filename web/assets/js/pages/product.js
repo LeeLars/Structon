@@ -159,13 +159,17 @@ function renderProduct(product) {
       
       <div class="product-cta-section" style="margin-top: 24px;">
         <a href="${buildQuoteUrl(product)}" class="btn-split usp-btn" style="width: 100%; justify-content: center;">
-          <span class="btn-split-text">Offerte Aanvragen</span>
+          <span class="btn-split-text">
+            <span class="guest-only-inline">Offerte Aanvragen</span>
+            <span class="auth-only-inline">Bestelling Plaatsen</span>
+          </span>
           <span class="btn-split-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </span>
         </a>
         <p style="font-size: 0.85rem; color: #666; margin-top: 8px; text-align: center;">
-          Alleen voor zakelijke klanten (B2B) • Betaling via factuur
+          <span class="guest-only-inline">Alleen voor zakelijke klanten (B2B) • Betaling via factuur</span>
+          <span class="auth-only-inline">Prijzen excl. BTW • Betaling via factuur</span>
         </p>
       </div>
     </div>

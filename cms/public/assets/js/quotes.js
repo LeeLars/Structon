@@ -192,7 +192,15 @@ function renderQuotes() {
         <div class="font-medium">${quote.customer_name}</div>
         <div class="text-muted small">${quote.company_name || ''}</div>
       </td>
-      <td><span class="badge badge-${getStatusColor(quote.status)}">${getStatusLabel(quote.status)}</span></td>
+      <td onclick="event.stopPropagation()">
+        <select class="status-select status-${quote.status}" onchange="updateStatusFromTable('${quote.id}', this.value)" data-quote-id="${quote.id}">
+          <option value="new" ${quote.status === 'new' ? 'selected' : ''}>Nieuw</option>
+          <option value="processing" ${quote.status === 'processing' ? 'selected' : ''}>In behandeling</option>
+          <option value="quoted" ${quote.status === 'quoted' ? 'selected' : ''}>Offerte verstuurd</option>
+          <option value="won" ${quote.status === 'won' ? 'selected' : ''}>Gewonnen</option>
+          <option value="lost" ${quote.status === 'lost' ? 'selected' : ''}>Verloren</option>
+        </select>
+      </td>
       <td class="text-right" onclick="event.stopPropagation()">
         ${quote.customer_phone ? `
         <a href="https://wa.me/${quote.customer_phone.replace(/[^0-9+]/g, '')}" class="btn-icon" title="WhatsApp" target="_blank" rel="noopener">
@@ -534,40 +542,122 @@ window.closeQuoteDrawer = () => {
   }
 };
 
-window.saveQuoteStatus = async (id, newStatus) => {
+/**
+ * Update status from table dropdown (inline)
+ */
+window.updateStatusFromTable = async (id, newStatus) => {
+  console.log('[QUOTES] updateStatusFromTable called:', id, newStatus);
+  
   const quote = allQuotes.find(q => q.id == id);
   if (!quote) {
     console.error('Quote not found:', id);
     return;
   }
   
-  // Optimistic update
   const oldStatus = quote.status;
-  quote.status = newStatus;
+  const selectEl = document.querySelector(`select[data-quote-id="${id}"]`);
   
-  // Update UI immediately
-  renderQuotes();
-  updateStats();
-  
-  // Re-render drawer actions to show new active state
-  openQuoteDrawer(quote); // Refreshes content
+  // Disable select during update
+  if (selectEl) {
+    selectEl.disabled = true;
+    selectEl.style.opacity = '0.6';
+  }
   
   try {
-    await api.put(`/quotes/${id}`, { status: newStatus });
+    console.log('[QUOTES] Sending API request to update status...');
+    const response = await api.put(`/quotes/${id}`, { status: newStatus });
+    console.log('[QUOTES] API response:', response);
+    
+    // Update local data
+    quote.status = newStatus;
+    
+    // Update select styling
+    if (selectEl) {
+      selectEl.className = `status-select status-${newStatus}`;
+      selectEl.disabled = false;
+      selectEl.style.opacity = '1';
+    }
+    
+    // Update stats
+    updateStats();
     
     if (window.showToast) {
-      window.showToast('Status bijgewerkt', 'success');
+      window.showToast('Status bijgewerkt naar: ' + getStatusLabel(newStatus), 'success');
     }
   } catch (error) {
     console.error('Failed to update status:', error);
-    // Revert on error
-    quote.status = oldStatus;
-    renderQuotes();
-    updateStats();
-    openQuoteDrawer(quote);
+    
+    // Revert select to old value
+    if (selectEl) {
+      selectEl.value = oldStatus;
+      selectEl.className = `status-select status-${oldStatus}`;
+      selectEl.disabled = false;
+      selectEl.style.opacity = '1';
+    }
     
     if (window.showToast) {
-      window.showToast('Fout bij updaten status', 'error');
+      window.showToast('Fout bij updaten status: ' + (error.message || 'Onbekende fout'), 'error');
+    }
+  }
+};
+
+/**
+ * Save status from drawer (button click)
+ */
+window.saveQuoteStatus = async (id, newStatus) => {
+  console.log('[QUOTES] saveQuoteStatus called:', id, newStatus);
+  
+  const quote = allQuotes.find(q => q.id == id);
+  if (!quote) {
+    console.error('Quote not found:', id);
+    return;
+  }
+  
+  // Disable all status buttons during update
+  const statusBtns = document.querySelectorAll('.status-btn');
+  statusBtns.forEach(btn => {
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+  });
+  
+  const oldStatus = quote.status;
+  
+  try {
+    console.log('[QUOTES] Sending API request to update status...');
+    const response = await api.put(`/quotes/${id}`, { status: newStatus });
+    console.log('[QUOTES] API response:', response);
+    
+    // Update local data
+    quote.status = newStatus;
+    
+    // Update UI
+    renderQuotes();
+    updateStats();
+    
+    // Update drawer buttons
+    statusBtns.forEach(btn => {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.classList.remove('active');
+      if (btn.textContent.trim() === getStatusLabel(newStatus)) {
+        btn.classList.add('active');
+      }
+    });
+    
+    if (window.showToast) {
+      window.showToast('Status bijgewerkt naar: ' + getStatusLabel(newStatus), 'success');
+    }
+  } catch (error) {
+    console.error('Failed to update status:', error);
+    
+    // Re-enable buttons
+    statusBtns.forEach(btn => {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
+    
+    if (window.showToast) {
+      window.showToast('Fout bij updaten status: ' + (error.message || 'Onbekende fout'), 'error');
     }
   }
 };

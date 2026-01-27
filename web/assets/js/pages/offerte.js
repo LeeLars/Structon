@@ -464,12 +464,21 @@ function setupRequestTypeToggle() {
   }
   
   const updateState = (type) => {
-    // Update button text
-    const labels = {
+    // Check if user is logged in
+    const isLoggedIn = document.body.classList.contains('is-logged-in');
+    
+    // Update button text - different labels for logged-in users
+    const guestLabels = {
       'offerte': 'Offerte Aanvragen',
       'vraag': 'Vraag Versturen',
       'maatwerk': 'Maatwerk Aanvragen'
     };
+    const authLabels = {
+      'offerte': 'Bestelling Plaatsen',
+      'vraag': 'Vraag Versturen',
+      'maatwerk': 'Maatwerk Aanvragen'
+    };
+    const labels = isLoggedIn ? authLabels : guestLabels;
     if (submitBtn) {
       submitBtn.textContent = labels[type] || 'Verzenden';
     }

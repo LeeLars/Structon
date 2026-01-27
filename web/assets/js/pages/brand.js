@@ -6,6 +6,7 @@
 import { products, brands } from '../api/client.js';
 import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
 import { BRAND_DATA } from '../data/brand-data.js?v=5';
+import { loadProductPrices } from '../pricing.js';
 
 // Brand page state
 let currentBrand = null;
@@ -752,6 +753,12 @@ function renderProducts() {
   container.innerHTML = previewProducts.map(product => 
     createProductCardHorizontal(product, isLoggedIn)
   ).join('');
+  
+  // Load prices for all product cards
+  const productElements = container.querySelectorAll('[data-product-id]');
+  if (productElements.length > 0) {
+    loadProductPrices(productElements);
+  }
   
   // Add "View all products" link if there are more than 4 products
   if (hasMoreProducts) {

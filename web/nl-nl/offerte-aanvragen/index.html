@@ -38,13 +38,22 @@
         <nav class="breadcrumb" aria-label="Kruimelpad">
           <a href="../index.html">Home</a>
           <span>/</span>
-          <span aria-current="page">Offerte Aanvragen</span>
+          <span aria-current="page">
+            <span class="guest-only-inline">Offerte Aanvragen</span>
+            <span class="auth-only-inline">Bestelling Plaatsen</span>
+          </span>
         </nav>
         
         <div class="page-hero-content">
           <div class="page-hero-text">
-            <h1 class="page-title">OFFERTE AANVRAGEN</h1>
-            <p class="page-subtitle">Vraag een vrijblijvende offerte aan voor kraanbakken en aanbouwdelen. Binnen 24 uur ontvangt u ons antwoord.</p>
+            <h1 class="page-title">
+              <span class="guest-only-inline">OFFERTE AANVRAGEN</span>
+              <span class="auth-only-inline">BESTELLING PLAATSEN</span>
+            </h1>
+            <p class="page-subtitle">
+              <span class="guest-only-inline">Vraag een vrijblijvende offerte aan voor kraanbakken en aanbouwdelen. Binnen 24 uur ontvangt u ons antwoord.</span>
+              <span class="auth-only-inline">Plaats uw bestelling voor kraanbakken en aanbouwdelen. Binnen 24 uur ontvangt u onze bevestiging.</span>
+            </p>
           </div>
         </div>
       </div>
@@ -55,7 +64,10 @@
         <!-- Left: Quote Form -->
         <div class="contact-form-section">
           <div class="form-card">
-            <h2 class="form-title">Offerte of vraag?</h2>
+            <h2 class="form-title">
+              <span class="guest-only-inline">Offerte of vraag?</span>
+              <span class="auth-only-inline">Bestelling of vraag?</span>
+            </h2>
             <p class="form-subtitle">Vul het formulier in en wij zorgen dat u snel de juiste informatie ontvangt.</p>
             <p class="form-notice">
               <strong>Let op:</strong> Structon levert uitsluitend aan zakelijke klanten (B2B). Betaling geschiedt via factuur.
@@ -80,8 +92,14 @@
                       <div class="card-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                       </div>
-                      <span class="card-title">Offerte aanvragen</span>
-                      <span class="card-desc">Prijsopgave voor een specifiek product</span>
+                      <span class="card-title">
+                        <span class="guest-only-inline">Offerte aanvragen</span>
+                        <span class="auth-only-inline">Bestelling plaatsen</span>
+                      </span>
+                      <span class="card-desc">
+                        <span class="guest-only-inline">Prijsopgave voor een specifiek product</span>
+                        <span class="auth-only-inline">Bevestiging van uw bestelling</span>
+                      </span>
                     </div>
                   </label>
                   <label class="request-type-card">

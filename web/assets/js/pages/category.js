@@ -6,6 +6,7 @@ import { products, categories } from '../api/client.js';
 import { createProductCardHorizontal, showLoading, showError, showNoResults } from '../main.js';
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
+import { loadProductPrices } from '../pricing.js';
 
 let allProducts = [];
 let currentCategory = null;
@@ -116,6 +117,12 @@ function renderProducts(productList) {
   container.innerHTML = productList.map(product => 
     createProductCardHorizontal(product, isLoggedIn)
   ).join('');
+  
+  // Load prices for all product cards
+  const productElements = container.querySelectorAll('[data-product-id]');
+  if (productElements.length > 0) {
+    loadProductPrices(productElements);
+  }
 }
 
 /**

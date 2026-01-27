@@ -44,6 +44,20 @@ class QuoteCartUI {
   }
 
   /**
+   * Check if user is logged in
+   */
+  isLoggedIn() {
+    return document.body.classList.contains('is-logged-in');
+  }
+
+  /**
+   * Get auth-aware text
+   */
+  getAuthText(guestText, authText) {
+    return this.isLoggedIn() ? authText : guestText;
+  }
+
+  /**
    * Create Sidebar
    */
   createSidebar() {
@@ -54,7 +68,10 @@ class QuoteCartUI {
       <div class="quote-cart-overlay" id="quote-cart-overlay"></div>
       <div class="quote-cart-panel">
         <div class="quote-cart-header">
-          <h2>UW OFFERTE</h2>
+          <h2 class="quote-cart-title">
+            <span class="guest-only-inline">UW OFFERTE</span>
+            <span class="auth-only-inline">UW BESTELLING</span>
+          </h2>
           <button class="quote-cart-close" id="quote-cart-close" aria-label="Sluiten">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -71,7 +88,10 @@ class QuoteCartUI {
             <strong id="quote-cart-total-count">0</strong>
           </div>
           <a href="/Structon/be-nl/offerte-aanvragen/" class="btn-split btn-split-primary quote-cart-cta" id="quote-cart-submit">
-            <span class="btn-split-text">Offerte aanvragen</span>
+            <span class="btn-split-text">
+              <span class="guest-only-inline">Offerte aanvragen</span>
+              <span class="auth-only-inline">Bestelling plaatsen</span>
+            </span>
             <span class="btn-split-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -144,7 +164,7 @@ class QuoteCartUI {
     document.getElementById('quote-cart-clear').addEventListener('click', () => {
       if (confirm('Weet u zeker dat u alle producten wilt verwijderen?')) {
         window.quoteCart.clear();
-        this.showToast('Offerte mandje geleegd', 'info');
+        this.showToast(this.isLoggedIn() ? 'Bestelling geleegd' : 'Offerte mandje geleegd', 'info');
       }
     });
     
@@ -181,7 +201,7 @@ class QuoteCartUI {
         if (wasInCart) {
           this.showToast(`${product.title} - aantal verhoogd`, 'success');
         } else {
-          this.showToast(`${product.title} toegevoegd aan offerte`, 'success');
+          this.showToast(`${product.title} toegevoegd aan ${this.isLoggedIn() ? 'bestelling' : 'offerte'}`, 'success');
         }
         
         // Pulse animation on FAB

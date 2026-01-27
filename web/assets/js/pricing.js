@@ -75,14 +75,29 @@ export async function loadProductPrices(productElements) {
  */
 function renderPrice(container, data) {
   container.classList.remove('price-locked');
-  container.innerHTML = `
-    <div class="product-price">
-      ${formatPrice(data.price, data.currency)}
-      <span class="product-price-vat">excl. BTW</span>
-    </div>
-    ${renderStockStatus(data)}
-    ${renderAddToCart(data)}
-  `;
+  
+  // Check if this is a grid card (compact view) or detail page (full view)
+  const isGridCard = container.closest('.product-card-horizontal') !== null;
+  
+  if (isGridCard) {
+    // Compact price display for product grid
+    container.innerHTML = `
+      <div class="product-price-compact">
+        <div class="product-price-amount">${formatPrice(data.price, data.currency)}</div>
+        <div class="product-price-vat">excl. BTW</div>
+      </div>
+    `;
+  } else {
+    // Full price display for product detail page
+    container.innerHTML = `
+      <div class="product-price">
+        ${formatPrice(data.price, data.currency)}
+        <span class="product-price-vat">excl. BTW</span>
+      </div>
+      ${renderStockStatus(data)}
+      ${renderAddToCart(data)}
+    `;
+  }
 }
 
 /**
@@ -113,7 +128,8 @@ function renderAddToCart(data) {
         <input type="number" id="quantity" class="quantity-input form-input" value="1" min="1" max="${data.stock_quantity}">
       </div>
       <button class="btn btn-primary btn-lg btn-arrow" data-action="add-to-cart">
-        Toevoegen aan Offerte
+        <span class="guest-only-inline">Toevoegen aan Offerte</span>
+        <span class="auth-only-inline">Toevoegen aan Bestelling</span>
       </button>
     </div>
   `;
@@ -138,11 +154,18 @@ function renderLockedPrice(container) {
  */
 function renderQuoteRequired(container) {
   container.innerHTML = `
-    <div class="product-price">Prijs op aanvraag</div>
+    <div class="product-price">
+      <span class="guest-only-inline">Prijs op aanvraag</span>
+      <span class="auth-only-inline">Neem contact op</span>
+    </div>
     <p class="quote-prompt">
-      Neem contact met ons op voor een offerte.
+      <span class="guest-only-inline">Neem contact met ons op voor een offerte.</span>
+      <span class="auth-only-inline">Neem contact met ons op voor dit product.</span>
     </p>
-    <a href="/offerte-aanvragen/" class="btn btn-primary">Offerte Aanvragen</a>
+    <a href="/offerte-aanvragen/" class="btn btn-primary">
+      <span class="guest-only-inline">Offerte Aanvragen</span>
+      <span class="auth-only-inline">Contact Opnemen</span>
+    </a>
   `;
 }
 

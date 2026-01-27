@@ -9,6 +9,7 @@ import { createProductCardHorizontal, createProductCard, createIndustryProductCa
 import { initFilters, getActiveFilters } from '../filters.js';
 import { initPagination, updatePagination, getOffset, getItemsPerPage } from '../pagination.js';
 import { createExpertBox } from '../components/expert-box.js';
+import { loadProductPrices } from '../pricing.js';
 
 let allProducts = [];
 let currentProduct = null;
@@ -420,6 +421,12 @@ function renderProducts(productList) {
   container.innerHTML = productList.map(product => 
     createProductCardHorizontal(product, isLoggedIn)
   ).join('');
+  
+  // Load prices for all product cards
+  const productElements = container.querySelectorAll('[data-product-id]');
+  if (productElements.length > 0) {
+    loadProductPrices(productElements);
+  }
 }
 
 /**
@@ -677,7 +684,10 @@ function renderProductDetail(product, container) {
               </button>
             ` : ''}
             <a href="${quoteUrl}" id="btn-request-quote" class="btn-split btn-split-lg" style="width: 100%; text-decoration: none;">
-              <span class="btn-split-text">Offerte Aanvragen</span>
+              <span class="btn-split-text">
+                <span class="guest-only-inline">Offerte Aanvragen</span>
+                <span class="auth-only-inline">Bestelling Plaatsen</span>
+              </span>
               <span class="btn-split-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </span>

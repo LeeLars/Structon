@@ -198,6 +198,39 @@
   font-weight: 700;
 }
 
+/* Compact Price Display for Product Grid */
+.product-price-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.product-price-compact .product-price-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.product-price-compact .product-price-vat {
+  font-size: 0.75rem;
+  color: var(--color-gray-600);
+  font-weight: 400;
+}
+
+/* Price Section Loading State */
+.product-price-section .loading-price {
+  font-size: 0.9rem;
+  color: var(--color-gray-500);
+  font-style: italic;
+}
+
+/* Price Locked State (Not Logged In) */
+.product-price-section.price-locked {
+  display: none; /* Hide price section completely when not logged in for clean look */
+}
+
 /* Buttons */
 .product-buttons {
   display: flex;

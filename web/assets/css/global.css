@@ -121,6 +121,64 @@
 }
 
 /* ============================================
+   AUTH-BASED VISIBILITY UTILITIES
+   Controls content visibility based on login state
+   Body gets 'is-logged-in' class via auth.js
+   ============================================ */
+
+/* Default: Show guest content, hide auth content */
+.auth-only {
+  display: none !important;
+}
+
+.guest-only {
+  display: block !important;
+}
+
+/* When logged in: Show auth content, hide guest content */
+body.is-logged-in .auth-only {
+  display: block !important;
+}
+
+body.is-logged-in .guest-only {
+  display: none !important;
+}
+
+/* Inline variants for spans/buttons */
+body.is-logged-in .auth-only-inline {
+  display: inline !important;
+}
+
+body:not(.is-logged-in) .auth-only-inline {
+  display: none !important;
+}
+
+body.is-logged-in .guest-only-inline {
+  display: none !important;
+}
+
+body:not(.is-logged-in) .guest-only-inline {
+  display: inline !important;
+}
+
+/* Flex variants for buttons/cards */
+body.is-logged-in .auth-only-flex {
+  display: flex !important;
+}
+
+body:not(.is-logged-in) .auth-only-flex {
+  display: none !important;
+}
+
+body.is-logged-in .guest-only-flex {
+  display: none !important;
+}
+
+body:not(.is-logged-in) .guest-only-flex {
+  display: flex !important;
+}
+
+/* ============================================
    RESET & BASE
    ============================================ */
 *,

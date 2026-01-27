@@ -7,11 +7,13 @@ import { initAuth } from './auth.js';
 import { initNavigation } from './navigation.js';
 import { registerServiceWorker } from './sw-register.js';
 import { initSitemap } from './sitemap.js';
+import { init as initAuthContent } from './utils/auth-content-manager.js';
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initAuth();
+  initAuthContent();
   initCmsLink();
   initNavigation();
   initSitemap();
@@ -118,12 +120,8 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
     </dl>
   `;
 
-  // Price display
-  const priceHtml = isLoggedIn 
-    ? `<div class="product-price-display">
-         <div class="product-price-amount">€${formatPrice(product.price_excl_vat)},-</div>
-       </div>`
-    : ''; // Don't show price block if not logged in, keep it clean
+  // Price display - Dynamic loading for authenticated users
+  const priceHtml = `<div class="product-price-section" data-product-id="${product.id}"></div>`;
 
   // Buttons - Structon Style
   const moreInfoBtn = `

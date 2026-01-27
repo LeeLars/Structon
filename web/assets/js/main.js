@@ -452,3 +452,45 @@ export function showNoResults(container, message = 'Geen producten gevonden.') {
     </div>
   `;
 }
+
+/**
+ * Scroll Animaties - IntersectionObserver
+ * Triggert animaties wanneer elementen in beeld komen
+ */
+function initScrollAnimations() {
+  // Check if IntersectionObserver is supported
+  if (!('IntersectionObserver' in window)) {
+    // Fallback: maak alles direct zichtbaar
+    document.querySelectorAll('.animate-on-scroll, .animate-stagger').forEach(el => {
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -10% 0px', // Trigger iets eerder
+    threshold: 0.1 // 10% zichtbaar
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // Eenmalig
+      }
+    });
+  }, observerOptions);
+
+  // Observeer alle elementen met animatie classes
+  document.querySelectorAll('.animate-on-scroll, .animate-stagger').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// Init animaties wanneer DOM ready is
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollAnimations);
+} else {
+  initScrollAnimations();
+}

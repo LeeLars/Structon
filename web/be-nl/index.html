@@ -53,6 +53,7 @@
   <link rel="preload" href="../assets/css/global.css?v=8" as="style">
   <link rel="stylesheet" href="../assets/css/global.css?v=8">
   <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
   <link rel="stylesheet" href="../assets/css/pages/home.css?v=4" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="../assets/css/pages/home.css?v=4"></noscript>
   <link rel="stylesheet" href="../assets/css/pages/unique-section.css" media="print" onload="this.media='all'">
@@ -175,7 +176,7 @@
         <!-- Left Column: Content -->
         <div class="hero-content">
           <!-- Configurator Badge -->
-          <a href="configurator/" class="hero-badge">
+          <a href="configurator/" class="hero-badge hero-animate">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="3"></circle>
               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -183,12 +184,12 @@
             Probeer onze configurator
           </a>
           
-          <h1 class="hero-title">
+          <h1 class="hero-title hero-animate hero-delay-1">
             KOOP BIJ STRUCTON UW<br>
             <span>AANBOUWDELEN</span> & KRAANBAKKEN
           </h1>
           
-          <p class="hero-subtitle-text">
+          <p class="hero-subtitle-text hero-animate hero-delay-2">
             Specialist in kraanbakken, sloophamers en graafmachine toebehoren. 
             Direct uit voorraad leverbaar of volledig op maat gemaakt.
           </p>
@@ -196,7 +197,7 @@
       </div>
       
       <!-- Scroll Down Indicator -->
-      <a href="#categorieen" class="hero-scroll-indicator">
+      <a href="#categorieen" class="hero-scroll-indicator hero-animate hero-delay-3">
         <span class="scroll-text">ONTDEK MEER</span>
         <div class="scroll-track">
           <div class="scroll-bar"></div>
@@ -205,10 +206,10 @@
     </section>
 
     <!-- 4 Main Categories Blocks -->
-    <section id="categorieen" class="section-categories">
+    <section id="categorieen" class="section-categories animate-on-scroll">
       <div class="container">
         
-        <div class="category-grid">
+        <div class="category-grid animate-stagger">
           
           <!-- Blok 1: Graafbakken -->
           <a href="producten/?cat=graafbakken" class="category-block">
@@ -260,7 +261,7 @@
     </section>
 
     <!-- USP Section: Wat maakt Structon uniek -->
-    <section class="section-usp">
+    <section class="section-usp animate-on-scroll">
       <div class="container">
         <div class="usp-container">
           
@@ -282,7 +283,7 @@
           </div>
 
           <!-- Rechter Kolom: 3 Blokken -->
-          <div class="usp-list">
+          <div class="usp-list animate-stagger">
             
             <!-- Blok 1 -->
             <div class="usp-item">
@@ -317,7 +318,7 @@
     </section>
 
     <!-- Uitgelichte Artikelen (Random producten) -->
-    <section class="section-featured">
+    <section class="section-featured animate-on-scroll">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">Uitgelicht Assortiment</h2>
@@ -338,7 +339,7 @@
     </section>
 
     <!-- Brands SEO Section -->
-    <section class="section-usp">
+    <section class="section-usp animate-on-scroll">
       <div class="container">
         <div class="usp-container brands-container">
           
@@ -348,7 +349,7 @@
           </div>
 
           <!-- Bottom: Brands Grid -->
-          <div class="brands-grid">
+          <div class="brands-grid animate-stagger">
             <a href="kraanbakken/caterpillar/" class="btn-split usp-btn brand-btn">
               <span class="btn-split-text">Caterpillar</span>
               <span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
@@ -416,7 +417,7 @@
     </section>
 
     <!-- About Structon Section -->
-    <section class="section-about">
+    <section class="section-about animate-on-scroll">
       <div class="container">
         <div class="about-container">
           
@@ -444,7 +445,7 @@
     </section>
 
     <!-- Industries Section -->
-    <section class="section-usp">
+    <section class="section-usp animate-on-scroll">
       <div class="container">
         <div class="usp-container brands-container">
           
@@ -454,7 +455,7 @@
           </div>
 
           <!-- Bottom: Industries Grid -->
-          <div class="brands-grid">
+          <div class="brands-grid animate-stagger">
             <a href="industrieen/grondwerkers/" class="btn-split usp-btn brand-btn">
               <span class="btn-split-text">Grondwerkers</span>
               <span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
@@ -494,7 +495,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="section-faq" id="faq">
+    <section class="section-faq animate-on-scroll" id="faq">
       <div class="container">
         <div class="section-header text-center">
           <h2 class="section-title">Veelgestelde Vragen</h2>

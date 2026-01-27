@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Render quote cart items above the form
+ * Render quote cart items above the form in a separate card
  */
 function renderCartItems() {
   // Check if quoteCart service is available
@@ -40,52 +40,70 @@ function renderCartItems() {
   }
   
   const items = window.quoteCart.getItems();
-  if (items.length === 0) return;
   
   // Find or create cart items container
   let container = document.getElementById('quote-cart-items');
+  
+  // If no items, remove container if it exists and return
+  if (items.length === 0) {
+    if (container) container.remove();
+    return;
+  }
+  
   if (!container) {
-    // Create container before the form
-    const form = document.getElementById('quote-form');
-    if (!form) return;
+    // Create container BEFORE the form-card (not inside it)
+    const formCard = document.querySelector('.form-card');
+    if (!formCard) return;
     
     container = document.createElement('div');
     container.id = 'quote-cart-items';
-    container.className = 'quote-cart-items-section';
-    form.parentNode.insertBefore(container, form);
+    container.className = 'quote-cart-card';
+    formCard.parentNode.insertBefore(container, formCard);
   }
   
-  // Render items
+  // Render items in a separate card style
   container.innerHTML = `
-    <div class="cart-items-header">
-      <h2>UW GESELECTEERDE PRODUCTEN</h2>
-      <span class="cart-items-count">${items.length} product${items.length > 1 ? 'en' : ''}</span>
+    <div class="quote-cart-card-header">
+      <div class="quote-cart-card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <h2>UW OFFERTE MANDJE</h2>
+      </div>
+      <span class="quote-cart-card-count">${items.length} product${items.length > 1 ? 'en' : ''}</span>
     </div>
-    <div class="cart-items-list">
+    <div class="quote-cart-card-items">
       ${items.map(item => `
-        <div class="cart-item-row">
-          <div class="cart-item-image">
+        <div class="quote-cart-card-item">
+          <div class="quote-cart-card-item-image">
             ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `
-              <div class="cart-item-placeholder">
+              <div class="quote-cart-card-item-placeholder">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                 </svg>
               </div>
             `}
           </div>
-          <div class="cart-item-details">
+          <div class="quote-cart-card-item-info">
             <h4>${item.title}</h4>
-            <p class="cart-item-category">${item.category}${item.subcategory ? ' › ' + item.subcategory : ''}</p>
+            <p class="quote-cart-card-item-category">${item.category}${item.subcategory ? ' › ' + item.subcategory : ''}</p>
             ${item.specs && Object.keys(item.specs).length > 0 ? `
-              <div class="cart-item-specs">
+              <div class="quote-cart-card-item-specs">
                 ${Object.entries(item.specs).filter(([k,v]) => v).map(([k,v]) => `<span>${v}</span>`).join('')}
               </div>
             ` : ''}
           </div>
-          <div class="cart-item-qty">
-            <span>Aantal: <strong>${item.quantity || 1}</strong></span>
+          <div class="quote-cart-card-item-qty">
+            <label>Aantal</label>
+            <div class="qty-controls">
+              <button type="button" class="qty-btn qty-minus" data-id="${item.id}">−</button>
+              <span class="qty-value">${item.quantity || 1}</span>
+              <button type="button" class="qty-btn qty-plus" data-id="${item.id}">+</button>
+            </div>
           </div>
-          <button type="button" class="cart-item-remove" data-id="${item.id}" aria-label="Verwijderen">
+          <button type="button" class="quote-cart-card-item-remove" data-id="${item.id}" aria-label="Verwijderen">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -94,18 +112,57 @@ function renderCartItems() {
         </div>
       `).join('')}
     </div>
+    <div class="quote-cart-card-footer">
+      <span>Totaal: <strong>${items.reduce((sum, item) => sum + (item.quantity || 1), 0)}</strong> product(en)</span>
+      <button type="button" class="quote-cart-card-clear" id="clear-cart-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        Mandje legen
+      </button>
+    </div>
     <input type="hidden" name="cart_items_json" id="cart-items-json" value='${window.quoteCart.formatAsJSON()}'>
     <input type="hidden" name="cart_items_text" id="cart-items-text" value="${encodeCartText()}">
   `;
   
+  // Bind quantity buttons
+  container.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const item = window.quoteCart.getItems().find(i => i.id === id);
+      if (item) {
+        const isPlus = btn.classList.contains('qty-plus');
+        const newQty = isPlus ? (item.quantity || 1) + 1 : (item.quantity || 1) - 1;
+        if (newQty <= 0) {
+          window.quoteCart.removeItem(id);
+        } else {
+          window.quoteCart.updateQuantity(id, newQty);
+        }
+        renderCartItems();
+      }
+    });
+  });
+  
   // Bind remove buttons
-  container.querySelectorAll('.cart-item-remove').forEach(btn => {
+  container.querySelectorAll('.quote-cart-card-item-remove').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
       window.quoteCart.removeItem(id);
       renderCartItems();
     });
   });
+  
+  // Bind clear cart button
+  const clearBtn = document.getElementById('clear-cart-btn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Weet u zeker dat u alle producten wilt verwijderen?')) {
+        window.quoteCart.clear();
+        renderCartItems();
+      }
+    });
+  }
 }
 
 /**

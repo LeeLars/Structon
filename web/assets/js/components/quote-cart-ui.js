@@ -155,7 +155,7 @@ class QuoteCartUI {
     
     // Add to quote buttons (delegated)
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('#add-to-quote');
+      const btn = e.target.closest('#add-to-quote, #add-to-quote-sticky');
       if (btn) {
         e.preventDefault();
         this.handleAddToQuote(btn);
@@ -373,12 +373,19 @@ class QuoteCartUI {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
+    return;
+  }
+
   // Wait for quoteCart service to be available
   if (window.quoteCart) {
     window.quoteCartUI = new QuoteCartUI();
   } else {
     // Retry after a short delay
     setTimeout(() => {
+      if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
+        return;
+      }
       window.quoteCartUI = new QuoteCartUI();
     }, 100);
   }

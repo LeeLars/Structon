@@ -501,25 +501,46 @@ if (document.readyState === 'loading') {
  * Loads the cart service and UI on all pages
  */
 function initQuoteCart() {
+  if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
+    return;
+  }
+
   // Load quote cart service script
-  const serviceScript = document.createElement('script');
-  serviceScript.src = '/Structon/assets/js/services/quote-cart-service.js';
-  serviceScript.onload = () => {
-    console.log('✅ Quote cart service loaded globally');
-    
-    // Load quote cart UI after service is loaded
+  const ensureUI = () => {
+    if (window.quoteCartUI || document.getElementById('quote-cart-fab')) {
+      return;
+    }
+
+    const uiAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/components/quote-cart-ui.js'));
+    if (uiAlreadyLoaded) {
+      return;
+    }
+
     const uiScript = document.createElement('script');
     uiScript.src = '/Structon/assets/js/components/quote-cart-ui.js';
-    uiScript.onload = () => {
-      console.log('✅ Quote cart UI loaded globally');
-    };
     document.head.appendChild(uiScript);
   };
-  document.head.appendChild(serviceScript);
+
+  if (window.quoteCart) {
+    ensureUI();
+  } else {
+    const serviceAlreadyLoaded = Array.from(document.scripts).some(s => (s.src || '').includes('/assets/js/services/quote-cart-service.js'));
+    if (!serviceAlreadyLoaded) {
+      const serviceScript = document.createElement('script');
+      serviceScript.src = '/Structon/assets/js/services/quote-cart-service.js';
+      serviceScript.onload = ensureUI;
+      document.head.appendChild(serviceScript);
+    } else {
+      setTimeout(ensureUI, 50);
+    }
+  }
   
   // Load quote cart CSS
-  const cartCSS = document.createElement('link');
-  cartCSS.rel = 'stylesheet';
-  cartCSS.href = '/Structon/assets/css/components/quote-cart.css';
-  document.head.appendChild(cartCSS);
+  const cssAlreadyLoaded = Array.from(document.styleSheets).some(s => (s.href || '').includes('/assets/css/components/quote-cart.css'));
+  if (!cssAlreadyLoaded) {
+    const cartCSS = document.createElement('link');
+    cartCSS.rel = 'stylesheet';
+    cartCSS.href = '/Structon/assets/css/components/quote-cart.css';
+    document.head.appendChild(cartCSS);
+  }
 }

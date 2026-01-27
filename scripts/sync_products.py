@@ -220,8 +220,14 @@ def generate_product_page(product, locale):
               <img src="{image_url}" alt="{title}" id="main-image">
             </div>
             <div class="product-badges">
-              <span class="badge badge-quality">Belgische Kwaliteit</span>
-              <span class="badge badge-stock {stock_class}">{stock_text}</span>
+              <span class="badge badge-quality">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Belgische Kwaliteit
+              </span>
+              <span class="badge badge-stock {stock_class}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                {stock_text}
+              </span>
             </div>
           </div>
           <div class="product-info animate-on-scroll">
@@ -259,6 +265,25 @@ def generate_product_page(product, locale):
               <div class="trust-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>Levering mogelijk</span>
+              </div>
+              <div class="trust-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>2 Jaar garantie op laswerk</span>
+              </div>
+            </div>
+            
+            <!-- Documentation Section -->
+            <div class="product-documentation">
+              <h3 class="documentation-title">Documentatie</h3>
+              <div class="documentation-links">
+                <a href="#" class="documentation-link" onclick="alert('Technische tekening wordt binnenkort beschikbaar gesteld'); return false;">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <span>Technische tekening (PDF)</span>
+                </a>
+                <a href="#" class="documentation-link" onclick="alert('Productbrochure wordt binnenkort beschikbaar gesteld'); return false;">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                  <span>Productbrochure (PDF)</span>
+                </a>
               </div>
             </div>
           </div>
@@ -343,6 +368,16 @@ def generate_product_page(product, locale):
         </div>
       </div>
     </section>
+    
+    <!-- Sticky Mobile CTA -->
+    <div class="product-sticky-cta">
+      <button class="btn-split btn-split-primary" id="add-to-quote-sticky" data-product="{cart_data_json}">
+        <span class="btn-split-text">{labels['add_to_quote']}</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
+      </button>
+    </div>
   </main>
   <div id="footer-placeholder"></div>
   <script src="{assets_prefix}/js/components/header-loader.js"></script>

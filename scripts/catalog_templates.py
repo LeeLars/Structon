@@ -31,7 +31,7 @@ def get_category_html(category_slug, locale, CATEGORIES, SUBCATEGORIES, LABELS, 
         subcat = SUBCATEGORIES.get(subcat_slug, {})
         subcat_title = subcat.get('title_translations', {}).get(locale, subcat.get('title', subcat_slug))
         subcat_cards.append(f'''<a href="{subcat_slug}/" class="subcategory-card">
-              <div class="subcategory-image"><img src="{assets_prefix}/images/categories/{subcat_slug}.jpg" alt="{subcat_title}" onerror="this.src='{assets_prefix}/images/placeholder.jpg'"></div>
+              <div class="subcategory-image"><img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768988292/graafbak-hero_apbtll.png" alt="{subcat_title}"></div>
               <div class="subcategory-overlay"></div>
               <div class="subcategory-content"><h3>{subcat_title}</h3></div>
             </a>''')

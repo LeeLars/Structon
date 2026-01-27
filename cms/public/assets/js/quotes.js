@@ -353,6 +353,41 @@ function openQuoteDrawer(quote) {
         </div>
       </div>
 
+      <!-- Cart Items (if any) -->
+      ${quote.cart_items && (Array.isArray(quote.cart_items) ? quote.cart_items.length > 0 : Object.keys(quote.cart_items).length > 0) ? `
+      <div class="detail-section">
+        <div class="detail-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          Producten in Offerte (${Array.isArray(quote.cart_items) ? quote.cart_items.length : 1})
+        </div>
+        <div class="cart-items-list" style="display: flex; flex-direction: column; gap: 12px;">
+          ${(Array.isArray(quote.cart_items) ? quote.cart_items : [quote.cart_items]).map(item => `
+            <div class="cart-item-card" style="display: flex; gap: 12px; padding: 12px; background: var(--col-bg); border-radius: 8px; border: 1px solid var(--col-border);">
+              ${item.image ? `
+                <div style="width: 60px; height: 60px; flex-shrink: 0; border-radius: 6px; overflow: hidden; background: white;">
+                  <img src="${item.image}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+              ` : ''}
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-weight: 600; color: var(--col-text);">${item.title || 'Product'}</div>
+                <div style="font-size: 0.85rem; color: var(--col-text-muted);">${item.category || ''}${item.subcategory ? ' › ' + item.subcategory : ''}</div>
+                ${item.specs ? `
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                    ${Object.entries(item.specs).filter(([k,v]) => v).map(([k,v]) => `
+                      <span style="font-size: 0.75rem; padding: 2px 8px; background: var(--col-primary-light); color: var(--col-primary); border-radius: 4px;">${v}</span>
+                    `).join('')}
+                  </div>
+                ` : ''}
+              </div>
+              <div style="text-align: right; flex-shrink: 0;">
+                <div style="font-weight: 600; color: var(--col-primary);">${item.quantity || 1}x</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
       <!-- Product Details -->
       <div class="detail-section">
         <div class="detail-section-title">
@@ -360,6 +395,12 @@ function openQuoteDrawer(quote) {
           Aanvraag Details
         </div>
         <div class="detail-grid">
+          ${quote.request_type ? `
+          <div class="detail-item">
+            <label>Type aanvraag</label>
+            <div>${quote.request_type === 'offerte' ? 'Offerte' : quote.request_type === 'maatwerk' ? 'Maatwerk' : quote.request_type === 'vraag' ? 'Vraag' : quote.request_type}</div>
+          </div>
+          ` : ''}
           <div class="detail-item full-width">
             <label>Product / Onderwerp</label>
             <div>${quote.product_title || quote.product_name || 'Algemene aanvraag'}</div>

@@ -570,6 +570,13 @@ async function handleFormSubmit(e) {
   
   // Collect form data
   const formData = new FormData(form);
+  
+  // Get cart items from quote cart service
+  let cartItems = [];
+  if (typeof window.quoteCart !== 'undefined') {
+    cartItems = window.quoteCart.getItems();
+  }
+  
   const quoteData = {
     // Required fields
     customer_name: formData.get('customer_name'),
@@ -597,6 +604,9 @@ async function handleFormSubmit(e) {
     
     // Message
     message: formData.get('message') || null,
+    
+    // Cart items (products in quote basket)
+    cart_items: cartItems.length > 0 ? cartItems : null,
     
     // Prefilled product details (auto-filled from product page)
     prefilled_product_name: formData.get('prefilled_product_name') || null,

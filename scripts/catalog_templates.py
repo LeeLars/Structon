@@ -281,10 +281,7 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
             <button class="btn btn-primary btn-full" id="apply-filters" style="display: none;">{labels['apply_filters']}</button>
           </aside>
           <div class="category-content">
-            <div id="category-header" class="category-header" style="display: block;">
-              <h2 class="category-header-title" id="category-header-title">{title.upper()}</h2>
-              <p class="category-header-description" id="category-header-description">{description}</p>
-            </div>
+            <div id="category-header" class="category-header" style="display: none;"></div>
             <div id="subcategories-section" style="display: none;"></div>
             <div class="products-toolbar">
               <div class="toolbar-left">

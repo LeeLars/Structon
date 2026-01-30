@@ -80,7 +80,7 @@ def get_category_html(category_slug, locale, CATEGORIES, SUBCATEGORIES, LABELS, 
               <h3 class="filters-title">{labels['filters']}</h3>
               <button class="btn-text" id="clear-filters">{labels['clear']}</button>
             </div>
-            <div class="filter-group">
+            <div class="filter-group" style="display: none;">
               <h4 class="filter-group-title">{labels['brand']}</h4>
               <div id="brand-filters-loading" class="filter-loading"><div class="spinner-small"></div><span>{labels['loading_brands']}</span></div>
               <div id="brand-filters-container" style="display: none;"></div>
@@ -243,7 +243,7 @@ def get_subcategory_html(subcategory_slug, locale, CATEGORIES, SUBCATEGORIES, LA
               <h3 class="filters-title">{labels['filters']}</h3>
               <button class="btn-text" id="clear-filters">{labels['clear']}</button>
             </div>
-            <div class="filter-group">
+            <div class="filter-group" style="display: none;">
               <h4 class="filter-group-title">{labels['brand']}</h4>
               <div id="brand-filters-loading" class="filter-loading"><div class="spinner-small"></div><span>{labels['loading_brands']}</span></div>
               <div id="brand-filters-container" style="display: none;"></div>

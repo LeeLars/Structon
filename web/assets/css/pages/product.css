@@ -647,6 +647,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 2rem;
 }
 
 .product-price-label {
@@ -800,6 +801,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-8);
+  margin-top: var(--space-8);
+  width: 100%;
 }
 
 @media (min-width: 1024px) {

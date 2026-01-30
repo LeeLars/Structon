@@ -10,7 +10,7 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  display: none; /* Hidden by default, shown by JS when cart has items */
+  display: flex; /* Always visible on all pages */
   width: 60px;
   height: 60px;
   border-radius: 50%;

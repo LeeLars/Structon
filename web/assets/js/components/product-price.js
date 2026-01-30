@@ -81,7 +81,7 @@
     if (!productId) return;
 
     // Show container while loading
-    priceContainer.style.display = 'block';
+    priceContainer.style.display = 'flex';
 
     const priceData = await fetchProductPrice(productId, token);
 

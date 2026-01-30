@@ -254,9 +254,9 @@ class QuoteCartUI {
     const footer = document.getElementById('quote-cart-footer');
     const fab = document.getElementById('quote-cart-fab');
     
-    // Show/hide FAB based on cart count
+    // FAB is always visible on all pages
     if (fab) {
-      fab.style.display = count > 0 ? 'flex' : 'none';
+      fab.style.display = 'flex';
     }
     
     if (badge) {

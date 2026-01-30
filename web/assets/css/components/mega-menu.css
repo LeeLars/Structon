@@ -100,7 +100,6 @@
   background-color: var(--color-primary-dark, #1a4f59);
 }
 
-.menu-dropdown-view-all span:last-child,
 .menu-dropdown-view-all svg {
   display: none; /* Hide arrow icon - clean rounded button style */
 }

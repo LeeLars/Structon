@@ -1,89 +1,15 @@
 /**
  * Structon - Related Products Loader
- * Dynamically loads relevant products based on current product
+ * Dynamically loads relevant products from CMS based on current product
  */
 
 (function() {
   'use strict';
 
-  // Mock product database - in production this would come from API
-  const MOCK_PRODUCTS = [
-    {
-      id: '11c08c8c-265d-4900-b005-046e6e3102c4',
-      slug: 'test-dieplepelbak-01',
-      title: 'Test - Dieplepelbak - 01',
-      category_slug: 'graafbakken',
-      subcategory_slug: 'dieplepelbakken',
-      category: 'Graafbakken',
-      subcategory: 'Dieplepelbakken',
-      image: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png',
-      excavator_min: 1.50,
-      excavator_max: 3.00,
-      width: 300,
-      weight: 55,
-      attachment: 'CW05'
-    },
-    {
-      id: 'prod-dieplepel-02',
-      slug: 'dieplepelbak-400mm',
-      title: 'Dieplepelbak 400mm',
-      category_slug: 'graafbakken',
-      subcategory_slug: 'dieplepelbakken',
-      category: 'Graafbakken',
-      subcategory: 'Dieplepelbakken',
-      image: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1737537600/structon/products/sample-dieplepel-2.jpg',
-      excavator_min: 2.00,
-      excavator_max: 4.00,
-      width: 400,
-      weight: 75,
-      attachment: 'CW10'
-    },
-    {
-      id: 'prod-dieplepel-03',
-      slug: 'dieplepelbak-250mm',
-      title: 'Dieplepelbak 250mm',
-      category_slug: 'graafbakken',
-      subcategory_slug: 'dieplepelbakken',
-      category: 'Graafbakken',
-      subcategory: 'Dieplepelbakken',
-      image: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1737537600/structon/products/sample-dieplepel-3.jpg',
-      excavator_min: 1.00,
-      excavator_max: 2.50,
-      width: 250,
-      weight: 45,
-      attachment: 'CW05'
-    },
-    {
-      id: 'prod-graafbak-01',
-      slug: 'standaard-graafbak-600mm',
-      title: 'Standaard Graafbak 600mm',
-      category_slug: 'graafbakken',
-      subcategory_slug: 'standaard-graafbakken',
-      category: 'Graafbakken',
-      subcategory: 'Standaard Graafbakken',
-      image: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1737537600/structon/products/sample-graafbak-1.jpg',
-      excavator_min: 1.50,
-      excavator_max: 3.00,
-      width: 600,
-      weight: 95,
-      attachment: 'CW05'
-    },
-    {
-      id: 'prod-taludbak-01',
-      slug: 'taludbak-800mm',
-      title: 'Taludbak 800mm',
-      category_slug: 'graafbakken',
-      subcategory_slug: 'taludbakken',
-      category: 'Graafbakken',
-      subcategory: 'Taludbakken',
-      image: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1737537600/structon/products/sample-taludbak-1.jpg',
-      excavator_min: 2.00,
-      excavator_max: 4.00,
-      width: 800,
-      weight: 110,
-      attachment: 'CW10'
-    }
-  ];
+  // API Configuration
+  const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:4000/api'
+    : 'https://structon-production.up.railway.app/api';
 
   /**
    * Get current product data from page
@@ -115,6 +41,33 @@
   }
 
   /**
+   * Fetch products from CMS API
+   */
+  async function fetchProducts(filters = {}) {
+    try {
+      const params = new URLSearchParams();
+      
+      if (filters.category_slug) params.set('category_slug', filters.category_slug);
+      if (filters.subcategory_slug) params.set('subcategory_slug', filters.subcategory_slug);
+      if (filters.limit) params.set('limit', filters.limit);
+      
+      const url = `${API_BASE}/products?${params.toString()}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        console.warn('Failed to fetch products from CMS');
+        return [];
+      }
+      
+      const data = await response.json();
+      return data.products || [];
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return [];
+    }
+  }
+
+  /**
    * Calculate relevance score for a product
    */
   function calculateRelevance(currentProduct, candidateProduct) {
@@ -132,10 +85,14 @@
     }
 
     // Similar tonnage range
-    if (currentProduct.excavator_min && currentProduct.excavator_max &&
-        candidateProduct.excavator_min && candidateProduct.excavator_max) {
-      const currentMid = (currentProduct.excavator_min + currentProduct.excavator_max) / 2;
-      const candidateMid = (candidateProduct.excavator_min + candidateProduct.excavator_max) / 2;
+    const currentMin = currentProduct.excavator_min || 0;
+    const currentMax = currentProduct.excavator_max || 0;
+    const candidateMin = candidateProduct.excavator_weight_min || 0;
+    const candidateMax = candidateProduct.excavator_weight_max || 0;
+    
+    if (currentMin && currentMax && candidateMin && candidateMax) {
+      const currentMid = (currentMin + currentMax) / 2;
+      const candidateMid = (candidateMin + candidateMax) / 2;
       const diff = Math.abs(currentMid - candidateMid);
       
       if (diff < 0.5) score += 30;
@@ -145,7 +102,7 @@
 
     // Same attachment type
     if (currentProduct.specs?.attachment && 
-        candidateProduct.attachment === currentProduct.specs.attachment) {
+        candidateProduct.attachment_type === currentProduct.specs.attachment) {
       score += 15;
     }
 
@@ -153,13 +110,32 @@
   }
 
   /**
-   * Get related products sorted by relevance
+   * Get related products from CMS sorted by relevance
    */
-  function getRelatedProducts(currentProduct, limit = 4) {
+  async function getRelatedProducts(currentProduct, limit = 3) {
     if (!currentProduct) return [];
 
+    // Try to fetch products from same subcategory first
+    let products = [];
+    
+    if (currentProduct.subcategory_slug) {
+      products = await fetchProducts({
+        subcategory_slug: currentProduct.subcategory_slug,
+        limit: 10
+      });
+    }
+    
+    // If not enough, fetch from same category
+    if (products.length < limit && currentProduct.category_slug) {
+      const categoryProducts = await fetchProducts({
+        category_slug: currentProduct.category_slug,
+        limit: 10
+      });
+      products = [...products, ...categoryProducts];
+    }
+
     // Filter out current product and calculate relevance
-    const candidates = MOCK_PRODUCTS
+    const candidates = products
       .filter(p => p.id !== currentProduct.id)
       .map(p => ({
         ...p,
@@ -190,10 +166,22 @@
   function createProductCard(product) {
     const productUrl = buildProductUrl(product);
     
+    // Get first image from cloudinary_images array
+    const imageUrl = product.cloudinary_images?.[0]?.url || 
+                     'https://via.placeholder.com/400x400?text=No+Image';
+    
+    // Build specs string
+    const specs = [];
+    if (product.width) specs.push(`${product.width}mm`);
+    if (product.weight) specs.push(`${product.weight} kg`);
+    if (product.excavator_weight_min && product.excavator_weight_max) {
+      specs.push(`${product.excavator_weight_min}-${product.excavator_weight_max}t`);
+    }
+    
     return `
       <article class="product-card clean-card">
         <a href="${productUrl}" class="product-card-image">
-          <img src="${product.image}" alt="${product.title}" loading="lazy">
+          <img src="${imageUrl}" alt="${product.title}" loading="lazy">
         </a>
         <div class="product-card-divider"></div>
         <div class="product-card-content">
@@ -202,11 +190,9 @@
               <a href="${productUrl}">${product.title}</a>
             </h3>
           </div>
-          <p class="product-card-specs">
-            ${product.width ? `${product.width}mm` : ''} 
-            ${product.weight ? `| ${product.weight} kg` : ''}
-            ${product.excavator_min && product.excavator_max ? `| ${product.excavator_min}-${product.excavator_max}t` : ''}
-          </p>
+          ${specs.length > 0 ? `
+            <p class="product-card-specs">${specs.join(' | ')}</p>
+          ` : ''}
           <div class="product-card-footer">
             <a href="${productUrl}" class="btn-split btn-split-sm" style="width: 100%;">
               <span class="btn-split-text">Meer info</span>
@@ -221,9 +207,9 @@
   }
 
   /**
-   * Load and render related products
+   * Load and render related products from CMS
    */
-  function loadRelatedProducts() {
+  async function loadRelatedProducts() {
     const section = document.getElementById('related-products-section');
     const grid = document.getElementById('related-products-grid');
     
@@ -235,20 +221,27 @@
       return;
     }
 
-    const relatedProducts = getRelatedProducts(currentProduct, 4);
-    
-    if (relatedProducts.length === 0) {
-      console.log('No related products found');
-      return;
-    }
-
-    // Render products
-    grid.innerHTML = relatedProducts.map(createProductCard).join('');
-    
-    // Show section
+    // Show loading state
+    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8;">Gerelateerde producten laden...</div>';
     section.style.display = 'block';
-    
-    console.log(`✅ Loaded ${relatedProducts.length} related products`);
+
+    try {
+      const relatedProducts = await getRelatedProducts(currentProduct, 3);
+      
+      if (relatedProducts.length === 0) {
+        console.log('No related products found');
+        section.style.display = 'none';
+        return;
+      }
+
+      // Render products
+      grid.innerHTML = relatedProducts.map(createProductCard).join('');
+      
+      console.log(`✅ Loaded ${relatedProducts.length} related products from CMS`);
+    } catch (error) {
+      console.error('Error loading related products:', error);
+      section.style.display = 'none';
+    }
   }
 
   // Initialize when DOM is ready

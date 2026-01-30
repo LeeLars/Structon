@@ -258,6 +258,7 @@ def generate_product_page(product, locale):
         <nav class="breadcrumb" aria-label="Kruimelpad">
           {breadcrumb_html}
         </nav>
+        <h1 class="hero-title">{title.upper()}</h1>
       </div>
     </section>
     
@@ -280,7 +281,7 @@ def generate_product_page(product, locale):
             
             <!-- Price display (only visible for logged-in users) -->
             <div class="product-price-container" id="product-price-container" data-product-id="{cart_data['id']}" style="display: none;">
-              <div class="product-price-label">Uw prijs</div>
+              <div class="product-price-label">Prijs:</div>
               <div class="product-price" id="product-price">
                 <span class="price-loading">Prijs laden...</span>
               </div>

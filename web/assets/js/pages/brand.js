@@ -482,6 +482,11 @@ async function loadBrandProducts(categorySlug = null) {
       allProducts = fetchedProducts.filter(product => {
         const compatibleBrands = product.specs?.compatible_brand_ids || product.compatible_brand_ids;
         
+        // If compatible_brand_ids is not set, undefined, null, or empty - treat as compatible with ALL brands
+        if (!compatibleBrands || compatibleBrands === '' || (Array.isArray(compatibleBrands) && compatibleBrands.length === 0)) {
+          return true;
+        }
+        
         // If compatible_brand_ids is "all", product works for all brands
         if (compatibleBrands === 'all') {
           return true;
@@ -497,16 +502,10 @@ async function loadBrandProducts(categorySlug = null) {
           return compatibleBrands.includes(currentBrand);
         }
         
-        return false;
+        return true; // Default to showing product if we can't determine compatibility
       });
       
       console.log(`✅ Filtered to ${allProducts.length} products compatible with ${currentBrand}`);
-      
-      // If no compatible products found, show all products as fallback
-      if (allProducts.length === 0) {
-        console.log('⚠️ No compatible products found, showing all products as fallback');
-        allProducts = fetchedProducts;
-      }
     } else {
       allProducts = fetchedProducts;
       console.log(`✅ Loaded ${allProducts.length} products (no brand filter)`);

@@ -639,15 +639,9 @@ margin-bottom: 0;
    PRODUCT PRICE (Authenticated Users Only)
    ============================================ */
 .product-price-container {
-  background: var(--color-gray-50);
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4) var(--space-6);
-  margin-bottom: var(--space-6);
-  display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .product-price-label {

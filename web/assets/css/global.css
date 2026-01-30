@@ -145,6 +145,11 @@ body.is-logged-in .guest-only {
 }
 
 /* Inline variants for spans/buttons */
+ .auth-only-inline,
+ .guest-only-inline {
+   display: none !important;
+ }
+ 
 body.is-logged-in .auth-only-inline {
   display: inline !important;
 }
@@ -1740,9 +1745,7 @@ body.nav-mobile-open {
 
 /* Price Section (Login Required) */
 .product-price-section {
-  background-color: var(--color-gray-50);
   border-radius: var(--radius-lg);
-  padding: var(--space-6);
   margin-bottom: var(--space-6);
 }
 

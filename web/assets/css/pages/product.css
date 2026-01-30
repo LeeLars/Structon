@@ -779,6 +779,123 @@
 }
 
 /* ============================================
+   PRODUCT SPECIFICATIONS TABLE SECTION
+   ============================================ */
+.product-specifications-section {
+  background: var(--color-white);
+  padding: var(--space-16) 0;
+}
+
+.product-specifications-section .section-title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-black);
+  color: var(--color-gray-900);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.specifications-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .specifications-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+  }
+}
+
+.specifications-description h3 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.specifications-description p {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--color-gray-700);
+  margin-bottom: var(--space-4);
+}
+
+.specifications-description p:last-child {
+  margin-bottom: 0;
+}
+
+.specifications-table-wrapper {
+  background: var(--color-gray-50);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  border: 1px solid var(--color-gray-200);
+}
+
+.specifications-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specifications-table thead {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.specifications-table thead th {
+  padding: var(--space-4);
+  text-align: left;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.specifications-table thead th:first-child {
+  border-top-left-radius: var(--radius-md);
+}
+
+.specifications-table thead th:last-child {
+  border-top-right-radius: var(--radius-md);
+}
+
+.specifications-table tbody tr {
+  border-bottom: 1px solid var(--color-gray-200);
+  transition: background-color 0.2s ease;
+}
+
+.specifications-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.specifications-table tbody tr:hover {
+  background: var(--color-white);
+}
+
+.specifications-table tbody td {
+  padding: var(--space-4);
+  font-size: var(--text-base);
+}
+
+.specifications-table tbody td:first-child {
+  color: var(--color-gray-600);
+  font-weight: var(--font-medium);
+}
+
+.specifications-table tbody td:last-child {
+  color: var(--color-gray-900);
+}
+
+.specifications-table tbody td strong {
+  font-weight: var(--font-bold);
+  color: var(--color-primary-dark);
+}
+
+/* ============================================
    RELATED PRODUCTS SECTION
    ============================================ */
 .related-products-section {

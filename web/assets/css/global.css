@@ -145,25 +145,20 @@ body.is-logged-in .guest-only {
 }
 
 /* Inline variants for spans/buttons */
- .auth-only-inline,
- .guest-only-inline {
-   display: none !important;
- }
- 
+.auth-only-inline {
+  display: none !important;
+}
+
+.guest-only-inline {
+  display: inline !important;
+}
+
 body.is-logged-in .auth-only-inline {
   display: inline !important;
 }
 
-body:not(.is-logged-in) .auth-only-inline {
-  display: none !important;
-}
-
 body.is-logged-in .guest-only-inline {
   display: none !important;
-}
-
-body:not(.is-logged-in) .guest-only-inline {
-  display: inline !important;
 }
 
 /* Flex variants for buttons/cards */

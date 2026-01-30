@@ -81,8 +81,29 @@ async function loadProducts() {
 
     const data = await products.getAll(filters);
     
-    allProducts = data.items || [];
-    const total = data.total || allProducts.length;
+    let filteredProducts = data.items || [];
+    
+    // Apply client-side excavator weight filter (API doesn't support this filter)
+    if (filters.excavator_weight_ranges && filters.excavator_weight_ranges.length > 0) {
+      filteredProducts = filteredProducts.filter(product => {
+        return filters.excavator_weight_ranges.some(rangeValue => {
+          let minTon, maxTon;
+          if (rangeValue === 1500) { minTon = 1.5; maxTon = 3; }
+          else if (rangeValue === 4000) { minTon = 3; maxTon = 8; }
+          else if (rangeValue === 12000) { minTon = 8; maxTon = 15; }
+          else if (rangeValue === 20000) { minTon = 15; maxTon = 25; }
+          else if (rangeValue === 30000) { minTon = 25; maxTon = 50; }
+          else return false;
+          
+          const productMin = parseFloat(product.excavator_weight_min) || 0;
+          const productMax = parseFloat(product.excavator_weight_max) || 0;
+          return productMin <= maxTon && productMax >= minTon;
+        });
+      });
+    }
+    
+    allProducts = filteredProducts;
+    const total = filters.excavator_weight_ranges?.length > 0 ? filteredProducts.length : (data.total || allProducts.length);
 
     console.log(`✅ Loaded ${allProducts.length} products for category: ${categorySlug}`);
 

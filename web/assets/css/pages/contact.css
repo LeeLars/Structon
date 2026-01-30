@@ -148,7 +148,7 @@
 /* Radio Buttons - Classic Dot Style */
 .radio-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--space-3);
   margin-top: var(--space-2);
 }

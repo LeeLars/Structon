@@ -477,19 +477,25 @@ export function filterProducts(products, filters) {
     }
     
     // Excavator weight filter - check if product falls within ANY selected range
+    // NOTE: Product data stores excavator_weight_min/max in TONS (e.g., 1.5, 3.0, 8.0)
+    // Checkbox values are in kg (1500, 4000, 12000, etc.) - we define ranges in TONS
     if (filters.excavator_weight_ranges && filters.excavator_weight_ranges.length > 0) {
       const matchesAnyRange = filters.excavator_weight_ranges.some(rangeValue => {
-        // rangeValue is midpoint in kg (e.g., 4000 for 3-8 ton range)
-        // Define ranges based on checkbox values
-        let min, max;
-        if (rangeValue === 1500) { min = 1500; max = 3000; }      // 1.5-3 ton
-        else if (rangeValue === 4000) { min = 3000; max = 8000; } // 3-8 ton
-        else if (rangeValue === 12000) { min = 8000; max = 15000; } // 8-15 ton
-        else if (rangeValue === 20000) { min = 15000; max = 25000; } // 15-25 ton
-        else if (rangeValue === 30000) { min = 25000; max = 50000; } // 25-50 ton
+        // rangeValue is checkbox value in kg - define filter ranges in TONS to match product data
+        let minTon, maxTon;
+        if (rangeValue === 1500) { minTon = 1.5; maxTon = 3; }      // 1.5-3 ton
+        else if (rangeValue === 4000) { minTon = 3; maxTon = 8; }   // 3-8 ton
+        else if (rangeValue === 12000) { minTon = 8; maxTon = 15; } // 8-15 ton
+        else if (rangeValue === 20000) { minTon = 15; maxTon = 25; } // 15-25 ton
+        else if (rangeValue === 30000) { minTon = 25; maxTon = 50; } // 25-50 ton
+        else return false;
         
-        // Check if product's weight range overlaps with filter range
-        return product.excavator_weight_min <= max && product.excavator_weight_max >= min;
+        // Product values are in tons - check if product's weight range overlaps with filter range
+        const productMin = parseFloat(product.excavator_weight_min) || 0;
+        const productMax = parseFloat(product.excavator_weight_max) || 0;
+        
+        // Check overlap: product range [productMin, productMax] overlaps with filter range [minTon, maxTon]
+        return productMin <= maxTon && productMax >= minTon;
       });
       
       if (!matchesAnyRange) {

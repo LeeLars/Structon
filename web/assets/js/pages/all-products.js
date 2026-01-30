@@ -384,8 +384,34 @@ async function loadProducts() {
       items: data.items
     });
     
-    allProducts = data.items || [];
-    const total = data.total || allProducts.length;
+    let filteredProducts = data.items || [];
+    
+    // Apply client-side excavator weight filter (API doesn't support this filter)
+    if (filters.excavator_weight_ranges && filters.excavator_weight_ranges.length > 0) {
+      filteredProducts = filteredProducts.filter(product => {
+        return filters.excavator_weight_ranges.some(rangeValue => {
+          // rangeValue is checkbox value in kg - define filter ranges in TONS to match product data
+          let minTon, maxTon;
+          if (rangeValue === 1500) { minTon = 1.5; maxTon = 3; }      // 1.5-3 ton
+          else if (rangeValue === 4000) { minTon = 3; maxTon = 8; }   // 3-8 ton
+          else if (rangeValue === 12000) { minTon = 8; maxTon = 15; } // 8-15 ton
+          else if (rangeValue === 20000) { minTon = 15; maxTon = 25; } // 15-25 ton
+          else if (rangeValue === 30000) { minTon = 25; maxTon = 50; } // 25-50 ton
+          else return false;
+          
+          // Product values are in tons - check if product's weight range overlaps with filter range
+          const productMin = parseFloat(product.excavator_weight_min) || 0;
+          const productMax = parseFloat(product.excavator_weight_max) || 0;
+          
+          // Check overlap: product range [productMin, productMax] overlaps with filter range [minTon, maxTon]
+          return productMin <= maxTon && productMax >= minTon;
+        });
+      });
+      console.log('🔧 Client-side excavator filter applied:', filteredProducts.length, 'products match');
+    }
+    
+    allProducts = filteredProducts;
+    const total = filters.excavator_weight_ranges?.length > 0 ? filteredProducts.length : (data.total || allProducts.length);
 
     // Update count
     document.getElementById('products-count').textContent = total;

@@ -155,6 +155,54 @@ def generate_product_page(product, locale):
               </div>''')
     specs_html = '\n              '.join(specs_items)
     
+    # Build specifications table rows
+    specs_table_rows = []
+    if width:
+        specs_table_rows.append(f'''<tr>
+                  <th>{labels["width"]}</th>
+                  <td>{width} mm</td>
+                </tr>''')
+    if volume:
+        specs_table_rows.append(f'''<tr>
+                  <th>{labels["volume"]}</th>
+                  <td>{volume} L</td>
+                </tr>''')
+    if weight:
+        specs_table_rows.append(f'''<tr>
+                  <th>{labels["weight"]}</th>
+                  <td>{weight} kg</td>
+                </tr>''')
+    if attachment:
+        specs_table_rows.append(f'''<tr>
+                  <th>{labels["attachment"]}</th>
+                  <td>{attachment}</td>
+                </tr>''')
+    if excavator_min and excavator_max:
+        specs_table_rows.append(f'''<tr>
+                  <th>Graafmachine klasse</th>
+                  <td>{excavator_min} - {excavator_max} ton</td>
+                </tr>''')
+    
+    # Add standard rows
+    specs_table_rows.append('''<tr>
+                  <th>Materiaal</th>
+                  <td>Hardox 450 staal</td>
+                </tr>''')
+    specs_table_rows.append('''<tr>
+                  <th>Productie</th>
+                  <td>Op maat gemaakt in België</td>
+                </tr>''')
+    specs_table_rows.append('''<tr>
+                  <th>Levertijd</th>
+                  <td>2-3 weken</td>
+                </tr>''')
+    specs_table_rows.append('''<tr>
+                  <th>Garantie</th>
+                  <td>12 maanden fabrieksgarantie</td>
+                </tr>''')
+    
+    specs_table_html = '\n                '.join(specs_table_rows)
+    
     # Stock status
     stock_class = 'in-stock' if stock > 0 else 'out-of-stock'
     stock_text = labels['stock'] if stock > 0 else labels['out_of_stock']
@@ -304,6 +352,28 @@ def generate_product_page(product, locale):
             </div>
             <h3>Snelle Levering</h3>
             <p>Afhalen in Beernem of levering op locatie. Neem contact op voor levertijden en mogelijkheden.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Specifications Content Section -->
+    <section class="section specifications-section">
+      <div class="container">
+        <div class="specifications-content">
+          <div class="specifications-description">
+            <h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>
+            <p>Deze hoogwaardige kraanbak is speciaal ontworpen voor professionele graafwerkzaamheden. De robuuste constructie en doordachte vorm maken deze bak ideaal voor diverse toepassingen in de grond-, weg- en waterbouw.</p>
+            <p>Vervaardigd uit slijtvast Hardox staal voor maximale duurzaamheid en een lange levensduur, zelfs onder zware werkomstandigheden. De geoptimaliseerde geometrie zorgt voor uitstekende prestaties in verschillende grondsoorten.</p>
+          </div>
+          
+          <div class="specifications-table-wrapper">
+            <h3 class="specifications-subtitle">Technische Specificaties</h3>
+            <table class="specifications-table">
+              <tbody>
+                {specs_table_html}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

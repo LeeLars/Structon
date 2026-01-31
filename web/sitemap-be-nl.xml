@@ -1005,10 +1005,11 @@
   
   
   
+  
   <!-- Product Pages -->
   <url>
     <loc>https://structon.be/be-nl/producten/graafbakken/dieplepelbakken/test-dieplepelbak-01/</loc>
-    <lastmod>2026-01-30</lastmod>
+    <lastmod>2026-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/dieplepelbakken/test-dieplepelbak-01/"/>
@@ -1019,7 +1020,7 @@
   </url>
   <url>
     <loc>https://structon.be/be-nl/producten/graafbakken/sleuvenbakken/test-sleuvenbak-01/</loc>
-    <lastmod>2026-01-30</lastmod>
+    <lastmod>2026-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="nl-BE" href="https://structon.be/be-nl/producten/graafbakken/sleuvenbakken/test-sleuvenbak-01/"/>

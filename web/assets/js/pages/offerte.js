@@ -490,6 +490,10 @@ function setupRequestTypeToggle() {
     const companyNameInput = document.getElementById('company_name');
     const vatNumberInput = document.getElementById('vat_number');
     
+    // Get form rows for layout adjustment
+    const nameRow = document.getElementById('customer_name')?.closest('.form-row');
+    const emailRow = document.getElementById('customer_email')?.closest('.form-row');
+    
     // Update fields visibility
     if (technicalFields) {
       if (type === 'vraag') {
@@ -509,6 +513,10 @@ function setupRequestTypeToggle() {
         vatNumberGroup.style.display = 'none';
         if (vatNumberInput) vatNumberInput.required = false;
       }
+      
+      // Make name, email, and phone fields full width for "Vraag stellen"
+      if (nameRow) nameRow.classList.add('form-row-single');
+      if (emailRow) emailRow.classList.add('form-row-single');
     } else {
       // Show B2B fields for offerte and maatwerk
       if (companyNameGroup) {
@@ -519,6 +527,10 @@ function setupRequestTypeToggle() {
         vatNumberGroup.style.display = 'block';
         if (vatNumberInput) vatNumberInput.required = true;
       }
+      
+      // Restore 2-column layout for offerte and maatwerk
+      if (nameRow) nameRow.classList.remove('form-row-single');
+      if (emailRow) emailRow.classList.remove('form-row-single');
     }
   };
 

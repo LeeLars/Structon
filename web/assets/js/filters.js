@@ -109,45 +109,28 @@ async function parseUrlParams() {
 }
 
 /**
- * Convert tonnage ID to excavator weight value (in TONS, matching database)
- * Examples: '1t-2-5t' -> 1.75, '5t-10t' -> 7.5
- * Database stores values in tons (e.g., 3.00, 8.00)
+ * Convert tonnage ID to excavator weight value (in KG, matching checkbox values)
+ * Maps mega menu tonnage ranges to checkbox values
+ * Examples: '1t-2-5t' -> 1500 (matches "1,5 - 3 ton" checkbox)
  */
 function parseTonnageToWeight(tonnageId) {
-  // Extract numbers from tonnage ID
-  // Format: '1t-2-5t' means 1 to 2.5 ton
-  // Format: '5t-10t' means 5 to 10 ton
-  // Format: '25t-plus' means 25+ ton
+  // Map tonnage ranges from mega menu to checkbox values (in kg)
+  const tonnageMap = {
+    '1t-2-5t': 1500,    // 1t - 2.5t -> 1,5 - 3 ton checkbox
+    '2-5t-5t': 4000,    // 2.5t - 5t -> 3 - 8 ton checkbox
+    '5t-10t': 12000,    // 5t - 10t -> 8 - 15 ton checkbox
+    '10t-15t': 20000,   // 10t - 15t -> 15 - 25 ton checkbox
+    '15t-25t': 20000,   // 15t - 25t -> 15 - 25 ton checkbox
+    '25t-plus': 30000,  // 25t+ -> 25 - 50 ton checkbox
+    // Sloop-sorteergrijpers ranges
+    '1t-5t': 4000,      // 1t - 5t -> 3 - 8 ton checkbox
+    '10t-20t': 12000,   // 10t - 20t -> 8 - 15 ton checkbox
+    '20t-30t': 20000,   // 20t - 30t -> 15 - 25 ton checkbox
+    '30t-40t': 30000,   // 30t - 40t -> 25 - 50 ton checkbox
+    '40t-plus': 30000   // 40t+ -> 25 - 50 ton checkbox
+  };
   
-  if (tonnageId === '25t-plus') {
-    return 25; // 25 ton and up (in tons)
-  }
-  
-  // Extract first number (minimum weight)
-  const match = tonnageId.match(/^(\d+)t/);
-  if (match) {
-    const minTon = parseInt(match[1]);
-    
-    // Check if there's a decimal part (e.g., '2-5' means 2.5)
-    const decimalMatch = tonnageId.match(/(\d+)t-(\d+)-(\d+)t/);
-    if (decimalMatch) {
-      // e.g., '1t-2-5t' -> use middle value 1.75 ton
-      const maxTon = parseFloat(`${decimalMatch[2]}.${decimalMatch[3]}`);
-      return (minTon + maxTon) / 2; // Return in tons
-    }
-    
-    // Check for range (e.g., '5t-10t')
-    const rangeMatch = tonnageId.match(/(\d+)t-(\d+)t/);
-    if (rangeMatch) {
-      const maxTon = parseInt(rangeMatch[2]);
-      return (minTon + maxTon) / 2; // Use middle value in tons
-    }
-    
-    // Single value
-    return minTon; // Return in tons
-  }
-  
-  return null;
+  return tonnageMap[tonnageId] || null;
 }
 
 /**
@@ -179,6 +162,14 @@ function setupFilterListeners() {
     checkbox.addEventListener('change', (e) => {
       updateCheckboxFilter('excavator_weight', parseFloat(e.target.value), e.target.checked);
     });
+    
+    // Pre-check checkbox if it matches active filter from URL
+    if (activeFilters.excavator_weight.length > 0) {
+      const checkboxValue = parseFloat(checkbox.value);
+      if (activeFilters.excavator_weight.includes(checkboxValue)) {
+        checkbox.checked = true;
+      }
+    }
   });
 
   // Width checkboxes

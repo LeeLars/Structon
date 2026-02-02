@@ -14,7 +14,8 @@ export async function sendConfirmationEmail(data) {
     cart_items,
     product_name,
     company_name,
-    message
+    message,
+    id
   } = data;
 
   // Determine email subject and content based on request type
@@ -41,10 +42,120 @@ export async function sendConfirmationEmail(data) {
     });
 
     console.log('✅ Confirmation email sent:', result);
+    
+    // Send internal notification email
+    await sendInternalNotification(data);
+    
     return result;
   } catch (error) {
     console.error('❌ Failed to send confirmation email:', error);
     throw error;
+  }
+}
+
+/**
+ * Send internal notification email to klantenleads@grafixstudio.be
+ */
+async function sendInternalNotification(data) {
+  const { 
+    customer_name, 
+    customer_email, 
+    request_type, 
+    reference,
+    company_name,
+    id
+  } = data;
+
+  const dashboardUrl = request_type === 'offerte' 
+    ? `https://structon-production.up.railway.app/cms/quotes.html`
+    : `https://structon-production.up.railway.app/cms/aanvragen.html`;
+
+  const typeLabel = {
+    'offerte': 'Offerte aanvraag',
+    'maatwerk': 'Maatwerk aanvraag',
+    'dealer': 'Dealer aanmelding',
+    'contact': 'Contact aanvraag',
+    'vraag': 'Vraag'
+  }[request_type] || 'Aanvraag';
+
+  const html = `
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <tr>
+            <td style="background: linear-gradient(135deg, #236773 0%, #2d7f8d 100%); padding: 30px; text-align: center;">
+              <h2 style="margin: 0; color: #ffffff; font-size: 20px;">Nieuwe ${typeLabel}</h2>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 30px;">
+              <p style="margin: 0 0 20px 0; color: #333333; font-size: 16px;">
+                Er is een nieuwe aanvraag binnengekomen via de website.
+              </p>
+              <table width="100%" cellpadding="8" cellspacing="0" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 8px; background: #f9f9f9; border-bottom: 1px solid #e0e0e0;"><strong>Referentie:</strong></td>
+                  <td style="padding: 8px; background: #f9f9f9; border-bottom: 1px solid #e0e0e0;">${reference || '-'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; background: #ffffff; border-bottom: 1px solid #e0e0e0;"><strong>Type:</strong></td>
+                  <td style="padding: 8px; background: #ffffff; border-bottom: 1px solid #e0e0e0;">${typeLabel}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; background: #f9f9f9; border-bottom: 1px solid #e0e0e0;"><strong>Klant:</strong></td>
+                  <td style="padding: 8px; background: #f9f9f9; border-bottom: 1px solid #e0e0e0;">${customer_name}</td>
+                </tr>
+                ${company_name ? `
+                <tr>
+                  <td style="padding: 8px; background: #ffffff; border-bottom: 1px solid #e0e0e0;"><strong>Bedrijf:</strong></td>
+                  <td style="padding: 8px; background: #ffffff; border-bottom: 1px solid #e0e0e0;">${company_name}</td>
+                </tr>
+                ` : ''}
+                <tr>
+                  <td style="padding: 8px; background: ${company_name ? '#f9f9f9' : '#ffffff'}; border-bottom: 1px solid #e0e0e0;"><strong>Email:</strong></td>
+                  <td style="padding: 8px; background: ${company_name ? '#f9f9f9' : '#ffffff'}; border-bottom: 1px solid #e0e0e0;">${customer_email}</td>
+                </tr>
+              </table>
+              <div style="text-align: center; margin-top: 30px;">
+                <a href="${dashboardUrl}" style="display: inline-block; padding: 14px 32px; background: #236773; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Bekijk aanvraag in dashboard</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="background: #f9f9f9; padding: 20px; text-align: center; border-top: 1px solid #e0e0e0;">
+              <p style="margin: 0; color: #666666; font-size: 12px;">
+                Structon Aanbouwdelen - CMS Notificatie
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `;
+
+  try {
+    const result = await resend.emails.send({
+      from: 'Structon CMS <noreply@structon-bv.com>',
+      to: 'klantenleads@grafixstudio.be',
+      subject: `Nieuwe ${typeLabel} - ${customer_name}`,
+      html: html
+    });
+
+    console.log('✅ Internal notification email sent:', result);
+    return result;
+  } catch (error) {
+    console.error('❌ Failed to send internal notification email:', error);
   }
 }
 

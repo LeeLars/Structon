@@ -156,21 +156,16 @@ function setupFilterListeners() {
     volumeMax.addEventListener('change', applyFilters);
   }
 
-  // Excavator class checkboxes (values are in tons as floats)
+  // Excavator class checkboxes (values are in kg as integers)
   const excavatorFilters = document.querySelectorAll('input[name="excavator"]');
   excavatorFilters.forEach(checkbox => {
     checkbox.addEventListener('change', (e) => {
-      updateCheckboxFilter('excavator_weight', parseFloat(e.target.value), e.target.checked);
+      updateCheckboxFilter('excavator_weight', parseInt(e.target.value), e.target.checked);
     });
-    
-    // Pre-check checkbox if it matches active filter from URL
-    if (activeFilters.excavator_weight.length > 0) {
-      const checkboxValue = parseFloat(checkbox.value);
-      if (activeFilters.excavator_weight.includes(checkboxValue)) {
-        checkbox.checked = true;
-      }
-    }
   });
+  
+  // Pre-check checkboxes based on URL parameters (after event listeners are set)
+  applyUrlFiltersToUI();
 
   // Width checkboxes
   const widthFilters = document.querySelectorAll('input[name="width"]');
@@ -228,6 +223,22 @@ function setupFilterListeners() {
 }
 
 /**
+ * Apply URL filters to UI (check appropriate checkboxes)
+ */
+function applyUrlFiltersToUI() {
+  // Check excavator weight checkboxes based on active filters
+  if (activeFilters.excavator_weight.length > 0) {
+    const excavatorCheckboxes = document.querySelectorAll('input[name="excavator"]');
+    excavatorCheckboxes.forEach(checkbox => {
+      const checkboxValue = parseInt(checkbox.value);
+      if (activeFilters.excavator_weight.includes(checkboxValue)) {
+        checkbox.checked = true;
+      }
+    });
+  }
+}
+
+/**
  * Update checkbox filter array
  */
 function updateCheckboxFilter(filterName, value, isChecked) {
@@ -238,6 +249,7 @@ function updateCheckboxFilter(filterName, value, isChecked) {
   } else {
     activeFilters[filterName] = activeFilters[filterName].filter(v => v !== value);
   }
+  
   applyFilters();
 }
 

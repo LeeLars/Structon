@@ -409,7 +409,7 @@ window.closeRequestDrawer = () => {
 };
 
 window.saveRequestStatus = async (id, newStatus) => {
-  const request = allRequests.find(r => r.id === id);
+  const request = allRequests.find(r => r.id == id);
   if (!request) return;
   
   const oldStatus = request.status;

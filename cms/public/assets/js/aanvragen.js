@@ -26,21 +26,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Load all requests (dealer + contact)
+ * Load all requests (dealer + contact + vraag)
  */
 async function loadRequests() {
   try {
-    // Fetch both dealer and contact requests
-    const [dealerRequests, contactRequests] = await Promise.all([
-      api.get('/requests/dealer'),
-      api.get('/requests/contact')
-    ]);
+    // Fetch all requests (contact, vraag, dealer) from new endpoint
+    const response = await api.get('/quotes/requests');
     
-    // Combine and mark type
-    allRequests = [
-      ...dealerRequests.map(r => ({ ...r, request_type: 'dealer' })),
-      ...contactRequests.map(r => ({ ...r, request_type: 'contact' }))
-    ];
+    // Response contains { requests: [...], total: X }
+    allRequests = response.requests || [];
     
     // Sort by date (newest first)
     allRequests.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -128,8 +122,8 @@ function renderRequests() {
   tbody.innerHTML = filtered.map((request, index) => `
     <tr onclick="viewRequest('${request.id}')" style="cursor: pointer;">
       <td>
-        <span class="badge badge-${request.request_type === 'dealer' ? 'primary' : 'secondary'}">
-          ${request.request_type === 'dealer' ? 'Dealer' : 'Contact'}
+        <span class="badge badge-${getRequestTypeBadge(request.request_type)}">
+          ${getRequestTypeLabel(request.request_type)}
         </span>
       </td>
       <td>
@@ -233,7 +227,12 @@ function openRequestDrawer(request) {
     document.body.appendChild(drawer);
   }
   
-  const typeLabel = request.request_type === 'dealer' ? 'Dealer Aanvraag' : 'Contact Formulier';
+  const typeLabels = {
+    dealer: 'Dealer Aanvraag',
+    contact: 'Contact Formulier',
+    vraag: 'Vraag'
+  };
+  const typeLabel = typeLabels[request.request_type] || 'Aanvraag';
   
   drawer.innerHTML = `
     <div class="drawer-header">
@@ -402,8 +401,8 @@ window.saveRequestStatus = async (id, newStatus) => {
   openRequestDrawer(request);
   
   try {
-    const endpoint = request.request_type === 'dealer' ? '/requests/dealer' : '/requests/contact';
-    await api.put(`${endpoint}/${id}`, { status: newStatus });
+    // All requests (contact, vraag, dealer) use the same quotes endpoint
+    await api.put(`/quotes/${id}`, { status: newStatus });
     
     if (window.showToast) {
       window.showToast('Status bijgewerkt', 'success');
@@ -423,6 +422,24 @@ window.saveRequestStatus = async (id, newStatus) => {
 };
 
 // Helper functions
+function getRequestTypeBadge(type) {
+  const badges = {
+    dealer: 'primary',
+    contact: 'secondary',
+    vraag: 'info'
+  };
+  return badges[type] || 'secondary';
+}
+
+function getRequestTypeLabel(type) {
+  const labels = {
+    dealer: 'Dealer',
+    contact: 'Contact',
+    vraag: 'Vraag'
+  };
+  return labels[type] || type;
+}
+
 function getStatusColor(status) {
   const colors = { 
     new: 'success', 

@@ -128,7 +128,7 @@ router.post('/', async (req, res) => {
 
 /**
  * GET /api/quotes (Protected - admin only)
- * Get all quotes for CMS
+ * Get all quotes for CMS - ONLY offerte and maatwerk
  */
 router.get('/', authenticateToken, async (req, res) => {
   try {
@@ -138,12 +138,13 @@ router.get('/', authenticateToken, async (req, res) => {
       SELECT q.*, p.title as product_title 
       FROM quotes q
       LEFT JOIN products p ON q.product_id = p.id
+      WHERE q.request_type IN ('offerte', 'maatwerk')
     `;
     
     const params = [];
     
     if (status) {
-      sql += ' WHERE q.status = $1';
+      sql += ' AND q.status = $1';
       params.push(status);
     }
     
@@ -167,11 +168,13 @@ router.get('/', authenticateToken, async (req, res) => {
     });
     
     // Get total count
-    let countSql = 'SELECT COUNT(*) FROM quotes';
+    let countSql = "SELECT COUNT(*) FROM quotes WHERE request_type IN ('offerte', 'maatwerk')";
+    const countParams = [];
     if (status) {
-      countSql += ' WHERE status = $1';
+      countSql += ' AND status = $1';
+      countParams.push(status);
     }
-    const countResult = await query(countSql, status ? [status] : []);
+    const countResult = await query(countSql, countParams);
     
     res.json({
       quotes,
@@ -184,6 +187,72 @@ router.get('/', authenticateToken, async (req, res) => {
     console.error('Get quotes error:', error);
     if (error.message.includes('does not exist')) {
       return res.json({ quotes: [], total: 0 });
+    }
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+/**
+ * GET /api/requests (Protected - admin only)
+ * Get all requests for CMS - ONLY contact, vraag, and dealer
+ */
+router.get('/requests', authenticateToken, async (req, res) => {
+  try {
+    const { status, limit = 50, offset = 0 } = req.query;
+    
+    let sql = `
+      SELECT q.*, p.title as product_title 
+      FROM quotes q
+      LEFT JOIN products p ON q.product_id = p.id
+      WHERE q.request_type IN ('contact', 'vraag', 'dealer')
+    `;
+    
+    const params = [];
+    
+    if (status) {
+      sql += ' AND q.status = $1';
+      params.push(status);
+    }
+    
+    sql += ' ORDER BY q.created_at DESC';
+    sql += ` LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+    params.push(parseInt(limit), parseInt(offset));
+    
+    const result = await query(sql, params);
+    
+    // Parse cart_items JSON for each request
+    const requests = result.rows.map(request => {
+      if (request.cart_items && typeof request.cart_items === 'string') {
+        try {
+          request.cart_items = JSON.parse(request.cart_items);
+        } catch (e) {
+          console.warn('Failed to parse cart_items for request', request.id);
+          request.cart_items = null;
+        }
+      }
+      return request;
+    });
+    
+    // Get total count
+    let countSql = "SELECT COUNT(*) FROM quotes WHERE request_type IN ('contact', 'vraag', 'dealer')";
+    const countParams = [];
+    if (status) {
+      countSql += ' AND status = $1';
+      countParams.push(status);
+    }
+    const countResult = await query(countSql, countParams);
+    
+    res.json({
+      requests,
+      total: parseInt(countResult.rows[0].count),
+      limit: parseInt(limit),
+      offset: parseInt(offset)
+    });
+    
+  } catch (error) {
+    console.error('Get requests error:', error);
+    if (error.message.includes('does not exist')) {
+      return res.json({ requests: [], total: 0 });
     }
     res.status(500).json({ error: 'Server error' });
   }

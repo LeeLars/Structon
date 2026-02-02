@@ -484,14 +484,40 @@ function setupRequestTypeToggle() {
       submitBtn.textContent = labels[type] || 'Verzenden';
     }
     
+    // Get B2B fields (company name and VAT number)
+    const companyNameGroup = document.getElementById('company_name')?.closest('.form-group');
+    const vatNumberGroup = document.getElementById('vat_number')?.closest('.form-group');
+    const companyNameInput = document.getElementById('company_name');
+    const vatNumberInput = document.getElementById('vat_number');
+    
     // Update fields visibility
     if (technicalFields) {
       if (type === 'vraag') {
         technicalFields.style.display = 'none';
-        // Clear required attributes if any (though currently none are required in this section)
       } else {
         technicalFields.style.display = 'block';
-        // Restore/scroll animation could go here
+      }
+    }
+    
+    // Hide B2B fields for "Vraag stellen" (simple contact question)
+    if (type === 'vraag') {
+      if (companyNameGroup) {
+        companyNameGroup.style.display = 'none';
+        if (companyNameInput) companyNameInput.required = false;
+      }
+      if (vatNumberGroup) {
+        vatNumberGroup.style.display = 'none';
+        if (vatNumberInput) vatNumberInput.required = false;
+      }
+    } else {
+      // Show B2B fields for offerte and maatwerk
+      if (companyNameGroup) {
+        companyNameGroup.style.display = 'block';
+        if (companyNameInput) companyNameInput.required = true;
+      }
+      if (vatNumberGroup) {
+        vatNumberGroup.style.display = 'block';
+        if (vatNumberInput) vatNumberInput.required = true;
       }
     }
   };

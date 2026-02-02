@@ -87,7 +87,7 @@
           <address class="footer-address">
             <p><strong>Structon BV</strong></p>
             <p>BE 1029978959</p>
-            <p>Industriepark 41</p>
+            <p>Sint jorisstraat 84B</p>
             <p>8730 Beernem</p>
             <p class="mt-2"><a href="mailto:info@structon.be">info@structon.be</a></p>
           </address>

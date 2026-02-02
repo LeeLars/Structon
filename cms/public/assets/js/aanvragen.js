@@ -3,7 +3,7 @@
  * Handles dealer applications and contact form submissions
  */
 
-import { api } from './api.js';
+import api from './api-client.js';
 
 // State
 let allRequests = [];

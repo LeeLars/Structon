@@ -271,43 +271,43 @@
                   
                   <div class="menu-dropdown-grid">
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=graafbakken&subcat=slotenbakken" class="menu-column-title">Slotenbakken</a>
+                      <a href="${pagesPrefix}graafbakken/slotenbakken/" class="menu-column-title">Slotenbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=slotenbakken&tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 1t - 2,5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=slotenbakken&tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 2,5t - 5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=slotenbakken&tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 5t - 10t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=slotenbakken&tonnage=10t-15t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 10t - 15t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=slotenbakken&tonnage=15t-25t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 15t - 25t</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 1t - 2,5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 2,5t - 5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 5t - 10t</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=10t-15t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 10t - 15t</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=15t-25t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 15t - 25t</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken" class="menu-column-title">Dieplepelbakken</a>
+                      <a href="${pagesPrefix}graafbakken/dieplepelbakken/" class="menu-column-title">Dieplepelbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken&tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 1t - 2,5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken&tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 2,5t - 5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken&tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 5t - 10t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken&tonnage=10t-15t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 10t - 15t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken&tonnage=15t-25t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 15t - 25t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=dieplepelbakken&tonnage=25t-plus" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 25t+</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 1t - 2,5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 2,5t - 5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 5t - 10t</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=10t-15t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 10t - 15t</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=15t-25t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 15t - 25t</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=25t-plus" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 25t+</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=graafbakken&subcat=sleuvenbakken" class="menu-column-title">Sleuvenbakken</a>
+                      <a href="${pagesPrefix}graafbakken/sleuvenbakken/" class="menu-column-title">Sleuvenbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=sleuvenbakken&tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 1t - 2,5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=sleuvenbakken&tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 2,5t - 5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=sleuvenbakken&tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 5t - 10t</span></a>
+                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 1t - 2,5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 2,5t - 5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 5t - 10t</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=graafbakken&subcat=kantelbakken" class="menu-column-title">Kantelbakken</a>
+                      <a href="${pagesPrefix}graafbakken/kantelbakken/" class="menu-column-title">Kantelbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=kantelbakken&tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 1t - 2,5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=kantelbakken&tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 2,5t - 5t</span></a>
-                        <a href="${pagesPrefix}?cat=graafbakken&subcat=kantelbakken&tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 5t - 10t</span></a>
+                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=1t-2-5t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 1t - 2,5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=2-5t-5t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 2,5t - 5t</span></a>
+                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 5t - 10t</span></a>
                       </div>
                     </div>
                   </div>
@@ -343,40 +343,40 @@
                   
                   <div class="menu-dropdown-grid">
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sorteergrijpers" class="menu-column-title">Sorteergrijpers</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/" class="menu-column-title">Sorteergrijpers</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sorteergrijpers&tonnage=1t-5t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 1t - 5t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sorteergrijpers&tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 5t - 10t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sorteergrijpers&tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 10t - 20t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sorteergrijpers&tonnage=20t-plus" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 20t+</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/?tonnage=1t-5t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 1t - 5t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 5t - 10t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/?tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 10t - 20t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/?tonnage=20t-plus" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 20t+</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sloopgrijpers" class="menu-column-title">Sloopgrijpers</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/" class="menu-column-title">Sloopgrijpers</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sloopgrijpers&tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 5t - 10t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sloopgrijpers&tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 10t - 20t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sloopgrijpers&tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 20t - 30t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=sloopgrijpers&tonnage=30t-plus" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 30t+</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 5t - 10t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/?tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 10t - 20t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/?tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 20t - 30t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/?tonnage=30t-plus" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 30t+</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=betonscharen" class="menu-column-title">Betonscharen</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/" class="menu-column-title">Betonscharen</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=betonscharen&tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 10t - 20t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=betonscharen&tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 20t - 30t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=betonscharen&tonnage=30t-plus" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 30t+</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/?tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 10t - 20t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/?tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 20t - 30t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/?tonnage=30t-plus" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 30t+</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=pulverisers" class="menu-column-title">Pulverisers</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/" class="menu-column-title">Pulverisers</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=pulverisers&tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 20t - 30t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=pulverisers&tonnage=30t-40t" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 30t - 40t</span></a>
-                        <a href="${pagesPrefix}?cat=sloop-sorteergrijpers&subcat=pulverisers&tonnage=40t-plus" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 40t+</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/?tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 20t - 30t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/?tonnage=30t-40t" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 30t - 40t</span></a>
+                        <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/?tonnage=40t-plus" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 40t+</span></a>
                       </div>
                     </div>
                   </div>
@@ -412,38 +412,38 @@
                   
                   <div class="menu-dropdown-grid">
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=overige&subcat=tanden-slijtdelen" class="menu-column-title">Tanden & Slijtdelen</a>
+                      <a href="${pagesPrefix}overige/tanden-slijtdelen/" class="menu-column-title">Tanden & Slijtdelen</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=overige&subcat=tanden-slijtdelen&type=graaftanden" class="menu-tonnage-link"><span>•</span> <span>Graaftanden (diverse types)</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=tanden-slijtdelen&type=slijtplaten" class="menu-tonnage-link"><span>•</span> <span>Slijtplaten Hardox</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=tanden-slijtdelen&type=snijkanten" class="menu-tonnage-link"><span>•</span> <span>Snijkanten</span></a>
+                        <a href="${pagesPrefix}overige/tanden-slijtdelen/?type=graaftanden" class="menu-tonnage-link"><span>•</span> <span>Graaftanden (diverse types)</span></a>
+                        <a href="${pagesPrefix}overige/tanden-slijtdelen/?type=slijtplaten" class="menu-tonnage-link"><span>•</span> <span>Slijtplaten Hardox</span></a>
+                        <a href="${pagesPrefix}overige/tanden-slijtdelen/?type=snijkanten" class="menu-tonnage-link"><span>•</span> <span>Snijkanten</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=overige&subcat=hydrauliek" class="menu-column-title">Hydraulische Onderdelen</a>
+                      <a href="${pagesPrefix}overige/hydrauliek/" class="menu-column-title">Hydraulische Onderdelen</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=overige&subcat=hydrauliek&type=cilinders" class="menu-tonnage-link"><span>•</span> <span>Hydraulische cilinders</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=hydrauliek&type=slangen" class="menu-tonnage-link"><span>•</span> <span>Hydraulische slangen</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=hydrauliek&type=koppelingen" class="menu-tonnage-link"><span>•</span> <span>Snelkoppelingen</span></a>
+                        <a href="${pagesPrefix}overige/hydrauliek/?type=cilinders" class="menu-tonnage-link"><span>•</span> <span>Hydraulische cilinders</span></a>
+                        <a href="${pagesPrefix}overige/hydrauliek/?type=slangen" class="menu-tonnage-link"><span>•</span> <span>Hydraulische slangen</span></a>
+                        <a href="${pagesPrefix}overige/hydrauliek/?type=koppelingen" class="menu-tonnage-link"><span>•</span> <span>Snelkoppelingen</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=overige&subcat=smeermiddelen" class="menu-column-title">Smeermiddelen</a>
+                      <a href="${pagesPrefix}overige/smeermiddelen/" class="menu-column-title">Smeermiddelen</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=overige&subcat=smeermiddelen&type=vet" class="menu-tonnage-link"><span>•</span> <span>Smeervet</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=smeermiddelen&type=olie" class="menu-tonnage-link"><span>•</span> <span>Hydraulische olie</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=smeermiddelen&type=spray" class="menu-tonnage-link"><span>•</span> <span>Smeersprays</span></a>
+                        <a href="${pagesPrefix}overige/smeermiddelen/?type=vet" class="menu-tonnage-link"><span>•</span> <span>Smeervet</span></a>
+                        <a href="${pagesPrefix}overige/smeermiddelen/?type=olie" class="menu-tonnage-link"><span>•</span> <span>Hydraulische olie</span></a>
+                        <a href="${pagesPrefix}overige/smeermiddelen/?type=spray" class="menu-tonnage-link"><span>•</span> <span>Smeersprays</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}?cat=overige&subcat=accessoires" class="menu-column-title">Accessoires</a>
+                      <a href="${pagesPrefix}overige/accessoires/" class="menu-column-title">Accessoires</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}?cat=overige&subcat=accessoires&type=hijsogen" class="menu-tonnage-link"><span>•</span> <span>Hijsogen</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=accessoires&type=beschermkappen" class="menu-tonnage-link"><span>•</span> <span>Beschermkappen</span></a>
-                        <a href="${pagesPrefix}?cat=overige&subcat=accessoires&type=gereedschap" class="menu-tonnage-link"><span>•</span> <span>Montage gereedschap</span></a>
+                        <a href="${pagesPrefix}overige/accessoires/?type=hijsogen" class="menu-tonnage-link"><span>•</span> <span>Hijsogen</span></a>
+                        <a href="${pagesPrefix}overige/accessoires/?type=beschermkappen" class="menu-tonnage-link"><span>•</span> <span>Beschermkappen</span></a>
+                        <a href="${pagesPrefix}overige/accessoires/?type=gereedschap" class="menu-tonnage-link"><span>•</span> <span>Montage gereedschap</span></a>
                       </div>
                     </div>
                   </div>

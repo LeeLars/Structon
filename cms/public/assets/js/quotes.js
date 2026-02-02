@@ -555,6 +555,7 @@ window.updateStatusFromTable = async (id, newStatus) => {
   }
   
   const oldStatus = quote.status;
+  const wasViewed = quote.viewed;
   const selectEl = document.querySelector(`select[data-quote-id="${id}"]`);
   
   // Disable select during update
@@ -565,11 +566,13 @@ window.updateStatusFromTable = async (id, newStatus) => {
   
   try {
     console.log('[QUOTES] Sending API request to update status...');
-    const response = await api.put(`/quotes/${id}`, { status: newStatus });
+    // Also mark as viewed when status is changed
+    const response = await api.put(`/quotes/${id}`, { status: newStatus, viewed: true });
     console.log('[QUOTES] API response:', response);
     
     // Update local data
     quote.status = newStatus;
+    quote.viewed = true; // Mark as viewed when status changes
     
     // Update select styling
     if (selectEl) {
@@ -577,6 +580,9 @@ window.updateStatusFromTable = async (id, newStatus) => {
       selectEl.disabled = false;
       selectEl.style.opacity = '1';
     }
+    
+    // Re-render to remove yellow background
+    renderQuotes();
     
     // Update stats
     updateStats();
@@ -621,14 +627,17 @@ window.saveQuoteStatus = async (id, newStatus) => {
   });
   
   const oldStatus = quote.status;
+  const wasViewed = quote.viewed;
   
   try {
     console.log('[QUOTES] Sending API request to update status...');
-    const response = await api.put(`/quotes/${id}`, { status: newStatus });
+    // Also mark as viewed when status is changed
+    const response = await api.put(`/quotes/${id}`, { status: newStatus, viewed: true });
     console.log('[QUOTES] API response:', response);
     
     // Update local data
     quote.status = newStatus;
+    quote.viewed = true; // Mark as viewed when status changes
     
     // Update UI
     renderQuotes();

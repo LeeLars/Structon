@@ -69,11 +69,11 @@ function updateStats() {
  */
 function updateNotificationBadge() {
   const badge = document.getElementById('requests-badge');
-  const unhandled = allRequests.filter(r => r.status === 'new' || r.status === 'pending').length;
+  const unviewedCount = allRequests.filter(r => !r.viewed).length;
   
   if (badge) {
-    if (unhandled > 0) {
-      badge.textContent = unhandled;
+    if (unviewedCount > 0) {
+      badge.textContent = unviewedCount;
       badge.style.display = 'inline-block';
     } else {
       badge.style.display = 'none';
@@ -121,7 +121,7 @@ function renderRequests() {
   }
   
   tbody.innerHTML = filtered.map((request, index) => `
-    <tr onclick="viewRequest('${request.id}')" style="cursor: pointer;">
+    <tr onclick="viewRequest('${request.id}')" style="cursor: pointer; ${!request.viewed ? 'background: #fef3c7;' : ''}">
       <td>
         <span class="badge badge-${getRequestTypeBadge(request.request_type)}">
           ${getRequestTypeLabel(request.request_type)}
@@ -202,9 +202,21 @@ function setupEventListeners() {
 /**
  * View request details in drawer
  */
-window.viewRequest = (id) => {
+window.viewRequest = async (id) => {
   const request = allRequests.find(r => r.id == id);
   if (request) {
+    // Mark as viewed if not already
+    if (!request.viewed) {
+      try {
+        await api.put(`/quotes/${id}`, { viewed: true });
+        request.viewed = true;
+        request.viewed_at = new Date().toISOString();
+        renderRequests();
+        updateNotificationBadge();
+      } catch (error) {
+        console.error('Failed to mark request as viewed:', error);
+      }
+    }
     openRequestDrawer(request);
   }
 };
@@ -413,7 +425,9 @@ window.saveRequestStatus = async (id, newStatus) => {
   if (!request) return;
   
   const oldStatus = request.status;
+  const wasViewed = request.viewed;
   request.status = newStatus;
+  request.viewed = true; // Mark as viewed when status changes
   
   renderRequests();
   updateStats();
@@ -422,7 +436,8 @@ window.saveRequestStatus = async (id, newStatus) => {
   
   try {
     // All requests (contact, vraag, dealer) use the same quotes endpoint
-    await api.put(`/quotes/${id}`, { status: newStatus });
+    // Also mark as viewed when status is changed
+    await api.put(`/quotes/${id}`, { status: newStatus, viewed: true });
     
     if (window.showToast) {
       window.showToast('Status bijgewerkt', 'success');
@@ -430,6 +445,7 @@ window.saveRequestStatus = async (id, newStatus) => {
   } catch (error) {
     console.error('Failed to update status:', error);
     request.status = oldStatus;
+    request.viewed = wasViewed;
     renderRequests();
     updateStats();
     updateNotificationBadge();

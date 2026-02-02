@@ -108,7 +108,7 @@ function buildEmailHTML({ customer_name, request_type, reference, cart_items, pr
           <tr>
             <td style="background: linear-gradient(135deg, #236773 0%, #2d7f8d 100%); padding: 40px 30px; text-align: center;">
               <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" style="height: 60px; margin-bottom: 15px;">
-              <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 14px; opacity: 0.9;">Kraanbakken & Graafmachine Aanbouwdelen</p>
+              <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 14px; opacity: 0.9;">Structon Aanbouwdelen</p>
             </td>
           </tr>
 

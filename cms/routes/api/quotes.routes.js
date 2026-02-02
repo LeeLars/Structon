@@ -6,6 +6,7 @@
 import { Router } from 'express';
 import { query } from '../../config/database.js';
 import { authenticateToken } from '../../middleware/auth.js';
+import { sendConfirmationEmail } from '../../services/email.service.js';
 
 const router = Router();
 
@@ -109,6 +110,23 @@ router.post('/', async (req, res) => {
 
     const cartCount = cart_items ? (Array.isArray(cart_items) ? cart_items.length : 0) : 0;
     console.log(`📧 New quote request ${reference} from ${customer_email} (${company_name || 'no company'}) - ${cartCount} cart items`);
+
+    // Send confirmation email (don't wait for it, send async)
+    sendConfirmationEmail({
+      customer_name,
+      customer_email,
+      customer_phone,
+      company_name,
+      vat_number,
+      request_type: request_type || 'offerte',
+      reference,
+      cart_items: cart_items ? (typeof cart_items === 'string' ? JSON.parse(cart_items) : cart_items) : null,
+      product_name,
+      message
+    }).catch(error => {
+      console.error('Failed to send confirmation email:', error);
+      // Don't fail the request if email fails
+    });
 
     res.status(201).json({
       success: true,

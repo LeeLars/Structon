@@ -1,7 +1,9 @@
 /**
  * Structon - Contact Form JavaScript
- * Handles simple contact form submission
+ * Handles contact form submission to CMS
  */
+
+import { quotes } from '../api/client.js';
 
 // Form state
 let isSubmitting = false;
@@ -60,29 +62,27 @@ async function handleSubmit(e) {
   btnText.style.display = 'none';
   btnLoading.style.display = 'flex';
   
+  // Prepare quote data for CMS (contact requests are stored as quotes with type 'contact')
+  const quoteData = {
+    customer_name: data.customer_name,
+    customer_email: data.customer_email,
+    customer_phone: data.customer_phone,
+    message: data.message,
+    request_type: 'contact',
+    source_page: window.location.href,
+    slug: generateQuoteSlug(data.customer_name)
+  };
+  
+  console.log('📤 Submitting contact request:', quoteData);
+  
   try {
-    // Create mailto link with form data
-    const subject = encodeURIComponent('Contact formulier - Structon');
-    const body = encodeURIComponent(
-      `Naam: ${data.customer_name}\n` +
-      `E-mail: ${data.customer_email}\n` +
-      `Telefoon: ${data.customer_phone || 'Niet opgegeven'}\n\n` +
-      `Bericht:\n${data.message}\n\n` +
-      `---\n` +
-      `Verzonden op: ${new Date().toLocaleString('nl-BE')}`
-    );
+    // Submit to CMS API
+    const response = await quotes.submit(quoteData);
     
-    const mailtoLink = `mailto:info@structon.be?subject=${subject}&body=${body}`;
+    console.log('✅ Contact request submitted successfully:', response);
     
-    // Open mailto link
-    window.location.href = mailtoLink;
-    
-    console.log('✅ Contact form submitted successfully');
-    
-    // Show success message after short delay
-    setTimeout(() => {
-      showSuccessMessage();
-    }, 500);
+    // Show success message
+    showSuccessMessage();
     
   } catch (error) {
     console.error('❌ Contact form submission failed:', error);
@@ -96,6 +96,22 @@ async function handleSubmit(e) {
     btnText.style.display = 'inline';
     btnLoading.style.display = 'none';
   }
+}
+
+/**
+ * Generate a slug for the contact request in CMS
+ * Format: contact-YYYYMMDD-name-slug
+ */
+function generateQuoteSlug(customerName) {
+  const date = new Date();
+  const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+  const nameSlug = customerName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 30);
+  
+  return `contact-${dateStr}-${nameSlug}`;
 }
 
 /**

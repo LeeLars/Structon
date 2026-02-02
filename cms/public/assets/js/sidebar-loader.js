@@ -141,11 +141,17 @@
         }
       });
 
-      let newQuotesCount = 0;
+      let unviewedQuotesCount = 0;
+      let unviewedRequestsCount = 0;
       if (quotesResponse.ok) {
         const quotesData = await quotesResponse.json();
-        // Only count quotes with status 'new'
-        newQuotesCount = (quotesData.quotes || []).filter(q => q.status === 'new').length;
+        const allQuotes = quotesData.quotes || [];
+        
+        // Count unviewed quotes (request_type === 'offerte')
+        unviewedQuotesCount = allQuotes.filter(q => !q.viewed && q.request_type === 'offerte').length;
+        
+        // Count unviewed requests (all other request types)
+        unviewedRequestsCount = allQuotes.filter(q => !q.viewed && q.request_type !== 'offerte').length;
       }
 
       // Fetch orders
@@ -164,8 +170,8 @@
       }
 
       return {
-        quotes: newQuotesCount,
-        requests: 0, // TODO: Implement when requests API is ready
+        quotes: unviewedQuotesCount,
+        requests: unviewedRequestsCount,
         orders: newOrdersCount
       };
     } catch (error) {

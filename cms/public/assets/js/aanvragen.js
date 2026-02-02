@@ -439,6 +439,11 @@ window.saveRequestStatus = async (id, newStatus) => {
     // Also mark as viewed when status is changed
     await api.put(`/quotes/${id}`, { status: newStatus, viewed: true });
     
+    // Refresh sidebar badges
+    if (window.cmsSidebar && window.cmsSidebar.refresh) {
+      window.cmsSidebar.refresh();
+    }
+    
     if (window.showToast) {
       window.showToast('Status bijgewerkt', 'success');
     }

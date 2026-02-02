@@ -587,6 +587,11 @@ window.updateStatusFromTable = async (id, newStatus) => {
     // Update stats
     updateStats();
     
+    // Refresh sidebar badges
+    if (window.cmsSidebar && window.cmsSidebar.refresh) {
+      window.cmsSidebar.refresh();
+    }
+    
     if (window.showToast) {
       window.showToast('Status bijgewerkt naar: ' + getStatusLabel(newStatus), 'success');
     }
@@ -652,6 +657,11 @@ window.saveQuoteStatus = async (id, newStatus) => {
         btn.classList.add('active');
       }
     });
+    
+    // Refresh sidebar badges
+    if (window.cmsSidebar && window.cmsSidebar.refresh) {
+      window.cmsSidebar.refresh();
+    }
     
     if (window.showToast) {
       window.showToast('Status bijgewerkt naar: ' + getStatusLabel(newStatus), 'success');

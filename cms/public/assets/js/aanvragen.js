@@ -8,6 +8,7 @@ import api from './api-client.js';
 // State
 let allRequests = [];
 let currentFilter = 'all';
+let currentRequestIndex = 0;
 
 /**
  * Initialize page
@@ -234,15 +235,34 @@ function openRequestDrawer(request) {
   };
   const typeLabel = typeLabels[request.request_type] || 'Aanvraag';
   
+  // Get current index for navigation and store it globally
+  const currentIndex = allRequests.findIndex(r => r.id == request.id);
+  currentRequestIndex = currentIndex; // Update global index for navigation
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < allRequests.length - 1;
+  
   drawer.innerHTML = `
     <div class="drawer-header">
-      <div>
-        <h2 class="drawer-title">${typeLabel}</h2>
-        <p class="drawer-subtitle">Ontvangen op ${formatDate(request.created_at)} om ${formatTime(request.created_at)}</p>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="btn-icon" onclick="navigateRequest(-1)" ${!hasPrev ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div>
+          <h2 class="drawer-title">${typeLabel} ${request.reference || '#' + request.id}</h2>
+          <p class="drawer-subtitle">Ontvangen op ${formatDate(request.created_at)} om ${formatTime(request.created_at)}</p>
+        </div>
+        <button class="btn-icon" onclick="navigateRequest(1)" ${!hasNext ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
-      <button class="btn-icon" onclick="closeRequestDrawer()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-icon" onclick="deleteRequest('${request.id}')" title="Verwijderen" style="color: var(--color-error);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        </button>
+        <button class="btn-icon" onclick="closeRequestDrawer()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
     </div>
     
     <div class="drawer-content">
@@ -493,3 +513,53 @@ function showError(message) {
     `;
   }
 }
+
+/**
+ * Navigate to previous/next request
+ */
+window.navigateRequest = (direction) => {
+  const currentRequest = allRequests[currentRequestIndex];
+  if (!currentRequest) return;
+  
+  const newIndex = currentRequestIndex + direction;
+  
+  if (newIndex >= 0 && newIndex < allRequests.length) {
+    currentRequestIndex = newIndex;
+    const request = allRequests[newIndex];
+    openRequestDrawer(request);
+  }
+};
+
+/**
+ * Delete a request
+ */
+window.deleteRequest = async (id) => {
+  if (!confirm('Weet je zeker dat je deze aanvraag wilt verwijderen?')) {
+    return;
+  }
+  
+  try {
+    await api.delete(`/quotes/${id}`);
+    
+    // Remove from local array
+    const index = allRequests.findIndex(r => r.id == id);
+    if (index > -1) {
+      allRequests.splice(index, 1);
+    }
+    
+    // Close drawer and refresh table
+    closeRequestDrawer();
+    renderRequests();
+    updateStats();
+    updateNotificationBadge();
+    
+    if (window.showToast) {
+      window.showToast('Aanvraag verwijderd', 'success');
+    }
+  } catch (error) {
+    console.error('Failed to delete request:', error);
+    if (window.showToast) {
+      window.showToast('Fout bij verwijderen', 'error');
+    }
+  }
+};

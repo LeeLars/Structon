@@ -61,23 +61,28 @@ async function handleSubmit(e) {
   btnLoading.style.display = 'flex';
   
   try {
-    // Submit to API (contact endpoint)
-    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:3001/api'
-      : 'https://structon-production.up.railway.app/api';
+    // Create mailto link with form data
+    const subject = encodeURIComponent('Contact formulier - Structon');
+    const body = encodeURIComponent(
+      `Naam: ${data.customer_name}\n` +
+      `E-mail: ${data.customer_email}\n` +
+      `Telefoon: ${data.customer_phone || 'Niet opgegeven'}\n\n` +
+      `Bericht:\n${data.message}\n\n` +
+      `---\n` +
+      `Verzonden op: ${new Date().toLocaleString('nl-BE')}`
+    );
     
-    const response = await fetch(`${API_BASE}/contact`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+    const mailtoLink = `mailto:info@structon.be?subject=${subject}&body=${body}`;
     
-    if (!response.ok) throw new Error('Submission failed');
+    // Open mailto link
+    window.location.href = mailtoLink;
     
     console.log('✅ Contact form submitted successfully');
     
-    // Show success message
-    showSuccessMessage();
+    // Show success message after short delay
+    setTimeout(() => {
+      showSuccessMessage();
+    }, 500);
     
   } catch (error) {
     console.error('❌ Contact form submission failed:', error);

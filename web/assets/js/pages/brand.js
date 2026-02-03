@@ -72,16 +72,35 @@ function getBrandFromUrl() {
  */
 async function loadBrandProducts() {
   const container = document.getElementById('products-grid');
-  if (!container) return;
+  console.log('🔍 Looking for products-grid container:', container);
+  
+  if (!container) {
+    console.error('❌ products-grid container not found!');
+    return;
+  }
   
   showLoading(container);
+  console.log('⏳ Loading products from API...');
   
   try {
     // Fetch all products
     const data = await products.getAll({ limit: 100 });
-    let allProducts = data.items || [];
+    console.log('📦 API Response:', data);
+    
+    let allProducts = data.items || data.products || [];
+    
+    // If data is an array directly
+    if (Array.isArray(data)) {
+      allProducts = data;
+    }
     
     console.log(`✅ Loaded ${allProducts.length} products for ${currentBrand}`);
+    
+    if (allProducts.length === 0) {
+      console.warn('⚠️ No products returned from API');
+      container.innerHTML = '<div class="no-results">Geen producten gevonden.</div>';
+      return;
+    }
     
     // Shuffle and take random products
     const shuffled = shuffleArray(allProducts);
@@ -92,7 +111,8 @@ async function loadBrandProducts() {
     renderProducts(displayProducts);
     
   } catch (error) {
-    console.error('Error loading brand products:', error);
+    console.error('❌ Error loading brand products:', error);
+    console.error('Error details:', error.message, error.stack);
     showError(container, 'Kon producten niet laden. Probeer het later opnieuw.');
   }
 }

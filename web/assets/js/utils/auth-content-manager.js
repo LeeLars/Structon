@@ -41,11 +41,8 @@ const CONTENT_MAP = {
 };
 
 // Selectors to target for text replacement
+// Note: quote-cart elements are excluded because they have their own guest-only/auth-only spans
 const TARGET_SELECTORS = [
-  '.btn-split-text',
-  '.quote-cart-cta .btn-split-text',
-  '.quote-cart-header h2',
-  '.quote-cart-card-header h2',
   '.cta-title',
   '.cta-text',
   '.brand-cta-banner-title',

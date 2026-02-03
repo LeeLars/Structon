@@ -7,6 +7,31 @@ main[data-brand] {
   background-color: white;
 }
 
+/* Hide spinners after 5 seconds as fallback if JS fails */
+main[data-brand] .loading,
+main[data-brand] .spinner {
+  animation: fadeOutSpinner 0.5s ease-out 5s forwards;
+}
+
+@keyframes fadeOutSpinner {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+}
+
+/* Products fallback styling */
+.products-fallback {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.products-fallback p {
+  margin-bottom: var(--space-4);
+  color: var(--color-gray-600);
+}
+
 /* View All Products Button */
 .view-all-products-wrapper {
   margin-top: var(--space-8);

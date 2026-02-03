@@ -93,8 +93,16 @@ async function loadBrandProducts() {
   console.log('⏳ Loading products from API...');
   
   try {
-    // Fetch all products
-    const data = await products.getAll({ limit: 100 });
+    // Fetch all products with timeout
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timeout')), 8000)
+    );
+    
+    const data = await Promise.race([
+      products.getAll({ limit: 100 }),
+      timeoutPromise
+    ]);
+    
     console.log('📦 API Response:', data);
     
     let allProducts = data.items || data.products || [];
@@ -108,7 +116,12 @@ async function loadBrandProducts() {
     
     if (allProducts.length === 0) {
       console.warn('⚠️ No products returned from API');
-      container.innerHTML = '<div class="no-results">Geen producten gevonden.</div>';
+      container.innerHTML = `
+        <div class="no-results">
+          <p>Momenteel geen producten beschikbaar.</p>
+          <a href="../../producten/?brand=${currentBrand}" class="btn-primary">Bekijk alle producten</a>
+        </div>
+      `;
       return;
     }
     
@@ -123,7 +136,13 @@ async function loadBrandProducts() {
   } catch (error) {
     console.error('❌ Error loading brand products:', error);
     console.error('Error details:', error.message, error.stack);
-    showError(container, 'Kon producten niet laden. Probeer het later opnieuw.');
+    // Show friendly message instead of error
+    container.innerHTML = `
+      <div class="no-results">
+        <p>Producten konden niet worden geladen.</p>
+        <a href="../../producten/?brand=${currentBrand}" class="btn-primary">Bekijk alle producten</a>
+      </div>
+    `;
   }
 }
 
@@ -197,8 +216,15 @@ function renderModelSelector() {
   }
   
   const brandData = BRAND_DATA[currentBrand];
-  if (!brandData || !brandData.modelCategories) {
+  if (!brandData || !brandData.modelCategories || brandData.modelCategories.length === 0) {
     console.warn('⚠️ No model categories found for brand:', currentBrand);
+    // Hide the section instead of showing spinner
+    const section = container.closest('.model-selector-section');
+    if (section) {
+      section.style.display = 'none';
+    } else {
+      container.innerHTML = '';
+    }
     return;
   }
   

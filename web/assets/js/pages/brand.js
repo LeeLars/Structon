@@ -153,8 +153,13 @@ function renderProducts(productsToRender) {
   const container = document.getElementById('products-grid');
   if (!container) return;
   
+  // Hide fallback content
+  const fallback = document.getElementById('products-fallback');
+  if (fallback) fallback.style.display = 'none';
+  
   if (productsToRender.length === 0) {
-    container.innerHTML = '<div class="no-results">Geen producten beschikbaar.</div>';
+    // Show fallback again if no products
+    if (fallback) fallback.style.display = 'block';
     return;
   }
   
@@ -281,6 +286,13 @@ function renderModelSelector() {
   `;
   
   container.innerHTML = html;
+  
+  // Show the section now that content is loaded
+  const section = document.getElementById('model-selector-section');
+  if (section) {
+    section.style.display = 'block';
+  }
+  
   console.log('✅ Model selector rendered for', brandName);
 }
 

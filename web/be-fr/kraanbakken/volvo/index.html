@@ -104,13 +104,10 @@
     </div>
 
     
-    <!-- Model Selector Section -->
-    <section class="model-selector-section section-white">
+    <!-- Model Selector Section - Hidden until JS loads -->
+    <section class="model-selector-section section-white" id="model-selector-section" style="display: none;">
       <div class="container" id="model-selector-container">
         <!-- Model selector will be dynamically loaded by brand.js -->
-        <div class="loading">
-          <div class="spinner"></div>
-        </div>
       </div>
     </section>
 
@@ -132,8 +129,17 @@
         
         <!-- Products Grid -->
         <div class="products-list" id="products-grid">
-          <div class="loading">
-            <div class="spinner"></div>
+          <div class="products-fallback" id="products-fallback">
+            <p>Bekijk onze producten voor dit merk:</p>
+            <a href="../../producten/?brand=volvo" class="btn-split btn-split-primary">
+              <span class="btn-split-text">Bekijk alle producten</span>
+              <span class="btn-split-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </a>
           </div>
         </div>
         

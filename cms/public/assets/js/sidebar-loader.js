@@ -222,6 +222,12 @@
         window.location.href = '/cms/login.html';
       });
     }
+
+    // Auto-refresh badges every 30 seconds
+    setInterval(async () => {
+      const updatedBadges = await fetchNotificationCounts();
+      updateBadges(updatedBadges);
+    }, 30000);
   }
 
   /**

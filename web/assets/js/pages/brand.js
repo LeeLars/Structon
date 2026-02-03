@@ -302,8 +302,16 @@ function getProductsPageUrl() {
 }
 
 // Auto-initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (document.querySelector('[data-brand]')) {
-    initBrandPage();
+    try {
+      await initBrandPage();
+    } catch (error) {
+      console.error('❌ Brand page initialization failed:', error);
+      // Remove all spinners on error
+      document.querySelectorAll('.loading, .spinner').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
   }
 });

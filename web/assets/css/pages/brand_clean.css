@@ -7,10 +7,10 @@ main[data-brand] {
   background-color: white;
 }
 
-/* Hide spinners after 5 seconds as fallback if JS fails */
+/* Hide spinners after 3 seconds as fallback if JS fails */
 main[data-brand] .loading,
 main[data-brand] .spinner {
-  animation: fadeOutSpinner 0.5s ease-out 5s forwards;
+  animation: fadeOutSpinner 0.3s ease-out 3s forwards;
 }
 
 @keyframes fadeOutSpinner {

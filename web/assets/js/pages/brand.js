@@ -95,7 +95,7 @@ async function loadBrandProducts() {
   try {
     // Fetch all products with timeout
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 8000)
+      setTimeout(() => reject(new Error('Request timeout')), 4000)
     );
     
     const data = await Promise.race([

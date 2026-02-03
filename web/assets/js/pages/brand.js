@@ -33,11 +33,17 @@ function shuffleArray(array) {
  * Initialize brand page
  */
 export async function initBrandPage() {
-  const brandContainer = document.querySelector('[data-brand]');
-  const brandSlug = brandContainer?.dataset.brand || getBrandFromUrl();
+  console.log('🚀 initBrandPage called');
+  
+  // Try multiple ways to find brand
+  const brandContainer = document.querySelector('[data-brand]') || document.querySelector('main[data-brand]');
+  const brandSlug = brandContainer?.dataset?.brand || getBrandFromUrl();
+  
+  console.log('🔍 Brand container:', brandContainer);
+  console.log('🔍 Brand slug:', brandSlug);
   
   if (!brandSlug) {
-    console.error('No brand specified');
+    console.error('❌ No brand specified');
     return;
   }
   
@@ -49,13 +55,14 @@ export async function initBrandPage() {
     currentBrandTitle = brandData.name;
     console.log('✅ Brand data loaded:', brandData.name);
   } else {
-    console.warn('⚠️ Brand not found:', brandSlug);
+    console.warn('⚠️ Brand not found in BRAND_DATA:', brandSlug);
+    console.log('📦 Available brands:', Object.keys(BRAND_DATA));
     currentBrandId = null;
     currentBrandTitle = null;
   }
   
   // Load random products for this brand
-  loadBrandProducts();
+  await loadBrandProducts();
 }
 
 /**

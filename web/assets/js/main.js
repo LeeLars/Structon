@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCmsLink();
   initNavigation();
   initSitemap();
-  initQuoteCart();
+  // initQuoteCart(); // DISABLED - Quote cart removed
   
   // Register service worker for offline support and caching
   registerServiceWorker();

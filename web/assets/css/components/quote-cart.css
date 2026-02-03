@@ -1,27 +1,16 @@
 /* ============================================
-   STRUCTON QUOTE CART STYLES
+   STRUCTON QUOTE CART STYLES - DISABLED
    FAB, Sidebar, Toast notifications
    ============================================ */
 
 /* ============================================
-   FLOATING ACTION BUTTON (FAB)
+   FLOATING ACTION BUTTON (FAB) - HIDDEN
    ============================================ */
 .quote-cart-fab {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  display: flex !important;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  border: none;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(35, 103, 115, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 9999;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .quote-cart-fab:hover {
@@ -70,22 +59,20 @@
 }
 
 /* ============================================
-   SIDEBAR
+   SIDEBAR - HIDDEN
    ============================================ */
 .quote-cart-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2000;
-  pointer-events: none;
-  visibility: hidden;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .quote-cart-sidebar.open {
-  pointer-events: auto;
-  visibility: visible;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Overlay */

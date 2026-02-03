@@ -61,6 +61,9 @@ export async function initBrandPage() {
     currentBrandTitle = null;
   }
   
+  // Render model selector with links to products page
+  renderModelSelector();
+  
   // Load random products for this brand
   await loadBrandProducts();
 }
@@ -181,6 +184,95 @@ function updateCategoryIntro(categorySlug) {
     <h3 class="category-description-title">${intro.title}</h3>
     <p class="category-description-text">${intro.text}</p>
   `;
+}
+
+/**
+ * Render model selector section
+ */
+function renderModelSelector() {
+  const container = document.getElementById('model-selector-container');
+  if (!container) {
+    console.log('ℹ️ No model-selector-container found, skipping model selector');
+    return;
+  }
+  
+  const brandData = BRAND_DATA[currentBrand];
+  if (!brandData || !brandData.modelCategories) {
+    console.warn('⚠️ No model categories found for brand:', currentBrand);
+    return;
+  }
+  
+  const brandName = brandData.name || currentBrand;
+  const productsUrl = getProductsPageUrl();
+  
+  let html = `
+    <div class="model-selector-header">
+      <h2 class="section-title">${brandData.modelSelectorTitle || `Modellen ${brandName}`}</h2>
+      <p class="section-subtitle">${brandData.modelSelectorSubtitle || 'Klik op een model voor passende producten'}</p>
+    </div>
+    <div class="model-cards-grid">
+  `;
+  
+  brandData.modelCategories.forEach(category => {
+    html += `
+      <div class="model-card">
+        <h3 class="model-card-title">${category.title}</h3>
+        <p class="model-card-subtitle">${category.subtitle}</p>
+        <div class="model-buttons">
+    `;
+    
+    category.models.forEach(model => {
+      // Link to products page with brand filter
+      const filterUrl = `${productsUrl}?brand=${currentBrand}`;
+      html += `
+        <a href="${filterUrl}" class="model-btn" data-model="${model.name}" data-tonnage="${model.tonnage}" data-cw="${model.cw}">
+          ${model.name}
+        </a>
+      `;
+    });
+    
+    html += `
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `</div>`;
+  
+  // Add "Bekijk alle producten" button
+  html += `
+    <div class="model-selector-cta">
+      <a href="${productsUrl}?brand=${currentBrand}" class="btn-split btn-split-primary">
+        <span class="btn-split-text">Bekijk alle ${brandName} producten</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+    </div>
+  `;
+  
+  container.innerHTML = html;
+  console.log('✅ Model selector rendered for', brandName);
+}
+
+/**
+ * Get products page URL based on current locale
+ */
+function getProductsPageUrl() {
+  const path = window.location.pathname;
+  
+  // Detect locale from path
+  const localeMatch = path.match(/\/(be-nl|nl-nl|be-fr|de-de)\//);
+  const locale = localeMatch ? localeMatch[1] : 'be-nl';
+  
+  // Build products URL
+  if (path.includes('/Structon/')) {
+    return `/Structon/${locale}/producten/`;
+  }
+  return `/${locale}/producten/`;
 }
 
 // Auto-initialize on DOM ready

@@ -189,28 +189,86 @@ function renderModelSelector(brandData) {
  * Render SEO content section
  */
 function renderSEOContent(brandData) {
+  const seoMain = document.querySelector('.brand-seo-main');
   const seoSidebar = document.querySelector('.brand-seo-sidebar');
-  if (!seoSidebar) return;
   
   const basePath = getBasePath();
   const currentBrandSlug = getBrandSlug();
+  const brandName = brandData.name || currentBrandSlug;
   
-  // Get all brands except current one
-  const otherBrandsList = OTHER_BRANDS.filter(b => b.slug !== currentBrandSlug);
-  
-  // Replace sidebar content with expert box and dynamic brand links
-  seoSidebar.innerHTML = `
-    ${createExpertBox()}
+  // Render main SEO content with CW table if available
+  if (seoMain && brandData.seoContent) {
+    const cwTable = brandData.seoContent.cwTable;
     
-    <div class="brand-related-card">
-      <h4>Andere Merken</h4>
-      <div class="brand-related-links">
-        ${otherBrandsList.map(brand => 
-          `<a href="${basePath}kraanbakken/${brand.slug}/">${brand.name}</a>`
-        ).join('')}
+    let mainHTML = `
+      <h2>Kraanbakken voor ${brandName} Graafmachines</h2>
+      <p>
+        Structon levert hoogwaardige kraanbakken speciaal ontworpen voor ${brandName} graafmachines. 
+        Wij hebben de juiste bak voor elke machine en toepassing, van minigravers tot zware rupskranen.
+      </p>
+    `;
+    
+    // Add CW table if available
+    if (cwTable && cwTable.rows && cwTable.rows.length > 0) {
+      mainHTML += `
+        <h3>${cwTable.title || `CW-Snelwisselsysteem voor ${brandName}`}</h3>
+        <p>${cwTable.description || `${brandName} machines gebruiken het CW-snelwisselsysteem. Alle Structon kraanbakken zijn standaard uitgerust met de juiste CW-aansluiting.`}</p>
+        
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Gewicht</th>
+              <th>CW-Systeem</th>
+              ${cwTable.rows[0].type ? '<th>Type</th>' : ''}
+            </tr>
+          </thead>
+          <tbody>
+            ${cwTable.rows.map(row => `
+              <tr>
+                <td>${row.model}</td>
+                <td>${row.weight}</td>
+                <td>${row.cw}</td>
+                ${row.type ? `<td>${row.type}</td>` : ''}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+    
+    // Add Hardox section
+    mainHTML += `
+      <h3>Hardox Slijtplaten</h3>
+      <p>
+        Alle Structon kraanbakken worden vervaardigd met Hardox 450 slijtplaten. Dit Zweedse 
+        slijtvaststaal biedt een uitstekende balans tussen hardheid en taaiheid, waardoor uw 
+        kraanbak langer meegaat en minder onderhoud nodig heeft.
+      </p>
+    `;
+    
+    seoMain.innerHTML = mainHTML;
+  }
+  
+  // Render sidebar
+  if (seoSidebar) {
+    // Get all brands except current one
+    const otherBrandsList = OTHER_BRANDS.filter(b => b.slug !== currentBrandSlug);
+    
+    // Replace sidebar content with expert box and dynamic brand links
+    seoSidebar.innerHTML = `
+      ${createExpertBox()}
+      
+      <div class="brand-related-card">
+        <h4>Andere Merken</h4>
+        <div class="brand-related-links">
+          ${otherBrandsList.map(brand => 
+            `<a href="${basePath}kraanbakken/${brand.slug}/">${brand.name}</a>`
+          ).join('')}
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  }
 }
 
 /**

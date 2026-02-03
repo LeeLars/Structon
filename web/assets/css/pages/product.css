@@ -45,15 +45,8 @@ margin-bottom: 0;
 /* Product Gallery */
 .product-gallery {
   position: relative;
-  background: var(--color-gray-50);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-gallery:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(35, 103, 115, 0.1);
 }
 
 .product-image-main {

@@ -10,7 +10,7 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  display: flex; /* Always visible on all pages */
+  display: flex !important;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -21,7 +21,7 @@
   justify-content: center;
   box-shadow: 0 4px 20px rgba(35, 103, 115, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .quote-cart-fab:hover {

@@ -46,6 +46,11 @@
   z-index: 1000;
 }
 
+/* When header is scrolled/sticky, adjust mega menu position */
+.header-wrapper.scrolled-down .menu-dropdown {
+  top: 90px; /* Smaller header when scrolled */
+}
+
 /* Hover delay: 100ms before showing menu - faster response */
 .menu-item:hover .menu-dropdown {
   transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s, visibility 0s linear 0.1s;

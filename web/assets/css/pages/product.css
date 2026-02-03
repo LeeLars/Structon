@@ -46,8 +46,9 @@ margin-bottom: 0;
 .product-gallery {
   position: relative;
   border-radius: var(--radius-xl);
-  padding: var(--space-8);
+  padding: var(--space-4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 400px;
 }
 
 .product-gallery:hover {
@@ -63,7 +64,7 @@ margin-bottom: 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-6);
-  max-height: 500px;
+  max-height: 350px;
 }
 
 .product-image-main img {

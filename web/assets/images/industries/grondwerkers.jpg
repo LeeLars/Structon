@@ -1,0 +1,12 @@
+<svg width="1920" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#236773;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a4f59;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="600" fill="url(#grad)"/>
+  <text x="960" y="280" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">INDUSTRIE AFBEELDING</text>
+  <text x="960" y="340" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.8)" text-anchor="middle">Plaats hier uw industrie-specifieke afbeelding</text>
+  <text x="960" y="380" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.6)" text-anchor="middle">Aanbevolen: 1920x600px | JPG of PNG | Max 500KB</text>
+</svg>

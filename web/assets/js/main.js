@@ -419,10 +419,12 @@ export function createProductCard(product, isLoggedIn = false) {
 /**
  * Utility: Show loading state
  */
-export function showLoading(container) {
+export function showLoading(container, message = '') {
+  if (!container) return;
   container.innerHTML = `
-    <div class="loading">
-      <div class="spinner"></div>
+    <div class="structon-loader loader-medium">
+      <div class="loader-spinner"></div>
+      ${message ? `<p class="loader-message">${message}</p>` : ''}
     </div>
   `;
 }

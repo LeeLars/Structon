@@ -26,7 +26,7 @@ export async function loadProductPrice(productId, priceContainer) {
   }
 
   try {
-    priceContainer.innerHTML = '<span class="loading-price">Laden...</span>';
+    priceContainer.innerHTML = '<span class="loader-inline"><span class="loader-spinner-inline"></span> Laden...</span>';
     
     const data = await products.getPrice(productId);
     

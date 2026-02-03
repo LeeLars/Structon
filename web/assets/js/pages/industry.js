@@ -118,6 +118,12 @@ async function loadPopularProducts() {
   const container = document.getElementById('content-popular-products');
   if (!container) return;
   
+  container.innerHTML = `
+    <div class="structon-loader loader-small">
+      <div class="loader-spinner"></div>
+    </div>
+  `;
+  
   try {
     // Use industry config to find relevant categories
     const config = INDUSTRY_CONFIG[currentIndustry];
@@ -139,7 +145,7 @@ async function loadPopularProducts() {
     
   } catch (error) {
     console.error('Error loading popular products:', error);
-    container.innerHTML = '';
+    container.innerHTML = '<div class="no-results">Kon producten niet laden.</div>';
   }
 }
 

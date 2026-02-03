@@ -1,0 +1,106 @@
+/**
+ * Universal Loader Component Styling
+ * Herbruikbare loader voor alle dynamische content secties
+ */
+
+/* Main Loader Container */
+.structon-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12);
+  min-height: 200px;
+}
+
+/* Loader Sizes */
+.structon-loader.loader-small {
+  padding: var(--space-6);
+  min-height: 100px;
+}
+
+.structon-loader.loader-medium {
+  padding: var(--space-12);
+  min-height: 200px;
+}
+
+.structon-loader.loader-large {
+  padding: var(--space-16);
+  min-height: 300px;
+}
+
+/* Loader Spinner */
+.loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loader-small .loader-spinner {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+.loader-large .loader-spinner {
+  width: 64px;
+  height: 64px;
+  border-width: 5px;
+}
+
+/* Loader Message */
+.loader-message {
+  margin-top: var(--space-4);
+  font-size: 0.95rem;
+  color: var(--color-gray-600);
+  text-align: center;
+}
+
+/* Inline Loader (voor prijzen, kleine elementen) */
+.loader-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.loader-spinner-inline {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Grid/List Context Aanpassingen */
+.products-grid .structon-loader,
+.products-list .structon-loader,
+.industry-products-grid .structon-loader {
+  grid-column: 1 / -1;
+}
+
+.subcategories-grid .structon-loader {
+  grid-column: 1 / -1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .structon-loader.loader-medium {
+    padding: var(--space-8);
+    min-height: 150px;
+  }
+  
+  .loader-spinner {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 async function loadBlogs() {
   const container = document.getElementById('blog-grid');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div class="structon-loader loader-medium">
+      <div class="loader-spinner"></div>
+      <p class="loader-message">Artikelen laden...</p>
+    </div>
+  `;
   
   try {
     const response = await fetch(`${API_BASE_URL}/blogs?limit=20`);

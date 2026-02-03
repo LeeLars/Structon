@@ -309,8 +309,12 @@ async function loadOrders() {
   const container = document.getElementById('orders-list');
   if (!container) return;
   
-  // Show loading
-  container.innerHTML = '<div class="loading-state"><p>Bestellingen laden...</p></div>';
+  container.innerHTML = `
+    <div class="structon-loader loader-small">
+      <div class="loader-spinner"></div>
+      <p class="loader-message">Bestellingen laden...</p>
+    </div>
+  `;
   
   try {
     const ordersData = await orders.getMyOrders();
@@ -350,8 +354,12 @@ async function loadQuotes() {
   const container = document.getElementById('quotes-list');
   if (!container) return;
   
-  // Show loading
-  container.innerHTML = '<div class="loading-state"><p>Offertes laden...</p></div>';
+  container.innerHTML = `
+    <div class="structon-loader loader-small">
+      <div class="loader-spinner"></div>
+      <p class="loader-message">Offertes laden...</p>
+    </div>
+  `;
   
   try {
     const quotesData = await quotes.getMyQuotes();
@@ -391,8 +399,12 @@ async function loadFavorites() {
   const container = document.getElementById('favorites-grid');
   if (!container) return;
   
-  // Show loading
-  container.innerHTML = '<div class="loading-state"><p>Favorieten laden...</p></div>';
+  container.innerHTML = `
+    <div class="structon-loader loader-small">
+      <div class="loader-spinner"></div>
+      <p class="loader-message">Favorieten laden...</p>
+    </div>
+  `;
   
   try {
     const favoritesData = await favorites.getMyFavorites();

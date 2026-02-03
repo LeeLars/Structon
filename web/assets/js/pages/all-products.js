@@ -96,6 +96,14 @@ async function loadSubcategories(categorySlug) {
   
   if (!section || !grid) return;
   
+  // Show loader
+  grid.innerHTML = `
+    <div class="structon-loader loader-small">
+      <div class="loader-spinner"></div>
+      <p class="loader-message">Subcategorieën laden...</p>
+    </div>
+  `;
+  
   try {
     console.log('🔍 Loading subcategories for:', categorySlug);
     
@@ -812,8 +820,9 @@ function renderProductDetail(product, container) {
       <div class="related-section">
         <h2 class="related-title">Uitgelichte Producten</h2>
         <div id="related-products-grid" class="related-grid">
-          <!-- Zal worden gevuld door loadFeaturedProducts -->
-          <div style="padding: 20px; text-align: center; color: #94a3b8;">Laden...</div>
+          <div class="structon-loader loader-small">
+            <div class="loader-spinner"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -901,7 +910,7 @@ async function loadFeaturedProducts(currentProduct) {
     
   } catch (error) {
     console.error('Error loading featured products:', error);
-    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8;">Kon uitgelichte producten niet laden.</div>';
+    container.innerHTML = '<div class="no-results" style="grid-column: 1/-1; text-align: center; color: #94a3b8;">Kon uitgelichte producten niet laden.</div>';
   }
 }
 

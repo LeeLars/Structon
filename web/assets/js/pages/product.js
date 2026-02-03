@@ -252,11 +252,16 @@ function formatWeight(kg) {
  * Load related products
  */
 async function loadRelatedProducts() {
-  if (!currentProduct?.category_id) return;
+  const section = document.getElementById('related-products-section');
+  const container = document.getElementById('related-products-grid');
+  
+  if (!section || !container || !currentProduct) return;
 
-  const container = document.getElementById('related-products');
-  const section = document.getElementById('related-section');
-  if (!container || !section) return;
+  container.innerHTML = `
+    <div class="structon-loader loader-small">
+      <div class="loader-spinner"></div>
+    </div>
+  `;
 
   try {
     const data = await products.getAll({
@@ -264,15 +269,17 @@ async function loadRelatedProducts() {
       limit: 4
     });
 
-    // Filter out current product
     const related = (data.items || []).filter(p => p.id !== currentProduct.id);
 
     if (related.length > 0) {
       section.style.display = 'block';
       container.innerHTML = related.slice(0, 4).map(createProductCard).join('');
+    } else {
+      container.innerHTML = '';
     }
   } catch (error) {
     console.error('Error loading related products:', error);
+    container.innerHTML = '';
   }
 }
 

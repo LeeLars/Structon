@@ -45,7 +45,6 @@ margin-bottom: 0;
 /* Product Gallery */
 .product-gallery {
   position: relative;
-  background: var(--color-gray-50);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -57,7 +56,6 @@ margin-bottom: 0;
 }
 
 .product-image-main {
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,6 +63,7 @@ margin-bottom: 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: var(--space-6);
+  max-height: 500px;
 }
 
 .product-image-main img {

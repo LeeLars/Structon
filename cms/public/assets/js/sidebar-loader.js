@@ -133,8 +133,8 @@
     if (!token) return { quotes: 0, requests: 0, orders: 0 };
 
     try {
-      // Fetch quotes
-      const quotesResponse = await fetch(`${API_BASE}/quotes?limit=100`, {
+      // Fetch quotes (offerte, maatwerk)
+      const quotesResponse = await fetch(`${API_BASE}/quotes?limit=200`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -142,20 +142,37 @@
       });
 
       let unviewedQuotesCount = 0;
-      let unviewedRequestsCount = 0;
       if (quotesResponse.ok) {
         const quotesData = await quotesResponse.json();
         const allQuotes = quotesData.quotes || [];
         
-        // Count unviewed quotes (request_type === 'offerte')
-        unviewedQuotesCount = allQuotes.filter(q => !q.viewed && q.request_type === 'offerte').length;
+        // Count unviewed quotes (viewed === false or viewed is null/undefined)
+        unviewedQuotesCount = allQuotes.filter(q => q.viewed === false || q.viewed === null || q.viewed === undefined).length;
         
-        // Count unviewed requests (all other request types)
-        unviewedRequestsCount = allQuotes.filter(q => !q.viewed && q.request_type !== 'offerte').length;
+        console.log('📊 Quotes notification count:', unviewedQuotesCount, 'of', allQuotes.length, 'total');
+      }
+
+      // Fetch requests (contact, vraag, dealer) - separate endpoint
+      const requestsResponse = await fetch(`${API_BASE}/quotes/requests?limit=200`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      let unviewedRequestsCount = 0;
+      if (requestsResponse.ok) {
+        const requestsData = await requestsResponse.json();
+        const allRequests = requestsData.requests || [];
+        
+        // Count unviewed requests
+        unviewedRequestsCount = allRequests.filter(r => r.viewed === false || r.viewed === null || r.viewed === undefined).length;
+        
+        console.log('📊 Requests notification count:', unviewedRequestsCount, 'of', allRequests.length, 'total');
       }
 
       // Fetch orders
-      const ordersResponse = await fetch(`${API_BASE}/orders?limit=100`, {
+      const ordersResponse = await fetch(`${API_BASE}/orders?limit=200`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -165,8 +182,11 @@
       let newOrdersCount = 0;
       if (ordersResponse.ok) {
         const ordersData = await ordersResponse.json();
-        // Only count orders with status 'new'
-        newOrdersCount = (ordersData.orders || []).filter(o => o.status === 'new').length;
+        // Count orders with status 'new' OR unviewed
+        const allOrders = ordersData.orders || [];
+        newOrdersCount = allOrders.filter(o => o.status === 'new' || o.viewed === false || o.viewed === null).length;
+        
+        console.log('📊 Orders notification count:', newOrdersCount, 'of', allOrders.length, 'total');
       }
 
       return {

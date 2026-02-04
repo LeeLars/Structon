@@ -5,7 +5,7 @@
 
 import { products } from '../api/client.js';
 import { createProductCardHorizontal, showLoading, showError } from '../main.js';
-import { BRAND_DATA } from '../data/brand-data.js?v=8';
+import { BRAND_DATA } from '../data/brand-data.js?v=7';
 import { loadProductPrices } from '../pricing.js';
 
 // Brand page state
@@ -95,7 +95,7 @@ async function loadBrandProducts() {
   try {
     // Fetch all products with timeout
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 4000)
+      setTimeout(() => reject(new Error('Request timeout')), 8000)
     );
     
     const data = await Promise.race([

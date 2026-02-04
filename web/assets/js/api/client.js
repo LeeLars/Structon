@@ -141,7 +141,7 @@ async function request(endpoint, options = {}) {
       
       // Attempt fetch with timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout for faster UX
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
       
       const response = await fetch(url, { ...config, signal: controller.signal });
       clearTimeout(timeoutId);

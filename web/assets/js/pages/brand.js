@@ -4,7 +4,7 @@
  */
 
 import { products } from '../api/client.js';
-import { createProductCardHorizontal, showLoading, showError } from '../main.js';
+import { createIndustryProductCard, showLoading, showError } from '../main.js';
 import { BRAND_DATA } from '../data/brand-data.js?v=7';
 import { loadProductPrices } from '../pricing.js';
 
@@ -147,7 +147,7 @@ async function loadBrandProducts() {
 }
 
 /**
- * Render products
+ * Render products in grid layout (same as home page featured products)
  */
 function renderProducts(productsToRender) {
   const container = document.getElementById('products-grid');
@@ -163,9 +163,10 @@ function renderProducts(productsToRender) {
     return;
   }
   
-  container.className = 'products-list';
+  // Use grid layout like home page featured products
+  container.className = 'products-grid';
   container.innerHTML = productsToRender.map(product => 
-    createProductCardHorizontal(product, isLoggedIn)
+    createIndustryProductCard(product, isLoggedIn)
   ).join('');
   
   // Load prices for logged in users

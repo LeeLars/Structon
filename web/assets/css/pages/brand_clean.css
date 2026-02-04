@@ -13,12 +13,6 @@ main[data-brand] .spinner {
   animation: fadeOutSpinner 0.3s ease-out 3s forwards;
 }
 
-/* Compact layout - reduced spacing */
-main[data-brand] .section-white,
-main[data-brand] .section-gray {
-  padding: var(--space-12) 0;
-}
-
 @keyframes fadeOutSpinner {
   to {
     opacity: 0;
@@ -77,22 +71,22 @@ main[data-brand] .section-gray {
    ============================================ */
 .brand-hero-clean {
   background: white;
-  padding: var(--space-8) 0;
+  padding: var(--space-6) 0;
 }
 
 .brand-hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
+  gap: var(--space-8);
   align-items: center;
 }
 
 .brand-hero-content {
-  padding-right: var(--space-8);
+  padding-right: var(--space-6);
 }
 
 .brand-breadcrumbs {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   font-size: var(--text-sm);
   color: var(--color-gray-500);
 }
@@ -112,7 +106,7 @@ main[data-brand] .section-gray {
   font-weight: 800;
   line-height: 1.1;
   color: var(--color-primary);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
   text-transform: uppercase;
   letter-spacing: -0.02em;
 }
@@ -146,7 +140,7 @@ main[data-brand] .section-gray {
 @media (max-width: 992px) {
   .brand-hero-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
   
   .brand-hero-content {
@@ -172,12 +166,13 @@ main[data-brand] .section-gray {
    MODEL SELECTOR SECTION
    ============================================ */
 .model-selector-section {
-  padding: var(--space-16) 0;
+  padding: var(--space-10) 0;
+  background-color: #F9FAFB;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-12);
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -187,7 +182,7 @@ main[data-brand] .section-gray {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
   color: var(--color-gray-900);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   text-transform: uppercase;
   letter-spacing: -0.01em;
 }
@@ -200,16 +195,14 @@ main[data-brand] .section-gray {
 
 .model-cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
 }
 
 .model-card {
   background: white;
   border-radius: 16px; /* Zachtere corners */
-  padding: var(--space-4);
-  padding: var(--space-8);
+  padding: var(--space-6);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02); /* Zeer subtiele shadow */
   border: 1px solid rgba(0,0,0,0.03); /* Bijna onzichtbare border */
   height: 100%;
@@ -237,7 +230,7 @@ main[data-brand] .section-gray {
 .model-card-subtitle {
   font-size: 0.9rem;
   color: var(--color-gray-500);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   font-weight: 500;
   text-align: center;
   background: #F3F4F6;
@@ -353,10 +346,9 @@ main[data-brand] .section-gray {
 /* ============================================
    PRODUCTS SECTION
    ============================================ */
-.products-container {
-  max-width: 1000px; /* Smalle container voor focus */
-  margin: 0 auto;
-  padding: 2rem;
+.products-section {
+  padding: var(--space-10) 0;
+  background-color: white;
 }
 
 .category-description-box {
@@ -365,7 +357,7 @@ main[data-brand] .section-gray {
   border-left: 4px solid var(--color-primary);
   border-radius: var(--radius-md);
   padding: var(--space-6);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .category-description-title {
@@ -389,7 +381,7 @@ main[data-brand] .section-gray {
 /* Empty State */
 .no-results {
   text-align: center;
-  padding: var(--space-16) 0;
+  padding: var(--space-12) 0;
   background: white;
   border-radius: var(--radius-lg);
   border: 1px dashed var(--color-gray-300);
@@ -429,13 +421,13 @@ main[data-brand] .section-gray {
 .info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
-  margin-bottom: var(--space-16);
+  gap: var(--space-6);
+  margin-bottom: var(--space-12);
 }
 
 .info-card {
   background: white;
-  padding: var(--space-8);
+  padding: var(--space-6);
   border-radius: var(--radius-lg);
   /* border: 1px solid var(--color-gray-100); - Removed border for cleaner look */
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* Lichte shadow */
@@ -445,7 +437,7 @@ main[data-brand] .section-gray {
   font-size: var(--text-md);
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   color: var(--color-gray-900);
 }
 
@@ -504,15 +496,15 @@ main[data-brand] .section-gray {
    ============================================ */
 .brand-cta-banner {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  padding: var(--space-16) 0;
-  margin: var(--space-8) 0;
+  padding: var(--space-12) 0;
+  margin: var(--space-6) 0;
 }
 
 .brand-cta-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-8);
+  gap: var(--space-6);
 }
 
 .brand-cta-text-wrapper {
@@ -550,15 +542,15 @@ main[data-brand] .section-gray {
    BENEFITS SECTION
    ============================================ */
 .brand-benefits {
-  padding: var(--space-16) 0;
+  padding: var(--space-12) 0;
   background: var(--color-gray-50);
 }
 
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--space-8);
-  margin-top: var(--space-8);
+  gap: var(--space-6);
+  margin-top: var(--space-6);
 }
 
 .benefit-card {
@@ -593,13 +585,14 @@ main[data-brand] .section-gray {
    SEO CONTENT (2-Column Layout with Sidebar)
    ============================================ */
 .brand-seo-content {
-  padding: var(--space-16) 0;
+  padding: var(--space-12) 0;
   background: white;
 }
 
 .brand-seo-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
+  gap: var(--space-8);
   gap: var(--space-12);
 }
 

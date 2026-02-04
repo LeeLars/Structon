@@ -2,7 +2,7 @@
    HOME PAGE SPECIFIC STYLES
    ============================================ */
 
-/* Hero Section Enhancement - FULL WIDTH DESIGN */
+/* Hero Section Enhancement - EDITORIAL TYPOGRAPHY FOCUS */
 .hero {
   position: relative;
   min-height: 70vh;
@@ -11,11 +11,9 @@
   justify-content: center;
   background: #236773; /* Solid petrol - clean, no gradient */
   color: white;
-  padding: var(--space-24) 0;
+  padding: var(--space-20) 0;
   overflow: hidden;
 }
-
-/* Removed grid pattern for cleaner look */
 
 .hero .container {
   position: relative;
@@ -37,18 +35,18 @@
   width: 100%;
 }
 
-/* Configurator Badge - Simplified */
+/* Configurator Badge - Minimal */
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: white;
-  padding: 10px 20px;
-  border-radius: 50px;
+  padding: 8px 18px;
+  border-radius: 4px;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: var(--space-8);
@@ -58,24 +56,25 @@
 
 .hero-badge:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Typography */
+/* Typography - Bold Editorial Style */
 .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(3rem, 6vw, 5.5rem);
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1.05;
-  letter-spacing: 0.02em;
   margin-bottom: var(--space-8);
   color: white;
+  letter-spacing: 0.02em;
 }
 
 .hero-title span {
   color: white;
+  display: block;
+  font-weight: 800;
 }
 
 .hero-subtitle-text {
@@ -83,7 +82,7 @@
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: var(--space-10);
   max-width: 650px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.5;
   text-align: center;
 }
@@ -159,70 +158,68 @@
   flex-shrink: 0;
 }
 
-/* Scroll Down Indicator - Modern Vertical Right */
+/* Scroll Down Indicator - Minimal */
 .hero-scroll-indicator {
   position: absolute;
   bottom: 0;
   right: 5vw;
   left: auto;
   transform: none;
-  height: 180px;
+  height: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 24px;
+  gap: 16px;
   text-decoration: none;
   z-index: 10;
   cursor: pointer;
-  padding-bottom: 50px;
-  transition: all 0.4s ease;
+  padding-bottom: 40px;
+  transition: all 0.3s ease;
+  opacity: 0.7;
 }
 
 .hero-scroll-indicator:hover {
-  padding-bottom: 40px;
-  transform: translateY(-5px);
+  opacity: 1;
+  padding-bottom: 35px;
 }
 
-/* Vertical Line connecting to bottom */
+/* Simple vertical line */
 .hero-scroll-indicator::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 2px;
+  width: 1px;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 100%);
   transform: translateX(-50%);
   z-index: -1;
 }
 
 .scroll-text {
-  font-size: 0.8rem;
-  font-weight: 800;
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.3em;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   color: white;
-  opacity: 1;
+  opacity: 0.9;
   transition: all 0.3s ease;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .hero-scroll-indicator:hover .scroll-text {
-  letter-spacing: 0.4em;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  letter-spacing: 0.35em;
 }
 
 .scroll-track {
-  width: 3px;
-  height: 60px;
-  background: rgba(255,255,255,0.3);
+  width: 2px;
+  height: 50px;
+  background: rgba(255,255,255,0.2);
   position: relative;
   overflow: hidden;
-  border-radius: 6px;
-  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
 
 .scroll-bar {
@@ -230,11 +227,10 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 45%;
-  background: #fff;
-  border-radius: 6px;
+  height: 40%;
+  background: rgba(255,255,255,0.6);
+  border-radius: 4px;
   animation: scroll-drop 2.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-  box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.4);
 }
 
 @keyframes scroll-drop {
@@ -247,23 +243,25 @@
 @media (max-width: 1024px) {
   .hero-scroll-indicator {
     right: 30px;
-    padding-bottom: 40px;
+    padding-bottom: 35px;
   }
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 60vh;
+  }
+  
   .hero-scroll-indicator {
     right: 20px;
-    height: 120px;
-    padding-bottom: 30px;
+    height: 100px;
+    padding-bottom: 25px;
   }
   
   .scroll-text {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
   }
-  
-  /* Keep simple vertical layout on mobile too */
 }
 
 /* ============================================
@@ -565,9 +563,9 @@
 .usp-btn .btn-split-text {
   background-color: #1E4851;
   color: white;
-  padding: 12px 20px;
+  padding: 16px 28px; /* Iets ruimer */
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   transition: background-color 0.2s;
@@ -576,18 +574,18 @@
 .usp-btn .btn-split-icon {
   background-color: #1a424b;
   color: white;
-  padding: 0 16px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s; /* Padding transitie verwijderd */
   border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 .usp-btn .btn-split-icon svg {
-  width: 20px !important;
-  height: 20px !important;
-  min-width: 20px;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px;
   stroke-width: 2.5;
   transition: transform 0.3s ease;
 }
@@ -609,7 +607,7 @@
    FEATURED PRODUCTS
    ============================================ */
 .section-featured {
-  padding: var(--space-12) 0;
+  padding: var(--space-16) 0;
   background-color: white;
 }
 
@@ -839,8 +837,8 @@
 /* Special modifier for brands section to stack content */
 .usp-container.brands-container {
   grid-template-columns: 1fr;
-  gap: 12px;
-  text-align: center;
+  gap: 16px;
+  text-align: center; /* Center align text */
 }
 
 .usp-container.brands-container .usp-left {
@@ -850,7 +848,7 @@
 .brands-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 16px;
   width: 100%;
 }
 

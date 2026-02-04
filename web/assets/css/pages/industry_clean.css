@@ -14,7 +14,7 @@ main[data-industry] .top-nav a {
 }
 
 .section-clean {
-  padding: var(--space-16) 0;
+  padding: var(--space-10) 0;
   position: relative;
 }
 
@@ -35,13 +35,13 @@ main[data-industry] .top-nav a {
    ============================================ */
 .industry-hero-clean {
   background: white;
-  padding: var(--space-8) 0;
+  padding: var(--space-4) 0;
 }
 
 .industry-hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
+  gap: var(--space-8);
   align-items: center;
 }
 
@@ -54,7 +54,7 @@ main[data-industry] .top-nav a {
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
-  height: 400px;
+  height: 350px;
 }
 
 .industry-hero-image-wrapper img {

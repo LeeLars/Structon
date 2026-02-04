@@ -13,6 +13,12 @@ main[data-brand] .spinner {
   animation: fadeOutSpinner 0.3s ease-out 3s forwards;
 }
 
+/* Compact layout - reduced spacing */
+main[data-brand] .section-white,
+main[data-brand] .section-gray {
+  padding: var(--space-12) 0;
+}
+
 @keyframes fadeOutSpinner {
   to {
     opacity: 0;
@@ -194,13 +200,15 @@ main[data-brand] .spinner {
 
 .model-cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
 }
 
 .model-card {
   background: white;
   border-radius: 16px; /* Zachtere corners */
+  padding: var(--space-4);
   padding: var(--space-8);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02); /* Zeer subtiele shadow */
   border: 1px solid rgba(0,0,0,0.03); /* Bijna onzichtbare border */

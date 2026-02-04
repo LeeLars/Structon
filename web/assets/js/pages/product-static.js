@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   setupTabs();
   setupThumbnails();
+  setupScrollAnimations();
 });
 
 /**
@@ -90,4 +91,45 @@ function setupThumbnails() {
       }, 200);
     });
   });
+}
+
+/**
+ * Setup Scroll Animations
+ * Uses IntersectionObserver to reveal elements as they enter viewport
+ */
+function setupScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe product detail cards
+  const detailCards = document.querySelectorAll('.product-detail-card');
+  detailCards.forEach(card => {
+    card.classList.add('scroll-reveal');
+    observer.observe(card);
+  });
+
+  // Observe specifications section
+  const specsSection = document.querySelector('.specifications-section');
+  if (specsSection) {
+    specsSection.classList.add('scroll-reveal');
+    observer.observe(specsSection);
+  }
+
+  // Observe expert box
+  const expertBox = document.querySelector('.expert-box');
+  if (expertBox) {
+    expertBox.classList.add('scroll-reveal');
+    observer.observe(expertBox);
+  }
 }

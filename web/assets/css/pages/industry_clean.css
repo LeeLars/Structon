@@ -650,6 +650,7 @@ main[data-industry] .top-nav a {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-8);
   margin-bottom: var(--space-8);
+  padding: var(--space-8) var(--space-4);
 }
 
 @media (max-width: 992px) {

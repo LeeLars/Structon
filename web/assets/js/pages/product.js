@@ -43,8 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
  * Initialize page
  */
 async function initPage() {
+  const container = document.getElementById('product-detail');
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('id');
+
+  // If no container, this script shouldn't do anything (static page)
+  if (!container) return;
 
   if (!productId) {
     showProductNotFound();
@@ -108,69 +112,182 @@ function renderProduct(product) {
   
   const images = product.cloudinary_images || [];
   const mainImage = images[0]?.url || 'https://via.placeholder.com/600x600?text=Geen+Afbeelding';
+  
+  // Generate dynamic SEO description based on product data
+  const seoDescription = generateSeoDescription(product);
 
   container.innerHTML = `
-    <div class="product-gallery">
-      <div class="product-main-image">
-        <img src="${mainImage}" alt="${product.title}" id="main-product-image">
-      </div>
-      ${images.length > 1 ? `
-        <div class="product-thumbnails">
-          ${images.map((img, i) => `
-            <button class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}">
-              <img src="${img.url}" alt="${product.title} ${i + 1}">
-            </button>
-          `).join('')}
+    <div class="product-layout">
+      <!-- LEFT COLUMN: Gallery -->
+      <div class="product-gallery-wrapper">
+        <div class="product-gallery">
+          <div class="product-main-image">
+            <img src="${mainImage}" alt="${product.title}" id="main-product-image">
+          </div>
+          ${images.length > 1 ? `
+            <div class="product-thumbnails">
+              ${images.map((img, i) => `
+                <button class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}">
+                  <img src="${img.url}" alt="${product.title} ${i + 1}">
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
         </div>
-      ` : ''}
+
+        <!-- Trust Signals (Mobile/Tablet only here, Desktop in right col) -->
+        <div class="product-trust-signals hide-on-desktop">
+          <div class="trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Op voorraad: Direct leverbaar</span>
+          </div>
+          <div class="trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>2 Jaar Garantie</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Info, Actions & Expert -->
+      <div class="product-info-wrapper">
+        <div class="product-info">
+          <div class="product-header">
+            <div class="product-badges">
+              <span class="badge badge-quality">Premium Kwaliteit</span>
+              ${product.stock_status === 'in_stock' ? '<span class="badge badge-stock in-stock">Op Voorraad</span>' : ''}
+            </div>
+            <span class="product-category-label">${product.category_title || 'Product'}</span>
+            <h1 class="product-title">${product.title}</h1>
+            <p class="product-subtitle">${product.short_description || `Hoogwaardige ${product.title.toLowerCase()} voor professioneel gebruik.`}</p>
+          </div>
+
+          <div class="product-key-specs">
+            ${product.width ? `
+              <div class="key-spec">
+                <span class="key-spec-label">Breedte</span>
+                <span class="key-spec-value">${product.width} mm</span>
+              </div>
+            ` : ''}
+            ${product.volume ? `
+              <div class="key-spec">
+                <span class="key-spec-label">Inhoud</span>
+                <span class="key-spec-value">${product.volume} L</span>
+              </div>
+            ` : ''}
+            ${product.weight ? `
+              <div class="key-spec">
+                <span class="key-spec-label">Gewicht</span>
+                <span class="key-spec-value">${product.weight} kg</span>
+              </div>
+            ` : ''}
+            ${product.attachment_type ? `
+              <div class="key-spec">
+                <span class="key-spec-label">Ophanging</span>
+                <span class="key-spec-value">${product.attachment_type}</span>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="product-price-section price-locked" id="price-section" data-product-id="${product.id}">
+            <div class="product-price">Login voor prijs</div>
+            <p class="login-prompt">
+              <a href="login.html">Log in</a> om prijzen te bekijken en te bestellen.
+            </p>
+          </div>
+          
+          <div class="product-cta-section">
+            <a href="${buildQuoteUrl(product)}" class="btn-split usp-btn">
+              <span class="btn-split-text">
+                <span class="guest-only-inline">Offerte Aanvragen</span>
+                <span class="auth-only-inline">Bestelling Plaatsen</span>
+              </span>
+              <span class="btn-split-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
+            </a>
+            <p class="cta-subtext">
+              <span class="guest-only-inline">Alleen voor zakelijke klanten (B2B) • Binnen 24u reactie</span>
+              <span class="auth-only-inline">Direct leverbaar uit voorraad • Betaling op factuur</span>
+            </p>
+          </div>
+
+          <!-- Expert / Dealer Info Box -->
+          <div class="expert-box">
+            <div class="expert-header">
+              <div class="expert-avatar">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <div class="expert-info">
+                <strong>Vragen over dit product?</strong>
+                <span>Onze specialisten helpen u graag</span>
+              </div>
+            </div>
+            <p class="expert-text">Twijfelt u of de <strong>${product.title}</strong> past op uw machine? Wij controleren het direct voor u.</p>
+            <div class="expert-actions">
+              <a href="tel:+32000000000" class="expert-contact-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                Bel ons direct
+              </a>
+              <a href="mailto:info@structon.be" class="expert-contact-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Stuur een mail
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="product-info">
-      <span class="product-category">${product.category_title || 'Product'}</span>
-      <h1 class="product-title">${product.title}</h1>
-      
-      ${product.description ? `
-        <p class="product-description">${product.description}</p>
-      ` : ''}
+    <!-- Full Width Content Sections -->
+    <div class="product-content-section">
+      <div class="product-tabs">
+        <button class="product-tab active" onclick="switchTab('specs')">Specificaties</button>
+        <button class="product-tab" onclick="switchTab('description')">Omschrijving & Toepassing</button>
+      </div>
 
-      <div class="specs-section">
-        <h3 class="specs-title">Specificaties</h3>
-        <table class="specs-table">
+      <div id="tab-specs" class="product-tab-content active">
+        <h3 class="section-title-small">Technische Specificaties</h3>
+        <table class="specs-table detailed-specs">
           <tbody>
-            ${product.volume ? `<tr><th>Inhoud</th><td>${product.volume} liter</td></tr>` : ''}
+            ${product.article_number ? `<tr><th>Artikelnummer</th><td>${product.article_number}</td></tr>` : ''}
+            ${product.brand_title ? `<tr><th>Merk Machine</th><td>${product.brand_title}</td></tr>` : ''}
+            ${product.category_title ? `<tr><th>Categorie</th><td>${product.category_title}</td></tr>` : ''}
+            ${product.attachment_type ? `<tr><th>Aansluiting</th><td>${product.attachment_type}</td></tr>` : ''}
             ${product.width ? `<tr><th>Breedte</th><td>${product.width} mm</td></tr>` : ''}
-            ${product.weight ? `<tr><th>Gewicht</th><td>${product.weight} kg</td></tr>` : ''}
-            ${product.attachment_type ? `<tr><th>Ophanging</th><td>${product.attachment_type}</td></tr>` : ''}
+            ${product.volume ? `<tr><th>Inhoud (SAE)</th><td>${product.volume} liter</td></tr>` : ''}
+            ${product.weight ? `<tr><th>Eigen Gewicht</th><td>${product.weight} kg</td></tr>` : ''}
             ${product.excavator_weight_min && product.excavator_weight_max ? `
-              <tr><th>Graafmachine klasse</th><td>${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</td></tr>
+              <tr><th>Machine Klasse</th><td>${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</td></tr>
             ` : ''}
-            ${product.brand_title ? `<tr><th>Merk</th><td>${product.brand_title}</td></tr>` : ''}
+            ${product.material ? `<tr><th>Materiaal</th><td>${product.material}</td></tr>` : '<tr><th>Materiaal</th><td>Hardox 450 / S355</td></tr>'}
+            ${product.warranty ? `<tr><th>Garantie</th><td>${product.warranty}</td></tr>` : '<tr><th>Garantie</th><td>2 Jaar Constructiegarantie</td></tr>'}
             ${renderExtraSpecs(product.specs)}
           </tbody>
         </table>
       </div>
 
-      <div class="product-price-section price-locked" id="price-section" data-product-id="${product.id}">
-        <div class="product-price">Login voor prijs</div>
-        <p class="login-prompt">
-          <a href="login.html">Log in</a> om prijzen te bekijken en te bestellen.
-        </p>
-      </div>
-      
-      <div class="product-cta-section" style="margin-top: 24px;">
-        <a href="${buildQuoteUrl(product)}" class="btn-split usp-btn" style="width: 100%; justify-content: center;">
-          <span class="btn-split-text">
-            <span class="guest-only-inline">Offerte Aanvragen</span>
-            <span class="auth-only-inline">Bestelling Plaatsen</span>
-          </span>
-          <span class="btn-split-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </span>
-        </a>
-        <p style="font-size: 0.85rem; color: #666; margin-top: 8px; text-align: center;">
-          <span class="guest-only-inline">Alleen voor zakelijke klanten (B2B) • Betaling via factuur</span>
-          <span class="auth-only-inline">Prijzen excl. BTW • Betaling via factuur</span>
-        </p>
+      <div id="tab-description" class="product-tab-content">
+        <div class="seo-content-block">
+          <h3>Over de ${product.title}</h3>
+          <p>${product.description || seoDescription.intro}</p>
+          
+          <h3>Toepassingen</h3>
+          <p>${seoDescription.applications}</p>
+          
+          <h3>Waarom kiezen voor Structon?</h3>
+          <ul class="usp-list">
+            <li><strong>Hardox 450:</strong> Maximale slijtvastheid en levensduur.</li>
+            <li><strong>Perfecte Geometrie:</strong> Ontworpen voor optimale indringing en lossing.</li>
+            <li><strong>Uit Voorraad:</strong> Snelle levering binnen Benelux.</li>
+          </ul>
+        </div>
       </div>
     </div>
   `;
@@ -179,10 +296,10 @@ function renderProduct(product) {
   const existingRelatedSection = document.getElementById('related-section');
   if (!existingRelatedSection) {
     const relatedSectionHtml = `
-      <section id="related-section" class="section" style="display: none; padding-top: var(--space-16); padding-bottom: var(--space-16);">
+      <section id="related-section" class="related-products-section" style="display: none;">
         <div class="container">
-          <h2 style="font-size: var(--text-3xl); color: var(--color-primary); margin-bottom: var(--space-8); text-align: center;">GERELATEERDE PRODUCTEN</h2>
-          <div id="related-products" class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6);"></div>
+          <h2 class="section-title">Gerelateerde Producten</h2>
+          <div id="related-products-grid" class="related-products-grid"></div>
         </div>
       </section>
     `;
@@ -197,6 +314,28 @@ function renderProduct(product) {
   if (priceSection) {
     loadProductPrice(product.id, priceSection);
   }
+  
+  // Expose switchTab to window
+  window.switchTab = function(tabName) {
+    document.querySelectorAll('.product-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.product-tab-content').forEach(c => c.classList.remove('active'));
+    
+    // Find button containing text or by index (simplified for now, assume order)
+    if(tabName === 'specs') document.querySelector('.product-tab:nth-child(1)').classList.add('active');
+    if(tabName === 'description') document.querySelector('.product-tab:nth-child(2)').classList.add('active');
+    
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+  };
+}
+
+/**
+ * Generate SEO description if missing
+ */
+function generateSeoDescription(product) {
+  return {
+    intro: `De <strong>${product.title}</strong> is een hoogwaardige aanbouwdeel voor professioneel gebruik. Speciaal ontwikkeld voor ${product.brand_title || 'diverse'} graafmachines tussen ${product.excavator_weight_min || '1'} en ${product.excavator_weight_max || '50'} ton. Dankzij het gebruik van slijtvaste materialen garanderen wij een lange levensduur, zelfs onder zware omstandigheden.`,
+    applications: `Deze ${product.category_title || 'graafbak'} is ideaal voor diverse grondverzetwerkzaamheden, waaronder het graven van sleuven, egaliseren van terreinen en laden van vrachtwagens. De geoptimaliseerde vorm zorgt voor een betere vulgraad en brandstofbesparing.`
+  };
 }
 
 /**

@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   setupTabs();
   setupThumbnails();
+  setupLightbox();
 });
 
 /**
@@ -53,7 +54,7 @@ function setupTabs() {
     });
   });
   
-  // Expose global function for compatibility if needed, but prefer event listeners
+  // Expose global function for compatibility
   window.switchTab = function(tabName) {
     const targetTab = Array.from(tabs).find(t => {
       if (tabName === 'specs') return t.textContent.toLowerCase().includes('specificaties');
@@ -80,14 +81,51 @@ function setupThumbnails() {
       thumbnails.forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
 
-      // Update main image
+      // Update main image with smooth transition
       const newSrc = thumb.getAttribute('data-image') || thumb.querySelector('img').src;
       mainImage.style.opacity = '0.5';
+      mainImage.style.transform = 'scale(0.95)';
       
       setTimeout(() => {
         mainImage.src = newSrc;
         mainImage.style.opacity = '1';
+        mainImage.style.transform = 'scale(1)';
       }, 200);
     });
   });
+}
+
+/**
+ * Setup Lightbox for Gallery
+ */
+function setupLightbox() {
+  const mainImage = document.getElementById('main-product-image');
+  const thumbnails = document.querySelectorAll('.product-thumbnail');
+  
+  if (!mainImage) return;
+  
+  // Collect all images
+  const images = [];
+  
+  // Add main image first
+  if (mainImage.src) images.push(mainImage.src);
+  
+  // Add thumbnail images
+  thumbnails.forEach(thumb => {
+    const imgSrc = thumb.getAttribute('data-image') || thumb.querySelector('img')?.src;
+    if (imgSrc && !images.includes(imgSrc)) {
+      images.push(imgSrc);
+    }
+  });
+  
+  // Main image click opens lightbox
+  const mainImageWrapper = mainImage.closest('.product-main-image, .product-image-main');
+  if (mainImageWrapper) {
+    mainImageWrapper.addEventListener('click', () => {
+      if (window.structonLightbox && images.length > 0) {
+        const currentIndex = images.indexOf(mainImage.src);
+        window.structonLightbox.open(images, currentIndex >= 0 ? currentIndex : 0);
+      }
+    });
+  }
 }

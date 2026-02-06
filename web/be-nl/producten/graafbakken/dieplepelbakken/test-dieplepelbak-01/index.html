@@ -40,76 +40,103 @@
       <div class="container">
         <div class="product-layout">
           <div class="product-gallery animate-on-scroll">
+            <div class="product-thumbnails">
+              <div class="product-thumbnail active" data-image="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png">
+                <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png" alt="Test - Dieplepelbak - 01 - View 1">
+              </div>
+              <div class="product-thumbnail" data-image="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png">
+                <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png" alt="Test - Dieplepelbak - 01 - View 2">
+              </div>
+              <div class="product-thumbnail" data-image="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png">
+                <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png" alt="Test - Dieplepelbak - 01 - View 3">
+              </div>
+            </div>
             <div class="product-image-main">
-              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png" alt="Test - Dieplepelbak - 01" id="main-image">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png" alt="Test - Dieplepelbak - 01" id="main-product-image">
             </div>
           </div>
-          <div class="product-info animate-on-scroll">
-            <h1 class="product-title">TEST - DIEPLEPELBAK - 01</h1>
-            <p class="product-subtitle">test dieplepelbak beschrijving</p>
-            
-            <div class="product-specs-grid">
-              <div class="spec-item">
-                <div class="spec-label">Breedte</div>
-                <div class="spec-value">300 mm</div>
-              </div>
-              <div class="spec-item">
-                <div class="spec-label">Gewicht</div>
-                <div class="spec-value">55 kg</div>
-              </div>
-              <div class="spec-item">
-                <div class="spec-label">Ophanging</div>
-                <div class="spec-value">CW05</div>
-              </div>
-              <div class="spec-item">
-                <div class="spec-label">Graafmachine</div>
-                <div class="spec-value">1.50 - 3.00 ton</div>
-              </div>
-            </div>
-            
-            <!-- Price display (only visible for logged-in users) -->
-            <div class="product-price-container" id="product-price-container" data-product-id="11c08c8c-265d-4900-b005-046e6e3102c4" style="display: none;">
-              <div class="product-price-label">Prijs:</div>
-              <div class="product-price" id="product-price">
-                <span class="price-loading">Prijs laden...</span>
-              </div>
-            </div>
-            
-            <div class="product-actions">
-              <button class="btn-split btn-split-primary" id="add-to-quote" data-product="{&quot;id&quot;: &quot;11c08c8c-265d-4900-b005-046e6e3102c4&quot;, &quot;slug&quot;: &quot;test-dieplepelbak-01&quot;, &quot;category_slug&quot;: &quot;graafbakken&quot;, &quot;subcategory_slug&quot;: &quot;dieplepelbakken&quot;, &quot;title&quot;: &quot;Test - Dieplepelbak - 01&quot;, &quot;image&quot;: &quot;https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png&quot;, &quot;category&quot;: &quot;Graafbakken&quot;, &quot;subcategory&quot;: &quot;Dieplepelbakken&quot;, &quot;specs&quot;: {&quot;width&quot;: &quot;300 mm&quot;, &quot;weight&quot;: &quot;55 kg&quot;, &quot;attachment&quot;: &quot;CW05&quot;, &quot;excavator&quot;: &quot;1.50-3.00t&quot;}}">
-                <span class="btn-split-text">Toevoegen aan offerte</span>
-                <span class="btn-split-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </span>
-              </button>
+          <div class="product-info-wrapper animate-on-scroll">
+            <div class="product-header">
+              <span class="product-category-label">Graafbakken / Dieplepelbakken</span>
+              <h1 class="product-title">Test - Dieplepelbak - 01</h1>
+              <p class="product-subtitle">Hoogwaardige dieplepelbak voor graafmachines van 1.5 tot 3.0 ton. Ideaal voor algemene graafwerken en sleuven.</p>
             </div>
 
-            <div class="expert-box">
+            <!-- Key Specs as Options -->
+            <div class="product-key-specs">
+              <div class="key-spec">
+                <span class="key-spec-label">Breedte</span>
+                <span class="key-spec-value">300 mm</span>
+              </div>
+              <div class="key-spec">
+                <span class="key-spec-label">Gewicht</span>
+                <span class="key-spec-value">55 kg</span>
+              </div>
+              <div class="key-spec">
+                <span class="key-spec-label">Ophanging</span>
+                <span class="key-spec-value">CW05</span>
+              </div>
+              <div class="key-spec">
+                <span class="key-spec-label">Klasse</span>
+                <span class="key-spec-value">1.5-3t</span>
+              </div>
+            </div>
+
+            <!-- Price & CTA -->
+            <div class="product-purchase-card">
+              <div class="product-price-container" id="product-price-container" data-product-id="11c08c8c-265d-4900-b005-046e6e3102c4" style="display: none;">
+                <div class="product-price-label">Prijs:</div>
+                <div class="product-price" id="product-price">
+                  <span class="price-loading">Prijs laden...</span>
+                </div>
+                <div class="stock-status in-stock">Op voorraad</div>
+              </div>
+              
+              <div class="product-cta-section">
+                <div class="product-quantity-wrapper">
+                  <div class="quantity-selector">
+                    <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
+                    <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
+                  </div>
+                  
+                  <div class="product-actions">
+                    <button class="btn-split btn-split-primary" id="add-to-quote" data-product="{&quot;id&quot;: &quot;11c08c8c-265d-4900-b005-046e6e3102c4&quot;, &quot;slug&quot;: &quot;test-dieplepelbak-01&quot;, &quot;category_slug&quot;: &quot;graafbakken&quot;, &quot;subcategory_slug&quot;: &quot;dieplepelbakken&quot;, &quot;title&quot;: &quot;Test - Dieplepelbak - 01&quot;, &quot;image&quot;: &quot;https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079586/structon/products/ap1labomijtkczoftjpz.png&quot;, &quot;category&quot;: &quot;Graafbakken&quot;, &quot;subcategory&quot;: &quot;Dieplepelbakken&quot;, &quot;specs&quot;: {&quot;width&quot;: &quot;300 mm&quot;, &quot;weight&quot;: &quot;55 kg&quot;, &quot;attachment&quot;: &quot;CW05&quot;, &quot;excavator&quot;: &quot;1.50-3.00t&quot;}}">
+                      <span class="btn-split-text">Toevoegen aan offerte</span>
+                      <span class="btn-split-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                
+                <ul class="product-usps">
+                  <li>Voor 15:00 besteld, morgen verzonden</li>
+                  <li>Gratis verzending vanaf €500</li>
+                  <li>Geproduceerd in België (Hardox staal)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Integrated Help Section -->
+            <div class="expert-box-sidebar">
               <div class="expert-header">
                 <div class="expert-avatar">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
                 </div>
-                <div class="expert-info">
-                  <strong>Arno Vermeersch</strong>
-                  <span>External Sales</span>
+                <div>
+                  <span class="expert-title">Hulp nodig bij uw keuze?</span>
+                  <span class="expert-subtitle">Onze experts helpen u graag verder.</span>
                 </div>
               </div>
-              <p class="expert-text">Twijfel je over de juiste ophanging of maat? Neem contact op met onze specialist.</p>
-              <a href="tel:+32469702138" class="expert-phone">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <a href="tel:+32469702138" class="expert-contact">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                 </svg>
                 +32 469 70 21 38
-              </a>
-              <a href="mailto:arno.vermeersch@structon.be" class="expert-email">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                arno.vermeersch@structon.be
               </a>
             </div>
           </div>

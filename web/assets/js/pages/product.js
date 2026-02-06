@@ -6,6 +6,7 @@ import { products, quotes } from '../api/client.js';
 import { createProductCard, showLoading, showError } from '../main.js';
 import { loadProductPrice } from '../pricing.js';
 import { isLoggedIn } from '../auth.js';
+import { createExpertBox } from '../components/expert-box.js';
 
 let currentProduct = null;
 
@@ -82,15 +83,18 @@ async function loadProduct(id) {
     
     if (currentProduct.category_title) {
       const categoryLink = document.getElementById('breadcrumb-category-link');
-      categoryLink.textContent = currentProduct.category_title;
-      categoryLink.href = `category.html?cat=${currentProduct.category_slug}`;
+      if (categoryLink) {
+        categoryLink.textContent = currentProduct.category_title;
+        categoryLink.href = `category.html?cat=${currentProduct.category_slug}`;
+      }
     }
 
     // Render product
     renderProduct(currentProduct);
 
     // Show action section
-    document.getElementById('product-action-section').style.display = 'block';
+    const actionSection = document.getElementById('product-action-section');
+    if (actionSection) actionSection.style.display = 'block';
 
     // Setup quote form with product info
     updateQuoteForm(currentProduct);
@@ -110,8 +114,24 @@ async function loadProduct(id) {
 function renderProduct(product) {
   const container = document.getElementById('product-detail');
   
-  const images = product.cloudinary_images || [];
-  const mainImage = images[0]?.url || 'https://via.placeholder.com/600x600?text=Geen+Afbeelding';
+  // Deduplicate images
+  const uniqueImages = [];
+  const seenUrls = new Set();
+  const rawImages = product.cloudinary_images || [];
+  
+  rawImages.forEach(img => {
+    if (!seenUrls.has(img.url)) {
+      seenUrls.add(img.url);
+      uniqueImages.push(img);
+    }
+  });
+  
+  if (uniqueImages.length === 0) {
+    uniqueImages.push({ url: 'https://via.placeholder.com/600x600?text=Geen+Afbeelding' });
+  }
+
+  const images = uniqueImages;
+  const mainImage = images[0]?.url;
   
   // Generate dynamic SEO description based on product data
   const seoDescription = generateSeoDescription(product);
@@ -212,40 +232,15 @@ function renderProduct(product) {
             </div>
             
             <ul class="product-usps">
-              <li>Op maat geproduceerd in België</li>
-              <li>Hardox 450 slijtvast staal</li>
-              <li>2 jaar constructiegarantie</li>
+              <li>Geproduceerd op bestelling</li>
+              <li>Hoogwaardig maatwerk uit eigen atelier</li>
+              <li>Levertijd in overleg</li>
             </ul>
           </div>
         </div>
 
         <div class="expert-box-sidebar">
-          <div class="expert-header">
-            <div class="expert-avatar">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </div>
-            <div class="expert-info">
-              <strong>Arno Vermeersch</strong>
-              <span>External Sales</span>
-            </div>
-          </div>
-          <p class="expert-text">Twijfel je over de juiste ophanging of maat? Neem contact op met onze specialist.</p>
-          <a href="tel:+32469702138" class="expert-phone">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            +32 469 70 21 38
-          </a>
-          <a href="mailto:arno.vermeersch@structon.be" class="expert-email">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            arno.vermeersch@structon.be
-          </a>
+          ${createExpertBox()}
         </div>
       </div>
     </div>
@@ -267,13 +262,6 @@ function renderProduct(product) {
             </div>
             <h3>Op Maat Gemaakt</h3>
             <p>Elke kraanbak wordt op maat geproduceerd in onze werkplaats in Beernem, België. Kwaliteit en precisie gegarandeerd.</p>
-          </div>
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
-            <h3>Belgische Productie</h3>
-            <p>Op maat geproduceerd in onze werkplaats in Beernem. Kwaliteit en precisie gegarandeerd.</p>
           </div>
         </div>
       </div>
@@ -315,7 +303,7 @@ function renderProduct(product) {
             </tbody>
           </table>
           
-          <div class="specs-technical-drawing animate-on-scroll">
+          <div class="specs-technical-drawing">
             <div style="text-align: center; padding: 2rem;">
               <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="1">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -334,9 +322,9 @@ function renderProduct(product) {
   const existingRelatedSection = document.getElementById('related-section');
   if (!existingRelatedSection) {
     const relatedSectionHtml = `
-      <section id="related-section" class="related-products-section">
+      <section id="related-products-section" class="related-products-section" style="display: none;">
         <div class="product-container">
-          <h2 class="section-title">Meer Producten</h2>
+          <h2>Gerelateerde Producten</h2>
           <div id="related-products-grid" class="related-products-grid"></div>
         </div>
       </section>
@@ -417,10 +405,10 @@ function formatWeight(kg) {
  * Load related products
  */
 async function loadRelatedProducts() {
-  const section = document.getElementById('related-section');
+  const section = document.getElementById('related-products-section');
   const container = document.getElementById('related-products-grid');
   
-  if (!container) return;
+  if (!section || !container || !currentProduct) return;
 
   container.innerHTML = `
     <div class="structon-loader loader-small">
@@ -429,28 +417,22 @@ async function loadRelatedProducts() {
   `;
 
   try {
-    // Try to get products from same category first
-    let data = await products.getAll({
-      category_id: currentProduct?.category_id,
-      limit: 8
+    const data = await products.getAll({
+      category_id: currentProduct.category_id,
+      limit: 4
     });
 
-    let related = (data.items || []).filter(p => p.id !== currentProduct?.id);
-
-    // If not enough products, get any products
-    if (related.length < 4) {
-      data = await products.getAll({ limit: 8 });
-      related = (data.items || []).filter(p => p.id !== currentProduct?.id);
-    }
+    const related = (data.items || []).filter(p => p.id !== currentProduct.id);
 
     if (related.length > 0) {
-      container.innerHTML = related.slice(0, 8).map(createProductCard).join('');
+      section.style.display = 'block';
+      container.innerHTML = related.slice(0, 4).map(createProductCard).join('');
     } else {
-      container.innerHTML = '<p style="text-align: center; color: var(--color-gray-500);">Geen producten beschikbaar</p>';
+      container.innerHTML = '';
     }
   } catch (error) {
     console.error('Error loading related products:', error);
-    container.innerHTML = '<p style="text-align: center; color: var(--color-gray-500);">Kon producten niet laden</p>';
+    container.innerHTML = '';
   }
 }
 

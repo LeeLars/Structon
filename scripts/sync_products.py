@@ -71,6 +71,29 @@ def get_hreflang_tags(locale, path_suffix):
     return '\n'.join(tags)
 
 
+
+def generate_key_specs_html(product, labels):
+    html = ""
+    
+    specs = [
+        ('width', product.get('width'), labels.get('width', 'Breedte'), 'mm'),
+        ('weight', product.get('weight'), labels.get('weight', 'Gewicht'), 'kg'),
+        ('attachment_type', product.get('attachment_type'), labels.get('attachment', 'Ophanging'), ''),
+        ('excavator_weight_range', f"{product.get('excavator_weight_min')}-{product.get('excavator_weight_max')}", labels.get('excavator', 'Klasse'), 't') if product.get('excavator_weight_min') else None
+    ]
+    
+    for key, value, label, unit in specs:
+        if value:
+            display_value = f"{value} {unit}".strip()
+            html += f'''
+              <div class="key-spec">
+                <span class="key-spec-label">{label}</span>
+                <span class="key-spec-value">{display_value}</span>
+              </div>'''
+    
+    return html
+
+
 def generate_product_page(product, locale):
     """Generate HTML for a product detail page."""
     labels = LABELS[locale]
@@ -208,6 +231,7 @@ def generate_product_page(product, locale):
     stock_text = labels['stock'] if stock > 0 else labels['out_of_stock']
     
     # Prepare cart data for add-to-quote button
+    # Prepare cart data for add-to-quote button
     cart_data = {
         'id': product.get('id', ''),
         'slug': slug,
@@ -230,9 +254,165 @@ def generate_product_page(product, locale):
     if excavator_min and excavator_max:
         cart_data['specs']['excavator'] = f"{excavator_min}-{excavator_max}t"
     
-    import html as html_module
-    cart_data_json = html_module.escape(json.dumps(cart_data, ensure_ascii=False))
+
+    # Prepare data for new template structure
+    key_specs_html = generate_key_specs_html(product, labels)
     
+    import json
+    cart_data_json_attr = json.dumps(cart_data).replace('"', '&quot;')
+    
+    # Gallery
+    gallery_section = f'''
+          <div class="product-gallery animate-on-scroll">
+            <div class="product-thumbnails">
+              <div class="product-thumbnail active" data-image="{image_url}">
+                <img src="{image_url}" alt="{title} - View 1">
+              </div>
+              <div class="product-thumbnail" data-image="{image_url}">
+                <img src="{image_url}" alt="{title} - View 2">
+              </div>
+              <div class="product-thumbnail" data-image="{image_url}">
+                <img src="{image_url}" alt="{title} - View 3">
+              </div>
+            </div>
+            <div class="product-image-main">
+              <img src="{image_url}" alt="{title}" id="main-product-image">
+            </div>
+          </div>'''
+
+    # Info Column
+    info_section = f'''
+          <div class="product-info-wrapper animate-on-scroll">
+            <div class="product-header">
+              <span class="product-category-label">{category_title} / {subcategory_title}</span>
+              <h1 class="product-title">{title.upper()}</h1>
+              <p class="product-subtitle">{description}</p>
+            </div>
+
+            <div class="product-key-specs">
+              {key_specs_html}
+            </div>
+
+            <div class="product-purchase-card">
+              <div class="product-price-container" id="product-price-container" data-product-id="{cart_data['id']}" style="display: none;">
+                <div class="product-price-label">Prijs:</div>
+                <div class="product-price" id="product-price">
+                  <span class="price-loading">Prijs laden...</span>
+                </div>
+                <div class="stock-status {stock_class}">{stock_text}</div>
+              </div>
+              
+              <div class="product-cta-section">
+                <div class="product-quantity-wrapper">
+                  <div class="quantity-selector">
+                    <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
+                    <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
+                  </div>
+                  
+                  <div class="product-actions">
+                    <button class="btn-split btn-split-primary" id="add-to-quote" data-product='{cart_data_json_attr}'>
+                      <span class="btn-split-text">{labels['add_to_quote']}</span>
+                      <span class="btn-split-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                
+                <ul class="product-usps">
+                  <li>Voor 15:00 besteld, morgen verzonden</li>
+                  <li>Gratis verzending vanaf €500</li>
+                  <li>Geproduceerd in België (Hardox staal)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="expert-box-sidebar">
+              <div class="expert-header">
+                <div class="expert-avatar">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <div>
+                  <span class="expert-title">Hulp nodig bij uw keuze?</span>
+                  <span class="expert-subtitle">Onze experts helpen u graag verder.</span>
+                </div>
+              </div>
+              <a href="tel:+32469702138" class="expert-contact">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                +32 469 70 21 38
+              </a>
+            </div>
+          </div>'''
+    
+    # Extra Sections
+    details_section = '''
+    <section class="section product-details-section fade-in">
+      <div class="container">
+        <div class="product-details-layout">
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            </div>
+            <h3>Technische Specificaties</h3>
+            <p>Alle kraanbakken worden vervaardigd uit hoogwaardig Hardox staal voor maximale sterkte en duurzaamheid. Perfect afgestemd op uw graafmachine.</p>
+          </div>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <h3>Op Maat Gemaakt</h3>
+            <p>Elke kraanbak wordt op maat geproduceerd in onze werkplaats in Beernem, België. Kwaliteit en precisie gegarandeerd.</p>
+          </div>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3>Snelle Levering</h3>
+            <p>Afhalen in Beernem of levering op locatie. Neem contact op voor levertijden en mogelijkheden.</p>
+          </div>
+        </div>
+      </div>
+    </section>'''
+
+    specs_section = f'''
+    <section class="section specifications-section">
+      <div class="container">
+        <div class="specifications-content">
+          <div class="specifications-description">
+            <h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>
+            <p>Deze hoogwaardige kraanbak is speciaal ontworpen voor professionele graafwerkzaamheden. De robuuste constructie en doordachte vorm maken deze bak ideaal voor diverse toepassingen in de grond-, weg- en waterbouw.</p>
+            <p>Vervaardigd uit slijtvast Hardox staal voor maximale duurzaamheid en een lange levensduur, zelfs onder zware werkomstandigheden. De geoptimaliseerde geometrie zorgt voor uitstekende prestaties in verschillende grondsoorten.</p>
+          </div>
+          
+          <div class="specifications-table-wrapper">
+            <h3 class="specifications-subtitle">Technische Specificaties</h3>
+            <table class="specifications-table">
+              <tbody>
+                {specs_table_html}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>'''
+
+    sticky_cta = f'''
+    <div class="product-sticky-cta">
+      <button class="btn-split btn-split-primary" id="add-to-quote-sticky" data-product='{cart_data_json_attr}'>
+        <span class="btn-split-text">{labels['add_to_quote']}</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
+      </button>
+    </div>'''
+
+
     return f'''<!DOCTYPE html>
 <html lang="{locale.replace('-', '_')}">
 <head>
@@ -266,130 +446,16 @@ def generate_product_page(product, locale):
     <section class="section product-section">
       <div class="container">
         <div class="product-layout">
-          <div class="product-gallery animate-on-scroll">
-            <div class="product-image-main">
-              <img src="{image_url}" alt="{title}" id="main-image">
-            </div>
-          </div>
-          <div class="product-info animate-on-scroll">
-            <h1 class="product-title">{title.upper()}</h1>
-            <p class="product-subtitle">{description}</p>
-            
-            <div class="product-specs-grid">
-              {specs_html}
-            </div>
-            
-            <!-- Price display (only visible for logged-in users) -->
-            <div class="product-price-container" id="product-price-container" data-product-id="{cart_data['id']}" style="display: none;">
-              <div class="product-price-label">Prijs:</div>
-              <div class="product-price" id="product-price">
-                <span class="price-loading">Prijs laden...</span>
-              </div>
-            </div>
-            
-            <div class="product-actions">
-              <button class="btn-split btn-split-primary" id="add-to-quote" data-product="{cart_data_json}">
-                <span class="btn-split-text">{labels['add_to_quote']}</span>
-                <span class="btn-split-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </span>
-              </button>
-            </div>
-
-            <div class="expert-box">
-              <div class="expert-header">
-                <div class="expert-avatar">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                </div>
-                <div class="expert-info">
-                  <strong>Arno Vermeersch</strong>
-                  <span>External Sales</span>
-                </div>
-              </div>
-              <p class="expert-text">Twijfel je over de juiste ophanging of maat? Neem contact op met onze specialist.</p>
-              <a href="tel:+32469702138" class="expert-phone">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                </svg>
-                +32 469 70 21 38
-              </a>
-              <a href="mailto:arno.vermeersch@structon.be" class="expert-email">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                arno.vermeersch@structon.be
-              </a>
-            </div>
-          </div>
+          {gallery_section}
+          {info_section}
         </div>
       </div>
     </section>
     
-    <!-- Product Details Section -->
-    <section class="section product-details-section fade-in">
-      <div class="container">
-        <div class="product-details-layout">
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-            </div>
-            <h3>Technische Specificaties</h3>
-            <p>Alle kraanbakken worden vervaardigd uit hoogwaardig Hardox staal voor maximale sterkte en duurzaamheid. Perfect afgestemd op uw graafmachine.</p>
-          </div>
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            </div>
-            <h3>Op Maat Gemaakt</h3>
-            <p>Elke kraanbak wordt op maat geproduceerd in onze werkplaats in Beernem, België. Kwaliteit en precisie gegarandeerd.</p>
-          </div>
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
-            <h3>Snelle Levering</h3>
-            <p>Afhalen in Beernem of levering op locatie. Neem contact op voor levertijden en mogelijkheden.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    {details_section}
+    {specs_section}
+    {sticky_cta}
     
-    <!-- Specifications Content Section -->
-    <section class="section specifications-section">
-      <div class="container">
-        <div class="specifications-content">
-          <div class="specifications-description">
-            <h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>
-            <p>Deze hoogwaardige kraanbak is speciaal ontworpen voor professionele graafwerkzaamheden. De robuuste constructie en doordachte vorm maken deze bak ideaal voor diverse toepassingen in de grond-, weg- en waterbouw.</p>
-            <p>Vervaardigd uit slijtvast Hardox staal voor maximale duurzaamheid en een lange levensduur, zelfs onder zware werkomstandigheden. De geoptimaliseerde geometrie zorgt voor uitstekende prestaties in verschillende grondsoorten.</p>
-          </div>
-          
-          <div class="specifications-table-wrapper">
-            <h3 class="specifications-subtitle">Technische Specificaties</h3>
-            <table class="specifications-table">
-              <tbody>
-                {specs_table_html}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    
-    <!-- Sticky Mobile CTA -->
-    <div class="product-sticky-cta">
-      <button class="btn-split btn-split-primary" id="add-to-quote-sticky" data-product="{cart_data_json}">
-        <span class="btn-split-text">{labels['add_to_quote']}</span>
-        <span class="btn-split-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-      </button>
-    </div>
   </main>
   <div id="footer-placeholder"></div>
   <script src="{assets_prefix}/js/components/header-loader.js"></script>

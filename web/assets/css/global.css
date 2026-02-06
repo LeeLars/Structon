@@ -392,6 +392,11 @@ h6 { font-size: var(--text-base); }
   align-items: stretch;
   gap: 2px; /* Vaste afstand tussen de twee blokken */
   text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  position: relative;
 }
 
 /* Blok 1: Tekst */
@@ -428,8 +433,13 @@ h6 { font-size: var(--text-base); }
 .btn-split:hover .btn-split-text,
 .btn-split:hover .btn-split-icon {
   background-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(35, 103, 115, 0.4);
+}
+
+.btn-split:active {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
+  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.3);
 }
 
 /* Small variant (voor product cards) */
@@ -627,6 +637,7 @@ h6 { font-size: var(--text-base); }
   gap: 5px;
   font-size: 0.875rem;
   white-space: nowrap;
+  transition: opacity 0.2s;
 }
 
 .top-nav a:hover {
@@ -781,6 +792,11 @@ h6 { font-size: var(--text-base); }
   cursor: pointer;
   padding: 0 15px; /* Horizontal padding only */
   height: 100%; /* Full height of nav bar */
+  transition: color 0.2s ease;
+}
+
+.menu-item:hover {
+  color: var(--color-primary);
 }
 
 /* Invisible Hover Bridge using pseudo-element on the container or dropdown itself */
@@ -1781,7 +1797,6 @@ body[data-page="product"] .hero-subtitle {
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
   color: var(--color-gray-900);
-  margin-bottom: var(--space-2);
 }
 
 .product-price-locked {
@@ -2048,7 +2063,6 @@ body[data-page="product"] .hero-subtitle {
   color: var(--color-gray-400);
   font-size: 0.8125rem;
   text-decoration: none;
-  transition: color var(--transition-fast);
 }
 
 @media (min-width: 768px) {

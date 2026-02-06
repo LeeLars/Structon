@@ -118,138 +118,129 @@ function renderProduct(product) {
 
   container.innerHTML = `
     <div class="product-layout">
-      <!-- LEFT COLUMN: Gallery -->
-      <div class="product-gallery-wrapper">
-        <div class="product-gallery">
-          <div class="product-main-image">
-            <img src="${mainImage}" alt="${product.title}" id="main-product-image">
-          </div>
-          ${images.length > 1 ? `
-            <div class="product-thumbnails">
-              ${images.map((img, i) => `
-                <button class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}">
-                  <img src="${img.url}" alt="${product.title} ${i + 1}">
-                </button>
-              `).join('')}
+      <!-- LEFT: Gallery with vertical thumbnails -->
+      <div class="product-gallery">
+        <div class="product-thumbnails">
+          ${images.map((img, i) => `
+            <div class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}">
+              <img src="${img.url}" alt="${product.title} ${i + 1}">
             </div>
-          ` : ''}
+          `).join('')}
         </div>
-
-        <!-- Trust Signals (Mobile/Tablet only here, Desktop in right col) -->
-        <div class="product-trust-signals hide-on-desktop">
-          <div class="trust-item">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span>Op voorraad: Direct leverbaar</span>
-          </div>
-          <div class="trust-item">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>2 Jaar Garantie</span>
-          </div>
+        <div class="product-image-main">
+          <img src="${mainImage}" alt="${product.title}" id="main-product-image">
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: Info, Actions & Expert -->
+      <!-- RIGHT: Product Info -->
       <div class="product-info-wrapper">
-        <div class="product-info">
-          <div class="product-header">
-            <div class="product-badges">
-              <span class="badge badge-quality">Premium Kwaliteit</span>
-              ${product.stock_status === 'in_stock' ? '<span class="badge badge-stock in-stock">Op Voorraad</span>' : ''}
-            </div>
-            <span class="product-category-label">${product.category_title || 'Product'}</span>
-            <h1 class="product-title">${product.title}</h1>
-            <div class="product-sku">Artikelnummer: ${product.article_number || product.sku || 'N/A'}</div>
-            <p class="product-subtitle">${product.short_description || `Hoogwaardige ${product.title.toLowerCase()} voor professioneel gebruik.`}</p>
-          </div>
+        <div class="product-header">
+          <span class="product-category-label">${product.category_title || 'Product'}</span>
+          <h1 class="product-title">${product.title}</h1>
+          <div class="product-sku">Artikelnummer: ${product.article_number || product.sku || 'N/A'}</div>
+          <p class="product-subtitle">${product.short_description || `Hoogwaardige ${product.title.toLowerCase()} voor professioneel gebruik.`}</p>
+        </div>
 
-          <div class="product-purchase-card">
-            <div class="product-price-container price-locked" id="price-section" data-product-id="${product.id}">
-              <div class="product-price">Login voor prijs</div>
-              <p class="login-prompt">
-                <a href="login.html">Log in</a> om prijzen te bekijken en te bestellen.
-              </p>
+        ${product.width || product.weight || product.attachment_type ? `
+        <div class="product-key-specs">
+          ${product.width ? `
+          <div class="key-spec">
+            <span class="key-spec-label">Breedte</span>
+            <span class="key-spec-value">${product.width} mm</span>
+          </div>
+          ` : ''}
+          ${product.weight ? `
+          <div class="key-spec">
+            <span class="key-spec-label">Gewicht</span>
+            <span class="key-spec-value">${product.weight} kg</span>
+          </div>
+          ` : ''}
+          ${product.attachment_type ? `
+          <div class="key-spec">
+            <span class="key-spec-label">Ophanging</span>
+            <span class="key-spec-value">${product.attachment_type}</span>
+          </div>
+          ` : ''}
+          ${product.excavator_weight_min && product.excavator_weight_max ? `
+          <div class="key-spec">
+            <span class="key-spec-label">Graafmachine</span>
+            <span class="key-spec-value">${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</span>
+          </div>
+          ` : ''}
+        </div>
+        ` : ''}
+
+        <div class="product-purchase-card">
+          <div class="product-price-container" id="price-section" data-product-id="${product.id}">
+            <div class="product-price-label">Prijs:</div>
+            <div class="product-price">Login voor prijs</div>
+            <p class="login-prompt">
+              <a href="login.html">Log in</a> om prijzen te bekijken en te bestellen.
+            </p>
+          </div>
+          
+          <div class="product-cta-section">
+            <div class="product-quantity-wrapper">
+              <div class="quantity-selector">
+                <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
+                <input type="number" id="quantity_${product.id}" name="quantity" value="1" min="1" max="99">
+                <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
+              </div>
+              
+              <div class="product-actions">
+                <button class="btn-split" 
+                  onclick="window.quoteCart.addItem({
+                    id: '${product.id}',
+                    title: '${product.title.replace(/'/g, "\\'")}',
+                    image: '${mainImage}',
+                    category: '${product.category_title || ''}',
+                    specs: {
+                      width: '${product.width || ''}',
+                      weight: '${product.weight || ''}'
+                    },
+                    quantity: parseInt(document.getElementById('quantity_${product.id}').value) || 1
+                  });"
+                >
+                  <span class="btn-split-text">Toevoegen aan offerte</span>
+                  <span class="btn-split-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  </span>
+                </button>
+              </div>
             </div>
             
-            <div class="product-cta-section">
-              <div class="product-quantity-wrapper" style="width: 100%; margin-bottom: 1rem;">
-                <div class="quantity-selector">
-                  <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
-                  <input type="number" id="quantity_${product.id}" name="quantity" value="1" min="1" max="99">
-                  <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
-                </div>
-              </div>
+            <ul class="product-usps">
+              <li>Voor 15:00 besteld, morgen verzonden</li>
+              <li>Gratis verzending vanaf €500</li>
+              <li>Geproduceerd in België (Hardox staal)</li>
+            </ul>
+          </div>
+        </div>
 
-              <button class="btn-split usp-btn" 
-                onclick="window.quoteCart.addItem({
-                  id: '${product.id}',
-                  title: '${product.title.replace(/'/g, "\\'")}',
-                  image: '${mainImage}',
-                  category: '${product.category_title || ''}',
-                  specs: {
-                    width: '${product.width || ''}',
-                    weight: '${product.weight || ''}'
-                  },
-                  quantity: parseInt(document.getElementById('quantity_${product.id}').value) || 1
-                });"
-              >
-                <span class="btn-split-text">
-                  Toevoegen aan offerte
-                </span>
-                <span class="btn-split-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </span>
-              </button>
-              
-              <ul class="product-usps">
-                <li class="product-usp-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Voor 15:00 besteld, morgen verzonden
-                </li>
-                <li class="product-usp-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Gratis verzending vanaf €500
-                </li>
-                <li class="product-usp-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  Geproduceerd in België (Hardox staal)
-                </li>
-              </ul>
+        <div class="expert-box-sidebar">
+          <div class="expert-header">
+            <div class="expert-avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div>
+              <span class="expert-title">Hulp nodig bij uw keuze?</span>
+              <span class="expert-subtitle">Onze experts helpen u graag verder.</span>
             </div>
           </div>
-
-          <!-- Expert / Dealer Info Box -->
-          <div class="expert-box-sidebar">
-            <div class="expert-header">
-              <div class="expert-avatar">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
-              <div>
-                <span class="expert-title">Hulp nodig bij uw keuze?</span>
-                <span class="expert-subtitle">Onze experts helpen u graag verder.</span>
-              </div>
-            </div>
-            <p class="expert-text">Twijfelt u of de <strong>${product.title}</strong> past op uw machine? Wij controleren het direct voor u.</p>
-            <div class="expert-actions">
-              <a href="tel:+32469702138" class="expert-contact">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                +32 469 70 21 38
-              </a>
-            </div>
-          </div>
+          <a href="tel:+32469702138" class="expert-contact">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            +32 469 70 21 38
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Product Details Section (Icons) -->
-    <section class="section product-details-section">
-      <div class="container">
+    <!-- Product Details Section -->
+    <section class="product-details-section">
+      <div class="product-container">
         <div class="product-details-layout">
           <div class="product-detail-card">
             <div class="detail-card-icon">
@@ -276,59 +267,20 @@ function renderProduct(product) {
       </div>
     </section>
 
-    <!-- Visual Storytelling: Action Shot -->
-    <section class="section product-action-shot" style="background-image: url('${mainImage}');">
-      <div class="action-shot-content fade-in">
+    <!-- Action Shot -->
+    <section class="product-action-shot" style="background-image: url('${mainImage}');">
+      <div class="action-shot-content">
         <h2>Kracht in elke beweging</h2>
-        <p>Ontworpen voor maximale prestaties en efficiëntie op de werf. Onze dieplepelbakken graven soepeler, vullen beter en gaan langer mee.</p>
+        <p>Ontworpen voor maximale prestaties en efficiëntie op de werf. Onze ${product.category_title || 'producten'} graven soepeler, vullen beter en gaan langer mee.</p>
       </div>
     </section>
 
-    <!-- Feature Hotspots -->
-    <section class="section product-features-hotspots">
-      <div class="container">
-        <div class="section-title-small">Belangrijkste Kenmerken</div>
-        <div class="features-hotspots-container">
-          <div class="hotspots-image animate-on-scroll">
-            <img src="${mainImage}" alt="${product.title} features">
-            <!-- Hotspots positioned absolutely (Generic positions for now) -->
-            <div class="hotspot-marker" style="top: 30%; left: 40%;" title="Versterkte ophanging">1</div>
-            <div class="hotspot-marker" style="top: 60%; left: 70%;" title="Slijtvast Hardox staal">2</div>
-            <div class="hotspot-marker" style="top: 80%; left: 30%;" title="Optimale snijhoek">3</div>
-          </div>
-          <div class="features-list animate-stagger">
-            <div class="feature-item">
-              <div class="feature-number">1</div>
-              <div class="feature-content">
-                <h3>Versterkte Ophanging</h3>
-                <p>De ophanging is extra verstevigd om de krachten van de graafmachine optimaal over te brengen zonder scheurvorming.</p>
-              </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-number">2</div>
-              <div class="feature-content">
-                <h3>Hardox 450 Staal</h3>
-                <p>Volledig vervaardigd uit slijtvast Hardox staal voor een extreem lange levensduur, zelfs in abrasieve grondsoorten.</p>
-              </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-number">3</div>
-              <div class="feature-content">
-                <h3>Geoptimaliseerde Vorm</h3>
-                <p>De vormgeving zorgt voor minder weerstand tijdens het graven, wat resulteert in een lager brandstofverbruik en snellere cyclustijden.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Specs Matrix (New Design) -->
-    <section class="section specs-matrix-section">
-      <div class="container">
+    <!-- Specs Matrix -->
+    <section class="specs-matrix-section">
+      <div class="product-container">
         <h2 class="specifications-title">Technische Specificaties</h2>
         <div class="specs-matrix-container">
-          <table class="specs-matrix-table animate-on-scroll">
+          <table class="specs-matrix-table">
             <thead>
               <tr>
                 <th colspan="2">Eigenschappen</th>

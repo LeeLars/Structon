@@ -120,6 +120,7 @@ function renderProduct(product) {
     <div class="product-layout">
       <!-- LEFT: Gallery with vertical thumbnails -->
       <div class="product-gallery">
+        ${images.length > 1 ? `
         <div class="product-thumbnails">
           ${images.map((img, i) => `
             <div class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}">
@@ -127,6 +128,7 @@ function renderProduct(product) {
             </div>
           `).join('')}
         </div>
+        ` : ''}
         <div class="product-image-main">
           <img src="${mainImage}" alt="${product.title}" id="main-product-image">
         </div>
@@ -210,9 +212,9 @@ function renderProduct(product) {
             </div>
             
             <ul class="product-usps">
-              <li>Voor 15:00 besteld, morgen verzonden</li>
-              <li>Gratis verzending vanaf €500</li>
-              <li>Geproduceerd in België (Hardox staal)</li>
+              <li>Op maat geproduceerd in België</li>
+              <li>Hardox 450 slijtvast staal</li>
+              <li>2 jaar constructiegarantie</li>
             </ul>
           </div>
         </div>
@@ -220,19 +222,29 @@ function renderProduct(product) {
         <div class="expert-box-sidebar">
           <div class="expert-header">
             <div class="expert-avatar">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#236773" stroke-width="1.5">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
             </div>
-            <div>
-              <span class="expert-title">Hulp nodig bij uw keuze?</span>
-              <span class="expert-subtitle">Onze experts helpen u graag verder.</span>
+            <div class="expert-info">
+              <strong>Arno Vermeersch</strong>
+              <span>External Sales</span>
             </div>
           </div>
-          <a href="tel:+32469702138" class="expert-contact">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <p class="expert-text">Twijfel je over de juiste ophanging of maat? Neem contact op met onze specialist.</p>
+          <a href="tel:+32469702138" class="expert-phone">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
             +32 469 70 21 38
+          </a>
+          <a href="mailto:arno.vermeersch@structon.be" class="expert-email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            arno.vermeersch@structon.be
           </a>
         </div>
       </div>
@@ -260,8 +272,8 @@ function renderProduct(product) {
             <div class="detail-card-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </div>
-            <h3>Snelle Levering</h3>
-            <p>Afhalen in Beernem of levering op locatie. Neem contact op voor levertijden en mogelijkheden.</p>
+            <h3>Belgische Productie</h3>
+            <p>Op maat geproduceerd in onze werkplaats in Beernem. Kwaliteit en precisie gegarandeerd.</p>
           </div>
         </div>
       </div>
@@ -322,9 +334,9 @@ function renderProduct(product) {
   const existingRelatedSection = document.getElementById('related-section');
   if (!existingRelatedSection) {
     const relatedSectionHtml = `
-      <section id="related-section" class="related-products-section" style="display: none;">
-        <div class="container">
-          <h2 class="section-title">Gerelateerde Producten</h2>
+      <section id="related-section" class="related-products-section">
+        <div class="product-container">
+          <h2 class="section-title">Meer Producten</h2>
           <div id="related-products-grid" class="related-products-grid"></div>
         </div>
       </section>
@@ -405,10 +417,10 @@ function formatWeight(kg) {
  * Load related products
  */
 async function loadRelatedProducts() {
-  const section = document.getElementById('related-products-section');
+  const section = document.getElementById('related-section');
   const container = document.getElementById('related-products-grid');
   
-  if (!section || !container || !currentProduct) return;
+  if (!container) return;
 
   container.innerHTML = `
     <div class="structon-loader loader-small">
@@ -417,22 +429,28 @@ async function loadRelatedProducts() {
   `;
 
   try {
-    const data = await products.getAll({
-      category_id: currentProduct.category_id,
-      limit: 4
+    // Try to get products from same category first
+    let data = await products.getAll({
+      category_id: currentProduct?.category_id,
+      limit: 8
     });
 
-    const related = (data.items || []).filter(p => p.id !== currentProduct.id);
+    let related = (data.items || []).filter(p => p.id !== currentProduct?.id);
+
+    // If not enough products, get any products
+    if (related.length < 4) {
+      data = await products.getAll({ limit: 8 });
+      related = (data.items || []).filter(p => p.id !== currentProduct?.id);
+    }
 
     if (related.length > 0) {
-      section.style.display = 'block';
-      container.innerHTML = related.slice(0, 4).map(createProductCard).join('');
+      container.innerHTML = related.slice(0, 8).map(createProductCard).join('');
     } else {
-      container.innerHTML = '';
+      container.innerHTML = '<p style="text-align: center; color: var(--color-gray-500);">Geen producten beschikbaar</p>';
     }
   } catch (error) {
     console.error('Error loading related products:', error);
-    container.innerHTML = '';
+    container.innerHTML = '<p style="text-align: center; color: var(--color-gray-500);">Kon producten niet laden</p>';
   }
 }
 

@@ -125,8 +125,10 @@
    PRODUCT HEADER
    =========================================== */
 .product-header {
-  border-bottom: 1px solid var(--structon-border);
-  padding-bottom: var(--space-4);
+  background: linear-gradient(135deg, var(--structon-petrol) 0%, var(--structon-petrol-dark) 100%);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-6);
 }
 
 .product-category-label {
@@ -135,8 +137,8 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--structon-petrol);
-  background: rgba(35, 103, 115, 0.08);
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
   padding: 4px 12px;
   border-radius: var(--radius-full);
   margin-bottom: var(--space-3);
@@ -144,9 +146,9 @@
 
 .product-title {
   font-size: var(--text-4xl);
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
-  color: var(--color-gray-900);
+  color: white;
   margin: 0 0 var(--space-2) 0;
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -154,14 +156,14 @@
 
 .product-sku {
   font-size: var(--text-sm);
-  color: var(--color-gray-500);
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: var(--space-3);
   font-family: monospace;
 }
 
 .product-subtitle {
   font-size: var(--text-base);
-  color: var(--color-gray-600);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-top: var(--space-3);
 }
@@ -410,51 +412,54 @@
 }
 
 /* ===========================================
-   EXPERT BOX
+   EXPERT BOX (Brand Page Style)
    =========================================== */
 .expert-box-sidebar {
-  background: var(--structon-gray-light);
+  background: white;
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   border: 1px solid var(--structon-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .expert-header {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .expert-avatar {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: white;
+  background: var(--structon-gray-light);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 2px solid white;
-  box-shadow: var(--shadow-sm);
 }
 
 .expert-avatar svg {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   color: var(--structon-petrol);
 }
 
-.expert-title {
+.expert-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.expert-info strong {
   font-size: var(--text-base);
   font-weight: 700;
   color: var(--color-gray-900);
   display: block;
   margin-bottom: 2px;
-  text-transform: uppercase;
 }
 
-.expert-subtitle {
+.expert-info span {
   font-size: var(--text-sm);
   color: var(--color-gray-600);
   display: block;
@@ -467,31 +472,39 @@
   line-height: 1.6;
 }
 
-.expert-contact {
+.expert-phone,
+.expert-email {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--space-2);
-  padding: 12px 20px;
-  background: white;
+  padding: 10px 16px;
+  background: var(--structon-gray-light);
   border: 1px solid var(--structon-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   color: var(--structon-petrol);
   text-decoration: none;
   font-size: var(--text-sm);
   font-weight: 600;
   transition: all 0.2s ease;
+  margin-bottom: var(--space-2);
 }
 
-.expert-contact:hover {
+.expert-phone:hover,
+.expert-email:hover {
   border-color: var(--structon-petrol);
   background: var(--structon-petrol);
   color: white;
 }
 
-.expert-contact svg {
-  width: 18px;
-  height: 18px;
+.expert-phone svg,
+.expert-email svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.expert-email:last-child {
+  margin-bottom: 0;
 }
 
 /* ===========================================
@@ -519,6 +532,11 @@
 .product-detail-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
+}
+
+/* Hide delivery card */
+.product-detail-card:nth-child(3) {
+  display: none;
 }
 
 .detail-card-icon {
@@ -586,7 +604,7 @@
 
 .action-shot-content h2 {
   font-size: var(--text-4xl);
-  font-weight: 800;
+  font-weight: 900;
   margin: 0 0 var(--space-4) 0;
   line-height: 1.1;
   color: white;

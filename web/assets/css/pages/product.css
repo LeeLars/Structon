@@ -1,6 +1,6 @@
 /* ============================================
-   STRUCTON PRODUCT PAGE STYLES - REDESIGN 2.0
-   Modern, Professional B2B product detail page
+   STRUCTON PRODUCT PAGE STYLES - REDESIGN 2.1
+   Modern, Professional B2B Webshop Experience
    ============================================ */
 
 /* Product Section */
@@ -9,11 +9,52 @@
   background: var(--color-white);
 }
 
-/* Modern Hero Header */
-.product-hero-header {
-  background: linear-gradient(180deg, var(--color-gray-50) 0%, var(--color-white) 100%);
-  padding: var(--space-8) 0 var(--space-12) 0;
-  border-bottom: 1px solid var(--color-gray-100);
+/* Hero Header - Petrol Background with White Text */
+.page-hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.page-hero .container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.page-hero .breadcrumb {
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+.page-hero .breadcrumb a,
+.page-hero .breadcrumb span {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.page-hero .breadcrumb a:hover {
+  color: white;
+}
+
+.page-hero .hero-title {
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-top: var(--space-4);
 }
 
 /* Product Layout - Sticky Sidebar */
@@ -320,10 +361,6 @@
   letter-spacing: -0.01em;
   line-height: 1.1;
   margin: 0 0 var(--space-3) 0;
-  background: linear-gradient(135deg, var(--color-gray-900) 0%, var(--color-gray-700) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .product-subtitle {
@@ -385,79 +422,191 @@
   color: var(--color-primary);
 }
 
-/* Price Section - Enhanced */
-.product-price-section {
+/* Price Section - Clear Visibility */
+.product-price-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-6);
-  border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  position: relative;
-  overflow: hidden;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-gray-200);
+  margin: var(--space-6) 0;
 }
 
-.product-price-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-  pointer-events: none;
+.product-price-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
 }
 
 .product-price {
-  font-size: var(--text-3xl);
+  font-size: var(--text-4xl);
   font-weight: var(--font-black);
-  color: white;
-  position: relative;
-  z-index: 1;
+  color: var(--color-primary);
+  margin: 0;
 }
 
 .login-prompt {
   font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-gray-600);
   margin: 0;
-  position: relative;
-  z-index: 1;
 }
 
 .login-prompt a {
-  color: white;
+  color: var(--color-primary);
   font-weight: 700;
   text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 2px;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .login-prompt a:hover {
-  text-decoration-color: rgba(255, 255, 255, 0.5);
+  color: var(--color-primary-dark);
 }
 
-/* CTA Section - Enhanced */
+/* CTA Section - Left Aligned with Quantity Selector */
 .product-cta-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  align-items: flex-start;
 }
 
-.product-cta-section .btn-split {
+.product-quantity-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+}
+
+.quantity-selector button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-selector button:hover {
+  background: var(--color-gray-200);
+  transform: translateY(-1px);
+}
+
+.quantity-selector button:active {
+  transform: scale(0.95);
+}
+
+.quantity-selector input {
+  width: 60px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.product-actions .btn-split {
   padding: var(--space-4) var(--space-6);
   font-size: 1.05rem;
   box-shadow: 0 4px 16px rgba(35, 103, 115, 0.25);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  justify-content: center;
 }
 
-.product-cta-section .btn-split:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(35, 103, 115, 0.35);
+.product-actions .btn-split:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(35, 103, 115, 0.35);
 }
 
-.product-cta-section .btn-split:active {
-  transform: translateY(-1px);
+.product-actions .btn-split:active {
+  transform: translateY(0);
+}
+
+/* Stock Status Badge */
+.stock-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: #dcfce7;
+  color: #166534;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.stock-status.in-stock::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: block;
+}
+
+.stock-status.limited-stock {
+  background: #fed7aa;
+  color: #9a3412;
+}
+
+.stock-status.limited-stock::before {
+  background: #f97316;
+}
+
+/* USP List under CTA */
+.product-usps {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.product-usps li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+
+.product-usps li::before {
+  content: '✓';
+  color: var(--color-success);
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .cta-subtext {

@@ -138,7 +138,7 @@ function renderProduct(product) {
 
   container.innerHTML = `
     <div class="product-layout">
-      <!-- LEFT: Gallery with vertical thumbnails -->
+      <!-- LEFT: Gallery with vertical thumbnails or lightbox button -->
       <div class="product-gallery">
         ${images.length > 1 ? `
         <div class="product-thumbnails">
@@ -148,8 +148,18 @@ function renderProduct(product) {
             </div>
           `).join('')}
         </div>
-        ` : ''}
-        <div class="product-image-main">
+        ` : `
+        <button class="product-lightbox-trigger" onclick="openProductLightbox('${mainImage}', '${product.title}')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          <span>Vergroot</span>
+        </button>
+        `}
+        <div class="product-image-main" ${images.length === 1 ? 'onclick="openProductLightbox(\'' + mainImage + '\', \'' + product.title + '\')" style="cursor: zoom-in;"' : ''}>
           <img src="${mainImage}" alt="${product.title}" id="main-product-image">
         </div>
       </div>
@@ -232,8 +242,8 @@ function renderProduct(product) {
             </div>
             
             <ul class="product-usps">
-              <li>Geproduceerd op bestelling</li>
-              <li>Hoogwaardig maatwerk uit eigen atelier</li>
+              <li>Belgische makelij</li>
+              <li>Aanbouwdelen op maat</li>
               <li>Levertijd in overleg</li>
             </ul>
           </div>
@@ -281,11 +291,6 @@ function renderProduct(product) {
         <h2 class="specifications-title">Technische Specificaties</h2>
         <div class="specs-matrix-container">
           <table class="specs-matrix-table">
-            <thead>
-              <tr>
-                <th colspan="2">Eigenschappen</th>
-              </tr>
-            </thead>
             <tbody>
               ${product.article_number ? `<tr><th>Artikelnummer</th><td>${product.article_number}</td></tr>` : ''}
               ${product.brand_title ? `<tr><th>Merk Machine</th><td>${product.brand_title}</td></tr>` : ''}
@@ -516,3 +521,52 @@ function updateQuoteForm(product) {
     if (productNameInput) productNameInput.value = product.title;
   }
 }
+
+/**
+ * Open product image in lightbox
+ */
+window.openProductLightbox = function(imageUrl, productTitle) {
+  // Create lightbox overlay
+  const lightbox = document.createElement('div');
+  lightbox.className = 'product-lightbox-overlay';
+  lightbox.innerHTML = `
+    <div class="product-lightbox-content">
+      <button class="product-lightbox-close" onclick="closeProductLightbox()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <img src="${imageUrl}" alt="${productTitle}">
+    </div>
+  `;
+  
+  document.body.appendChild(lightbox);
+  document.body.style.overflow = 'hidden';
+  
+  // Close on overlay click
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) {
+      closeProductLightbox();
+    }
+  });
+  
+  // Close on ESC key
+  document.addEventListener('keydown', function escHandler(e) {
+    if (e.key === 'Escape') {
+      closeProductLightbox();
+      document.removeEventListener('keydown', escHandler);
+    }
+  });
+};
+
+/**
+ * Close product lightbox
+ */
+window.closeProductLightbox = function() {
+  const lightbox = document.querySelector('.product-lightbox-overlay');
+  if (lightbox) {
+    lightbox.remove();
+    document.body.style.overflow = '';
+  }
+};

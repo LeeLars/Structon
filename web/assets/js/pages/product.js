@@ -239,9 +239,9 @@ function renderProduct(product) {
             </div>
             
             <ul class="product-usps">
-              <li>Belgische makelij</li>
-              <li>Aanbouwdelen op maat</li>
-              <li>Levertijd in overleg</li>
+              <li>Op maat gemaakt in België - perfecte pasvorm</li>
+              <li>Hardox 450 staal - langere levensduur</li>
+              <li>Rechtstreeks van fabrikant - eerlijke prijzen</li>
             </ul>
           </div>
         </div>

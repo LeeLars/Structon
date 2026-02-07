@@ -286,37 +286,34 @@ function renderProduct(product) {
     </section>
 
     <!-- Specs Matrix -->
-    <section class="specs-matrix-section">
+    <section class="specifications-section">
       <div class="product-container">
-        <h2 class="specifications-title">Technische Specificaties</h2>
-        <div class="specs-matrix-container">
-          <table class="specs-matrix-table">
-            <tbody>
-              ${product.article_number ? `<tr><th>Artikelnummer</th><td>${product.article_number}</td></tr>` : ''}
-              ${product.brand_title ? `<tr><th>Merk Machine</th><td>${product.brand_title}</td></tr>` : ''}
-              ${product.category_title ? `<tr><th>Categorie</th><td>${product.category_title}</td></tr>` : ''}
-              ${product.attachment_type ? `<tr><th>Aansluiting</th><td>${product.attachment_type}</td></tr>` : ''}
-              ${product.width ? `<tr><th>Breedte</th><td>${product.width} mm</td></tr>` : ''}
-              ${product.volume ? `<tr><th>Inhoud (SAE)</th><td>${product.volume} liter</td></tr>` : ''}
-              ${product.weight ? `<tr><th>Eigen Gewicht</th><td>${product.weight} kg</td></tr>` : ''}
-              ${product.excavator_weight_min && product.excavator_weight_max ? `
-                <tr><th>Machine Klasse</th><td>${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</td></tr>
-              ` : ''}
-              ${product.material ? `<tr><th>Materiaal</th><td>${product.material}</td></tr>` : '<tr><th>Materiaal</th><td>Hardox 450 / S355</td></tr>'}
-              ${product.warranty ? `<tr><th>Garantie</th><td>${product.warranty}</td></tr>` : '<tr><th>Garantie</th><td>2 Jaar Constructiegarantie</td></tr>'}
-              ${renderExtraSpecs(product.specs)}
-            </tbody>
-          </table>
+        <div class="specifications-content">
+          <div class="specifications-description">
+            <h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>
+            <p>${product.description || generateSeoDescription(product).intro}</p>
+            <p>${generateSeoDescription(product).applications}</p>
+          </div>
           
-          <div class="specs-technical-drawing">
-            <div style="text-align: center; padding: 2rem;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="1">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-              <p style="color: #94a3b8; margin-top: 1rem;">Technische tekening</p>
-            </div>
+          <div class="specifications-table-wrapper">
+            <h3 class="specifications-subtitle">Technische Specificaties</h3>
+            <table class="specifications-table">
+              <tbody>
+                ${product.article_number ? `<tr><th>Artikelnummer</th><td>${product.article_number}</td></tr>` : ''}
+                ${product.brand_title ? `<tr><th>Merk Machine</th><td>${product.brand_title}</td></tr>` : ''}
+                ${product.category_title ? `<tr><th>Categorie</th><td>${product.category_title}</td></tr>` : ''}
+                ${product.attachment_type ? `<tr><th>Aansluiting</th><td>${product.attachment_type}</td></tr>` : ''}
+                ${product.width ? `<tr><th>Breedte</th><td>${product.width} mm</td></tr>` : ''}
+                ${product.volume ? `<tr><th>Inhoud (SAE)</th><td>${product.volume} liter</td></tr>` : ''}
+                ${product.weight ? `<tr><th>Eigen Gewicht</th><td>${product.weight} kg</td></tr>` : ''}
+                ${product.excavator_weight_min && product.excavator_weight_max ? `
+                  <tr><th>Machine Klasse</th><td>${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</td></tr>
+                ` : ''}
+                ${product.material ? `<tr><th>Materiaal</th><td>${product.material}</td></tr>` : '<tr><th>Materiaal</th><td>Hardox 450 / S355</td></tr>'}
+                ${product.warranty ? `<tr><th>Garantie</th><td>${product.warranty}</td></tr>` : '<tr><th>Garantie</th><td>2 Jaar Constructiegarantie</td></tr>'}
+                ${renderExtraSpecs(product.specs)}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

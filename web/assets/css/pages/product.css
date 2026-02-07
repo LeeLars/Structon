@@ -688,86 +688,122 @@
 }
 
 /* ===========================================
-   SPECS MATRIX & TABLE STYLING - REDESIGNED
+   SPECIFICATIONS SECTION (NEW)
    =========================================== */
-.specs-matrix-section {
-  padding: var(--space-16) 0;
+.specifications-section {
+  padding: var(--space-12) 0;
   background: white;
+  border-top: 1px solid var(--structon-border);
+}
+
+.specifications-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+}
+
+@media (min-width: 1024px) {
+  .specifications-content {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.specifications-description {
+  max-width: 600px;
 }
 
 .specifications-title {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   font-weight: 900;
   color: var(--color-gray-900);
-  margin: 0 0 var(--space-10) 0;
+  margin: 0 0 var(--space-6) 0;
   text-transform: uppercase;
-  text-align: center;
   letter-spacing: -0.01em;
 }
 
-.specs-matrix-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
-  max-width: 900px;
-  margin: 0 auto;
+.specifications-description p {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-gray-600);
+  margin-bottom: var(--space-4);
 }
 
-/* Premium Clean Table Design */
-.specs-matrix-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
+.specifications-table-wrapper {
+  background: var(--structon-gray-light);
   border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg); /* More prominent shadow */
+  padding: var(--space-8);
   border: 1px solid var(--structon-border);
 }
 
-.specs-matrix-table thead {
-  display: none; /* Hide standard header for cleaner look, we have section title */
+.specifications-subtitle {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--structon-petrol);
+  margin: 0 0 var(--space-6) 0;
+  text-transform: uppercase;
 }
 
-.specs-matrix-table tbody tr {
-  border-bottom: 1px solid var(--structon-border);
-  transition: background-color 0.2s ease;
+.specifications-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.specs-matrix-table tbody tr:last-child {
+.specifications-table th {
+  text-align: left;
+  padding: var(--space-3) 0;
+  color: var(--color-gray-500);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  width: 40%;
+}
+
+.specifications-table td {
+  text-align: right;
+  padding: var(--space-3) 0;
+  color: var(--color-gray-900);
+  font-weight: 700;
+  font-size: var(--text-base);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.specifications-table tr:last-child th,
+.specifications-table tr:last-child td {
   border-bottom: none;
 }
 
-.specs-matrix-table tbody tr:hover {
-  background-color: var(--structon-gray-light);
-}
-
-.specs-matrix-table tbody th {
-  padding: 24px 32px;
-  text-align: left;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  width: 35%;
-  background-color: white;
-}
-
-.specs-matrix-table tbody td {
-  padding: 24px 32px;
-  text-align: right; /* Right align values for technical feel */
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--structon-petrol); /* Highlight value in brand color */
-  font-variant-numeric: tabular-nums;
-  background-color: white;
-}
-
-.specs-technical-drawing {
-  margin-top: var(--space-4);
-  background: var(--structon-gray-light);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--structon-border);
+/* Mobile responsive adjustments for specs */
+@media (max-width: 640px) {
+  .specifications-table-wrapper {
+    padding: var(--space-6);
+  }
+  
+  .specifications-table th,
+  .specifications-table td {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 2px 0;
+    border: none;
+  }
+  
+  .specifications-table th {
+    font-size: var(--text-xs);
+    margin-top: var(--space-3);
+  }
+  
+  .specifications-table td {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .specifications-table tr:last-child td {
+    border-bottom: none;
+  }
 }
 
 /* ===========================================

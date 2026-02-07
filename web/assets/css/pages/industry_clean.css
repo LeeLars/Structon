@@ -272,13 +272,13 @@ main[data-industry] .top-nav a {
   background: var(--color-primary);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(35, 103, 115, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .model-btn.active {
   background: var(--color-primary);
   color: white;
-  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
@@ -370,7 +370,7 @@ main[data-industry] .top-nav a {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: white;
-  box-shadow: 0 8px 20px rgba(35, 103, 115, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .tonnage-checkbox {

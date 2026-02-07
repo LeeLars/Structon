@@ -434,12 +434,12 @@ h6 { font-size: var(--text-base); }
 .btn-split:hover .btn-split-icon {
   background-color: var(--color-primary);
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(35, 103, 115, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .btn-split:active {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Small variant (voor product cards) */
@@ -1038,7 +1038,7 @@ h6 { font-size: var(--text-base); }
 .cta-button:hover {
   background-color: #1a4f59;
   transform: translateX(-50%) translateY(-1px);
-  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Mobile Menu Toggle */
@@ -1187,7 +1187,7 @@ h6 { font-size: var(--text-base); }
 .nav-mobile .nav-link-primary:hover {
   background-color: #1a4a56;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* CTA link */
@@ -1412,7 +1412,7 @@ body[data-page="product"] .hero-subtitle {
 
 .product-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(35, 103, 115, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border-color: transparent;
 }
 

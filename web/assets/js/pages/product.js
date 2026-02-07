@@ -249,9 +249,7 @@ function renderProduct(product) {
           </div>
         </div>
 
-        <div class="expert-box-sidebar">
-          ${createExpertBox()}
-        </div>
+        ${createExpertBox()}
       </div>
     </div>
 
@@ -263,15 +261,22 @@ function renderProduct(product) {
             <div class="detail-card-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
             </div>
-            <h3>Technische Specificaties</h3>
-            <p>Alle kraanbakken worden vervaardigd uit hoogwaardig Hardox staal voor maximale sterkte en duurzaamheid. Perfect afgestemd op uw graafmachine.</p>
+            <h3>Geproduceerd uit Hardox 450 staal</h3>
+            <p>Slijtvast staal van topkwaliteit voor intensief professioneel gebruik.<br><strong>Langere levensduur, minder slijtage, lagere onderhoudskosten.</strong></p>
           </div>
           <div class="product-detail-card">
             <div class="detail-card-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             </div>
-            <h3>Op Maat Gemaakt</h3>
-            <p>Elke kraanbak wordt op maat geproduceerd in onze werkplaats in Beernem, België. Kwaliteit en precisie gegarandeerd.</p>
+            <h3>Op maat gemaakt in België</h3>
+            <p>Geen stockproduct. Elk aanbouwdeel wordt specifiek voor jouw machine geproduceerd in onze werkplaats in Beernem.<br><strong>Perfecte pasvorm, geen compromissen.</strong></p>
+          </div>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3>Afhalen of levering op locatie</h3>
+            <p>Afhaling in Beernem of levering waar nodig.<br><strong>Flexibel volgens jouw planning.</strong></p>
           </div>
         </div>
       </div>

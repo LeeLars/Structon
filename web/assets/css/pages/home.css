@@ -330,7 +330,7 @@
 
 .category-block:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(35, 103, 115, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 .category-image {

@@ -158,7 +158,7 @@
   background: #236773;
   color: white;
   border: none;
-  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   z-index: 100;
   align-items: center;
@@ -724,7 +724,7 @@
 .quick-action:hover {
   border-color: #236773;
   background: white;
-  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .quick-action-icon {

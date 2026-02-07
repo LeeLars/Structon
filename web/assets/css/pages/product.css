@@ -161,7 +161,7 @@
   background: var(--structon-petrol);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(35, 103, 115, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .product-lightbox-trigger svg {

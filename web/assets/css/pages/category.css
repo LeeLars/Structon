@@ -335,11 +335,11 @@
 }
 
 .products-sort select:hover,
-.sort-select:hover {
+.products-cta:hover {
   background-color: #1a4f59;
   border-color: #1a4f59;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(35, 103, 115, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .products-sort select:focus,

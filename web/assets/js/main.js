@@ -76,8 +76,8 @@ function initMobileMenu() {
 /**
  * Utility: Create product card HTML
  */
-// Stock photos for products without images
-const STOCK_PHOTOS = [
+// Placeholder photos for products without images
+const PLACEHOLDER_PHOTOS = [
   'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop',
   'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=400&h=400&fit=crop',
   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
@@ -92,8 +92,8 @@ const STOCK_PHOTOS = [
  * - "Vraag offerte aan" always visible
  */
 export function createProductCardHorizontal(product, isLoggedIn = false) {
-  const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
-  const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
+  const placeholderIndex = product.id ? product.id.charCodeAt(0) % PLACEHOLDER_PHOTOS.length : 0;
+  const imageUrl = product.cloudinary_images?.[0]?.url || PLACEHOLDER_PHOTOS[placeholderIndex];
   
   // Use absolute path with dynamic base for GitHub Pages compatibility
   // Build clean URL: /locale/producten/category/subcategory/product-slug/

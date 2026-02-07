@@ -94,38 +94,20 @@ function renderPrice(container, data) {
         ${formatPrice(data.price, data.currency)}
         <span class="product-price-vat">excl. BTW</span>
       </div>
-      ${renderStockStatus(data)}
       ${renderAddToCart(data)}
     `;
   }
 }
 
 /**
- * Render stock status
- */
-function renderStockStatus(data) {
-  if (data.stock_quantity === undefined) return '';
-  
-  const inStock = data.in_stock;
-  const statusClass = inStock ? 'in-stock' : 'out-of-stock';
-  const statusText = inStock ? `Op voorraad (${data.stock_quantity})` : 'Niet op voorraad';
-  
-  return `<div class="product-stock ${statusClass}">${statusText}</div>`;
-}
-
-/**
  * Render add to cart button
  */
 function renderAddToCart(data) {
-  if (!data.in_stock) {
-    return `<button class="btn btn-secondary" disabled>Niet beschikbaar</button>`;
-  }
-  
   return `
     <div class="product-actions">
       <div class="quantity-selector">
         <label for="quantity">Aantal:</label>
-        <input type="number" id="quantity" class="quantity-input form-input" value="1" min="1" max="${data.stock_quantity}">
+        <input type="number" id="quantity" class="quantity-input form-input" value="1" min="1" max="99">
       </div>
       <button class="btn btn-primary btn-lg btn-arrow" data-action="add-to-cart">
         <span class="guest-only-inline">Toevoegen aan Offerte</span>

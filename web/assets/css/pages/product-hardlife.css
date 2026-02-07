@@ -210,7 +210,8 @@
   margin: 0;
 }
 
-/* Stock Status */
+/* Stock Status - DISABLED (werken op bestelling, niet op voorraad) */
+/*
 .stock-status {
   display: inline-flex;
   align-items: center;
@@ -233,6 +234,7 @@
   width: 16px;
   height: 16px;
 }
+*/
 
 /* Variant Selector Buttons */
 .product-variants {

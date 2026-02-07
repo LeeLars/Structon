@@ -735,7 +735,8 @@
   color: var(--color-primary);
 }
 
-/* Stock Status */
+/* Stock Status - DISABLED (werken op bestelling, niet op voorraad) */
+/*
 .stock-status {
   display: inline-flex;
   align-items: center;
@@ -758,6 +759,7 @@
 .status-in-stock { color: #22c55e; }
 .status-low-stock { color: #f59e0b; }
 .status-out-stock { color: #6b7280; }
+*/
 
 /* Specs */
 .product-card-specs {

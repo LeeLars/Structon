@@ -2783,7 +2783,8 @@ body[data-page="product"] .hero-subtitle {
   margin-bottom: 8px;
 }
 
-/* Stock Status */
+/* Stock Status - DISABLED (werken op bestelling, niet op voorraad) */
+/*
 .stock-status {
   display: inline-flex;
   align-items: center;
@@ -2820,6 +2821,7 @@ body[data-page="product"] .hero-subtitle {
 .status-out-stock .status-dot {
   background-color: var(--color-error);
 }
+*/
 
 /* New Badge */
 .badge-new {

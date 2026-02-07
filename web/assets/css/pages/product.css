@@ -430,12 +430,20 @@
   font-size: var(--text-base);
   font-weight: 600;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .quantity-selector input::-webkit-outer-spin-button,
 .quantity-selector input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* Add padding to body on mobile to prevent content being hidden behind sticky CTA */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 80px;
+  }
 }
 
 .product-actions {
@@ -814,29 +822,53 @@
    RESPONSIVE
    =========================================== */
 @media (max-width: 768px) {
+  .page-hero {
+    padding: var(--space-8) 0;
+  }
+
   .product-layout {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
   }
 
   .product-gallery {
-    flex-direction: column-reverse;
+    display: flex;
+    flex-direction: column; /* Changed from column-reverse to standard column, main image first */
+    gap: var(--space-4);
   }
 
   .product-thumbnails {
     flex-direction: row;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     max-height: none;
-    padding-bottom: 4px; /* for scrollbar */
+    padding-bottom: 8px; /* for scrollbar */
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 0 var(--space-4);
   }
 
   .product-thumbnail {
-    width: 70px;
-    height: 70px;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+  
+  /* Adjust Lightbox Trigger for Mobile */
+  .product-lightbox-trigger {
+    width: 64px;
+    height: 64px;
+    font-size: 10px;
+  }
+  
+  .product-lightbox-trigger svg {
+    width: 16px;
+    height: 16px;
   }
 
   .product-image-main {
-    min-height: 350px;
+    min-height: 300px;
+    max-height: 400px;
   }
 
   .product-title {
@@ -848,16 +880,31 @@
   }
 
   .product-key-specs {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr; /* Keep 2 cols on mobile for compactness */
+    gap: var(--space-3);
+  }
+
+  /* Optimize Purchase Card for Mobile */
+  .product-purchase-card {
+    padding: var(--space-4);
   }
 
   .product-quantity-wrapper {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row; /* Keep row for better space usage */
+    align-items: center;
   }
 
   .quantity-selector {
-    justify-content: center;
+    height: 44px; /* Touch friendly */
+  }
+
+  .product-actions .btn-split {
+    display: none; /* Hide main CTA on mobile, use sticky instead */
+  }
+
+  /* Action Shot Mobile */
+  .product-action-shot {
+    min-height: 300px;
   }
 
   .action-shot-content {
@@ -885,22 +932,40 @@
 
   .specs-matrix-table tbody th {
     width: 100%;
-    padding: 0 0 8px 0;
+    padding: 0 0 4px 0;
     font-size: var(--text-xs);
     border: none;
+    color: var(--color-gray-500);
   }
 
   .specs-matrix-table tbody td {
     width: 100%;
     padding: 0;
     text-align: left;
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     border: none;
+  }
+  
+  /* Expert Box Mobile */
+  .expert-box {
+    padding: var(--space-4);
+  }
+  
+  .expert-header {
+    flex-direction: row;
+    align-items: center;
   }
 
   .related-products-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
+    gap: var(--space-3);
+  }
+  
+  /* Sticky CTA Mobile Optimization */
+  .product-sticky-cta {
+    display: block;
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
 }
 
@@ -909,9 +974,13 @@
     padding: 0 var(--space-4);
   }
 
+  .product-key-specs {
+    grid-template-columns: 1fr; /* 1 col for very small screens */
+  }
+
   .product-thumbnail {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
   }
 
   .related-products-grid {

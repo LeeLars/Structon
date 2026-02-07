@@ -321,6 +321,25 @@ function renderProduct(product) {
         </div>
       </div>
     </section>
+
+    <div class="product-sticky-cta">
+      <button class="btn-split btn-split-primary" onclick="window.quoteCart.addItem({
+        id: '${product.id}',
+        title: '${product.title.replace(/'/g, "\\'")}',
+        image: '${mainImage}',
+        category: '${product.category_title || ''}',
+        specs: {
+          width: '${product.width || ''}',
+          weight: '${product.weight || ''}'
+        },
+        quantity: parseInt(document.getElementById('quantity_${product.id}').value) || 1
+      });">
+        <span class="btn-split-text">Toevoegen aan offerte</span>
+        <span class="btn-split-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
+      </button>
+    </div>
   `;
 
   // Add related products section container after product detail

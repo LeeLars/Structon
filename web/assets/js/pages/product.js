@@ -137,8 +137,15 @@ function renderProduct(product) {
   const seoDescription = generateSeoDescription(product);
 
   container.innerHTML = `
+    <button class="product-back-button" onclick="window.history.back()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Terug</span>
+    </button>
     <div class="product-layout">
-      <!-- LEFT: Gallery with vertical thumbnails or lightbox button -->
+      <!-- LEFT: Gallery with vertical thumbnails -->
       <div class="product-gallery">
         ${images.length > 1 ? `
         <div class="product-thumbnails">
@@ -148,18 +155,8 @@ function renderProduct(product) {
             </div>
           `).join('')}
         </div>
-        ` : `
-        <button class="product-lightbox-trigger" onclick="openProductLightbox('${mainImage}', '${product.title}')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <polyline points="9 21 3 21 3 15"></polyline>
-            <line x1="21" y1="3" x2="14" y2="10"></line>
-            <line x1="3" y1="21" x2="10" y2="14"></line>
-          </svg>
-          <span>Vergroot</span>
-        </button>
-        `}
-        <div class="product-image-main" ${images.length === 1 ? 'onclick="openProductLightbox(\'' + mainImage + '\', \'' + product.title + '\')" style="cursor: zoom-in;"' : ''}>
+        ` : ''}
+        <div class="product-image-main">
           <img src="${mainImage}" alt="${product.title}" id="main-product-image">
         </div>
       </div>
@@ -443,21 +440,38 @@ async function loadRelatedProducts() {
   `;
 
   try {
-    const data = await products.getAll({
-      category_id: currentProduct.category_id,
-      limit: 4
+    // Try to get products from same subcategory first
+    let data = await products.getAll({
+      subcategory_id: currentProduct.subcategory_id,
+      limit: 8
     });
 
-    const related = (data.items || []).filter(p => p.id !== currentProduct.id);
+    let related = (data.items || []).filter(p => p.id !== currentProduct.id);
+
+    // If not enough from subcategory, get from same category
+    if (related.length < 4 && currentProduct.category_id) {
+      const categoryData = await products.getAll({
+        category_id: currentProduct.category_id,
+        limit: 8
+      });
+      
+      const categoryProducts = (categoryData.items || []).filter(p => 
+        p.id !== currentProduct.id && !related.find(r => r.id === p.id)
+      );
+      
+      related = [...related, ...categoryProducts];
+    }
 
     if (related.length > 0) {
       section.style.display = 'block';
       container.innerHTML = related.slice(0, 4).map(createProductCard).join('');
     } else {
+      section.style.display = 'none';
       container.innerHTML = '';
     }
   } catch (error) {
     console.error('Error loading related products:', error);
+    section.style.display = 'none';
     container.innerHTML = '';
   }
 }

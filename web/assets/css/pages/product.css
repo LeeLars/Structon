@@ -20,6 +20,35 @@
   padding-top: 0;
 }
 
+/* Back Button */
+.product-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: transparent;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  color: var(--color-gray-700);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.product-back-button:hover {
+  background: var(--color-gray-50);
+  border-color: var(--structon-petrol);
+  color: var(--structon-petrol);
+  transform: translateX(-2px);
+}
+
+.product-back-button svg {
+  width: 20px;
+  height: 20px;
+}
+
 /* Hero Section Override for Product Page */
 .page-hero {
   background-color: var(--structon-petrol) !important;

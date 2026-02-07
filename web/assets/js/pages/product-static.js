@@ -118,11 +118,15 @@ function setupLightbox() {
     }
   });
   
+  // Only enable lightbox if there are multiple images (more than 1)
+  if (images.length <= 1) return;
+  
   // Main image click opens lightbox
   const mainImageWrapper = mainImage.closest('.product-main-image, .product-image-main');
   if (mainImageWrapper) {
+    mainImageWrapper.style.cursor = 'zoom-in';
     mainImageWrapper.addEventListener('click', () => {
-      if (window.structonLightbox && images.length > 0) {
+      if (window.structonLightbox && images.length > 1) {
         const currentIndex = images.indexOf(mainImage.src);
         window.structonLightbox.open(images, currentIndex >= 0 ? currentIndex : 0);
       }

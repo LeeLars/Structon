@@ -310,7 +310,7 @@ export const BRAND_DATA = {
         items: [
           { title: 'Perfecte pasvorm', description: 'Onze bakken zijn ontworpen voor optimale prestaties met Hitachi machines' },
           { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
-          { title: 'Snelle levering', description: 'Grote voorraad, snel leverbaar' },
+          { title: 'Snelle levering', description: 'Op bestelling gemaakt, snel leverbaar' },
           { title: 'Maatwerk mogelijk', description: 'Speciale afmetingen op aanvraag' }
         ]
       }

@@ -35,7 +35,7 @@ export const INDUSTRY_DATA = {
       {
         icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
         title: 'Snelle Levering',
-        description: 'Grote voorraad, snel leverbaar. Stilstand kost geld, wij begrijpen dat.'
+        description: 'Snelle productie op maat. Stilstand kost geld, wij begrijpen dat.'
       },
       {
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
@@ -183,7 +183,7 @@ export const INDUSTRY_DATA = {
       {
         icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
         title: 'Snelle Levering',
-        description: 'Grote voorraad minigraver bakken direct leverbaar.'
+        description: 'Minigraver bakken op bestelling gemaakt, snel leverbaar.'
       }
     ],
     
@@ -316,7 +316,7 @@ export const INDUSTRY_DATA = {
       {
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         title: 'Snelle Levering',
-        description: 'Grote voorraad, snel leverbaar. Ook voor grote orders.'
+        description: 'Op bestelling gemaakt, snel leverbaar. Ook voor grote orders.'
       },
       {
         icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
@@ -523,7 +523,7 @@ export const INDUSTRY_DATA = {
       {
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         title: 'Snelle Levering',
-        description: 'Grote voorraad, snel leverbaar. Ook in drukke seizoenen.'
+        description: 'Op bestelling gemaakt, snel leverbaar. Ook in drukke seizoenen.'
       },
       {
         icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',

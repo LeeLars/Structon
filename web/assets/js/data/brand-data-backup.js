@@ -72,7 +72,7 @@ export const BRAND_DATA = {
         items: [
           { title: 'Perfecte pasvorm', description: 'Ontworpen voor optimale prestaties met CAT machines' },
           { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
-          { title: 'Snelle levering', description: 'Grote voorraad, direct leverbaar uit België' },
+          { title: 'Snelle levering', description: 'Op bestelling gemaakt, korte levertijd uit België' },
           { title: 'Maatwerk', description: 'Speciale afmetingen op aanvraag mogelijk' },
           { title: 'Garantie', description: '2 jaar garantie op constructiefouten' }
         ]
@@ -148,7 +148,7 @@ export const BRAND_DATA = {
         items: [
           { title: 'Perfecte pasvorm', description: 'Ontworpen voor optimale prestaties met Volvo machines' },
           { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
-          { title: 'Snelle levering', description: 'Grote voorraad, direct leverbaar uit België' },
+          { title: 'Snelle levering', description: 'Op bestelling gemaakt, korte levertijd uit België' },
           { title: 'Maatwerk', description: 'Speciale afmetingen op aanvraag mogelijk' },
           { title: 'Garantie', description: '2 jaar garantie op constructiefouten' }
         ]
@@ -253,7 +253,7 @@ export const BRAND_DATA = {
         items: [
           { title: 'Perfecte pasvorm', description: 'Onze bakken zijn ontworpen voor optimale prestaties met Hitachi machines' },
           { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
-          { title: 'Snelle levering', description: 'Grote voorraad, snel leverbaar' },
+          { title: 'Snelle levering', description: 'Op bestelling gemaakt, snel leverbaar' },
           { title: 'Maatwerk mogelijk', description: 'Speciale afmetingen op aanvraag' }
         ]
       }
@@ -289,7 +289,7 @@ otherBrands.forEach(brand => {
           items: [
             { title: 'Perfecte pasvorm', description: `Ontworpen voor optimale prestaties met ${brandName} machines` },
             { title: 'Hardox kwaliteit', description: 'Slijtplaten van Hardox 450 voor maximale levensduur' },
-            { title: 'Snelle levering', description: 'Grote voorraad, direct leverbaar uit België' },
+            { title: 'Snelle levering', description: 'Op bestelling gemaakt, korte levertijd uit België' },
             { title: 'Maatwerk', description: 'Speciale afmetingen op aanvraag mogelijk' },
             { title: 'Garantie', description: '2 jaar garantie op constructiefouten' }
           ]

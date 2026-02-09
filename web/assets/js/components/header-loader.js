@@ -188,52 +188,8 @@
       <div class="container">
         ${getLanguageSwitcher({ showFlag: false, variant: 'topbar' })}
         <nav class="top-nav">
-          <div class="account-menu-wrapper">
-            <a href="#" id="login-btn" class="login-trigger"><span>Mijn Account</span></a>
-            <div id="account-dropdown" class="account-dropdown">
-              <div class="account-dropdown-header">
-                <div class="account-avatar">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                </div>
-                <div class="account-info">
-                  <div class="account-name">admin@structon.nl</div>
-                  <div class="account-role">Administrator</div>
-                </div>
-              </div>
-              <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/cms/" class="account-dropdown-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                <span>CMS Dashboard</span>
-              </a>
-              <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/cms/products.html" class="account-dropdown-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                </svg>
-                <span>Producten Beheren</span>
-              </a>
-              <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/cms/quotes.html" class="account-dropdown-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                </svg>
-                <span>Offertes Beheren</span>
-              </a>
-              <button class="account-dropdown-item" id="logout-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  <polyline points="16 17 21 12 16 7"></polyline>
-                  <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-                <span>Uitloggen</span>
-              </button>
-            </div>
+          <div class="account-menu-wrapper" id="account-menu-wrapper">
+            <!-- Account menu will be dynamically populated based on login state -->
           </div>
           <a href="${basePath}over-ons/">Over</a>
           <a href="${basePath}dealer/">Dealer worden</a>
@@ -584,22 +540,127 @@
     initAccountDropdown();
   }
   
-  // Initialize account dropdown
-  function initAccountDropdown() {
+  // Render account menu based on login state
+  function renderAccountMenu() {
+    const wrapper = document.getElementById('account-menu-wrapper');
+    if (!wrapper) return;
+    
+    // Check if user is logged in
+    let user = null;
+    try {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        user = JSON.parse(userData);
+      }
+    } catch (e) {}
+    
+    const isLoggedIn = user && user.email;
+    const isAdmin = user && (user.role === 'admin' || user.role === 'administrator');
+    
+    if (isLoggedIn) {
+      // Show logged in state with dropdown
+      wrapper.innerHTML = `
+        <a href="#" id="login-btn" class="login-trigger"><span>${user.email}</span></a>
+        <div id="account-dropdown" class="account-dropdown">
+          <div class="account-dropdown-header">
+            <div class="account-avatar">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="account-info">
+              <div class="account-name">${user.email}</div>
+              <div class="account-role">${isAdmin ? 'Administrator' : 'Klant'}</div>
+            </div>
+          </div>
+          ${isAdmin ? `
+          <a href="https://structon-production.up.railway.app/cms/" class="account-dropdown-item" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>CMS Dashboard</span>
+          </a>
+          <a href="https://structon-production.up.railway.app/cms/products.html" class="account-dropdown-item" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            </svg>
+            <span>Producten Beheren</span>
+          </a>
+          <a href="https://structon-production.up.railway.app/cms/quotes.html" class="account-dropdown-item" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span>Offertes Beheren</span>
+          </a>
+          ` : `
+          <a href="#" class="account-dropdown-item" onclick="window.openLoginModal && window.openLoginModal(); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span>Mijn Offertes</span>
+          </a>
+          `}
+          <button class="account-dropdown-item" id="logout-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Uitloggen</span>
+          </button>
+        </div>
+      `;
+    } else {
+      // Show login button for guests
+      wrapper.innerHTML = `
+        <a href="#" id="login-btn" class="login-trigger"><span>Inloggen</span></a>
+      `;
+    }
+    
+    // Re-attach event listeners
+    initAccountDropdownEvents();
+  }
+  
+  // Initialize account dropdown events
+  function initAccountDropdownEvents() {
     const loginBtn = document.getElementById('login-btn');
     const accountDropdown = document.getElementById('account-dropdown');
     const logoutBtn = document.getElementById('logout-btn');
     
-    if (loginBtn && accountDropdown) {
+    // Check if user is logged in
+    let isLoggedIn = false;
+    try {
+      const userData = localStorage.getItem('user');
+      isLoggedIn = userData && JSON.parse(userData).email;
+    } catch (e) {}
+    
+    if (loginBtn) {
       loginBtn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        accountDropdown.classList.toggle('active');
+        
+        if (isLoggedIn && accountDropdown) {
+          // Toggle dropdown for logged in users
+          accountDropdown.classList.toggle('active');
+        } else {
+          // Open login modal for guests
+          if (window.openLoginModal) {
+            window.openLoginModal();
+          }
+        }
       });
-      
+    }
+    
+    if (accountDropdown) {
       // Close dropdown when clicking outside
       document.addEventListener('click', function(e) {
-        if (!loginBtn.contains(e.target) && !accountDropdown.contains(e.target)) {
+        if (loginBtn && !loginBtn.contains(e.target) && !accountDropdown.contains(e.target)) {
           accountDropdown.classList.remove('active');
         }
       });
@@ -623,6 +684,11 @@
         window.location.href = window.location.href;
       });
     }
+  }
+  
+  // Initialize account dropdown (called after header is loaded)
+  function initAccountDropdown() {
+    renderAccountMenu();
   }
   
   // Initialize language switcher dropdown

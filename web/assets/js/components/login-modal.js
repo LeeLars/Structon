@@ -59,7 +59,8 @@ const translations = {
       connection: 'Kan geen verbinding maken met de server. Probeer het later opnieuw.',
       success: 'Succesvol ingelogd! Pagina wordt herladen...',
       emailNotFound: 'Dit e-mailadres is niet gevonden in ons systeem.',
-      resetSent: 'Een e-mail met reset instructies is verzonden naar uw e-mailadres.',
+      resetSent: 'Een e-mail met reset instructies is verzonden naar uw e-mailadres. Dit kan 2-3 minuten duren.',
+      resendEmail: 'Nieuwe mail aanvragen',
       invalidEmail: 'Voer een geldig e-mailadres in.',
       passwordMismatch: 'Wachtwoorden komen niet overeen.',
       passwordTooShort: 'Wachtwoord moet minimaal 8 tekens bevatten.',
@@ -96,7 +97,8 @@ const translations = {
       connection: 'Kan geen verbinding maken met de server. Probeer het later opnieuw.',
       success: 'Succesvol ingelogd! Pagina wordt herladen...',
       emailNotFound: 'Dit e-mailadres is niet gevonden in ons systeem.',
-      resetSent: 'Een e-mail met reset instructies is verzonden naar uw e-mailadres.',
+      resetSent: 'Een e-mail met reset instructies is verzonden naar uw e-mailadres. Dit kan 2-3 minuten duren.',
+      resendEmail: 'Nieuwe mail aanvragen',
       invalidEmail: 'Voer een geldig e-mailadres in.',
       passwordMismatch: 'Wachtwoorden komen niet overeen.',
       passwordTooShort: 'Wachtwoord moet minimaal 8 tekens bevatten.',
@@ -133,7 +135,8 @@ const translations = {
       connection: 'Impossible de se connecter au serveur. Réessayez plus tard.',
       success: 'Connexion réussie! La page va se recharger...',
       emailNotFound: 'Cette adresse e-mail n\'a pas été trouvée dans notre système.',
-      resetSent: 'Un e-mail avec les instructions de réinitialisation a été envoyé.',
+      resetSent: 'Un e-mail avec les instructions de réinitialisation a été envoyé. Cela peut prendre 2-3 minutes.',
+      resendEmail: 'Demander un nouvel e-mail',
       invalidEmail: 'Veuillez entrer une adresse e-mail valide.',
       passwordMismatch: 'Les mots de passe ne correspondent pas.',
       passwordTooShort: 'Le mot de passe doit contenir au moins 8 caractères.',
@@ -170,7 +173,8 @@ const translations = {
       connection: 'Keine Verbindung zum Server möglich. Bitte versuchen Sie es später erneut.',
       success: 'Erfolgreich angemeldet! Seite wird neu geladen...',
       emailNotFound: 'Diese E-Mail-Adresse wurde in unserem System nicht gefunden.',
-      resetSent: 'Eine E-Mail mit Anweisungen zum Zurücksetzen wurde gesendet.',
+      resetSent: 'Eine E-Mail mit Anweisungen zum Zurücksetzen wurde gesendet. Dies kann 2-3 Minuten dauern.',
+      resendEmail: 'Neue E-Mail anfordern',
       invalidEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
       passwordMismatch: 'Die Passwörter stimmen nicht überein.',
       passwordTooShort: 'Das Passwort muss mindestens 8 Zeichen enthalten.',
@@ -652,10 +656,30 @@ async function handleForgotSubmit(e) {
     console.log('Forgot password response:', response.status, data);
     
     if (response.ok) {
-      // Success - show message (even if email not found for security)
+      // Success - show message with resend button
       alertEl.className = 'login-modal-alert success';
-      alertEl.textContent = t.errors.resetSent;
+      alertEl.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p style="margin: 0;">${t.errors.resetSent}</p>
+          <button id="resend-reset-email" class="btn-text" style="align-self: flex-start; padding: 8px 16px; background: rgba(35, 103, 115, 0.1); border-radius: 6px; color: #236773; font-weight: 600; display: none;">
+            ${t.errors.resendEmail}
+          </button>
+        </div>
+      `;
       alertEl.style.display = 'block';
+      
+      // Show resend button after 3 minutes
+      setTimeout(() => {
+        const resendBtn = document.getElementById('resend-reset-email');
+        if (resendBtn) {
+          resendBtn.style.display = 'inline-block';
+          resendBtn.addEventListener('click', () => {
+            // Re-submit the form
+            handleForgotSubmit(e);
+            resendBtn.style.display = 'none';
+          });
+        }
+      }, 180000); // 3 minutes
       
       // Clear form
       document.getElementById('forgot-password-form').reset();

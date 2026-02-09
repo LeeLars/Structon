@@ -33,6 +33,9 @@ export async function initFilters(callback) {
   // Load brand filters
   await loadBrandFilters();
   
+  // Inject improved range slider styles
+  injectRangeSliderStyles();
+  
   // Setup event listeners
   setupFilterListeners();
   
@@ -260,10 +263,113 @@ function updateRangeDisplay(type) {
   if (type === 'volume') {
     const minDisplay = document.getElementById('volume-min-value');
     const maxDisplay = document.getElementById('volume-max-value');
+    const minSlider = document.getElementById('volume-min');
+    const maxSlider = document.getElementById('volume-max');
     
     if (minDisplay) minDisplay.textContent = `${activeFilters.volume_min || 0}L`;
     if (maxDisplay) maxDisplay.textContent = `${activeFilters.volume_max || 5000}L`;
+    
+    // Update slider visual feedback
+    if (minSlider && maxSlider) {
+      const min = parseInt(minSlider.value);
+      const max = parseInt(maxSlider.value);
+      const minPercent = (min / 5000) * 100;
+      const maxPercent = (max / 5000) * 100;
+      
+      // Update track fill
+      const track = minSlider.parentElement.querySelector('.range-track-fill');
+      if (track) {
+        track.style.left = `${minPercent}%`;
+        track.style.width = `${maxPercent - minPercent}%`;
+      }
+    }
   }
+}
+
+/**
+ * Inject improved range slider styles
+ */
+function injectRangeSliderStyles() {
+  if (document.getElementById('range-slider-styles')) return;
+  
+  const style = document.createElement('style');
+  style.id = 'range-slider-styles';
+  style.textContent = `
+    .range-slider {
+      position: relative;
+      padding: 20px 0;
+    }
+    .range-slider-track {
+      position: relative;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      margin: 0 8px;
+    }
+    .range-track-fill {
+      position: absolute;
+      height: 100%;
+      background: linear-gradient(90deg, #236773 0%, #2d7f8d 100%);
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .range-slider input[type="range"] {
+      position: absolute;
+      width: calc(100% - 16px);
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      pointer-events: none;
+    }
+    .range-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 3px solid #236773;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: all;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+    .range-slider input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 3px 8px rgba(35, 103, 115, 0.3);
+    }
+    .range-slider input[type="range"]::-webkit-slider-thumb:active {
+      transform: scale(1.05);
+      border-width: 4px;
+    }
+    .range-slider input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 3px solid #236773;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: all;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+    .range-slider input[type="range"]::-moz-range-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 3px 8px rgba(35, 103, 115, 0.3);
+    }
+    .range-values {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #236773;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 /**
@@ -413,17 +519,37 @@ async function loadBrandFilters() {
     // Sort brands alphabetically
     const sortedBrands = data.sort((a, b) => a.name.localeCompare(b.name));
     
-    // Generate checkboxes
-    containerEl.innerHTML = sortedBrands.map(brand => `
-      <label class="checkbox-label">
-        <input type="checkbox" name="brand" value="${brand.slug}">
-        <span>${brand.name}${brand.product_count ? ` (${brand.product_count})` : ''}</span>
-      </label>
-    `).join('');
+    // Generate scrollable select with search
+    containerEl.innerHTML = `
+      <div class="brand-select-wrapper">
+        <input 
+          type="text" 
+          id="brand-search" 
+          class="brand-search-input" 
+          placeholder="Zoek merk..."
+          autocomplete="off"
+        />
+        <div class="brand-select-dropdown" id="brand-select-dropdown">
+          ${sortedBrands.map(brand => `
+            <label class="brand-option">
+              <input type="checkbox" name="brand" value="${brand.slug}" class="brand-checkbox">
+              <span class="brand-name">${brand.name}</span>
+              ${brand.product_count ? `<span class="brand-count">(${brand.product_count})</span>` : ''}
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    
+    // Inject CSS for brand select
+    injectBrandSelectStyles();
     
     // Hide loading, show container
     loadingEl.style.display = 'none';
     containerEl.style.display = 'block';
+    
+    // Setup search functionality
+    setupBrandSearch();
     
     console.log('✅ Brand filters loaded:', sortedBrands.length);
   } catch (error) {
@@ -432,6 +558,115 @@ async function loadBrandFilters() {
     containerEl.innerHTML = '<p class="filter-error">Kon merken niet laden</p>';
     containerEl.style.display = 'block';
   }
+}
+
+/**
+ * Inject CSS styles for brand select dropdown
+ */
+function injectBrandSelectStyles() {
+  if (document.getElementById('brand-select-styles')) return;
+  
+  const style = document.createElement('style');
+  style.id = 'brand-select-styles';
+  style.textContent = `
+    .brand-select-wrapper {
+      position: relative;
+    }
+    .brand-search-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      background: #fff;
+    }
+    .brand-search-input:focus {
+      outline: none;
+      border-color: #236773;
+      box-shadow: 0 0 0 3px rgba(35, 103, 115, 0.1);
+    }
+    .brand-select-dropdown {
+      margin-top: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fff;
+      padding: 4px;
+    }
+    .brand-select-dropdown::-webkit-scrollbar {
+      width: 8px;
+    }
+    .brand-select-dropdown::-webkit-scrollbar-track {
+      background: #f9fafb;
+      border-radius: 4px;
+    }
+    .brand-select-dropdown::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 4px;
+    }
+    .brand-select-dropdown::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+    .brand-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      font-size: 14px;
+    }
+    .brand-option:hover {
+      background: #f9fafb;
+    }
+    .brand-option.hidden {
+      display: none;
+    }
+    .brand-checkbox {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .brand-name {
+      flex: 1;
+      color: #374151;
+      font-weight: 500;
+    }
+    .brand-count {
+      color: #9ca3af;
+      font-size: 13px;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+/**
+ * Setup brand search functionality
+ */
+function setupBrandSearch() {
+  const searchInput = document.getElementById('brand-search');
+  const dropdown = document.getElementById('brand-select-dropdown');
+  
+  if (!searchInput || !dropdown) return;
+  
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase().trim();
+    const options = dropdown.querySelectorAll('.brand-option');
+    
+    options.forEach(option => {
+      const brandName = option.querySelector('.brand-name').textContent.toLowerCase();
+      if (brandName.includes(searchTerm)) {
+        option.classList.remove('hidden');
+      } else {
+        option.classList.add('hidden');
+      }
+    });
+  });
 }
 
 /**

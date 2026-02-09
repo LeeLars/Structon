@@ -132,6 +132,13 @@
   stroke-width: 2;
 }
 
+.account-nav-item span {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .account-nav-badge {
   margin-left: auto;
   background: #ef4444;

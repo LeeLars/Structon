@@ -6,21 +6,21 @@
   <title>Mijn Account - Structon</title>
   <meta name="description" content="Beheer uw Structon account, bekijk bestellingen en pas uw gegevens aan.">
   
-  <link rel="stylesheet" href="../../assets/css/main.css?v=2">
-  <link rel="stylesheet" href="../../assets/css/pages/account-new.css?v=2">
-  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css?v=2">
-  <link rel="stylesheet" href="../../assets/css/components/account-dropdown.css?v=2">
-  <link rel="stylesheet" href="../../assets/css/components/quote-cart.css?v=2">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/pages/account-new.css">
+  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../../assets/css/components/account-dropdown.css">
+  <link rel="stylesheet" href="../../assets/css/components/quote-cart.css">
 </head>
 <body>
   <div id="header-container"></div>
 
   <main class="account-page">
-    <!-- Hero Section -->
-    <section class="page-hero">
-      <div class="container">
-        <h1 style="color: white; font-family: var(--font-heading); font-size: 3rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">Mon Compte</h1>
-        <p style="color: rgba(255,255,255,0.9); font-size: 1.125rem; max-width: 600px; margin: 0 auto;">Gérez vos commandes, devis et informations personnelles</p>
+    <!-- Account Hero -->
+    <section class="account-hero">
+      <div class="account-hero-content">
+        <h1>Mon Compte</h1>
+        <p>Gérez vos commandes, devis et informations personnelles</p>
       </div>
     </section>
 
@@ -35,7 +35,7 @@
               </svg>
             </div>
             <div class="account-user-info">
-              <h2 class="account-username" id="account-username">Chargement...</h2>
+              <h2 class="account-username" id="account-username">Laden...</h2>
               <p class="account-email" id="account-email">...</p>
             </div>
           </div>
@@ -48,7 +48,7 @@
                 <rect x="14" y="14" width="7" height="7"></rect>
                 <rect x="3" y="14" width="7" height="7"></rect>
               </svg>
-              <span>Tableau de bord</span>
+              <span>Dashboard</span>
             </a>
             <a href="#bestellingen" class="account-nav-item" data-section="bestellingen">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -56,7 +56,7 @@
                 <circle cx="20" cy="21" r="1"></circle>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
               </svg>
-              <span>Commandes</span>
+              <span>Bestellingen</span>
             </a>
             <a href="#offertes" class="account-nav-item" data-section="offertes">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -66,27 +66,27 @@
                 <line x1="16" y1="17" x2="8" y2="17"></line>
                 <polyline points="10 9 9 9 8 9"></polyline>
               </svg>
-              <span>Devis</span>
+              <span>Offertes</span>
             </a>
             <a href="#favorieten" class="account-nav-item" data-section="favorieten">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
               </svg>
-              <span>Favoris</span>
+              <span>Favorieten</span>
             </a>
             <a href="#adressen" class="account-nav-item" data-section="adressen">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              <span>Adresses</span>
+              <span>Adressen</span>
             </a>
             <a href="#profiel" class="account-nav-item" data-section="profiel">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-              <span>Profil</span>
+              <span>Profiel</span>
             </a>
           </nav>
 
@@ -97,7 +97,7 @@
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
-              <span>Se déconnecter</span>
+              <span>Uitloggen</span>
             </button>
           </div>
         </aside>
@@ -107,8 +107,8 @@
           <!-- Dashboard Section -->
           <section id="section-dashboard" class="account-section active">
             <div class="account-section-header">
-              <h1>TABLEAU DE BORD</h1>
-              <p>Bon retour ! Voici un aperçu de votre compte.</p>
+              <h1>DASHBOARD</h1>
+              <p>Welkom terug! Hier is een overzicht van uw account.</p>
             </div>
 
             <div class="dashboard-stats">
@@ -122,7 +122,7 @@
                 </div>
                 <div class="stat-info">
                   <h3 id="total-orders">0</h3>
-                  <p>Total commandes</p>
+                  <p>Totaal bestellingen</p>
                 </div>
               </div>
 
@@ -135,7 +135,7 @@
                 </div>
                 <div class="stat-info">
                   <h3 id="pending-quotes">0</h3>
-                  <p>Devis en cours</p>
+                  <p>Open offertes</p>
                 </div>
               </div>
 
@@ -147,7 +147,7 @@
                 </div>
                 <div class="stat-info">
                   <h3 id="total-favorites">0</h3>
-                  <p>Favoris</p>
+                  <p>Favorieten</p>
                 </div>
               </div>
 
@@ -156,8 +156,8 @@
             <div class="dashboard-grid">
               <div class="dashboard-card">
                 <div class="dashboard-card-header">
-                  <h2>COMMANDES RÉCENTES</h2>
-                  <a href="#bestellingen" class="link-view-all" data-section="bestellingen">Tout voir</a>
+                  <h2>RECENTE BESTELLINGEN</h2>
+                  <a href="#bestellingen" class="link-view-all" data-section="bestellingen">Bekijk alles</a>
                 </div>
                 <div class="dashboard-card-content" id="recent-orders">
                   <div class="empty-state">
@@ -166,15 +166,15 @@
                       <circle cx="20" cy="21" r="1"></circle>
                       <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
-                    <p>Aucune commande passée</p>
+                    <p>Nog geen bestellingen geplaatst</p>
                   </div>
                 </div>
               </div>
 
               <div class="dashboard-card">
                 <div class="dashboard-card-header">
-                  <h2>DEVIS EN COURS</h2>
-                  <a href="#offertes" class="link-view-all" data-section="offertes">Tout voir</a>
+                  <h2>OPENSTAANDE OFFERTES</h2>
+                  <a href="#offertes" class="link-view-all" data-section="offertes">Bekijk alles</a>
                 </div>
                 <div class="dashboard-card-content" id="pending-quotes-list">
                   <div class="empty-state">
@@ -182,7 +182,7 @@
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
                     </svg>
-                    <p>Aucun devis en cours</p>
+                    <p>Geen openstaande offertes</p>
                   </div>
                 </div>
               </div>
@@ -192,34 +192,34 @@
           <!-- Bestellingen Section -->
           <section id="section-bestellingen" class="account-section">
             <div class="account-section-header">
-              <h1>COMMANDES</h1>
-              <p>Consultez et gérez toutes vos commandes.</p>
+              <h1>BESTELLINGEN</h1>
+              <p>Bekijk en beheer al uw bestellingen.</p>
             </div>
 
             <div class="orders-filters">
               <div class="filter-group">
-                <label for="order-status">Statut</label>
+                <label for="order-status">Status</label>
                 <select id="order-status" class="form-select">
-                  <option value="all">Toutes les commandes</option>
-                  <option value="pending">En traitement</option>
-                  <option value="processing">En cours</option>
-                  <option value="shipped">Expédiée</option>
-                  <option value="delivered">Livrée</option>
-                  <option value="cancelled">Annulée</option>
+                  <option value="all">Alle bestellingen</option>
+                  <option value="pending">In behandeling</option>
+                  <option value="processing">Wordt verwerkt</option>
+                  <option value="shipped">Verzonden</option>
+                  <option value="delivered">Geleverd</option>
+                  <option value="cancelled">Geannuleerd</option>
                 </select>
               </div>
               <div class="filter-group">
-                <label for="order-period">Période</label>
+                <label for="order-period">Periode</label>
                 <select id="order-period" class="form-select">
-                  <option value="all">Toutes les périodes</option>
-                  <option value="30">30 derniers jours</option>
-                  <option value="90">3 derniers mois</option>
-                  <option value="180">6 derniers mois</option>
-                  <option value="365">Dernière année</option>
+                  <option value="all">Alle periodes</option>
+                  <option value="30">Laatste 30 dagen</option>
+                  <option value="90">Laatste 3 maanden</option>
+                  <option value="180">Laatste 6 maanden</option>
+                  <option value="365">Laatste jaar</option>
                 </select>
               </div>
               <div class="filter-group">
-                <input type="text" id="order-search" class="form-input" placeholder="Rechercher par numéro..." style="margin-top: 24px;">
+                <input type="text" id="order-search" class="form-input" placeholder="Zoek op bestelnummer..." style="margin-top: 24px;">
               </div>
             </div>
 
@@ -230,7 +230,7 @@
                   <circle cx="20" cy="21" r="1"></circle>
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                 </svg>
-                <p>Aucune commande trouvée</p>
+                <p>Geen bestellingen gevonden</p>
               </div>
             </div>
           </section>
@@ -238,20 +238,20 @@
           <!-- Offertes Section -->
           <section id="section-offertes" class="account-section">
             <div class="account-section-header">
-              <h1>DEVIS</h1>
-              <p>Consultez vos devis demandés et leur statut.</p>
+              <h1>OFFERTES</h1>
+              <p>Bekijk uw aangevraagde offertes en hun status.</p>
             </div>
 
             <div class="quotes-filters">
               <div class="filter-group">
-                <label for="quote-status">Statut</label>
+                <label for="quote-status">Status</label>
                 <select id="quote-status" class="form-select">
-                  <option value="all">Tous les devis</option>
-                  <option value="pending">En traitement</option>
-                  <option value="sent">Envoyé</option>
-                  <option value="accepted">Accepté</option>
-                  <option value="rejected">Refusé</option>
-                  <option value="expired">Expiré</option>
+                  <option value="all">Alle offertes</option>
+                  <option value="pending">In behandeling</option>
+                  <option value="sent">Verzonden</option>
+                  <option value="accepted">Geaccepteerd</option>
+                  <option value="rejected">Afgewezen</option>
+                  <option value="expired">Verlopen</option>
                 </select>
               </div>
             </div>
@@ -262,7 +262,7 @@
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                   <polyline points="14 2 14 8 20 8"></polyline>
                 </svg>
-                <p>Aucun devis trouvé</p>
+                <p>Geen offertes gevonden</p>
               </div>
             </div>
           </section>
@@ -270,8 +270,8 @@
           <!-- Favorieten Section -->
           <section id="section-favorieten" class="account-section">
             <div class="account-section-header">
-              <h1>FAVORIS</h1>
-              <p>Vos produits enregistrés pour un accès rapide.</p>
+              <h1>FAVORIETEN</h1>
+              <p>Uw opgeslagen producten voor snelle toegang.</p>
             </div>
 
             <div class="favorites-grid" id="favorites-grid">
@@ -279,7 +279,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
-                <p>Aucun favori ajouté</p>
+                <p>Nog geen favorieten toegevoegd</p>
               </div>
             </div>
           </section>
@@ -287,14 +287,14 @@
           <!-- Adressen Section -->
           <section id="section-adressen" class="account-section">
             <div class="account-section-header">
-              <h1>ADRESSES</h1>
-              <p>Gérez vos adresses de livraison et de facturation.</p>
+              <h1>ADRESSEN</h1>
+              <p>Beheer uw bezorg- en factuuradres.</p>
             </div>
 
             <div class="addresses-grid">
               <div class="address-card">
                 <div class="address-card-header">
-                  <h3>ADRESSE DE FACTURATION</h3>
+                  <h3>FACTUURADRES</h3>
                   <button class="btn-edit" data-address-type="billing">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -303,13 +303,13 @@
                   </button>
                 </div>
                 <div class="address-card-content" id="billing-address">
-                  <p class="address-empty">Aucune adresse de facturation définie</p>
+                  <p class="address-empty">Nog geen factuuradres ingesteld</p>
                 </div>
               </div>
 
               <div class="address-card">
                 <div class="address-card-header">
-                  <h3>ADRESSE DE LIVRAISON</h3>
+                  <h3>BEZORGADRES</h3>
                   <button class="btn-edit" data-address-type="shipping">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -318,7 +318,7 @@
                   </button>
                 </div>
                 <div class="address-card-content" id="shipping-address">
-                  <p class="address-empty">Aucune adresse de livraison définie</p>
+                  <p class="address-empty">Nog geen bezorgadres ingesteld</p>
                 </div>
               </div>
             </div>
@@ -327,46 +327,46 @@
           <!-- Profiel Section -->
           <section id="section-profiel" class="account-section">
             <div class="account-section-header">
-              <h1>PROFIL</h1>
-              <p>Gérez vos informations personnelles.</p>
+              <h1>PROFIEL</h1>
+              <p>Beheer uw persoonlijke gegevens.</p>
             </div>
 
             <form class="account-form" id="profile-form">
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="profile-firstname">Prénom *</label>
+                  <label for="profile-firstname">Voornaam *</label>
                   <input type="text" id="profile-firstname" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label for="profile-lastname">Nom *</label>
+                  <label for="profile-lastname">Achternaam *</label>
                   <input type="text" id="profile-lastname" class="form-input" required>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="profile-email">Adresse e-mail *</label>
+                <label for="profile-email">E-mailadres *</label>
                 <input type="email" id="profile-email" class="form-input" required>
               </div>
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="profile-phone">Numéro de téléphone</label>
+                  <label for="profile-phone">Telefoonnummer</label>
                   <input type="tel" id="profile-phone" class="form-input">
                 </div>
                 <div class="form-group">
-                  <label for="profile-company">Nom de l'entreprise</label>
+                  <label for="profile-company">Bedrijfsnaam</label>
                   <input type="text" id="profile-company" class="form-input">
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="profile-vat">Numéro de TVA</label>
+                <label for="profile-vat">BTW-nummer</label>
                 <input type="text" id="profile-vat" class="form-input">
               </div>
 
               <div class="form-actions">
                 <button type="submit" class="btn-primary">
-                  <span>Enregistrer</span>
+                  <span>Opslaan</span>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
@@ -377,28 +377,28 @@
             <div class="account-divider"></div>
 
             <div class="account-section-header">
-              <h2>CHANGER LE MOT DE PASSE</h2>
+              <h2>WACHTWOORD WIJZIGEN</h2>
             </div>
 
             <form class="account-form" id="password-form">
               <div class="form-group">
-                <label for="current-password">Mot de passe actuel *</label>
+                <label for="current-password">Huidig wachtwoord *</label>
                 <input type="password" id="current-password" class="form-input" required>
               </div>
 
               <div class="form-group">
-                <label for="new-password">Nouveau mot de passe *</label>
+                <label for="new-password">Nieuw wachtwoord *</label>
                 <input type="password" id="new-password" class="form-input" required>
               </div>
 
               <div class="form-group">
-                <label for="confirm-password">Confirmer le nouveau mot de passe *</label>
+                <label for="confirm-password">Bevestig nieuw wachtwoord *</label>
                 <input type="password" id="confirm-password" class="form-input" required>
               </div>
 
               <div class="form-actions">
                 <button type="submit" class="btn-primary">
-                  <span>Changer le mot de passe</span>
+                  <span>Wachtwoord wijzigen</span>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>

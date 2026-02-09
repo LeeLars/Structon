@@ -400,7 +400,7 @@ async function loadProducts() {
         return filters.excavator_weight_ranges.some(rangeValue => {
           // rangeValue is checkbox value in kg - define filter ranges in TONS to match product data
           let minTon, maxTon;
-          if (rangeValue === 1500) { minTon = 1.5; maxTon = 3; }      // 1.5-3 ton
+          if (rangeValue === 1500) { minTon = 1; maxTon = 3; }      // 1-3 ton
           else if (rangeValue === 4000) { minTon = 3; maxTon = 8; }   // 3-8 ton
           else if (rangeValue === 12000) { minTon = 8; maxTon = 15; } // 8-15 ton
           else if (rangeValue === 20000) { minTon = 15; maxTon = 25; } // 15-25 ton

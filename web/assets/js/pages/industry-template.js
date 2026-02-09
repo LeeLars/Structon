@@ -191,11 +191,11 @@ class IndustryTemplate {
     if (!filterGrid || !data.tonnageRanges) return;
 
     const tonnageLabels = {
-      '0-2': { label: '0 - 2 ton', description: 'Minigravers' },
-      '2-5': { label: '2 - 5 ton', description: 'Compacte gravers' },
-      '5-10': { label: '5 - 10 ton', description: 'Middenklasse' },
-      '10-15': { label: '10 - 15 ton', description: 'Middenklasse' },
+      '1-3': { label: '1 - 3 ton', description: 'Minigravers' },
+      '3-8': { label: '3 - 8 ton', description: 'Compacte gravers' },
+      '8-15': { label: '8 - 15 ton', description: 'Middenklasse' },
       '15-25': { label: '15 - 25 ton', description: 'Zware klasse' },
+      '25-50': { label: '25 - 50 ton', description: 'Extra zware klasse' },
       '25-40': { label: '25 - 40 ton', description: 'Zware klasse' },
       '40+': { label: '40+ ton', description: 'Extra zware klasse' }
     };

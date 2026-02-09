@@ -111,16 +111,16 @@ async function parseUrlParams() {
 /**
  * Convert tonnage ID to excavator weight value (in KG, matching checkbox values)
  * Maps mega menu tonnage ranges to checkbox values
- * Examples: '1t-2-5t' -> 1500 (matches "1,5 - 3 ton" checkbox)
+ * Examples: '1-3t' -> 1500 (matches "1 - 3 ton" checkbox)
  */
 function parseTonnageToWeight(tonnageId) {
   // Map tonnage ranges from mega menu to checkbox values (in kg)
   const tonnageMap = {
-    '1t-2-5t': 1500,    // 1t - 2.5t -> 1,5 - 3 ton checkbox
-    '2-5t-5t': 4000,    // 2.5t - 5t -> 3 - 8 ton checkbox
-    '5t-10t': 12000,    // 5t - 10t -> 8 - 15 ton checkbox
-    '10t-15t': 20000,   // 10t - 15t -> 15 - 25 ton checkbox
-    '15t-25t': 20000,   // 15t - 25t -> 15 - 25 ton checkbox
+    '1-3t': 1500,    // 1 - 3 ton checkbox
+    '3-8t': 4000,    // 3 - 8 ton checkbox
+    '8-15t': 12000,  // 8 - 15 ton checkbox
+    '15-25t': 20000, // 15 - 25 ton checkbox
+    '25-50t': 30000, // 25 - 50 ton checkbox
     '25t-plus': 30000,  // 25t+ -> 25 - 50 ton checkbox
     // Sloop-sorteergrijpers ranges
     '1t-5t': 4000,      // 1t - 5t -> 3 - 8 ton checkbox

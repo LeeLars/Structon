@@ -88,7 +88,7 @@ async function loadProducts() {
       filteredProducts = filteredProducts.filter(product => {
         return filters.excavator_weight_ranges.some(rangeValue => {
           let minTon, maxTon;
-          if (rangeValue === 1500) { minTon = 1.5; maxTon = 3; }
+          if (rangeValue === 1500) { minTon = 1; maxTon = 3; }
           else if (rangeValue === 4000) { minTon = 3; maxTon = 8; }
           else if (rangeValue === 12000) { minTon = 8; maxTon = 15; }
           else if (rangeValue === 20000) { minTon = 15; maxTon = 25; }

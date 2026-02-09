@@ -448,10 +448,11 @@ function showView(view) {
   }, 100);
 }
 
-// Check URL for reset token
+// Check URL for reset token or login trigger
 function checkForResetToken() {
   const urlParams = new URLSearchParams(window.location.search);
   const resetToken = urlParams.get('reset_token');
+  const loginTrigger = urlParams.get('login');
   
   if (resetToken) {
     // Store token and show reset view
@@ -462,6 +463,14 @@ function checkForResetToken() {
     // Clean URL
     const url = new URL(window.location);
     url.searchParams.delete('reset_token');
+    window.history.replaceState({}, '', url);
+  } else if (loginTrigger === 'true') {
+    // Open login modal when login=true parameter is present
+    openLoginModal();
+    
+    // Clean URL
+    const url = new URL(window.location);
+    url.searchParams.delete('login');
     window.history.replaceState({}, '', url);
   }
 }

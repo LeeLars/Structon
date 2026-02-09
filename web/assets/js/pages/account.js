@@ -72,11 +72,15 @@ async function init() {
   userData = await checkAuth();
   
   if (!userData) {
-    console.log('❌ Not authenticated, redirecting to login');
-    // Redirect to login
-    const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-    const currentPath = window.location.pathname;
-    window.location.href = `${basePath}/login/?redirect=${encodeURIComponent(currentPath)}`;
+    console.log('❌ Not authenticated, opening login modal');
+    // Open login modal instead of redirecting to 404
+    if (window.openLoginModal) {
+      window.openLoginModal();
+    } else {
+      // Fallback: redirect to home with login modal trigger
+      const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+      window.location.href = `${basePath}/?login=true`;
+    }
     return;
   }
   

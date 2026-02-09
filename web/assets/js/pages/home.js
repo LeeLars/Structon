@@ -9,6 +9,114 @@ import { createProductCard, showLoading } from '../main.js';
 // Use requestIdleCallback for non-critical initialization
 const scheduleTask = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 
+// Fallback products when API is unavailable
+const FALLBACK_PRODUCTS = [
+  {
+    id: 'fb-1',
+    title: 'Dieplepelbak 600mm',
+    slug: 'dieplepelbak-600mm',
+    description: 'Robuuste dieplepelbak voor grondverzet. Vervaardigd uit Hardox 450 staal.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'dieplepelbakken',
+    weight: 85,
+    volume: 120,
+    width: 600,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-2',
+    title: 'Slotenbak 400mm',
+    slug: 'slotenbak-400mm',
+    description: 'Smalle slotenbak voor precisiewerk. Ideaal voor kabels en leidingen.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'sleuvenbakken',
+    weight: 65,
+    volume: 80,
+    width: 400,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  },
+  {
+    id: 'fb-3',
+    title: 'Rioolbak 300mm',
+    slug: 'rioolbak-300mm',
+    description: 'Gespecialiseerde rioolbak voor drainage en rioleringswerkzaamheden.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'rioolbakken',
+    weight: 55,
+    volume: 60,
+    width: 300,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-4',
+    title: 'Dieplepelbak 800mm',
+    slug: 'dieplepelbak-800mm',
+    description: 'Brede dieplepelbak voor grote grondverzet projecten.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'dieplepelbakken',
+    weight: 120,
+    volume: 180,
+    width: 800,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  },
+  {
+    id: 'fb-5',
+    title: 'Sorteergrijper 600mm',
+    slug: 'sorteergrijper-600mm',
+    description: 'Krachtige sorteergrijper voor efficiënt sorteren en verplaatsen.',
+    category_title: 'Sorteergrijpers',
+    category_slug: 'sorteergrijpers',
+    subcategory_slug: null,
+    weight: 450,
+    volume: null,
+    width: 600,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-6',
+    title: 'Slotenbak 500mm',
+    slug: 'slotenbak-500mm',
+    description: 'Veelzijdige slotenbak voor diverse grondwerkzaamheden.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'sleuvenbakken',
+    weight: 75,
+    volume: 95,
+    width: 500,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  },
+  {
+    id: 'fb-7',
+    title: 'Dieplepelbak 1000mm',
+    slug: 'dieplepelbak-1000mm',
+    description: 'Extra brede dieplepelbak voor grootschalige projecten.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'dieplepelbakken',
+    weight: 150,
+    volume: 250,
+    width: 1000,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-8',
+    title: 'Rioolbak 450mm',
+    slug: 'rioolbak-450mm',
+    description: 'Professionele rioolbak voor drainage systemen.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'rioolbakken',
+    weight: 70,
+    volume: 85,
+    width: 450,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize header scroll behavior
   initHeaderScroll();
@@ -126,7 +234,14 @@ async function loadFeaturedProducts() {
 
   try {
     // Fetch ALL products (not just featured) - auto-select diverse mix
-    const data = await products.getAll({ limit: 50 });
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timeout')), 3000)
+    );
+    
+    const data = await Promise.race([
+      products.getAll({ limit: 50 }),
+      timeoutPromise
+    ]);
     
     if (data.items && data.items.length > 0) {
       // Smart selection: pick diverse products from different categories
@@ -134,7 +249,13 @@ async function loadFeaturedProducts() {
       console.log(`✅ Auto-selected ${selected.length} featured products from ${data.items.length} total`);
     }
   } catch (error) {
-    console.error('Error loading featured products:', error);
+    console.warn('⚠️ API unavailable, using fallback products:', error.message);
+  }
+
+  // Use fallback products if API returned nothing
+  if (selected.length === 0) {
+    console.log('📦 Using fallback products for featured section');
+    selected = selectDiverseProducts(FALLBACK_PRODUCTS, 8);
   }
 
   if (selected.length > 0) {

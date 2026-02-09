@@ -71,11 +71,19 @@
       <aside class="filters-sidebar" id="filters-sidebar">
        <div class="filters-header">
         <h3 class="filters-title">
-         Filters
+         Filtres
         </h3>
-        <button class="btn-text" id="clear-filters">
-         Wissen
-        </button>
+        <div style="display: flex; gap: 12px; align-items: center;">
+         <button class="btn-text" id="clear-filters">
+          Effacer
+         </button>
+         <button class="mobile-close-btn" id="mobile-filters-close" aria-label="Fermer">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <line x1="18" y1="6" x2="6" y2="18"></line>
+           <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+         </button>
+        </div>
        </div>
        <!-- Brand Filter -->
        <div class="filter-group">

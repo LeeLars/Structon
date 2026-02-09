@@ -222,6 +222,19 @@ function setupFilterListeners() {
     toggleBtn.addEventListener('click', () => {
       filtersSidebar.classList.toggle('is-open');
     });
+    
+    // Close on overlay click (click outside the sidebar content)
+    filtersSidebar.addEventListener('click', (e) => {
+      if (e.target === filtersSidebar) {
+        closeMobileFilters();
+      }
+    });
+  }
+  
+  // Close button for mobile filters
+  const mobileCloseBtn = document.getElementById('mobile-filters-close');
+  if (mobileCloseBtn) {
+    mobileCloseBtn.addEventListener('click', closeMobileFilters);
   }
 }
 

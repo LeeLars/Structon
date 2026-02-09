@@ -145,9 +145,11 @@
     }
 
     // Brand filter (match any selected)
+    // Products with empty brand or "all" should match all brand filters
     if (filters.brands.length > 0) {
       const brand = card.dataset.brand || '';
-      if (!filters.brands.includes(brand)) return false;
+      // Show product if: brand matches filter OR brand is empty (all brands)
+      if (brand !== '' && !filters.brands.includes(brand)) return false;
     }
 
     return true;

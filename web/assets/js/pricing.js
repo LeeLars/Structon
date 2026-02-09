@@ -126,7 +126,7 @@ function renderLockedPrice(container) {
   container.innerHTML = `
     <div class="product-price">Login voor prijs</div>
     <p class="login-prompt">
-      <a href="/login/">Log in</a> om prijzen te bekijken en te bestellen.
+      <a href="#" class="login-trigger">Log in</a> om prijzen te bekijken en te bestellen.
     </p>
   `;
 }

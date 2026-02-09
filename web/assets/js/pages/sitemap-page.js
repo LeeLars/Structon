@@ -167,7 +167,7 @@ async function initSitemapPage() {
       <div class="sitemap-column">
         <h2>Overig</h2>
         <ul>
-          <li><a href="../login/">Klant Login</a></li>
+          <li><a href="#" class="login-trigger">Klant Login</a></li>
           <li><a href="../account/">Mijn Account</a></li>
           <li><a href="../privacy/">Privacybeleid</a></li>
           <li><a href="../voorwaarden/">Algemene Voorwaarden</a></li>

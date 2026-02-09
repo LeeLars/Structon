@@ -44,7 +44,7 @@ export async function initSitemap() {
           <li><a href="../../">Home</a></li>
           <li><a href="../../over-ons/">Over Ons</a></li>
           <li><a href="../../contact/">Contact</a></li>
-          <li><a href="../../login/">Klant Login</a></li>
+          <li><a href="#" class="login-trigger">Klant Login</a></li>
         </ul>
       </li>
     `;

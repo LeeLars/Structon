@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="nl-NL">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mijn Account - Structon</title>
   <meta name="description" content="Beheer uw Structon account, bekijk bestellingen en pas uw gegevens aan.">
   
-  <link rel="stylesheet" href="/Structon/assets/css/main.css">
-  <link rel="stylesheet" href="/Structon/assets/css/pages/account-new.css">
-  <link rel="stylesheet" href="/Structon/assets/css/components/mega-menu.css">
-  <link rel="stylesheet" href="/Structon/assets/css/components/account-dropdown.css">
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/pages/account-new.css">
+  <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../../assets/css/components/account-dropdown.css">
   <link rel="stylesheet" href="../../assets/css/components/quote-cart.css">
 </head>
 <body>
   <div id="header-container"></div>
 
   <main class="account-page">
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="container">
+        <h1 style="color: white; font-family: var(--font-heading); font-size: 3rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">Mijn Account</h1>
+        <p style="color: rgba(255,255,255,0.9); font-size: 1.125rem; max-width: 600px; margin: 0 auto;">Beheer uw bestellingen, offertes en persoonlijke gegevens</p>
+      </div>
+    </section>
+
     <div class="account-layout">
         <!-- Sidebar Navigation -->
         <aside class="account-sidebar">
@@ -27,8 +35,8 @@
               </svg>
             </div>
             <div class="account-user-info">
-              <h2 class="account-username" id="account-username">Gebruiker</h2>
-              <p class="account-email" id="account-email">gebruiker@email.com</p>
+              <h2 class="account-username" id="account-username">Laden...</h2>
+              <p class="account-email" id="account-email">...</p>
             </div>
           </div>
 
@@ -211,7 +219,7 @@
                 </select>
               </div>
               <div class="filter-group">
-                <input type="text" id="order-search" class="form-input" placeholder="Zoek op bestelnummer...">
+                <input type="text" id="order-search" class="form-input" placeholder="Zoek op bestelnummer..." style="margin-top: 24px;">
               </div>
             </div>
 
@@ -405,9 +413,9 @@
 
   <footer id="footer-container"></footer>
 
-  <script type="module" src="/Structon/assets/js/components/header-loader.js"></script>
-  <script type="module" src="/Structon/assets/js/components/footer-loader.js"></script>
-  <script type="module" src="/Structon/assets/js/pages/account.js"></script>
+  <script type="module" src="../../assets/js/components/header-loader.js"></script>
+  <script type="module" src="../../assets/js/components/footer-loader.js"></script>
+  <script type="module" src="../../assets/js/pages/account.js"></script>
   <script src="../../assets/js/services/quote-cart-service.js"></script>
   <script src="../../assets/js/components/quote-cart-ui.js"></script>
 </body>

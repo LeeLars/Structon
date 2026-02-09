@@ -273,40 +273,40 @@
                     <div class="menu-column">
                       <a href="${pagesPrefix}graafbakken/slotenbakken/" class="menu-column-title">Slotenbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>1 - 3 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>3 - 8 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>8 - 15 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=15-25t" class="menu-tonnage-link"><span>•</span> <span>15 - 25 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=25-50t" class="menu-tonnage-link"><span>•</span> <span>25 - 50 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 1 - 3 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 3 - 8 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 8 - 15 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=15-25t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 15 - 25 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=25-50t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 25 - 50 ton</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
                       <a href="${pagesPrefix}graafbakken/dieplepelbakken/" class="menu-column-title">Dieplepelbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>1 - 3 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>3 - 8 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>8 - 15 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=15-25t" class="menu-tonnage-link"><span>•</span> <span>15 - 25 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=25-50t" class="menu-tonnage-link"><span>•</span> <span>25 - 50 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 1 - 3 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 3 - 8 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 8 - 15 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=15-25t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 15 - 25 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=25-50t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 25 - 50 ton</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
                       <a href="${pagesPrefix}graafbakken/sleuvenbakken/" class="menu-column-title">Sleuvenbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>1 - 3 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>3 - 8 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>8 - 15 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 1 - 3 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 3 - 8 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 8 - 15 ton</span></a>
                       </div>
                     </div>
                     
                     <div class="menu-column">
                       <a href="${pagesPrefix}graafbakken/kantelbakken/" class="menu-column-title">Kantelbakken</a>
                       <div class="menu-tonnage-list">
-                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>1 - 3 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>3 - 8 ton</span></a>
-                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>8 - 15 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 1 - 3 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 3 - 8 ton</span></a>
+                        <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=8-15t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 8 - 15 ton</span></a>
                       </div>
                     </div>
                   </div>

@@ -495,8 +495,27 @@ function updateUrl() {
   window.history.replaceState({}, '', newUrl);
 }
 
+// Fallback brands when API is unavailable
+const FALLBACK_BRANDS = [
+  { name: 'Caterpillar', slug: 'caterpillar' },
+  { name: 'Case', slug: 'case' },
+  { name: 'Develon', slug: 'develon' },
+  { name: 'Hitachi', slug: 'hitachi' },
+  { name: 'Hyundai', slug: 'hyundai' },
+  { name: 'JCB', slug: 'jcb' },
+  { name: 'Kobelco', slug: 'kobelco' },
+  { name: 'Komatsu', slug: 'komatsu' },
+  { name: 'Kubota', slug: 'kubota' },
+  { name: 'Liebherr', slug: 'liebherr' },
+  { name: 'Sany', slug: 'sany' },
+  { name: 'Takeuchi', slug: 'takeuchi' },
+  { name: 'Volvo', slug: 'volvo' },
+  { name: 'Wacker Neuson', slug: 'wacker-neuson' },
+  { name: 'Yanmar', slug: 'yanmar' }
+];
+
 /**
- * Load brand filters from API
+ * Load brand filters from API with fallback
  */
 async function loadBrandFilters() {
   const loadingEl = document.getElementById('brand-filters-loading');
@@ -504,60 +523,70 @@ async function loadBrandFilters() {
   
   if (!loadingEl || !containerEl) return;
   
+  let brandsToShow = [];
+  
   try {
-    // Import brands API
+    // Import brands API with short timeout
     const { brands } = await import('./api/client.js');
-    const data = await brands.getAll(true); // with count
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Timeout')), 3000)
+    );
     
-    if (!data || !data.length) {
-      loadingEl.style.display = 'none';
-      containerEl.innerHTML = '<p class="filter-empty">Geen merken beschikbaar</p>';
-      containerEl.style.display = 'block';
-      return;
+    const data = await Promise.race([
+      brands.getAll(true),
+      timeoutPromise
+    ]);
+    
+    if (data && data.length > 0) {
+      brandsToShow = data;
+      console.log('✅ Brand filters loaded from API:', brandsToShow.length);
     }
-    
-    // Sort brands alphabetically
-    const sortedBrands = data.sort((a, b) => a.name.localeCompare(b.name));
-    
-    // Generate scrollable select with search
-    containerEl.innerHTML = `
-      <div class="brand-select-wrapper">
-        <input 
-          type="text" 
-          id="brand-search" 
-          class="brand-search-input" 
-          placeholder="Zoek merk..."
-          autocomplete="off"
-        />
-        <div class="brand-select-dropdown" id="brand-select-dropdown">
-          ${sortedBrands.map(brand => `
-            <label class="brand-option">
-              <input type="checkbox" name="brand" value="${brand.slug}" class="brand-checkbox">
-              <span class="brand-name">${brand.name}</span>
-              ${brand.product_count ? `<span class="brand-count">(${brand.product_count})</span>` : ''}
-            </label>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    
-    // Inject CSS for brand select
-    injectBrandSelectStyles();
-    
-    // Hide loading, show container
-    loadingEl.style.display = 'none';
-    containerEl.style.display = 'block';
-    
-    // Setup search functionality
-    setupBrandSearch();
-    
-    console.log('✅ Brand filters loaded:', sortedBrands.length);
   } catch (error) {
-    console.error('Error loading brand filters:', error);
-    loadingEl.style.display = 'none';
-    containerEl.innerHTML = '<p class="filter-error">Kon merken niet laden</p>';
-    containerEl.style.display = 'block';
+    console.warn('⚠️ API unavailable, using fallback brands:', error.message);
   }
+  
+  // Use fallback brands if API returned nothing
+  if (brandsToShow.length === 0) {
+    brandsToShow = FALLBACK_BRANDS;
+    console.log('📦 Using fallback brands');
+  }
+  
+  // Sort brands alphabetically
+  const sortedBrands = brandsToShow.sort((a, b) => a.name.localeCompare(b.name));
+  
+  // Generate scrollable select with search
+  containerEl.innerHTML = `
+    <div class="brand-select-wrapper">
+      <input 
+        type="text" 
+        id="brand-search" 
+        class="brand-search-input" 
+        placeholder="Zoek merk..."
+        autocomplete="off"
+      />
+      <div class="brand-select-dropdown" id="brand-select-dropdown">
+        ${sortedBrands.map(brand => `
+          <label class="brand-option">
+            <input type="checkbox" name="brand" value="${brand.slug}" class="brand-checkbox">
+            <span class="brand-name">${brand.name}</span>
+            ${brand.product_count ? `<span class="brand-count">(${brand.product_count})</span>` : ''}
+          </label>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  
+  // Inject CSS for brand select
+  injectBrandSelectStyles();
+  
+  // Hide loading, show container
+  loadingEl.style.display = 'none';
+  containerEl.style.display = 'block';
+  
+  // Setup search functionality
+  setupBrandSearch();
+  
+  console.log('✅ Brand filters ready:', sortedBrands.length);
 }
 
 /**

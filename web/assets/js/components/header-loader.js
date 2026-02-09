@@ -203,7 +203,7 @@
                   <div class="account-role">Administrator</div>
                 </div>
               </div>
-              <a href="${basePath}cms/" class="account-dropdown-item">
+              <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/cms/" class="account-dropdown-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="7" height="7"></rect>
                   <rect x="14" y="3" width="7" height="7"></rect>
@@ -212,13 +212,13 @@
                 </svg>
                 <span>CMS Dashboard</span>
               </a>
-              <a href="${basePath}cms/products.html" class="account-dropdown-item">
+              <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/cms/products.html" class="account-dropdown-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                 </svg>
                 <span>Producten Beheren</span>
               </a>
-              <a href="${basePath}cms/quotes.html" class="account-dropdown-item">
+              <a href="${window.location.pathname.includes('/Structon/') ? '/Structon' : ''}/cms/quotes.html" class="account-dropdown-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                   <polyline points="14 2 14 8 20 8"></polyline>
@@ -615,10 +615,12 @@
           sessionStorage.removeItem('structon_auth_token');
           localStorage.removeItem('structon_user_email');
           localStorage.removeItem('structon_user_role');
+          localStorage.removeItem('auth_token');
+          localStorage.removeItem('user');
         } catch (err) {}
         
-        // Reload current page to show logged out state
-        window.location.reload();
+        // Stay on current page by navigating to the same URL
+        window.location.href = window.location.href;
       });
     }
   }

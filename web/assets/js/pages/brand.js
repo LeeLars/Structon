@@ -12,10 +12,126 @@ import { loadProductPrices } from '../pricing.js';
 let currentBrand = null;
 let currentBrandId = null;
 let currentBrandTitle = null;
-const PRODUCTS_TO_SHOW = 12;
+const PRODUCTS_TO_SHOW = 8;
 
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('authToken') !== null;
+
+// Fallback products when API is unavailable
+const FALLBACK_PRODUCTS = [
+  {
+    id: 'fb-1',
+    title: 'Dieplepelbak 600mm',
+    slug: 'dieplepelbak-600mm',
+    description: 'Robuuste dieplepelbak voor grondverzet. Vervaardigd uit Hardox 450 staal.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'dieplepelbakken',
+    weight: 85,
+    volume: 120,
+    width: 600,
+    stock: 12,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-2',
+    title: 'Slotenbak 400mm',
+    slug: 'slotenbak-400mm',
+    description: 'Smalle slotenbak voor precisiewerk. Ideaal voor kabels en leidingen.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'sleuvenbakken',
+    weight: 65,
+    volume: 80,
+    width: 400,
+    stock: 8,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  },
+  {
+    id: 'fb-3',
+    title: 'Rioolbak 300mm',
+    slug: 'rioolbak-300mm',
+    description: 'Gespecialiseerde rioolbak voor drainage en rioleringswerkzaamheden.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'rioolbakken',
+    weight: 55,
+    volume: 60,
+    width: 300,
+    stock: 5,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-4',
+    title: 'Dieplepelbak 800mm',
+    slug: 'dieplepelbak-800mm',
+    description: 'Brede dieplepelbak voor grote grondverzet projecten.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'dieplepelbakken',
+    weight: 120,
+    volume: 180,
+    width: 800,
+    stock: 15,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  },
+  {
+    id: 'fb-5',
+    title: 'Sorteergrijper 600mm',
+    slug: 'sorteergrijper-600mm',
+    description: 'Krachtige sorteergrijper voor efficiënt sorteren en verplaatsen.',
+    category_title: 'Sorteergrijpers',
+    category_slug: 'sorteergrijpers',
+    subcategory_slug: null,
+    weight: 450,
+    volume: null,
+    width: 600,
+    stock: 3,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-6',
+    title: 'Slotenbak 500mm',
+    slug: 'slotenbak-500mm',
+    description: 'Veelzijdige slotenbak voor diverse grondwerkzaamheden.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'sleuvenbakken',
+    weight: 75,
+    volume: 95,
+    width: 500,
+    stock: 10,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  },
+  {
+    id: 'fb-7',
+    title: 'Dieplepelbak 1000mm',
+    slug: 'dieplepelbak-1000mm',
+    description: 'Extra brede dieplepelbak voor grootschalige projecten.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'dieplepelbakken',
+    weight: 150,
+    volume: 250,
+    width: 1000,
+    stock: 7,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831686/CM20190621-473fb-e9a23_umfdbh.jpg' }]
+  },
+  {
+    id: 'fb-8',
+    title: 'Rioolbak 450mm',
+    slug: 'rioolbak-450mm',
+    description: 'Professionele rioolbak voor drainage systemen.',
+    category_title: 'Graafbakken',
+    category_slug: 'graafbakken',
+    subcategory_slug: 'rioolbakken',
+    weight: 70,
+    volume: 85,
+    width: 450,
+    stock: 6,
+    cloudinary_images: [{ url: 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1768831820/volvo_n1v8j7.jpg' }]
+  }
+];
 
 /**
  * Shuffle array randomly
@@ -79,6 +195,7 @@ function getBrandFromUrl() {
 
 /**
  * Load random products for current brand
+ * Uses fallback products if API is unavailable
  */
 async function loadBrandProducts() {
   const container = document.getElementById('products-grid');
@@ -90,60 +207,43 @@ async function loadBrandProducts() {
   }
   
   showLoading(container);
-  console.log('⏳ Loading products from API...');
+  console.log('⏳ Loading products...');
+  
+  let displayProducts = [];
   
   try {
-    // Fetch all products with timeout
+    // Try to fetch from API with short timeout
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 8000)
+      setTimeout(() => reject(new Error('Request timeout')), 3000)
     );
     
     const data = await Promise.race([
-      products.getAll({ limit: 100 }),
+      products.getAll({ limit: 50 }),
       timeoutPromise
     ]);
     
-    console.log('📦 API Response:', data);
-    
     let allProducts = data.items || data.products || [];
-    
-    // If data is an array directly
     if (Array.isArray(data)) {
       allProducts = data;
     }
     
-    console.log(`✅ Loaded ${allProducts.length} products for ${currentBrand}`);
-    
-    if (allProducts.length === 0) {
-      console.warn('⚠️ No products returned from API');
-      container.innerHTML = `
-        <div class="no-results">
-          <p>Momenteel geen producten beschikbaar.</p>
-          <a href="../../producten/?brand=${currentBrand}" class="btn-primary">Bekijk alle producten</a>
-        </div>
-      `;
-      return;
+    if (allProducts.length > 0) {
+      console.log(`✅ Loaded ${allProducts.length} products from API`);
+      const shuffled = shuffleArray(allProducts);
+      displayProducts = shuffled.slice(0, PRODUCTS_TO_SHOW);
     }
-    
-    // Shuffle and take random products
-    const shuffled = shuffleArray(allProducts);
-    const displayProducts = shuffled.slice(0, PRODUCTS_TO_SHOW);
-    
-    console.log(`✅ Showing ${displayProducts.length} random products`);
-    
-    renderProducts(displayProducts);
-    
   } catch (error) {
-    console.error('❌ Error loading brand products:', error);
-    console.error('Error details:', error.message, error.stack);
-    // Show friendly message instead of error
-    container.innerHTML = `
-      <div class="no-results">
-        <p>Producten konden niet worden geladen.</p>
-        <a href="../../producten/?brand=${currentBrand}" class="btn-primary">Bekijk alle producten</a>
-      </div>
-    `;
+    console.warn('⚠️ API unavailable, using fallback products:', error.message);
   }
+  
+  // Use fallback products if API returned nothing
+  if (displayProducts.length === 0) {
+    console.log('📦 Using fallback products');
+    displayProducts = shuffleArray(FALLBACK_PRODUCTS).slice(0, PRODUCTS_TO_SHOW);
+  }
+  
+  console.log(`✅ Showing ${displayProducts.length} products`);
+  renderProducts(displayProducts);
 }
 
 /**

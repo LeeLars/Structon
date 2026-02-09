@@ -545,6 +545,9 @@
     const wrapper = document.getElementById('account-menu-wrapper');
     if (!wrapper) return;
     
+    // Get base path for links
+    const basePath = getBasePath();
+    
     // Check if user is logged in
     let user = null;
     try {
@@ -598,13 +601,42 @@
             <span>Offertes Beheren</span>
           </a>
           ` : `
-          <a href="#" class="account-dropdown-item" onclick="window.openLoginModal && window.openLoginModal(); return false;">
+          <div class="account-dropdown-divider"></div>
+          <a href="${basePath}/account/#dashboard" class="account-dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="${basePath}/account/#bestellingen" class="account-dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span>Bestellingen</span>
+          </a>
+          <a href="${basePath}/account/#offertes" class="account-dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
             </svg>
-            <span>Mijn Offertes</span>
+            <span>Offertes</span>
           </a>
+          <div class="account-dropdown-divider"></div>
+          <a href="${basePath}/account/#profiel" class="account-dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profiel</span>
+          </a>
+          <div class="account-dropdown-divider"></div>
           `}
           <button class="account-dropdown-item" id="logout-btn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

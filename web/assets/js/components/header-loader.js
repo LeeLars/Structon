@@ -545,8 +545,8 @@
     const wrapper = document.getElementById('account-menu-wrapper');
     if (!wrapper) return;
     
-    // Get base path for links
-    const basePath = getBasePath();
+    // Get locale base path for account links (e.g., /Structon/be-nl/)
+    const localeBasePath = getLocaleBasePath();
     
     // Check if user is logged in
     let user = null;
@@ -602,7 +602,7 @@
           </a>
           ` : `
           <div class="account-dropdown-divider"></div>
-          <a href="${basePath}/account/#dashboard" class="account-dropdown-item">
+          <a href="${localeBasePath}account/#dashboard" class="account-dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
@@ -611,7 +611,7 @@
             </svg>
             <span>Dashboard</span>
           </a>
-          <a href="${basePath}/account/#bestellingen" class="account-dropdown-item">
+          <a href="${localeBasePath}account/#bestellingen" class="account-dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="9" cy="21" r="1"></circle>
               <circle cx="20" cy="21" r="1"></circle>
@@ -619,7 +619,7 @@
             </svg>
             <span>Bestellingen</span>
           </a>
-          <a href="${basePath}/account/#offertes" class="account-dropdown-item">
+          <a href="${localeBasePath}account/#offertes" class="account-dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
@@ -629,7 +629,7 @@
             <span>Offertes</span>
           </a>
           <div class="account-dropdown-divider"></div>
-          <a href="${basePath}/account/#profiel" class="account-dropdown-item">
+          <a href="${localeBasePath}account/#profiel" class="account-dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>

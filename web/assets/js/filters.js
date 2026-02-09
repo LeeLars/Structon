@@ -88,12 +88,12 @@ async function parseUrlParams() {
     activeFilters.subcategory = params.get('subcat');
   }
   
-  // Tonnage filter (from navigation menu) - convert to excavator_weight
+  // Tonnage filter (from navigation menu) - convert to excavator_weight_ranges
   if (params.has('tonnage')) {
     const tonnage = params.get('tonnage');
     const weight = parseTonnageToWeight(tonnage);
     if (weight) {
-      activeFilters.excavator_weight = [weight];
+      activeFilters.excavator_weight_ranges = [weight];
     }
   }
   

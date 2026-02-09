@@ -143,31 +143,8 @@ export async function logout() {
   // Update UI
   updateAuthUI(false);
   
-  // Determine base path and locale
-  const path = window.location.pathname;
-  let basePath = '/';
-  let locale = 'be-nl';
-  
-  if (path.includes('/Structon/')) {
-    basePath = '/Structon/';
-  }
-  
-  // Detect current locale
-  const locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
-  for (const loc of locales) {
-    if (path.includes('/' + loc + '/')) {
-      locale = loc;
-      break;
-    }
-  }
-  
-  const loginUrl = basePath + locale + '/login/';
-  
-  // Replace current history entry to prevent back-button returning to authenticated page
-  window.history.replaceState(null, '', loginUrl);
-  
-  // Force redirect with cache bypass
-  window.location.replace(loginUrl);
+  // Stay on current page after logout - just reload
+  window.location.reload();
 }
 
 /**

@@ -225,8 +225,7 @@ main[data-industry] .top-nav a {
 }
 
 .model-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
   border-color: var(--color-primary);
 }
 
@@ -272,7 +271,6 @@ main[data-industry] .top-nav a {
   background: var(--color-primary);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .model-btn.active {
@@ -363,7 +361,6 @@ main[data-industry] .top-nav a {
 .tonnage-filter label:hover {
   border-color: var(--color-primary);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
 }
 
 .tonnage-filter input:checked + label {
@@ -1049,7 +1046,6 @@ main[data-industry] .top-nav a {
 
 .cta-box .btn-split:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 /* ============================================
@@ -1129,7 +1125,6 @@ main[data-industry] .top-nav a {
 .expert-email:hover {
   background: #236773;
   color: white;
-  transform: translateX(4px);
 }
 
 .expert-phone svg,

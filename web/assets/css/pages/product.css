@@ -41,7 +41,6 @@
   background: var(--color-gray-50);
   border-color: var(--structon-petrol);
   color: var(--structon-petrol);
-  transform: translateX(-2px);
 }
 
 .product-back-button svg {
@@ -190,7 +189,6 @@
   background: var(--structon-petrol);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .product-lightbox-trigger svg {
@@ -601,7 +599,6 @@
 .expert-email:hover {
   background: #236773;
   color: white;
-  transform: translateX(4px);
 }
 
 .expert-phone svg,
@@ -632,8 +629,7 @@
 }
 
 .product-detail-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .detail-card-icon {

@@ -225,7 +225,6 @@
 
 .faq-cta .btn:hover {
   background-color: var(--color-gray-100);
-  transform: translateY(-2px);
 }
 
 /* Hidden items (for search) */

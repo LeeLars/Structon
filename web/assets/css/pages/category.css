@@ -355,8 +355,7 @@
 .products-cta:hover {
   background-color: #1a4f59;
   border-color: #1a4f59;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
 .products-sort select:focus,
@@ -569,8 +568,7 @@
 }
 
 .industry-product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .industry-product-image {

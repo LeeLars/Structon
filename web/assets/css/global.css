@@ -433,13 +433,11 @@ h6 { font-size: var(--text-base); }
 .btn-split:hover .btn-split-text,
 .btn-split:hover .btn-split-icon {
   background-color: var(--color-primary);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .btn-split:active {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Small variant (voor product cards) */
@@ -998,7 +996,6 @@ h6 { font-size: var(--text-base); }
 
 .menu-dropdown-view-all:hover {
   background-color: #3a7a8c;
-  transform: translateX(4px);
 }
 
 .menu-dropdown-item {
@@ -1017,7 +1014,6 @@ h6 { font-size: var(--text-base); }
   background-color: #f8f9fa;
   color: #3a7a8c;
   border-left-color: #2C5F6F;
-  transform: translateX(4px);
 }
 
 /* Responsive mega menu */

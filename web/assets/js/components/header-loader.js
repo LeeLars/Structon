@@ -561,9 +561,9 @@
     const isAdmin = user && (user.role === 'admin' || user.role === 'administrator');
     
     if (isLoggedIn) {
-      // Show logged in state with dropdown
+      // Show logged in state with dropdown - always show "Mijn Account" in button
       wrapper.innerHTML = `
-        <a href="#" id="login-btn" class="login-trigger"><span>${user.email}</span></a>
+        <a href="#" id="login-btn" class="login-trigger"><span>Mijn Account</span></a>
         <div id="account-dropdown" class="account-dropdown">
           <div class="account-dropdown-header">
             <div class="account-avatar">

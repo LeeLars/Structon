@@ -343,7 +343,7 @@ async function loadOrders() {
     
   } catch (error) {
     console.error('Error loading orders:', error);
-    showEmptyState('orders-list', 'Kon bestellingen niet laden');
+    showEmptyState('orders-list', 'Nog geen bestellingen geplaatst');
   }
 }
 

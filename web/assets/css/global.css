@@ -3127,6 +3127,15 @@ body[data-page="product"] .hero-subtitle {
   border: 1px solid #bbf7d0;
 }
 
+/* Modal Views - for switching between login/forgot/reset */
+.modal-view {
+  display: none;
+}
+
+.modal-view.active {
+  display: block;
+}
+
 /* ============================================
    UNIVERSAL PAGE HERO
    Voor: Merken, Industrieën, Blog, Dealer, Over, FAQ, Configurator

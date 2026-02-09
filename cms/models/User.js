@@ -127,5 +127,65 @@ export const User = {
    */
   async verifyPassword(plainPassword, hashedPassword) {
     return bcrypt.compare(plainPassword, hashedPassword);
+  },
+
+  /**
+   * Set password reset token
+   */
+  async setResetToken(email) {
+    const crypto = await import('crypto');
+    const token = crypto.randomBytes(32).toString('hex');
+    const expires = new Date(Date.now() + 3600000); // 1 hour from now
+    
+    const result = await pool.query(
+      `UPDATE users SET reset_token = $1, reset_token_expires = $2 
+       WHERE email = $3 
+       RETURNING id, email`,
+      [token, expires, email.toLowerCase()]
+    );
+    
+    if (result.rows[0]) {
+      return { token, user: result.rows[0] };
+    }
+    return null;
+  },
+
+  /**
+   * Find user by reset token
+   */
+  async findByResetToken(token) {
+    const result = await pool.query(
+      `SELECT id, email, reset_token_expires FROM users 
+       WHERE reset_token = $1 AND reset_token_expires > NOW()`,
+      [token]
+    );
+    return result.rows[0] || null;
+  },
+
+  /**
+   * Reset password using token
+   */
+  async resetPassword(token, newPassword) {
+    // Validate password strength
+    this.validatePassword(newPassword);
+    
+    // Find user by token
+    const user = await this.findByResetToken(token);
+    if (!user) {
+      return null;
+    }
+    
+    // Hash new password
+    const password_hash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    
+    // Update password and clear token
+    const result = await pool.query(
+      `UPDATE users SET password_hash = $1, reset_token = NULL, reset_token_expires = NULL 
+       WHERE id = $2 
+       RETURNING id, email`,
+      [password_hash, user.id]
+    );
+    
+    return result.rows[0] || null;
   }
 };

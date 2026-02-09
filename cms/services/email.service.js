@@ -3,6 +3,154 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
+ * Send password reset email
+ */
+export async function sendPasswordResetEmail({ email, resetUrl, locale = 'be-nl' }) {
+  const translations = {
+    'be-nl': {
+      subject: 'Wachtwoord resetten - Structon',
+      title: 'Wachtwoord Resetten',
+      greeting: 'Beste klant,',
+      intro: 'U heeft een verzoek ingediend om uw wachtwoord te resetten. Klik op de onderstaande knop om een nieuw wachtwoord in te stellen.',
+      button: 'Wachtwoord Resetten',
+      expiry: 'Deze link is 1 uur geldig.',
+      ignore: 'Als u dit verzoek niet heeft ingediend, kunt u deze e-mail negeren. Uw wachtwoord blijft ongewijzigd.',
+      footer: 'Deze e-mail is automatisch gegenereerd. Gelieve niet te antwoorden op dit bericht.'
+    },
+    'nl-nl': {
+      subject: 'Wachtwoord resetten - Structon',
+      title: 'Wachtwoord Resetten',
+      greeting: 'Beste klant,',
+      intro: 'U heeft een verzoek ingediend om uw wachtwoord te resetten. Klik op de onderstaande knop om een nieuw wachtwoord in te stellen.',
+      button: 'Wachtwoord Resetten',
+      expiry: 'Deze link is 1 uur geldig.',
+      ignore: 'Als u dit verzoek niet heeft ingediend, kunt u deze e-mail negeren. Uw wachtwoord blijft ongewijzigd.',
+      footer: 'Deze e-mail is automatisch gegenereerd. Gelieve niet te antwoorden op dit bericht.'
+    },
+    'be-fr': {
+      subject: 'Reinitialiser le mot de passe - Structon',
+      title: 'Reinitialiser le Mot de Passe',
+      greeting: 'Cher client,',
+      intro: 'Vous avez demande a reinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous pour definir un nouveau mot de passe.',
+      button: 'Reinitialiser le Mot de Passe',
+      expiry: 'Ce lien est valable pendant 1 heure.',
+      ignore: 'Si vous n\'avez pas fait cette demande, vous pouvez ignorer cet e-mail. Votre mot de passe restera inchange.',
+      footer: 'Cet e-mail a ete genere automatiquement. Veuillez ne pas repondre a ce message.'
+    },
+    'de-de': {
+      subject: 'Passwort zurucksetzen - Structon',
+      title: 'Passwort Zurucksetzen',
+      greeting: 'Sehr geehrter Kunde,',
+      intro: 'Sie haben angefordert, Ihr Passwort zuruckzusetzen. Klicken Sie auf die Schaltflache unten, um ein neues Passwort festzulegen.',
+      button: 'Passwort Zurucksetzen',
+      expiry: 'Dieser Link ist 1 Stunde gultig.',
+      ignore: 'Wenn Sie diese Anfrage nicht gestellt haben, konnen Sie diese E-Mail ignorieren. Ihr Passwort bleibt unverandert.',
+      footer: 'Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht auf diese Nachricht.'
+    }
+  };
+
+  const t = translations[locale] || translations['be-nl'];
+
+  const html = `
+<!DOCTYPE html>
+<html lang="${locale}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${t.subject}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Arial', sans-serif; background-color: #f4f4f4;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #236773 0%, #2d7f8d 100%); padding: 40px 30px; text-align: center;">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png" alt="Structon" style="height: 60px; margin-bottom: 15px;">
+              <h2 style="margin: 10px 0 0 0; color: #ffffff; font-size: 24px;">${t.title}</h2>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px 30px;">
+              <p style="margin: 0 0 20px 0; color: #333333; font-size: 16px; line-height: 1.6;">
+                ${t.greeting}
+              </p>
+              <p style="margin: 0 0 30px 0; color: #333333; font-size: 16px; line-height: 1.6;">
+                ${t.intro}
+              </p>
+
+              <!-- Button -->
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="${resetUrl}" style="display: inline-block; padding: 16px 40px; background: #236773; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">${t.button}</a>
+              </div>
+
+              <!-- Expiry Notice -->
+              <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; margin: 30px 0;">
+                <p style="margin: 0; color: #856404; font-size: 14px;">
+                  ${t.expiry}
+                </p>
+              </div>
+
+              <!-- Ignore Notice -->
+              <p style="margin: 30px 0 0 0; color: #666666; font-size: 14px; line-height: 1.6;">
+                ${t.ignore}
+              </p>
+
+              <!-- Fallback URL -->
+              <p style="margin: 20px 0 0 0; color: #999999; font-size: 12px; word-break: break-all;">
+                Link werkt niet? Kopieer en plak deze URL in uw browser:<br>
+                <a href="${resetUrl}" style="color: #236773;">${resetUrl}</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e0e0e0;">
+              <p style="margin: 0 0 10px 0; color: #666666; font-size: 14px;">
+                <strong>Structon BV</strong><br>
+                Sint jorisstraat 84B, 8730 Beernem, Belgie<br>
+                BTW: BE 1029978959
+              </p>
+              <p style="margin: 15px 0 0 0; color: #666666; font-size: 14px;">
+                <a href="mailto:info@structon.be" style="color: #236773; text-decoration: none;">info@structon.be</a> | 
+                <a href="https://structon-bv.com" style="color: #236773; text-decoration: none;">www.structon-bv.com</a>
+              </p>
+              <p style="margin: 15px 0 0 0; color: #999999; font-size: 12px;">
+                ${t.footer}
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `;
+
+  try {
+    const result = await resend.emails.send({
+      from: 'Structon <noreply@structon-bv.com>',
+      to: email,
+      subject: t.subject,
+      html: html
+    });
+
+    console.log('Password reset email sent:', result);
+    return result;
+  } catch (error) {
+    console.error('Failed to send password reset email:', error);
+    throw error;
+  }
+}
+
+/**
  * Send confirmation email for quote/request submission
  */
 export async function sendConfirmationEmail(data) {

@@ -613,10 +613,12 @@
         try {
           localStorage.removeItem('structon_auth_token');
           sessionStorage.removeItem('structon_auth_token');
+          localStorage.removeItem('structon_user_email');
+          localStorage.removeItem('structon_user_role');
         } catch (err) {}
         
-        // Redirect to home or show login modal
-        window.location.href = '/';
+        // Reload current page to show logged out state
+        window.location.reload();
       });
     }
   }

@@ -4,7 +4,7 @@
  */
 
 import { products } from '../api/client.js';
-import { createIndustryProductCard, showLoading, showError } from '../main.js';
+import { createProductCard, showLoading, showError } from '../main.js';
 import { BRAND_DATA } from '../data/brand-data.js?v=7';
 import { loadProductPrices } from '../pricing.js';
 
@@ -166,7 +166,7 @@ function renderProducts(productsToRender) {
   // Use grid layout like home page featured products
   container.className = 'products-grid';
   container.innerHTML = productsToRender.map(product => 
-    createIndustryProductCard(product, isLoggedIn)
+    createProductCard(product, isLoggedIn)
   ).join('');
   
   // Load prices for logged in users

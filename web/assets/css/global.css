@@ -452,11 +452,11 @@ h6 { font-size: var(--text-base); }
    ============================================ */
 @media (max-width: 1024px) {
   .btn-split-text {
-    padding: 12px 20px;
+    padding: 11px 18px;
     font-size: 15px;
   }
   .btn-split-icon {
-    width: 48px;
+    width: 46px;
   }
 }
 
@@ -465,11 +465,11 @@ h6 { font-size: var(--text-base); }
    ============================================ */
 @media (max-width: 640px) {
   .btn-split-text {
-    padding: 12px 18px;
+    padding: 10px 14px;
     font-size: 14px;
   }
   .btn-split-icon {
-    width: 44px;
+    width: 40px;
   }
   .btn-split-icon svg {
     width: 18px;
@@ -3342,4 +3342,22 @@ body[data-page="product"] .hero-subtitle {
   font-weight: 600;
   color: var(--spec-value-color);
   font-size: 0.85rem;
+}
+
+/* ============================================
+   MOBILE CTA PADDING REDUCTION
+   ============================================ */
+@media (max-width: 640px) {
+  .btn-login,
+  .login-modal-form .btn-login,
+  .btn-primary,
+  .btn-secondary,
+  .btn,
+  button[type="submit"] {
+    padding: 10px 16px !important;
+  }
+  
+  .btn-block {
+    padding: 12px 16px !important;
+  }
 }

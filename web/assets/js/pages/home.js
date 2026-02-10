@@ -224,43 +224,39 @@ async function loadFeaturedProducts() {
   const container = document.getElementById('featured-products-wrapper');
   if (!container) return;
 
-  showLoading(container);
-
   // Check login status for price visibility
-  const token = localStorage.getItem('token');
-  const isLoggedIn = !!token;
+  const isLoggedIn = !!(localStorage.getItem('token') || localStorage.getItem('auth_token'));
 
   let selected = [];
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-  try {
-    // Fetch ALL products (not just featured) - auto-select diverse mix
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 8000)
-    );
-    
-    const data = await Promise.race([
-      products.getAll({ limit: 50 }),
-      timeoutPromise
-    ]);
-    
-    if (data && data.items && data.items.length > 0) {
-      // Smart selection: pick diverse products from different categories
-      selected = selectDiverseProducts(data.items, 8);
-      console.log(`✅ Auto-selected ${selected.length} featured products from ${data.items.length} total`);
-    } else {
-      console.warn('⚠️ API returned empty products, using fallback');
+  if (isLocal) {
+    // Only try API on localhost where CMS is running
+    showLoading(container);
+    try {
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), 5000)
+      );
+      
+      const data = await Promise.race([
+        products.getAll({ limit: 50 }),
+        timeoutPromise
+      ]);
+      
+      if (data && data.items && data.items.length > 0) {
+        selected = selectDiverseProducts(data.items, 8);
+      }
+    } catch (error) {
+      console.warn('⚠️ API unavailable, using fallback products');
     }
-  } catch (error) {
-    console.warn('⚠️ API unavailable, using fallback products:', error.message);
   }
 
-  // Use fallback products if API returned nothing
+  // Use fallback products if API returned nothing or on production
   if (selected.length === 0) {
-    console.log('📦 Using fallback products for featured section');
     selected = FALLBACK_PRODUCTS.slice(0, 8);
   }
 
-  // Always render products
+  // Render products immediately
   container.innerHTML = selected.map(p => `
     <div class="swiper-slide">
       ${createProductCard(p, isLoggedIn)}

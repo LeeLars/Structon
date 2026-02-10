@@ -199,50 +199,41 @@ function getBrandFromUrl() {
  */
 async function loadBrandProducts() {
   const container = document.getElementById('products-grid');
-  console.log('🔍 Looking for products-grid container:', container);
-  
-  if (!container) {
-    console.error('❌ products-grid container not found!');
-    return;
-  }
-  
-  showLoading(container);
-  console.log('⏳ Loading products...');
+  if (!container) return;
   
   let displayProducts = [];
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   
-  try {
-    // Try to fetch from API with short timeout
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 3000)
-    );
-    
-    const data = await Promise.race([
-      products.getAll({ limit: 50 }),
-      timeoutPromise
-    ]);
-    
-    let allProducts = data.items || data.products || [];
-    if (Array.isArray(data)) {
-      allProducts = data;
+  if (isLocal) {
+    // Only try API on localhost where CMS is running
+    showLoading(container);
+    try {
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), 3000)
+      );
+      
+      const data = await Promise.race([
+        products.getAll({ limit: 50 }),
+        timeoutPromise
+      ]);
+      
+      let allProducts = data.items || data.products || [];
+      if (Array.isArray(data)) allProducts = data;
+      
+      if (allProducts.length > 0) {
+        const shuffled = shuffleArray(allProducts);
+        displayProducts = shuffled.slice(0, PRODUCTS_TO_SHOW);
+      }
+    } catch (error) {
+      console.warn('API unavailable, using fallback products');
     }
-    
-    if (allProducts.length > 0) {
-      console.log(`✅ Loaded ${allProducts.length} products from API`);
-      const shuffled = shuffleArray(allProducts);
-      displayProducts = shuffled.slice(0, PRODUCTS_TO_SHOW);
-    }
-  } catch (error) {
-    console.warn('⚠️ API unavailable, using fallback products:', error.message);
   }
   
-  // Use fallback products if API returned nothing
+  // Use fallback products if API returned nothing or on production
   if (displayProducts.length === 0) {
-    console.log('📦 Using fallback products');
     displayProducts = shuffleArray(FALLBACK_PRODUCTS).slice(0, PRODUCTS_TO_SHOW);
   }
   
-  console.log(`✅ Showing ${displayProducts.length} products`);
   renderProducts(displayProducts);
 }
 
@@ -253,21 +244,26 @@ function renderProducts(productsToRender) {
   const container = document.getElementById('products-grid');
   if (!container) return;
   
-  // Hide fallback content
   const fallback = document.getElementById('products-fallback');
-  if (fallback) fallback.style.display = 'none';
   
   if (productsToRender.length === 0) {
-    // Show fallback again if no products
     if (fallback) fallback.style.display = 'block';
     return;
   }
   
-  // Use grid layout like home page featured products
-  container.className = 'products-grid';
-  container.innerHTML = productsToRender.map(product => 
-    createProductCard(product, isLoggedIn)
-  ).join('');
+  // Keep the fallback link visible, add products grid below it
+  const productsHtml = `
+    <div class="products-grid" style="margin-top: 24px;">
+      ${productsToRender.map(product => createProductCard(product, isLoggedIn)).join('')}
+    </div>
+  `;
+  
+  if (fallback) {
+    // Insert products grid after the fallback div
+    fallback.insertAdjacentHTML('afterend', productsHtml);
+  } else {
+    container.innerHTML = productsHtml;
+  }
   
   // Load prices for logged in users
   if (isLoggedIn) {

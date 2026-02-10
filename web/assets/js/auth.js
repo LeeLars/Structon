@@ -3,7 +3,7 @@
  * Handles authentication state and UI updates
  */
 
-import { auth } from './api/client.js';
+import { auth, clearApiCache } from './api/client.js';
 
 // Auth state
 let currentUser = null;
@@ -112,42 +112,36 @@ export async function login(email, password) {
  * Logout user - Complete session destruction
  */
 export async function logout() {
-  try {
-    await auth.logout();
-  } catch (error) {
-    console.error('Logout API error:', error);
-    // Continue with logout even if API fails
-  }
+  console.log('🚪 Starting logout...');
   
-  // Clear all auth data from localStorage
-  currentUser = null;
-  localStorage.removeItem('auth_token');
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('structon_auth_token');
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('structon_user');
-  localStorage.removeItem('structon_user_email');
-  localStorage.removeItem('structon_user_role');
-  localStorage.removeItem('cms_token');
+  // 1. Clear API response cache first
+  clearApiCache();
   
-  // Clear session storage completely
+  // 2. Clear ALL localStorage (nuclear option)
+  localStorage.clear();
+  
+  // 3. Clear sessionStorage
   sessionStorage.clear();
   
-  // Clear all cookies related to auth
+  // 4. Clear all cookies (client-side accessible)
   document.cookie.split(";").forEach(function(c) {
     document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
   });
   
-  // Remove is-logged-in class from body
+  // 5. Reset in-memory state
+  currentUser = null;
   document.body.classList.remove('is-logged-in');
   
-  // Update UI
-  updateAuthUI(false);
+  // 6. Try API logout to invalidate server-side session/cookie
+  try {
+    await auth.logout();
+  } catch (error) {
+    console.warn('Logout API failed, continuing with client-side logout');
+  }
   
-  // Stay on current page after logout - just reload
-  window.location.reload();
+  // 7. Redirect to homepage (NOT reload - reload would re-auth via cookie)
+  const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+  window.location.href = `${basePath}/`;
 }
 
 /**

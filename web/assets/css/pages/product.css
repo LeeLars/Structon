@@ -158,11 +158,13 @@
   height: 100%;
   object-fit: contain;
   padding: var(--space-6);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.2));
 }
 
 .product-image-main:hover img {
   transform: scale(1.02);
+  filter: drop-shadow(5px 10px 16px rgba(0, 0, 0, 0.28));
 }
 
 /* Lightbox Trigger Button (for single images) */

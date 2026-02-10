@@ -39,13 +39,13 @@ export const Product = {
       values.push(filters.subcategory_slug);
     }
 
-    // Brand filter
+    // Brand filter - also include products compatible with ALL brands
     if (filters.brand_id) {
-      query += ` AND p.brand_id = $${paramCount++}`;
+      query += ` AND (p.brand_id = $${paramCount++} OR p.specs->>'compatible_brand_ids' = 'all')`;
       values.push(filters.brand_id);
     }
     if (filters.brand_slug) {
-      query += ` AND b.slug = $${paramCount++}`;
+      query += ` AND (b.slug = $${paramCount++} OR p.specs->>'compatible_brand_ids' = 'all')`;
       values.push(filters.brand_slug);
     }
 
@@ -352,8 +352,12 @@ export const Product = {
     }
 
     if (filters.brand_id) {
-      query += ` AND p.brand_id = $${paramCount++}`;
+      query += ` AND (p.brand_id = $${paramCount++} OR p.specs->>'compatible_brand_ids' = 'all')`;
       values.push(filters.brand_id);
+    }
+    if (filters.brand_slug) {
+      query += ` AND (b.slug = $${paramCount++} OR p.specs->>'compatible_brand_ids' = 'all')`;
+      values.push(filters.brand_slug);
     }
 
     if (filters.attachment_type) {

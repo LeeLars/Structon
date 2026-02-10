@@ -299,7 +299,10 @@ class QuoteCartUI {
   open() {
     this.isOpen = true;
     this.sidebar.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    // Block body scroll on mobile only
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden';
+    }
     this.renderCartItems();
   }
 
@@ -309,7 +312,10 @@ class QuoteCartUI {
   close() {
     this.isOpen = false;
     this.sidebar.classList.remove('open');
-    document.body.style.overflow = '';
+    // Restore body scroll only if we blocked it
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = '';
+    }
   }
 
   /**

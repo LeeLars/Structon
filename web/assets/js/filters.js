@@ -226,8 +226,10 @@ function setupFilterListeners() {
       if (filtersOverlay) {
         filtersOverlay.classList.toggle('is-open');
       }
-      // Block body scroll when filters open on mobile
-      document.body.style.overflow = isOpening ? 'hidden' : '';
+      // Block body scroll when filters open on mobile only
+      if (window.innerWidth <= 1024) {
+        document.body.style.overflow = isOpening ? 'hidden' : '';
+      }
     });
   }
   
@@ -757,8 +759,10 @@ function closeMobileFilters() {
   if (filtersOverlay) {
     filtersOverlay.classList.remove('is-open');
   }
-  // Restore body scroll
-  document.body.style.overflow = '';
+  // Restore body scroll on mobile only
+  if (window.innerWidth <= 1024) {
+    document.body.style.overflow = '';
+  }
 }
 
 /**

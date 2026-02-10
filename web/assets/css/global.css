@@ -292,14 +292,6 @@ h6 { font-size: var(--text-base); }
   padding: var(--space-24) 0;
 }
 
-/* Ensure logo doesn't overlap content on small screens or tight layouts */
-@media (max-width: 1024px) {
-  .page-content, 
-  main:not(.no-padding) {
-    padding-top: var(--space-16);
-  }
-}
-
 /* ============================================
    PAGE HEADER (Consistent across pages)
    ============================================ */

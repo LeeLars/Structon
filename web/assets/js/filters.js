@@ -221,10 +221,13 @@ function setupFilterListeners() {
   
   if (toggleBtn && filtersSidebar) {
     toggleBtn.addEventListener('click', () => {
+      const isOpening = !filtersSidebar.classList.contains('is-open');
       filtersSidebar.classList.toggle('is-open');
       if (filtersOverlay) {
         filtersOverlay.classList.toggle('is-open');
       }
+      // Block body scroll when filters open on mobile
+      document.body.style.overflow = isOpening ? 'hidden' : '';
     });
   }
   
@@ -754,6 +757,8 @@ function closeMobileFilters() {
   if (filtersOverlay) {
     filtersOverlay.classList.remove('is-open');
   }
+  // Restore body scroll
+  document.body.style.overflow = '';
 }
 
 /**

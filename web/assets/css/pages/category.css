@@ -455,8 +455,7 @@
   }
 
   #toggle-filters svg {
-    margin-right: 8px;
-    color: var(--color-primary);
+    display: none; /* Hide icon on mobile */
   }
 
   /* Sort Select Mobile - Tweede (volle breedte) */

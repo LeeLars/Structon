@@ -94,7 +94,7 @@
 /* Image Section - Links */
 .product-card-horizontal .product-image {
   width: 100%;
-  height: 220px;
+  height: 330px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +111,7 @@
   object-fit: contain;
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: drop-shadow(3px 6px 8px rgba(0, 0, 0, 0.2));
+  margin-top: -4rem;
 }
 
 .product-card-horizontal:hover .product-image img {

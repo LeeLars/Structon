@@ -267,10 +267,23 @@ async function loadFeaturedProducts() {
     </div>
   `).join('');
   
-  // Initialize Swiper after a short delay to ensure DOM is ready
-  setTimeout(() => {
+  // Initialize Swiper - retry until library is loaded
+  waitForSwiper();
+}
+
+/**
+ * Wait for Swiper library to be available, then initialize
+ */
+function waitForSwiper(attempts = 0) {
+  if (typeof Swiper !== 'undefined') {
     initSwiper();
-  }, 100);
+    return;
+  }
+  if (attempts < 20) {
+    setTimeout(() => waitForSwiper(attempts + 1), 200);
+  } else {
+    console.warn('Swiper library failed to load after 4s');
+  }
 }
 
 /**

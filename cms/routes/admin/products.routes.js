@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { pool } from '../../config/database.js';
 import { Product, ProductPrice } from '../../models/index.js';
 import { authenticate, requireAdmin } from '../../middleware/auth.js';
+import { clearCache } from '../../middleware/cache.js';
 
 const router = Router();
 
@@ -98,6 +99,9 @@ router.post('/', async (req, res, next) => {
       await ProductPrice.setPrice(product.id, price);
     }
 
+    // Clear products cache so frontend gets fresh data
+    clearCache('/api/products');
+    
     res.status(201).json({ product });
   } catch (error) {
     next(error);
@@ -157,6 +161,9 @@ router.patch('/:id', async (req, res, next) => {
       await ProductPrice.setPrice(product.id, price);
     }
 
+    // Clear products cache so frontend gets fresh data
+    clearCache('/api/products');
+    
     res.json({ product });
   } catch (error) {
     next(error);
@@ -175,6 +182,9 @@ router.delete('/:id', async (req, res, next) => {
       return res.status(404).json({ error: 'Product not found' });
     }
 
+    // Clear products cache so frontend gets fresh data
+    clearCache('/api/products');
+    
     res.json({ success: true, message: 'Product deleted' });
   } catch (error) {
     next(error);

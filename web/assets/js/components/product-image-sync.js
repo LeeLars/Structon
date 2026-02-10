@@ -37,14 +37,25 @@
         mainImg.src = newUrl;
       }
 
-      // Update thumbnails
+      // Update thumbnails - remove extras if fewer images than thumbnails
+      const thumbnailsContainer = document.querySelector('.product-thumbnails');
       const thumbnails = document.querySelectorAll('.product-thumbnail');
-      thumbnails.forEach((thumb, i) => {
-        const imgUrl = images[i]?.url || newUrl;
-        thumb.setAttribute('data-image', imgUrl);
-        const img = thumb.querySelector('img');
-        if (img) img.src = imgUrl;
-      });
+      
+      if (images.length <= 1 && thumbnailsContainer) {
+        // Hide thumbnails entirely if only 1 image
+        thumbnailsContainer.style.display = 'none';
+      } else if (thumbnailsContainer) {
+        thumbnails.forEach((thumb, i) => {
+          if (i < images.length) {
+            thumb.setAttribute('data-image', images[i].url);
+            const img = thumb.querySelector('img');
+            if (img) img.src = images[i].url;
+          } else {
+            // Remove thumbnail if no corresponding image
+            thumb.remove();
+          }
+        });
+      }
 
       // Update data-product attributes on buttons (for quote cart image)
       document.querySelectorAll('[data-product]').forEach(btn => {

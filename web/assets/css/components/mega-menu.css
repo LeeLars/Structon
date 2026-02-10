@@ -51,9 +51,9 @@
   top: 90px; /* Smaller header when scrolled */
 }
 
-/* Hover delay: 100ms before showing menu - faster response */
+/* Hover delay: 300ms before showing menu - prevents accidental opens */
 .menu-item:hover .menu-dropdown {
-  transition: opacity 0.2s ease 0.1s, transform 0.2s ease 0.1s, visibility 0s linear 0.1s;
+  transition: opacity 0.2s ease 0.3s, transform 0.2s ease 0.3s, visibility 0s linear 0.3s;
 }
 
 /* When already open and hovering dropdown itself, keep it open instantly */

@@ -12,7 +12,7 @@
 
   if (!slug) return;
 
-  fetch(`${API_BASE}/products/${slug}`)
+  fetch(`${API_BASE}/products/${slug}?_t=${Date.now()}`, { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error('Product not found');
       return res.json();

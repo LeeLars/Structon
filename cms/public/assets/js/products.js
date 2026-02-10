@@ -1110,8 +1110,11 @@ async function handleImageSelect(e) {
     
     if (response.images && response.images.length > 0) {
       showToast(`${response.images.length} afbeelding(en) geüpload!`, 'success');
-      // Replace existing images with new upload
-      window.uploadedImages = [...response.images];
+      // Append new images to existing ones
+      if (!window.uploadedImages) {
+        window.uploadedImages = [];
+      }
+      window.uploadedImages = [...window.uploadedImages, ...response.images];
       
       // Re-render all images including the new ones
       renderImagePreviews();

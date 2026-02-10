@@ -282,9 +282,15 @@
   }
 
   .product-card-horizontal .product-image {
-    height: 240px;
+    height: auto;
+    min-height: 280px;
     width: 100%;
-    justify-content: flex-start; /* Links uitlijnen op mobiel */
+    justify-content: center;
+  }
+
+  .product-card-horizontal .product-image img {
+    max-width: 90%;
+    max-height: 320px;
   }
   
   .product-specs {

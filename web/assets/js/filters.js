@@ -36,11 +36,45 @@ export async function initFilters(callback) {
   // Inject improved range slider styles
   injectRangeSliderStyles();
   
+  // Inject range slider HTML structure
+  injectRangeSliderHTML();
+  
   // Setup event listeners
   setupFilterListeners();
   
+  // Initialize slider visual state
+  updateRangeDisplay('volume');
+  
   // Apply initial filters
   applyFilters();
+}
+
+/**
+ * Inject HTML structure for range slider track
+ */
+function injectRangeSliderHTML() {
+  const container = document.querySelector('.range-slider');
+  if (!container) return;
+  
+  // Check if track already exists
+  if (container.querySelector('.range-slider-track')) return;
+  
+  // Create track elements
+  const track = document.createElement('div');
+  track.className = 'range-slider-track';
+  
+  const fill = document.createElement('div');
+  fill.className = 'range-track-fill';
+  
+  track.appendChild(fill);
+  
+  // Insert track before the input elements (visually behind them via z-index/positioning)
+  // The inputs are absolute, track is relative. 
+  // We want track to be in the flow to give height, but inputs are absolute.
+  // Actually, let's put track first so it's behind inputs in DOM order if z-index fails, 
+  // but we control z-index in CSS.
+  // Ideally track determines height.
+  container.insertBefore(track, container.firstChild);
 }
 
 /**
@@ -146,12 +180,30 @@ function setupFilterListeners() {
   
   if (volumeMin && volumeMax) {
     volumeMin.addEventListener('input', (e) => {
-      activeFilters.volume_min = parseInt(e.target.value);
+      let val = parseInt(e.target.value);
+      const maxVal = parseInt(volumeMax.value);
+      
+      // Prevent crossing
+      if (val > maxVal) {
+        val = maxVal;
+        e.target.value = val;
+      }
+      
+      activeFilters.volume_min = val;
       updateRangeDisplay('volume');
     });
     
     volumeMax.addEventListener('input', (e) => {
-      activeFilters.volume_max = parseInt(e.target.value);
+      let val = parseInt(e.target.value);
+      const minVal = parseInt(volumeMin.value);
+      
+      // Prevent crossing
+      if (val < minVal) {
+        val = minVal;
+        e.target.value = val;
+      }
+      
+      activeFilters.volume_max = val;
       updateRangeDisplay('volume');
     });
     
@@ -322,28 +374,31 @@ function injectRangeSliderStyles() {
   style.textContent = `
     .range-slider {
       position: relative;
-      padding: 20px 0;
+      padding: 30px 0 10px;
+      height: 40px;
     }
     .range-slider-track {
-      position: relative;
-      height: 8px;
-      background: #d1d5db;
-      border: 2px solid #9ca3af;
-      border-radius: 4px;
-      margin: 0 8px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 10px;
+      right: 10px;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
     }
     .range-track-fill {
       position: absolute;
       height: 100%;
       background: #236773;
-      border-radius: 2px;
+      border-radius: 3px;
       pointer-events: none;
-      transition: all 0.15s ease;
+      z-index: 1;
     }
     .range-slider input[type="range"] {
       position: absolute;
-      width: calc(100% - 16px);
-      left: 8px;
+      width: calc(100% - 20px);
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       -webkit-appearance: none;
@@ -351,55 +406,50 @@ function injectRangeSliderStyles() {
       background: transparent;
       pointer-events: none;
       z-index: 2;
+      margin: 0;
+      height: 0; /* Minimize height to avoid layout issues */
     }
+    /* Webkit Thumb */
     .range-slider input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       background: #fff;
-      border: 3px solid #236773;
+      border: 2px solid #236773;
       border-radius: 50%;
       cursor: pointer;
-      pointer-events: all;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      transition: all 0.2s ease;
+      pointer-events: auto;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      margin-top: -12px; /* Center thumb: -width/2 */
     }
     .range-slider input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-      box-shadow: 0 4px 12px rgba(35, 103, 115, 0.4);
-      border-width: 4px;
-    }
-    .range-slider input[type="range"]::-webkit-slider-thumb:active {
       transform: scale(1.1);
-      border-width: 4px;
-      background: #f0f9ff;
+      box-shadow: 0 4px 8px rgba(35, 103, 115, 0.2);
     }
+    /* Firefox Thumb */
     .range-slider input[type="range"]::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       background: #fff;
-      border: 3px solid #236773;
+      border: 2px solid #236773;
       border-radius: 50%;
       cursor: pointer;
-      pointer-events: all;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      transition: all 0.2s ease;
+      pointer-events: auto;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      border: none; /* Reset default border */
     }
     .range-slider input[type="range"]::-moz-range-thumb:hover {
-      transform: scale(1.15);
-      box-shadow: 0 4px 12px rgba(35, 103, 115, 0.4);
-      border-width: 4px;
-    }
-    .range-slider input[type="range"]::-moz-range-thumb:active {
       transform: scale(1.1);
-      border-width: 4px;
-      background: #f0f9ff;
+      box-shadow: 0 4px 8px rgba(35, 103, 115, 0.2);
     }
+    
     .range-values {
       display: flex;
       justify-content: space-between;
-      margin-top: 12px;
+      margin-top: 20px;
       font-size: 14px;
       font-weight: 600;
       color: #236773;

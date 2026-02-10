@@ -1981,7 +1981,7 @@ body {
   position: relative;
   aspect-ratio: 1;
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
 }
@@ -1996,6 +1996,7 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius);
+  overflow: hidden;
 }
 
 #image-preview-container button {

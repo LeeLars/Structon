@@ -915,6 +915,8 @@ async function handleProductSubmit(e) {
   try {
     console.log('💾 Saving product to API:');
     console.log('  - Product ID:', productId);
+    console.log('  - Images:', productData.cloudinary_images?.length, 'images');
+    console.log('  - Image URLs:', productData.cloudinary_images?.map(i => i.url));
     console.log('  - Data:', productData);
     
     let savedProduct;
@@ -1108,11 +1110,8 @@ async function handleImageSelect(e) {
     
     if (response.images && response.images.length > 0) {
       showToast(`${response.images.length} afbeelding(en) geüpload!`, 'success');
-      // Append new images to existing ones instead of replacing
-      if (!window.uploadedImages) {
-        window.uploadedImages = [];
-      }
-      window.uploadedImages = [...window.uploadedImages, ...response.images];
+      // Replace existing images with new upload
+      window.uploadedImages = [...response.images];
       
       // Re-render all images including the new ones
       renderImagePreviews();

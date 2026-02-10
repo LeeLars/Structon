@@ -30,7 +30,7 @@ router.get('/', cacheMiddleware(5 * 60 * 1000), async (req, res, next) => {
       excavator_weight: excavator_weight ? parseInt(excavator_weight) : undefined,
       volume_min: volume_min ? parseInt(volume_min) : undefined,
       volume_max: volume_max ? parseInt(volume_max) : undefined,
-      width: width ? parseInt(width) : undefined,
+      width: width ? width.split(',').map(w => parseInt(w)).filter(w => !isNaN(w)) : undefined,
       search,
       sort,
       limit: limit ? parseInt(limit) : undefined,

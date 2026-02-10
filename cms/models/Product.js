@@ -71,10 +71,15 @@ export const Product = {
       values.push(filters.volume_max);
     }
 
-    // Width filter
+    // Width filter - supports array of widths
     if (filters.width) {
-      query += ` AND p.width = $${paramCount++}`;
-      values.push(filters.width);
+      if (Array.isArray(filters.width) && filters.width.length > 0) {
+        query += ` AND p.width = ANY($${paramCount++})`;
+        values.push(filters.width);
+      } else {
+        query += ` AND p.width = $${paramCount++}`;
+        values.push(filters.width);
+      }
     }
 
     // Featured filter
@@ -380,8 +385,13 @@ export const Product = {
     }
 
     if (filters.width) {
-      query += ` AND p.width = $${paramCount++}`;
-      values.push(filters.width);
+      if (Array.isArray(filters.width) && filters.width.length > 0) {
+        query += ` AND p.width = ANY($${paramCount++})`;
+        values.push(filters.width);
+      } else {
+        query += ` AND p.width = $${paramCount++}`;
+        values.push(filters.width);
+      }
     }
 
     if (filters.is_featured === true) {

@@ -513,9 +513,9 @@ export function getActiveFilters() {
     filters.volume_max = activeFilters.volume_max;
   }
   
-  // Width filter
+  // Width filter - send all selected widths
   if (activeFilters.width.length > 0) {
-    filters.width = activeFilters.width[0]; // API accepts single value
+    filters.width = activeFilters.width.join(',');
   }
   
   // Attachment type filter

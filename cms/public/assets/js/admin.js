@@ -229,8 +229,18 @@ async function handleLogout() {
     console.error('Logout error:', error);
   }
 
-  // Clear token from localStorage
+  // Clear all auth tokens from localStorage
+  localStorage.removeItem('structon_auth_token');
+  localStorage.removeItem('structon_user');
+  localStorage.removeItem('structon_user_email');
+  localStorage.removeItem('structon_user_role');
   localStorage.removeItem('auth_token');
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('refresh_token');
+  localStorage.removeItem('cms_token');
+  sessionStorage.clear();
   
   currentUser = null;
   showLoginModal();

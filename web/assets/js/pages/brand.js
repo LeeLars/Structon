@@ -203,9 +203,8 @@ async function loadBrandProducts() {
   const container = document.getElementById('products-grid');
   if (!container) return;
   
-  // Show fallback products immediately for fast initial render
-  let displayProducts = shuffleArray(FALLBACK_PRODUCTS).slice(0, PRODUCTS_TO_SHOW);
-  renderProducts(displayProducts);
+  // Skip if products are already hardcoded in HTML
+  if (container.querySelectorAll('.product-card').length > 0) return;
   
   // Then try to fetch real products from API
   try {

@@ -117,8 +117,12 @@ export async function logout() {
   // 1. Clear API response cache first
   clearApiCache();
   
-  // 2. Clear ALL localStorage (nuclear option)
-  localStorage.clear();
+  // 2. Clear website auth keys (NOT cms keys - those are separate)
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('refresh_token');
   
   // 3. Clear sessionStorage
   sessionStorage.clear();

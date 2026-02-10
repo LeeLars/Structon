@@ -124,6 +124,18 @@ async function initializeData() {
     populateBrandCheckboxes();
   } catch (error) {
     console.error('❌ Error loading data from CMS:', error);
+    
+    // If session expired, redirect to login
+    if (error.message && error.message.includes('Session expired')) {
+      window.location.href = '/cms/login.html';
+      return;
+    }
+    
+    // Show error in table
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan="10" class="loading-cell" style="color: #dc2626;">Fout bij laden: ${error.message}. <a href="javascript:location.reload()">Opnieuw proberen</a></td></tr>`;
+    }
+    
     products = [];
     filteredProducts = [];
     categories = [];

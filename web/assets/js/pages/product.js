@@ -240,8 +240,8 @@ function renderProduct(product) {
             
             <ul class="product-usps">
               <li>Op maat gemaakt in België - perfecte pasvorm</li>
-              <li>Hardox 450 staal - langere levensduur</li>
-              <li>Rechtstreeks van fabrikant - eerlijke prijzen</li>
+              <li>Afgestemd op jouw graafmachine</li>
+              <li>Snelle, gecontroleerde productie</li>
             </ul>
           </div>
         </div>

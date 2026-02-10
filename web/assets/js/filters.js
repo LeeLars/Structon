@@ -39,6 +39,9 @@ export async function initFilters(callback) {
   // Inject range slider HTML structure
   injectRangeSliderHTML();
   
+  // Inject active filters display
+  injectActiveFiltersDisplay();
+  
   // Setup event listeners
   setupFilterListeners();
   
@@ -466,6 +469,9 @@ function applyFilters() {
     onFilterChange(getActiveFilters());
   }
   
+  // Update active filters display
+  updateActiveFiltersDisplay();
+  
   // Update URL
   updateUrl();
 }
@@ -794,6 +800,278 @@ function setupBrandListeners() {
       updateCheckboxFilter('brand', e.target.value, e.target.checked);
     });
   });
+}
+
+/**
+ * Inject active filters display HTML
+ */
+function injectActiveFiltersDisplay() {
+  const brandFilterGroup = document.querySelector('.filter-group');
+  if (!brandFilterGroup) return;
+  
+  // Check if already exists
+  if (document.getElementById('active-filters-display')) return;
+  
+  const activeFiltersHTML = `
+    <div id="active-filters-display" class="active-filters-display">
+      <div class="active-filters-header">
+        <span class="active-filters-title">Actieve filters</span>
+        <button class="active-filters-clear-all" id="active-filters-clear-all" style="display: none;">Alles wissen</button>
+      </div>
+      <div id="active-filters-tags" class="active-filters-tags"></div>
+    </div>
+  `;
+  
+  brandFilterGroup.insertAdjacentHTML('beforebegin', activeFiltersHTML);
+  
+  // Inject styles
+  injectActiveFiltersStyles();
+  
+  // Setup clear all handler
+  const clearAllBtn = document.getElementById('active-filters-clear-all');
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener('click', clearFilters);
+  }
+}
+
+/**
+ * Inject active filters styles
+ */
+function injectActiveFiltersStyles() {
+  if (document.getElementById('active-filters-styles')) return;
+  
+  const style = document.createElement('style');
+  style.id = 'active-filters-styles';
+  style.textContent = `
+    .active-filters-display {
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .active-filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .active-filters-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .active-filters-clear-all {
+      background: none;
+      border: none;
+      color: #236773;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.15s ease;
+    }
+    .active-filters-clear-all:hover {
+      background: #e5e7eb;
+    }
+    .active-filters-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .active-filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #374151;
+      transition: all 0.15s ease;
+    }
+    .active-filter-tag:hover {
+      border-color: #236773;
+      background: #f0f9fa;
+    }
+    .active-filter-tag-label {
+      font-weight: 500;
+    }
+    .active-filter-tag-remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      background: #e5e7eb;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .active-filter-tag-remove:hover {
+      background: #236773;
+    }
+    .active-filter-tag-remove svg {
+      width: 10px;
+      height: 10px;
+      stroke: #6b7280;
+      transition: stroke 0.15s ease;
+    }
+    .active-filter-tag-remove:hover svg {
+      stroke: #fff;
+    }
+    .active-filters-empty {
+      font-size: 13px;
+      color: #9ca3af;
+      font-style: italic;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+/**
+ * Update active filters display
+ */
+function updateActiveFiltersDisplay() {
+  const tagsContainer = document.getElementById('active-filters-tags');
+  const clearAllBtn = document.getElementById('active-filters-clear-all');
+  if (!tagsContainer) return;
+  
+  const tags = [];
+  
+  // Volume filters
+  if (activeFilters.volume_min && activeFilters.volume_min > 0) {
+    tags.push({
+      type: 'volume_min',
+      label: `Min: ${activeFilters.volume_min}L`,
+      value: activeFilters.volume_min
+    });
+  }
+  if (activeFilters.volume_max && activeFilters.volume_max < 5000) {
+    tags.push({
+      type: 'volume_max',
+      label: `Max: ${activeFilters.volume_max}L`,
+      value: activeFilters.volume_max
+    });
+  }
+  
+  // Excavator weight filters
+  activeFilters.excavator_weight.forEach(weight => {
+    let label = '';
+    if (weight === 1500) label = '1-3 ton';
+    else if (weight === 4000) label = '3-8 ton';
+    else if (weight === 12000) label = '8-15 ton';
+    else if (weight === 20000) label = '15-25 ton';
+    else if (weight === 30000) label = '25-50 ton';
+    
+    if (label) {
+      tags.push({
+        type: 'excavator_weight',
+        label: label,
+        value: weight
+      });
+    }
+  });
+  
+  // Width filters
+  activeFilters.width.forEach(width => {
+    tags.push({
+      type: 'width',
+      label: `Breedte: ${width}mm`,
+      value: width
+    });
+  });
+  
+  // Attachment type filters
+  activeFilters.attachment_type.forEach(type => {
+    tags.push({
+      type: 'attachment_type',
+      label: type,
+      value: type
+    });
+  });
+  
+  // Brand filters
+  activeFilters.brand.forEach(brand => {
+    // Capitalize first letter
+    const brandLabel = brand.charAt(0).toUpperCase() + brand.slice(1);
+    tags.push({
+      type: 'brand',
+      label: brandLabel,
+      value: brand
+    });
+  });
+  
+  // Render tags
+  if (tags.length === 0) {
+    tagsContainer.innerHTML = '<span class="active-filters-empty">Geen actieve filters</span>';
+    if (clearAllBtn) clearAllBtn.style.display = 'none';
+  } else {
+    tagsContainer.innerHTML = tags.map(tag => `
+      <div class="active-filter-tag" data-filter-type="${tag.type}" data-filter-value="${tag.value}">
+        <span class="active-filter-tag-label">${tag.label}</span>
+        <div class="active-filter-tag-remove">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+      </div>
+    `).join('');
+    
+    if (clearAllBtn) clearAllBtn.style.display = 'block';
+    
+    // Add click handlers to remove buttons
+    tagsContainer.querySelectorAll('.active-filter-tag-remove').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tag = e.target.closest('.active-filter-tag');
+        const filterType = tag.dataset.filterType;
+        const filterValue = tag.dataset.filterValue;
+        removeFilter(filterType, filterValue);
+      });
+    });
+  }
+}
+
+/**
+ * Remove a specific filter
+ */
+function removeFilter(type, value) {
+  if (type === 'volume_min') {
+    activeFilters.volume_min = null;
+    const slider = document.getElementById('volume-min');
+    if (slider) slider.value = 0;
+    updateRangeDisplay('volume');
+  } else if (type === 'volume_max') {
+    activeFilters.volume_max = null;
+    const slider = document.getElementById('volume-max');
+    if (slider) slider.value = 5000;
+    updateRangeDisplay('volume');
+  } else if (type === 'excavator_weight') {
+    const numValue = parseInt(value);
+    activeFilters.excavator_weight = activeFilters.excavator_weight.filter(v => v !== numValue);
+    // Uncheck the checkbox
+    const checkbox = document.querySelector(`input[name="excavator"][value="${value}"]`);
+    if (checkbox) checkbox.checked = false;
+  } else if (type === 'width') {
+    const numValue = parseInt(value);
+    activeFilters.width = activeFilters.width.filter(v => v !== numValue);
+    const checkbox = document.querySelector(`input[name="width"][value="${value}"]`);
+    if (checkbox) checkbox.checked = false;
+  } else if (type === 'attachment_type') {
+    activeFilters.attachment_type = activeFilters.attachment_type.filter(v => v !== value);
+    const checkbox = document.querySelector(`input[name="attachment"][value="${value}"]`);
+    if (checkbox) checkbox.checked = false;
+  } else if (type === 'brand') {
+    activeFilters.brand = activeFilters.brand.filter(v => v !== value);
+    const checkbox = document.querySelector(`input[name="brand"][value="${value}"]`);
+    if (checkbox) checkbox.checked = false;
+  }
+  
+  applyFilters();
 }
 
 /**

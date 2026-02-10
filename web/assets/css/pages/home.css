@@ -720,13 +720,13 @@
 }
 
 .product-card-image {
-  height: 280px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
   overflow: hidden;
-  padding: 20px;
+  padding: 12px;
   background: transparent;
   border-radius: 0;
 }

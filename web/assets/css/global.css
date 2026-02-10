@@ -1077,6 +1077,8 @@ h6 { font-size: var(--text-base); }
   justify-content: center;
   border-radius: 6px;
   transition: background-color 0.2s ease;
+  z-index: 501; /* Ensure above mobile nav (z-index 500) */
+  position: relative;
 }
 
 .menu-toggle:hover {
@@ -1088,20 +1090,22 @@ h6 { font-size: var(--text-base); }
   width: 26px;
   height: 3px;
   background-color: #2C5F6F;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 2px;
+  transform-origin: center;
 }
 
 .menu-toggle.is-active span:nth-child(1) {
-  transform: rotate(45deg) translateY(8px);
+  transform: translateY(8px) rotate(45deg);
 }
 
 .menu-toggle.is-active span:nth-child(2) {
   opacity: 0;
+  transform: scale(0);
 }
 
 .menu-toggle.is-active span:nth-child(3) {
-  transform: rotate(-45deg) translateY(-8px);
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 @media (min-width: 1024px) {
@@ -1119,13 +1123,17 @@ h6 { font-size: var(--text-base); }
   right: 0;
   bottom: 0;
   background-color: white;
-  z-index: var(--z-modal);
-  padding: 80px 24px 24px;
+  z-index: 190; /* Below main-nav (200) so header stays visible */
+  padding: 100px 24px 24px; /* Increased top padding to clear header */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   opacity: 0;
   transform: translateX(100%);
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-mobile-close {
+  display: none; /* Hide separate close button, use toggle instead */
 }
 
 .nav-mobile.active {
@@ -1459,6 +1467,19 @@ body[data-page="product"] .hero-subtitle {
 
 .product-card:hover .product-card-image-wrapper img {
   transform: scale(1.12);
+}
+
+/* Mobile: grotere afbeeldingen door minder padding */
+@media (max-width: 768px) {
+  .product-card-image-wrapper {
+    padding: var(--space-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card-image-wrapper {
+    padding: var(--space-2);
+  }
 }
 
 /* Gradient Divider */

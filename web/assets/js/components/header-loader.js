@@ -521,17 +521,47 @@
 
     if (menuToggle && navMobile) {
       menuToggle.addEventListener('click', function() {
-        navMobile.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        // Toggle menu visibility
+        const isExpanded = navMobile.classList.toggle('active');
+        
+        // Toggle button animation state
+        menuToggle.classList.toggle('is-active');
+        
+        // Update aria-expanded
+        menuToggle.setAttribute('aria-expanded', isExpanded);
+        
+        // Toggle body scroll
+        if (isExpanded) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
       });
     }
 
     if (navMobileClose && navMobile) {
       navMobileClose.addEventListener('click', function() {
         navMobile.classList.remove('active');
+        if (menuToggle) {
+          menuToggle.classList.remove('is-active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
         document.body.style.overflow = '';
       });
     }
+    
+    // Close menu when clicking a link inside it
+    const navLinks = navMobile ? navMobile.querySelectorAll('a') : [];
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navMobile.classList.remove('active');
+        if (menuToggle) {
+          menuToggle.classList.remove('is-active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+        document.body.style.overflow = '';
+      });
+    });
     
     // Initialize language switcher
     initLanguageSwitcher();

@@ -421,7 +421,7 @@
 @media (max-width: 768px) {
   .products-toolbar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 12px;
     padding: 0;
     background: transparent;
@@ -435,8 +435,9 @@
     display: contents; /* Unwrap containers so children participate in grid */
   }
 
-  /* Filters Button Mobile */
+  /* Filters Button Mobile - Eerste (volle breedte) */
   #toggle-filters {
+    order: 1;
     grid-column: 1;
     display: flex;
     align-items: center;
@@ -458,13 +459,14 @@
     color: var(--color-primary);
   }
 
-  /* Sort Select Mobile */
+  /* Sort Select Mobile - Tweede (volle breedte) */
   .sort-label {
     display: none; /* Hide label on mobile */
   }
 
   .sort-select {
-    grid-column: 2;
+    order: 2;
+    grid-column: 1;
     width: 100%;
     min-width: 0;
     height: 48px; /* Match button height */
@@ -484,9 +486,10 @@
     box-shadow: 0 0 0 3px rgba(35, 103, 115, 0.1);
   }
 
-  /* Product Count Mobile */
+  /* Product Count Mobile - Onderaan */
   .products-count-text {
-    grid-column: 1 / -1;
+    order: 3;
+    grid-column: 1;
     text-align: center;
     font-size: 13px;
     margin-top: 4px;

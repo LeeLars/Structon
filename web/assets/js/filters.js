@@ -137,6 +137,14 @@ async function parseUrlParams() {
     }
   }
   
+  // Brand filter (from brand pages link)
+  if (params.has('brand')) {
+    const brandParam = params.get('brand');
+    if (brandParam) {
+      activeFilters.brand = [brandParam];
+    }
+  }
+  
   // Search filter
   if (params.has('search')) {
     activeFilters.search = params.get('search');
@@ -579,6 +587,9 @@ function updateUrl() {
   if (activeFilters.search) {
     params.set('search', activeFilters.search);
   }
+  if (activeFilters.brand && activeFilters.brand.length > 0) {
+    params.set('brand', activeFilters.brand[0]);
+  }
   if (activeFilters.sort && activeFilters.sort !== 'newest') {
     params.set('sort', activeFilters.sort);
   }
@@ -677,6 +688,17 @@ async function loadBrandFilters() {
   
   // Setup search functionality
   setupBrandSearch();
+  
+  // Pre-select brand checkboxes from URL params
+  if (activeFilters.brand && activeFilters.brand.length > 0) {
+    activeFilters.brand.forEach(brandSlug => {
+      const checkbox = containerEl.querySelector(`input[value="${brandSlug}"]`);
+      if (checkbox) {
+        checkbox.checked = true;
+        console.log(`✅ Brand pre-selected from URL: ${brandSlug}`);
+      }
+    });
+  }
   
   console.log('✅ Brand filters ready:', sortedBrands.length);
 }

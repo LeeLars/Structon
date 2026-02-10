@@ -152,6 +152,11 @@
     background: #d1d5db;
     border-radius: 2px;
     z-index: 1;
+    cursor: grab;
+  }
+  
+  .quote-cart-panel.dragging::before {
+    cursor: grabbing;
   }
 }
 

@@ -217,24 +217,31 @@ function setupFilterListeners() {
   // Mobile filter toggle
   const toggleBtn = document.getElementById('toggle-filters');
   const filtersSidebar = document.getElementById('filters-sidebar');
+  const filtersOverlay = document.getElementById('filters-overlay');
   
   if (toggleBtn && filtersSidebar) {
     toggleBtn.addEventListener('click', () => {
       filtersSidebar.classList.toggle('is-open');
-    });
-    
-    // Close on overlay click (click outside the sidebar content)
-    filtersSidebar.addEventListener('click', (e) => {
-      if (e.target === filtersSidebar) {
-        closeMobileFilters();
+      if (filtersOverlay) {
+        filtersOverlay.classList.toggle('is-open');
       }
     });
+  }
+  
+  // Overlay click to close
+  if (filtersOverlay) {
+    filtersOverlay.addEventListener('click', closeMobileFilters);
   }
   
   // Close button for mobile filters
   const mobileCloseBtn = document.getElementById('mobile-filters-close');
   if (mobileCloseBtn) {
     mobileCloseBtn.addEventListener('click', closeMobileFilters);
+  }
+  
+  // Swipe down to close on mobile
+  if (filtersSidebar && window.innerWidth <= 1024) {
+    setupSwipeToClose(filtersSidebar, closeMobileFilters);
   }
 }
 
@@ -739,9 +746,81 @@ function setupBrandListeners() {
  */
 function closeMobileFilters() {
   const filtersSidebar = document.getElementById('filters-sidebar');
+  const filtersOverlay = document.getElementById('filters-overlay');
+  
   if (filtersSidebar) {
     filtersSidebar.classList.remove('is-open');
   }
+  if (filtersOverlay) {
+    filtersOverlay.classList.remove('is-open');
+  }
+}
+
+/**
+ * Setup swipe down to close functionality
+ */
+function setupSwipeToClose(element, closeCallback) {
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+  let startTime = 0;
+  
+  const handleStart = (e) => {
+    const touch = e.touches ? e.touches[0] : e;
+    const rect = element.getBoundingClientRect();
+    
+    // Only start drag if touching near the top (handle area)
+    if (touch.clientY - rect.top > 60) return;
+    
+    startY = touch.clientY;
+    currentY = startY;
+    isDragging = true;
+    startTime = Date.now();
+    element.classList.add('dragging');
+    element.style.transition = 'none';
+  };
+  
+  const handleMove = (e) => {
+    if (!isDragging) return;
+    
+    const touch = e.touches ? e.touches[0] : e;
+    currentY = touch.clientY;
+    const deltaY = currentY - startY;
+    
+    // Only allow dragging down
+    if (deltaY > 0) {
+      element.style.transform = `translateY(${deltaY}px)`;
+    }
+  };
+  
+  const handleEnd = () => {
+    if (!isDragging) return;
+    
+    const deltaY = currentY - startY;
+    const deltaTime = Date.now() - startTime;
+    const velocity = deltaY / deltaTime;
+    
+    element.classList.remove('dragging');
+    element.style.transition = '';
+    element.style.transform = '';
+    
+    // Close if dragged down more than 100px or fast swipe
+    if (deltaY > 100 || velocity > 0.5) {
+      closeCallback();
+    }
+    
+    isDragging = false;
+  };
+  
+  // Touch events
+  element.addEventListener('touchstart', handleStart, { passive: true });
+  element.addEventListener('touchmove', handleMove, { passive: true });
+  element.addEventListener('touchend', handleEnd);
+  
+  // Mouse events for desktop testing
+  element.addEventListener('mousedown', handleStart);
+  document.addEventListener('mousemove', handleMove);
+  document.addEventListener('mouseup', handleEnd);
 }
 
 /**

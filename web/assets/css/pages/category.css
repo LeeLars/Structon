@@ -62,7 +62,31 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Mobile Filter Overlay */
+.filters-overlay {
+  display: none;
+}
+
 @media (max-width: 1024px) {
+  .filters-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .filters-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
   .filters-sidebar {
     position: fixed;
     bottom: 0;
@@ -79,6 +103,7 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 20px 20px 0 0;
     padding: var(--space-6) var(--space-4);
+    touch-action: pan-y;
   }
   
   .filters-sidebar.is-open {
@@ -96,6 +121,11 @@
     height: 4px;
     background: #d1d5db;
     border-radius: 2px;
+    cursor: grab;
+  }
+  
+  .filters-sidebar.dragging::before {
+    cursor: grabbing;
   }
 }
 

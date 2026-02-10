@@ -173,6 +173,12 @@ class QuoteCartUI {
       if (e.key === 'Escape' && this.isOpen) this.close();
     });
     
+    // Swipe down to close on mobile
+    const panel = document.querySelector('.quote-cart-panel');
+    if (panel && window.innerWidth <= 768) {
+      this.setupSwipeToClose(panel);
+    }
+    
     // Add to quote buttons (delegated)
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('#add-to-quote, #add-to-quote-sticky');
@@ -181,6 +187,68 @@ class QuoteCartUI {
         this.handleAddToQuote(btn);
       }
     });
+  }
+
+  /**
+   * Setup swipe down to close functionality for mobile
+   */
+  setupSwipeToClose(element) {
+    let startY = 0;
+    let currentY = 0;
+    let isDragging = false;
+    let startTime = 0;
+    
+    const handleStart = (e) => {
+      const touch = e.touches ? e.touches[0] : e;
+      const rect = element.getBoundingClientRect();
+      
+      // Only start drag if touching near the top (handle area)
+      if (touch.clientY - rect.top > 60) return;
+      
+      startY = touch.clientY;
+      currentY = startY;
+      isDragging = true;
+      startTime = Date.now();
+      element.classList.add('dragging');
+      element.style.transition = 'none';
+    };
+    
+    const handleMove = (e) => {
+      if (!isDragging) return;
+      
+      const touch = e.touches ? e.touches[0] : e;
+      currentY = touch.clientY;
+      const deltaY = currentY - startY;
+      
+      // Only allow dragging down on mobile
+      if (deltaY > 0 && window.innerWidth <= 768) {
+        element.style.transform = `translateY(${deltaY}px)`;
+      }
+    };
+    
+    const handleEnd = () => {
+      if (!isDragging) return;
+      
+      const deltaY = currentY - startY;
+      const deltaTime = Date.now() - startTime;
+      const velocity = deltaY / deltaTime;
+      
+      element.classList.remove('dragging');
+      element.style.transition = '';
+      element.style.transform = '';
+      
+      // Close if dragged down more than 100px or fast swipe
+      if (deltaY > 100 || velocity > 0.5) {
+        this.close();
+      }
+      
+      isDragging = false;
+    };
+    
+    // Touch events
+    element.addEventListener('touchstart', handleStart, { passive: true });
+    element.addEventListener('touchmove', handleMove, { passive: true });
+    element.addEventListener('touchend', handleEnd);
   }
 
   /**

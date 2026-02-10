@@ -12,6 +12,7 @@ import { loadProductPrices } from '../pricing.js';
 let currentBrand = null;
 let currentBrandId = null;
 let currentBrandTitle = null;
+let brandInitialized = false;
 const PRODUCTS_TO_SHOW = 8;
 
 // Check if user is logged in
@@ -149,7 +150,8 @@ function shuffleArray(array) {
  * Initialize brand page
  */
 export async function initBrandPage() {
-  console.log('🚀 initBrandPage called');
+  if (brandInitialized) return;
+  brandInitialized = true;
   
   // Try multiple ways to find brand
   const brandContainer = document.querySelector('[data-brand]') || document.querySelector('main[data-brand]');
@@ -201,40 +203,34 @@ async function loadBrandProducts() {
   const container = document.getElementById('products-grid');
   if (!container) return;
   
-  let displayProducts = [];
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  
-  if (isLocal) {
-    // Only try API on localhost where CMS is running
-    showLoading(container);
-    try {
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 3000)
-      );
-      
-      const data = await Promise.race([
-        products.getAll({ limit: 50 }),
-        timeoutPromise
-      ]);
-      
-      let allProducts = data.items || data.products || [];
-      if (Array.isArray(data)) allProducts = data;
-      
-      if (allProducts.length > 0) {
-        const shuffled = shuffleArray(allProducts);
-        displayProducts = shuffled.slice(0, PRODUCTS_TO_SHOW);
-      }
-    } catch (error) {
-      console.warn('API unavailable, using fallback products');
-    }
-  }
-  
-  // Use fallback products if API returned nothing or on production
-  if (displayProducts.length === 0) {
-    displayProducts = shuffleArray(FALLBACK_PRODUCTS).slice(0, PRODUCTS_TO_SHOW);
-  }
-  
+  // Show fallback products immediately for fast initial render
+  let displayProducts = shuffleArray(FALLBACK_PRODUCTS).slice(0, PRODUCTS_TO_SHOW);
   renderProducts(displayProducts);
+  
+  // Then try to fetch real products from API
+  try {
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('timeout')), 4000)
+    );
+    
+    const data = await Promise.race([
+      products.getAll({ limit: 50 }),
+      timeoutPromise
+    ]);
+    
+    let allProducts = data.items || data.products || [];
+    if (Array.isArray(data)) allProducts = data;
+    
+    if (allProducts.length > 0) {
+      // Replace fallback with real products
+      const existing = container.querySelector('.products-grid');
+      if (existing) existing.remove();
+      displayProducts = shuffleArray(allProducts).slice(0, PRODUCTS_TO_SHOW);
+      renderProducts(displayProducts);
+    }
+  } catch (error) {
+    // Fallback already rendered, nothing to do
+  }
 }
 
 /**
@@ -251,19 +247,17 @@ function renderProducts(productsToRender) {
     return;
   }
   
-  // Keep the fallback link visible, add products grid below it
-  const productsHtml = `
-    <div class="products-grid" style="margin-top: 24px;">
-      ${productsToRender.map(product => createProductCard(product, isLoggedIn)).join('')}
-    </div>
-  `;
+  // Hide fallback link when products are shown
+  if (fallback) fallback.style.display = 'none';
   
-  if (fallback) {
-    // Insert products grid after the fallback div
-    fallback.insertAdjacentHTML('afterend', productsHtml);
-  } else {
-    container.innerHTML = productsHtml;
-  }
+  // Render products grid
+  const gridDiv = document.createElement('div');
+  gridDiv.className = 'products-grid';
+  gridDiv.innerHTML = productsToRender.map(product => 
+    createProductCard(product, isLoggedIn)
+  ).join('');
+  
+  container.appendChild(gridDiv);
   
   // Load prices for logged in users
   if (isLoggedIn) {

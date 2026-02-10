@@ -235,7 +235,7 @@ async function loadFeaturedProducts() {
   try {
     // Fetch ALL products (not just featured) - auto-select diverse mix
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 3000)
+      setTimeout(() => reject(new Error('Request timeout')), 8000)
     );
     
     const data = await Promise.race([
@@ -243,10 +243,12 @@ async function loadFeaturedProducts() {
       timeoutPromise
     ]);
     
-    if (data.items && data.items.length > 0) {
+    if (data && data.items && data.items.length > 0) {
       // Smart selection: pick diverse products from different categories
       selected = selectDiverseProducts(data.items, 8);
       console.log(`✅ Auto-selected ${selected.length} featured products from ${data.items.length} total`);
+    } else {
+      console.warn('⚠️ API returned empty products, using fallback');
     }
   } catch (error) {
     console.warn('⚠️ API unavailable, using fallback products:', error.message);
@@ -255,25 +257,20 @@ async function loadFeaturedProducts() {
   // Use fallback products if API returned nothing
   if (selected.length === 0) {
     console.log('📦 Using fallback products for featured section');
-    selected = selectDiverseProducts(FALLBACK_PRODUCTS, 8);
+    selected = FALLBACK_PRODUCTS.slice(0, 8);
   }
 
-  if (selected.length > 0) {
-    container.innerHTML = selected.map(p => `
-      <div class="swiper-slide">
-        ${createProductCard(p, isLoggedIn)}
-      </div>
-    `).join('');
-    
-    // Initialize Swiper
+  // Always render products
+  container.innerHTML = selected.map(p => `
+    <div class="swiper-slide">
+      ${createProductCard(p, isLoggedIn)}
+    </div>
+  `).join('');
+  
+  // Initialize Swiper after a short delay to ensure DOM is ready
+  setTimeout(() => {
     initSwiper();
-  } else {
-    container.innerHTML = `
-      <div class="no-results" style="width: 100%; text-align: center;">
-        <p>Binnenkort beschikbaar</p>
-      </div>
-    `;
-  }
+  }, 100);
 }
 
 /**

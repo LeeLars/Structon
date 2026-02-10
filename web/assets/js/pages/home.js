@@ -224,37 +224,17 @@ async function loadFeaturedProducts() {
   const container = document.getElementById('featured-products-wrapper');
   if (!container) return;
 
+  // Skip if products are already hardcoded in HTML
+  const existingSlides = container.querySelectorAll('.swiper-slide');
+  if (existingSlides.length > 0) {
+    waitForSwiper();
+    return;
+  }
+
   // Check login status for price visibility
   const isLoggedIn = !!(localStorage.getItem('token') || localStorage.getItem('auth_token'));
 
-  let selected = [];
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
-  if (isLocal) {
-    // Only try API on localhost where CMS is running
-    showLoading(container);
-    try {
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout')), 5000)
-      );
-      
-      const data = await Promise.race([
-        products.getAll({ limit: 50 }),
-        timeoutPromise
-      ]);
-      
-      if (data && data.items && data.items.length > 0) {
-        selected = selectDiverseProducts(data.items, 8);
-      }
-    } catch (error) {
-      console.warn('⚠️ API unavailable, using fallback products');
-    }
-  }
-
-  // Use fallback products if API returned nothing or on production
-  if (selected.length === 0) {
-    selected = FALLBACK_PRODUCTS.slice(0, 8);
-  }
+  let selected = FALLBACK_PRODUCTS.slice(0, 8);
 
   // Render products immediately
   container.innerHTML = selected.map(p => `

@@ -511,7 +511,46 @@
       
       // Initialize mobile menu toggle after header is loaded
       initMobileMenu();
+      
+      // Initialize header scroll behavior (top-bar hide/show)
+      initHeaderScroll();
     }
+  }
+
+  /**
+   * Initialize header scroll behavior
+   * Hides top-bar when scrolling down, shows when scrolling up
+   */
+  function initHeaderScroll() {
+    const headerWrapper = document.getElementById('header-wrapper');
+    if (!headerWrapper) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function updateHeader() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 50) {
+        headerWrapper.classList.remove('scrolled-down', 'scrolled-up');
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        headerWrapper.classList.add('scrolled-down');
+        headerWrapper.classList.remove('scrolled-up');
+      } else if (currentScrollY < lastScrollY) {
+        headerWrapper.classList.add('scrolled-up');
+        headerWrapper.classList.remove('scrolled-down');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
   // Initialize mobile menu functionality

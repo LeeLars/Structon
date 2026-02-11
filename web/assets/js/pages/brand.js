@@ -203,13 +203,12 @@ async function loadBrandProducts() {
   const container = document.getElementById('products-grid');
   if (!container) return;
   
-  // Skip if products are already hardcoded in HTML
-  if (container.querySelectorAll('.product-card').length > 0) return;
+  // Clear any loading placeholder
+  container.innerHTML = '';
   
-  // Then try to fetch real products from API
   try {
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('timeout')), 4000)
+      setTimeout(() => reject(new Error('timeout')), 6000)
     );
     
     const data = await Promise.race([
@@ -221,14 +220,14 @@ async function loadBrandProducts() {
     if (Array.isArray(data)) allProducts = data;
     
     if (allProducts.length > 0) {
-      // Replace fallback with real products
-      const existing = container.querySelector('.products-grid');
-      if (existing) existing.remove();
       displayProducts = shuffleArray(allProducts).slice(0, PRODUCTS_TO_SHOW);
       renderProducts(displayProducts);
+    } else {
+      container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">Geen producten beschikbaar</div>';
     }
   } catch (error) {
-    // Fallback already rendered, nothing to do
+    console.warn('Could not load brand products:', error);
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">Producten konden niet geladen worden</div>';
   }
 }
 

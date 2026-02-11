@@ -10,6 +10,19 @@ let currentUser = null;
 let isChecking = false;
 
 /**
+ * Force clear all auth data from client
+ */
+function clearAllAuthData() {
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('refresh_token');
+  sessionStorage.clear();
+  clearApiCache();
+}
+
+/**
  * Check if user is authenticated
  */
 export async function checkAuth() {
@@ -17,41 +30,41 @@ export async function checkAuth() {
   isChecking = true;
 
   try {
-    // Check if user just logged out - prevent re-authentication
-    if (localStorage.getItem('logged_out') === 'true') {
-      console.log('User recently logged out, skipping auth check');
+    // Check if user recently logged out - prevent re-authentication via API cookie
+    const loggedOutAt = localStorage.getItem('logged_out');
+    if (loggedOutAt) {
+      const logoutTime = parseInt(loggedOutAt, 10);
+      const elapsed = Date.now() - logoutTime;
+      // Respect logout flag for 30 seconds (covers redirects, bfcache, etc.)
+      if (elapsed < 30000) {
+        console.log('[Auth] User logged out', Math.round(elapsed / 1000), 's ago, skipping auth check');
+        currentUser = null;
+        clearAllAuthData();
+        updateAuthUI(false);
+        return null;
+      }
+      // Flag expired, remove it
       localStorage.removeItem('logged_out');
-      currentUser = null;
-      updateAuthUI(false);
-      return null;
     }
 
-    // First try API call
+    // Try API call - this is the source of truth
+    console.log('[Auth] Checking authentication via API...');
     const response = await auth.me();
     
-    // Handle null response (user not logged in)
+    // API responded: user NOT logged in
     if (!response || !response.user) {
-      // Check localStorage as fallback (for when cookies don't work cross-domain)
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        try {
-          currentUser = JSON.parse(storedUser);
-          console.log('User loaded from localStorage:', currentUser.email);
-          updateAuthUI(true);
-          return currentUser;
-        } catch (e) {
-          console.log('Invalid stored user data');
-        }
-      }
-      
+      console.log('[Auth] API says: not authenticated');
+      // API is authoritative - clear any stale localStorage data
+      clearAllAuthData();
       currentUser = null;
       updateAuthUI(false);
       return null;
     }
     
+    // API responded: user IS logged in
     currentUser = response.user;
     
-    // Store token and user if provided
+    // Store token and user for offline/fallback use
     if (response.token) {
       localStorage.setItem('auth_token', response.token);
     }
@@ -59,22 +72,34 @@ export async function checkAuth() {
       localStorage.setItem('user', JSON.stringify(response.user));
     }
     
-    console.log('User authenticated via API:', currentUser.email);
+    console.log('[Auth] Authenticated via API:', currentUser.email);
     updateAuthUI(true);
     return currentUser;
   } catch (error) {
-    console.log('Auth check API failed, checking localStorage...');
+    // API call failed (network error, timeout, CORS, etc.)
+    // Only use localStorage as fallback for genuine network failures
+    console.log('[Auth] API call failed:', error.message);
     
-    // Check localStorage as fallback
+    // If error is 401/403, user is definitely not authenticated
+    if (error.message.includes('401') || error.message.includes('403') || 
+        error.message.includes('Authentication')) {
+      console.log('[Auth] Server rejected auth, clearing local data');
+      clearAllAuthData();
+      currentUser = null;
+      updateAuthUI(false);
+      return null;
+    }
+    
+    // Network error - use localStorage as temporary fallback
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
         currentUser = JSON.parse(storedUser);
-        console.log('User loaded from localStorage:', currentUser.email);
+        console.log('[Auth] Using localStorage fallback (network error):', currentUser.email);
         updateAuthUI(true);
         return currentUser;
       } catch (e) {
-        console.log('Invalid stored user data');
+        console.log('[Auth] Invalid stored user data');
       }
     }
     
@@ -121,47 +146,55 @@ export async function login(email, password) {
  * Logout user - Complete session destruction
  */
 export async function logout() {
-  console.log('Starting logout...');
+  console.log('[Auth] === LOGOUT START ===');
   
-  // 1. Set logout flag FIRST - prevents checkAuth() from re-authenticating on next page load
-  localStorage.setItem('logged_out', 'true');
+  // 1. Set logout timestamp FIRST - prevents checkAuth() from re-authenticating
+  //    for 30 seconds after logout (covers redirects, bfcache, back button, etc.)
+  localStorage.setItem('logged_out', Date.now().toString());
+  console.log('[Auth] Logout flag set with timestamp');
   
-  // 2. Clear API response cache
-  clearApiCache();
+  // 2. Clear all auth data
+  clearAllAuthData();
+  console.log('[Auth] All local auth data cleared');
   
-  // 3. Clear all website auth keys
-  localStorage.removeItem('auth_token');
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  localStorage.removeItem('refresh_token');
-  
-  // 4. Clear sessionStorage
-  sessionStorage.clear();
-  
-  // 5. Clear all cookies (client-side accessible) including cross-domain attempts
+  // 3. Clear all cookies (client-side accessible)
   document.cookie.split(";").forEach(function(c) {
     const name = c.split("=")[0].trim();
+    if (!name) return;
+    // Clear for current path
     document.cookie = name + "=;expires=" + new Date(0).toUTCString() + ";path=/";
+    // Clear for current domain
     document.cookie = name + "=;expires=" + new Date(0).toUTCString() + ";path=/;domain=" + window.location.hostname;
+    // Clear for parent domain (e.g. github.io)
+    const parts = window.location.hostname.split('.');
+    if (parts.length > 2) {
+      const parentDomain = parts.slice(-2).join('.');
+      document.cookie = name + "=;expires=" + new Date(0).toUTCString() + ";path=/;domain=." + parentDomain;
+    }
   });
+  console.log('[Auth] Cookies cleared');
   
-  // 6. Reset in-memory state
+  // 4. Reset in-memory state
   currentUser = null;
   document.body.classList.remove('is-logged-in');
   
-  // 7. Update UI immediately to show logged-out state
+  // 5. Update UI immediately to show logged-out state
   updateAuthUI(false);
+  console.log('[Auth] UI updated to logged-out state');
   
-  // 8. Try API logout to invalidate server-side session/cookie
+  // 6. Try API logout to invalidate server-side session/cookie
   try {
-    await auth.logout();
-    console.log('Server-side logout successful');
+    const result = await auth.logout();
+    console.log('[Auth] Server-side logout successful:', result);
   } catch (error) {
-    console.warn('Logout API call failed, client-side logout completed');
+    // This is expected on cross-domain (GitHub Pages -> Railway)
+    // The important thing is that client-side data is already cleared
+    console.warn('[Auth] Server logout failed (expected cross-domain):', error.message);
   }
   
-  // 9. Redirect to homepage
+  console.log('[Auth] === LOGOUT COMPLETE - Redirecting ===');
+  
+  // 7. Redirect to homepage
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   window.location.href = `${basePath}/`;
 }
@@ -531,46 +564,52 @@ function updatePriceVisibility(isAuthenticated) {
 export function initAuth() {
   checkAuth();
   
-  // Handle back-button navigation (bfcache)
-  // This ensures logged-out users can't access cached authenticated pages
+  // Handle back-button navigation (bfcache) and tab switching
+  // This ensures logged-out users stay logged out on ALL pages
   window.addEventListener('pageshow', function(event) {
-    // Check if page was restored from bfcache
     if (event.persisted) {
-      console.log('Page restored from bfcache, checking auth state...');
+      console.log('[Auth] Page restored from bfcache, re-checking auth...');
       
-      // Check if user should be logged in but tokens are missing
-      const hasToken = localStorage.getItem('auth_token') || 
-                       localStorage.getItem('authToken') || 
-                       localStorage.getItem('structon_auth_token');
-      const hasUser = localStorage.getItem('user');
-      
-      // If on an account page but no auth tokens, redirect to login
-      const isAccountPage = window.location.pathname.includes('/account');
-      
-      if (isAccountPage && (!hasToken || !hasUser)) {
-        console.log('No auth tokens found on account page, redirecting to login...');
-        const path = window.location.pathname;
-        let basePath = '/';
-        let locale = 'be-nl';
-        
-        if (path.includes('/Structon/')) {
-          basePath = '/Structon/';
-        }
-        
-        const locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
-        for (const loc of locales) {
-          if (path.includes('/' + loc + '/')) {
-            locale = loc;
-            break;
+      // Check logout flag first - if user logged out, force logged-out state
+      const loggedOutAt = localStorage.getItem('logged_out');
+      if (loggedOutAt) {
+        const elapsed = Date.now() - parseInt(loggedOutAt, 10);
+        if (elapsed < 30000) {
+          console.log('[Auth] Logout flag active on bfcache restore, forcing logged-out state');
+          currentUser = null;
+          clearAllAuthData();
+          updateAuthUI(false);
+          
+          // If on account page, redirect to homepage
+          if (window.location.pathname.includes('/account')) {
+            const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+            window.location.replace(`${basePath}/`);
           }
+          return;
         }
-        
-        window.location.replace(basePath + locale + '/login/');
-        return;
       }
       
-      // Re-check auth state to update UI
+      // No logout flag - re-check auth state via API
+      // Reset isChecking so checkAuth() can run again
+      isChecking = false;
       checkAuth();
+    }
+  });
+  
+  // Also handle visibility change (tab switching back)
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+      // Check if user logged out in another tab/window
+      const loggedOutAt = localStorage.getItem('logged_out');
+      if (loggedOutAt && currentUser !== null) {
+        const elapsed = Date.now() - parseInt(loggedOutAt, 10);
+        if (elapsed < 30000) {
+          console.log('[Auth] Logout detected from another tab, updating UI');
+          currentUser = null;
+          clearAllAuthData();
+          updateAuthUI(false);
+        }
+      }
     }
   });
 }

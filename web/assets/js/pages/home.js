@@ -9,8 +9,6 @@ import { createProductCard, showLoading } from '../main.js';
 // Use requestIdleCallback for non-critical initialization
 const scheduleTask = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 
-const API_BASE = 'https://structon-production.up.railway.app/api';
-
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize header scroll behavior
   initHeaderScroll();
@@ -121,11 +119,11 @@ async function loadFeaturedProducts() {
   const isLoggedIn = !!(localStorage.getItem('token') || localStorage.getItem('auth_token'));
 
   try {
-    const response = await fetch(`${API_BASE}/products?limit=8&_t=${Date.now()}`, { cache: 'no-store' });
-    if (!response.ok) throw new Error('API error');
-    const data = await response.json();
+    const data = await products.getAll({ limit: 50 });
     
-    let allProducts = data.products || [];
+    let allProducts = data.items || data.products || [];
+    if (Array.isArray(data)) allProducts = data;
+    
     if (allProducts.length === 0) {
       container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">Geen producten beschikbaar</div>';
       return;

@@ -178,8 +178,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
  * Uses new universal .product-card design
  */
 export function createIndustryProductCard(product, isLoggedIn = false) {
-  const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
-  const imageUrl = product.cloudinary_images?.[0]?.url || STOCK_PHOTOS[stockIndex];
+  const imageUrl = product.cloudinary_images?.[0]?.url || '';
   
   // Use absolute path with dynamic base for GitHub Pages compatibility
   // Build clean URL: /locale/producten/category/subcategory/product-slug/
@@ -323,10 +322,7 @@ function updateCartBadge() {
  * Legacy: Create vertical product card (for homepage slider etc)
  */
 export function createProductCard(product, isLoggedIn = false) {
-  // Use product image, or random stock photo based on product id
-  const stockIndex = product.id ? product.id.charCodeAt(0) % STOCK_PHOTOS.length : 0;
-  const imageUrl = product.cloudinary_images?.[0]?.url 
-    || STOCK_PHOTOS[stockIndex];
+  const imageUrl = product.cloudinary_images?.[0]?.url || '';
   
   // Use absolute path with dynamic base for GitHub Pages compatibility
   // Build clean URL: /locale/producten/category/subcategory/product-slug/

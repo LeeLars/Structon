@@ -148,7 +148,7 @@
 
 .product-image-main {
   flex: 1;
-  background: var(--structon-gray-light);
+  background: transparent;
   border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;

@@ -342,13 +342,20 @@ function renderProduct(product) {
   `;
 
   // Add related products section container after product detail
-  const existingRelatedSection = document.getElementById('related-section');
+  const existingRelatedSection = document.getElementById('related-products-section');
   if (!existingRelatedSection) {
+    const productsPageUrl = window.location.pathname.replace(/\/producten\/.*/, '/producten/');
     const relatedSectionHtml = `
-      <section id="related-products-section" class="related-products-section" style="display: none;">
-        <div class="product-container">
-          <h2>Gerelateerde Producten</h2>
-          <div id="related-products-grid" class="related-products-grid"></div>
+      <section id="related-products-section" class="section-featured related-products-section" style="display: none;">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">UITGELICHTE PRODUCTEN</h2>
+            <a href="${productsPageUrl}" class="btn-link-arrow">
+              Bekijk alle producten
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+          <div id="related-products-grid" class="products-grid"></div>
         </div>
       </section>
     `;
@@ -464,7 +471,8 @@ async function loadRelatedProducts() {
 
     if (related.length > 0) {
       section.style.display = 'block';
-      container.innerHTML = related.slice(0, 4).map(createProductCard).join('');
+      const loggedIn = isLoggedIn();
+      container.innerHTML = related.slice(0, 4).map(p => createProductCard(p, loggedIn)).join('');
     } else {
       section.style.display = 'none';
       container.innerHTML = '';

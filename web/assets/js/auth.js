@@ -30,21 +30,13 @@ export async function checkAuth() {
   isChecking = true;
 
   try {
-    // Check if user recently logged out - prevent re-authentication via API cookie
-    const loggedOutAt = localStorage.getItem('logged_out');
-    if (loggedOutAt) {
-      const logoutTime = parseInt(loggedOutAt, 10);
-      const elapsed = Date.now() - logoutTime;
-      // Respect logout flag for 30 seconds (covers redirects, bfcache, etc.)
-      if (elapsed < 30000) {
-        console.log('[Auth] User logged out', Math.round(elapsed / 1000), 's ago, skipping auth check');
-        currentUser = null;
-        clearAllAuthData();
-        updateAuthUI(false);
-        return null;
-      }
-      // Flag expired, remove it
-      localStorage.removeItem('logged_out');
+    // Check if user has logged out - this flag is PERMANENT until a new login()
+    // This prevents the cross-domain session cookie from re-authenticating the user
+    if (localStorage.getItem('logged_out')) {
+      console.log('[Auth] User is logged out (flag active), skipping API auth check');
+      currentUser = null;
+      updateAuthUI(false);
+      return null;
     }
 
     // Try API call - this is the source of truth
@@ -136,9 +128,18 @@ export function isAdmin() {
  * Login user
  */
 export async function login(email, password) {
+  // Remove logout flag BEFORE login so checkAuth() works again
+  localStorage.removeItem('logged_out');
   const response = await auth.login(email, password);
   currentUser = response.user;
+  if (response.token) {
+    localStorage.setItem('auth_token', response.token);
+  }
+  if (response.user) {
+    localStorage.setItem('user', JSON.stringify(response.user));
+  }
   updateAuthUI(true);
+  console.log('[Auth] Login successful:', currentUser.email);
   return response;
 }
 
@@ -148,10 +149,10 @@ export async function login(email, password) {
 export async function logout() {
   console.log('[Auth] === LOGOUT START ===');
   
-  // 1. Set logout timestamp FIRST - prevents checkAuth() from re-authenticating
-  //    for 30 seconds after logout (covers redirects, bfcache, back button, etc.)
-  localStorage.setItem('logged_out', Date.now().toString());
-  console.log('[Auth] Logout flag set with timestamp');
+  // 1. Set logout flag FIRST - this is PERMANENT until next login()
+  //    Prevents cross-domain session cookie from re-authenticating the user
+  localStorage.setItem('logged_out', 'true');
+  console.log('[Auth] Logout flag set (permanent until next login)');
   
   // 2. Clear all auth data
   clearAllAuthData();
@@ -570,23 +571,18 @@ export function initAuth() {
     if (event.persisted) {
       console.log('[Auth] Page restored from bfcache, re-checking auth...');
       
-      // Check logout flag first - if user logged out, force logged-out state
-      const loggedOutAt = localStorage.getItem('logged_out');
-      if (loggedOutAt) {
-        const elapsed = Date.now() - parseInt(loggedOutAt, 10);
-        if (elapsed < 30000) {
-          console.log('[Auth] Logout flag active on bfcache restore, forcing logged-out state');
-          currentUser = null;
-          clearAllAuthData();
-          updateAuthUI(false);
-          
-          // If on account page, redirect to homepage
-          if (window.location.pathname.includes('/account')) {
-            const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
-            window.location.replace(`${basePath}/`);
-          }
-          return;
+      // Check logout flag - if user logged out, force logged-out state
+      if (localStorage.getItem('logged_out')) {
+        console.log('[Auth] Logout flag active on bfcache restore, forcing logged-out state');
+        currentUser = null;
+        updateAuthUI(false);
+        
+        // If on account page, redirect to homepage
+        if (window.location.pathname.includes('/account')) {
+          const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
+          window.location.replace(`${basePath}/`);
         }
+        return;
       }
       
       // No logout flag - re-check auth state via API
@@ -600,15 +596,10 @@ export function initAuth() {
   document.addEventListener('visibilitychange', function() {
     if (document.visibilityState === 'visible') {
       // Check if user logged out in another tab/window
-      const loggedOutAt = localStorage.getItem('logged_out');
-      if (loggedOutAt && currentUser !== null) {
-        const elapsed = Date.now() - parseInt(loggedOutAt, 10);
-        if (elapsed < 30000) {
-          console.log('[Auth] Logout detected from another tab, updating UI');
-          currentUser = null;
-          clearAllAuthData();
-          updateAuthUI(false);
-        }
+      if (localStorage.getItem('logged_out') && currentUser !== null) {
+        console.log('[Auth] Logout detected from another tab, updating UI');
+        currentUser = null;
+        updateAuthUI(false);
       }
     }
   });

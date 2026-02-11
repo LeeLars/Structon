@@ -1049,6 +1049,315 @@ main[data-industry] .top-nav a {
 }
 
 /* ============================================
+   PRODUCT CARDS (Identiek aan homepage/brand)
+   ============================================ */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Clean Product Card Design */
+.product-card.clean-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  transform: none !important;
+  border-radius: 0;
+}
+
+.product-card.clean-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.products-grid .product-card-image {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  overflow: hidden;
+  padding: 12px;
+  background: transparent;
+  border-radius: 0;
+}
+
+.products-grid .product-card-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease, filter 0.3s ease;
+  filter: drop-shadow(3px 6px 8px rgba(0, 0, 0, 0.2));
+}
+
+.products-grid .product-card-image:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.3));
+}
+
+.products-grid .product-card-divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.products-grid .product-card-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.products-grid .product-header {
+  margin-bottom: 8px;
+}
+
+.products-grid .product-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.products-grid .product-card-title a {
+  color: var(--color-gray-900);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.products-grid .product-card-title a:hover {
+  color: var(--color-primary);
+}
+
+.products-grid .product-card-specs {
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+  margin-bottom: 12px;
+}
+
+.products-grid .product-card-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.products-grid .product-price-label {
+  font-size: 0.9rem;
+  color: var(--color-gray-600);
+  font-weight: 500;
+  padding: 8px 0;
+}
+
+.products-grid .product-price-row {
+  padding: 8px 0;
+}
+
+.products-grid .product-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.products-grid .product-vat {
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+  font-weight: 400;
+}
+
+.products-grid .stock-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.products-grid .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.products-grid .status-in-stock .status-dot { background-color: #22c55e; }
+.products-grid .status-low-stock .status-dot { background-color: #f59e0b; }
+.products-grid .status-out-stock .status-dot { background-color: #9ca3af; }
+
+.products-grid .status-in-stock { color: #22c55e; }
+.products-grid .status-low-stock { color: #f59e0b; }
+.products-grid .status-out-stock { color: #6b7280; }
+
+/* ============================================
+   CATEGORIE DOORLINK SECTIE - TECHNICAL STYLE
+   ============================================ */
+.brand-categories-section {
+  background-color: #f8fafc; /* gray-50 */
+  padding: var(--space-16) 0;
+  border-top: 1px solid #e5e7eb; /* gray-200 */
+  margin-top: var(--space-12);
+}
+
+.brand-categories-section .section-title {
+  text-align: center;
+  margin-bottom: var(--space-10);
+  color: var(--color-gray-900);
+}
+
+.brand-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+}
+
+@media (max-width: 1024px) {
+  .brand-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-category-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+/* Technical Card Design */
+.tech-category-card {
+  background: white;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.tech-category-card:hover {
+  border-color: var(--color-primary); /* Petrol */
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.1);
+}
+
+.tech-card-image {
+  height: 240px;
+  width: 100%;
+  background: #f1f5f9; /* gray-100 */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.tech-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-category-card:hover .tech-card-image img {
+  transform: scale(1.08);
+}
+
+.tech-card-content {
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.tech-card-header {
+  margin-bottom: var(--space-4);
+}
+
+.tech-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--color-gray-900);
+  margin: 0 0 var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+.tech-card-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-gray-500);
+  line-height: 1.5;
+  display: block;
+}
+
+.tech-card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-6);
+  border-top: 1px solid #f3f4f6;
+}
+
+.tech-link-text {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.tech-card-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(35, 103, 115, 0.08); /* transparent petrol */
+  color: var(--color-primary);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.tech-category-card:hover .tech-card-icon {
+  background: var(--color-primary);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* ============================================
    EXPERT BOX
    ============================================ */
 .expert-box {

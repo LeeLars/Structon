@@ -103,18 +103,24 @@ async function loadIndustryProducts() {
     
     // Fetch products from relevant categories
     const data = await products.getAll({ limit: 100 });
-    let allProducts = data.items || [];
+    let allProducts = data.items || data.products || [];
     
     // Filter products by relevant categories if configured
+    let filteredProducts = allProducts;
     if (categories.length > 0) {
-      allProducts = allProducts.filter(product => {
+      filteredProducts = allProducts.filter(product => {
         const categorySlug = product.category_slug || '';
         return categories.some(cat => categorySlug.includes(cat));
       });
     }
     
+    // Fallback: if no products match industry categories, show all products
+    if (filteredProducts.length === 0) {
+      filteredProducts = allProducts;
+    }
+    
     // Shuffle and take random products
-    const shuffled = shuffleArray(allProducts);
+    const shuffled = shuffleArray(filteredProducts);
     const displayProducts = shuffled.slice(0, PRODUCTS_TO_SHOW);
     
     console.log(`✅ Showing ${displayProducts.length} random products for ${currentIndustry}`);

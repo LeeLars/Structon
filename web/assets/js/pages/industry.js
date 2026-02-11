@@ -11,7 +11,7 @@ let currentIndustry = null;
 const PRODUCTS_TO_SHOW = 12
 
 // Check if user is logged in
-const isLoggedIn = localStorage.getItem('authToken') !== null;
+const isLoggedIn = !!(localStorage.getItem('token') || localStorage.getItem('auth_token'));
 
 /**
  * Shuffle array randomly

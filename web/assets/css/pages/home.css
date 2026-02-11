@@ -327,7 +327,7 @@
 
 .category-block {
   position: relative;
-  height: 450px; /* Tall, elegant blocks */
+  height: 525px; /* Tall, elegant blocks */
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);

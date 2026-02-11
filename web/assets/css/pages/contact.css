@@ -569,7 +569,7 @@
 }
 
 .team-member:hover {
-  transform: translateX(4px);
+  transform: translateY(-2px);
 }
 
 .member-avatar {

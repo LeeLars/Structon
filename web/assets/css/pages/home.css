@@ -429,7 +429,7 @@
 }
 
 .category-block:hover .category-link-text svg {
-  transform: translateX(4px);
+  transform: none;
 }
 
 @media (max-width: 768px) {
@@ -616,7 +616,7 @@
 }
 
 .usp-btn:hover {
-  transform: translateX(5px); /* Hele knop schuift rechts */
+  transform: translateY(-2px);
   box-shadow: none;
 }
 
@@ -660,7 +660,7 @@
 }
 
 .usp-btn:hover .btn-split-icon svg {
-  transform: translateX(2px); /* Klein beetje extra beweging pijl */
+  transform: none;
 }
 
 /* ============================================
@@ -883,7 +883,7 @@
 }
 
 .btn-product-cta:hover svg {
-  transform: translateX(3px);
+  transform: none;
 }
 
 /* Media Queries */

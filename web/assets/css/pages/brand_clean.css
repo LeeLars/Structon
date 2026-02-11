@@ -896,7 +896,7 @@ main[data-brand] .spinner {
 .expert-email:hover {
   background: #236773;
   color: white;
-  transform: translateX(4px);
+  transform: translateY(-2px);
 }
 
 .expert-phone svg,

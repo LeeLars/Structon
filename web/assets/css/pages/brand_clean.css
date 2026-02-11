@@ -1074,137 +1074,144 @@ main[data-brand] .spinner {
 }
 
 /* ============================================
-   CATEGORIE DOORLINK SECTIE
-   Zelfde design als homepage category blocks
+   CATEGORIE DOORLINK SECTIE - TECHNICAL STYLE
+   Nieuw "Technical Catalog" design voor merkpagina's
    ============================================ */
 .brand-categories-section {
-  padding: var(--space-16) 0 var(--space-12);
+  background-color: #f8fafc; /* gray-50 */
+  padding: var(--space-16) 0;
+  border-top: 1px solid #e5e7eb; /* gray-200 */
+  margin-top: var(--space-12);
 }
 
 .brand-categories-section .section-title {
   text-align: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
+  color: var(--color-gray-900);
 }
 
 .brand-category-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
+  gap: var(--space-8);
 }
 
 @media (max-width: 1024px) {
   .brand-category-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
   }
 }
 
 @media (max-width: 640px) {
   .brand-category-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-4);
+    gap: var(--space-6);
   }
 }
 
-.brand-category-block {
-  position: relative;
-  height: 320px;
+/* Technical Card Design */
+.tech-category-card {
+  background: white;
+  border: 1px solid #e5e7eb; /* gray-200 */
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
-  display: flex;
-  align-items: flex-end;
   text-decoration: none;
-  background-color: var(--color-gray-900);
-}
-
-.brand-category-block:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-}
-
-.brand-category-block .cat-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  z-index: 1;
+  position: relative;
 }
 
-.brand-category-block .cat-image img {
+.tech-category-card:hover {
+  border-color: var(--color-primary); /* Petrol */
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.1);
+}
+
+.tech-card-image {
+  height: 240px;
+  width: 100%;
+  background: #f1f5f9; /* gray-100 */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.tech-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.7s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.brand-category-block:hover .cat-image img {
-  transform: scale(1.1);
+.tech-category-card:hover .tech-card-image img {
+  transform: scale(1.08);
 }
 
-.brand-category-block .cat-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top,
-    rgba(35, 103, 115, 0.95) 0%,
-    rgba(35, 103, 115, 0.6) 40%,
-    rgba(35, 103, 115, 0.1) 100%);
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  opacity: 0.9;
+.tech-card-content {
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.brand-category-block:hover .cat-overlay {
-  opacity: 1;
-  background: linear-gradient(to top,
-    rgba(35, 103, 115, 1) 0%,
-    rgba(35, 103, 115, 0.7) 50%,
-    rgba(35, 103, 115, 0.2) 100%);
+.tech-card-header {
+  margin-bottom: var(--space-4);
 }
 
-.brand-category-block .cat-content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  padding: var(--space-6);
-  transform: translateY(0);
-  transition: transform 0.3s ease;
-}
-
-.brand-category-block:hover .cat-content {
-  transform: translateY(-5px);
-}
-
-.brand-category-block .cat-content h3 {
+.tech-card-title {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
-  color: white;
-  margin: 0 0 var(--space-1);
+  font-size: 1.35rem;
+  color: var(--color-gray-900);
+  margin: 0 0 var(--space-2);
   text-transform: uppercase;
-  line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.02em;
+  font-weight: 700;
 }
 
-.brand-category-block .cat-link-text {
-  display: inline-flex;
+.tech-card-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-gray-500);
+  line-height: 1.5;
+  display: block;
+}
+
+.tech-card-footer {
+  margin-top: auto;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  color: white;
+  justify-content: space-between;
+  padding-top: var(--space-6);
+  border-top: 1px solid #f3f4f6;
+}
+
+.tech-link-text {
+  color: var(--color-primary);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0;
-  transform: translateY(10px);
+  transition: color 0.2s ease;
+}
+
+.tech-card-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(35, 103, 115, 0.08); /* transparent petrol */
+  color: var(--color-primary);
+  border-radius: 50%;
   transition: all 0.3s ease;
 }
 
-.brand-category-block:hover .cat-link-text {
-  opacity: 1;
-  transform: translateY(0);
+.tech-category-card:hover .tech-card-icon {
+  background: var(--color-primary);
+  color: white;
+  transform: translateX(4px);
 }
+

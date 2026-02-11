@@ -53,9 +53,12 @@
   <!-- Styles - Non-critical loaded async -->
   <link rel="preload" href="../assets/css/global.css?v=8" as="style">
   <link rel="stylesheet" href="../assets/css/global.css?v=8">
-  <link rel="stylesheet" href="../assets/css/components/mega-menu.css">
-  <link rel="stylesheet" href="../assets/css/components/quote-cart.css">
-  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/components/mega-menu.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../assets/css/components/mega-menu.css"></noscript>
+  <link rel="stylesheet" href="../assets/css/components/quote-cart.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../assets/css/components/quote-cart.css"></noscript>
+  <link rel="stylesheet" href="../assets/css/animations.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="../assets/css/animations.css"></noscript>
   <link rel="stylesheet" href="../assets/css/pages/home.css?v=5">
   <link rel="stylesheet" href="../assets/css/pages/unique-section.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="../assets/css/pages/unique-section.css"></noscript>
@@ -206,7 +209,7 @@
           <!-- Blok 1: Graafbakken -->
           <a href="producten/?cat=graafbakken" class="category-block">
             <div class="category-image">
-              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768988292/graafbak-hero_apbtll.png" alt="Graafbakken">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/f_auto,q_auto,w_600/v1768988292/graafbak-hero_apbtll.png" alt="Graafbakken" loading="lazy">
             </div>
             <div class="category-overlay"></div>
             <div class="category-content">
@@ -221,7 +224,7 @@
           <!-- Blok 2: Sloop en sorteergrijpers -->
           <a href="producten/?cat=sorteergrijpers" class="category-block">
             <div class="category-image">
-              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768991111/Sloop-hero_tpw7g5.png" alt="Sloop en sorteergrijpers">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/f_auto,q_auto,w_600/v1768991111/Sloop-hero_tpw7g5.png" alt="Sloop en sorteergrijpers" loading="lazy">
             </div>
             <div class="category-overlay"></div>
             <div class="category-content">
@@ -236,7 +239,7 @@
           <!-- Blok 3: Overige -->
           <a href="producten/?cat=overige" class="category-block">
             <div class="category-image">
-              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1768988143/Overige-hero_xph1k0.png" alt="Overige Producten">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/f_auto,q_auto,w_600/v1768988143/Overige-hero_xph1k0.png" alt="Overige Producten" loading="lazy">
             </div>
             <div class="category-overlay"></div>
             <div class="category-content">
@@ -429,7 +432,7 @@
 
           <!-- Right Column: Image -->
           <div class="about-right">
-            <img src="../assets/images/static/Over-sectie.png" alt="Case CX19D minigraver met Structon kraanbak" class="about-image">
+            <img src="../assets/images/static/Over-sectie.png" alt="Case CX19D minigraver met Structon kraanbak" class="about-image" loading="lazy">
           </div>
 
         </div>
@@ -671,8 +674,8 @@
   <script src="../assets/js/components/footer-loader.js" defer></script>
   <script type="module" src="../assets/js/main.js?v=2"></script>
   <script type="module" src="../assets/js/pages/home.js?v=2"></script>
-  <script src="../assets/js/components/login-modal.js?v=2"></script>
-  <script src="../assets/js/services/quote-cart-service.js"></script>
-  <script src="../assets/js/components/quote-cart-ui.js"></script>
+  <script src="../assets/js/components/login-modal.js?v=2" defer></script>
+  <script src="../assets/js/services/quote-cart-service.js" defer></script>
+  <script src="../assets/js/components/quote-cart-ui.js" defer></script>
 </body>
 </html>

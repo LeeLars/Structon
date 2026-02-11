@@ -5,8 +5,10 @@
 
 import { products } from '../api/client.js';
 import { createProductCard, showLoading, showError } from '../main.js';
-import { BRAND_DATA } from '../data/brand-data.js?v=8';
 import { loadProductPrices } from '../pricing.js';
+
+// Brand data loaded dynamically to prevent import errors from blocking product loading
+let BRAND_DATA = {};
 
 // Brand page state
 let currentBrand = null;
@@ -42,32 +44,32 @@ export async function initBrandPage() {
   const brandContainer = document.querySelector('[data-brand]') || document.querySelector('main[data-brand]');
   const brandSlug = brandContainer?.dataset?.brand || getBrandFromUrl();
   
-  console.log('🔍 Brand container:', brandContainer);
   console.log('🔍 Brand slug:', brandSlug);
   
   if (!brandSlug) {
-    console.error('❌ No brand specified');
+    console.error('No brand specified');
     return;
   }
   
   currentBrand = brandSlug;
 
-  const brandData = BRAND_DATA[brandSlug];
-  if (brandData) {
-    currentBrandId = brandSlug;
-    currentBrandTitle = brandData.name;
-    console.log('✅ Brand data loaded:', brandData.name);
-  } else {
-    console.warn('⚠️ Brand not found in BRAND_DATA:', brandSlug);
-    console.log('📦 Available brands:', Object.keys(BRAND_DATA));
-    currentBrandId = null;
-    currentBrandTitle = null;
+  // Load brand data dynamically (non-blocking for product loading)
+  try {
+    const brandModule = await import('../data/brand-data.js?v=9');
+    BRAND_DATA = brandModule.BRAND_DATA || {};
+    const brandData = BRAND_DATA[brandSlug];
+    if (brandData) {
+      currentBrandId = brandSlug;
+      currentBrandTitle = brandData.name;
+    }
+  } catch (err) {
+    console.warn('Brand data could not be loaded:', err.message);
   }
   
   // Render model selector with links to products page
   renderModelSelector();
   
-  // Load random products for this brand
+  // Load random products - always runs even if brand-data failed
   await loadBrandProducts();
 }
 

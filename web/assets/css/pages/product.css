@@ -109,11 +109,15 @@
 }
 
 .product-thumbnails {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: var(--space-3);
   max-height: 500px;
   overflow-y: auto;
+}
+
+.product-thumbnails.has-multiple {
+  display: flex;
 }
 
 .product-thumbnail {
@@ -1094,7 +1098,8 @@
     gap: var(--space-4);
   }
 
-  .product-thumbnails {
+  .product-thumbnails.has-multiple {
+    display: flex;
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;

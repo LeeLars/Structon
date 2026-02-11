@@ -35,8 +35,8 @@
       const primaryUrl = images[0].url;
       if (!primaryUrl) return;
 
-      // Update main product image
-      if (mainImg) mainImg.src = primaryUrl;
+      // Update main product image only if URL actually changed
+      if (mainImg && mainImg.src !== primaryUrl) mainImg.src = primaryUrl;
 
       // Handle thumbnails based on actual image count
       if (images.length > 1 && thumbnailsContainer) {

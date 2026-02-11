@@ -297,19 +297,9 @@
 
   <script src="../../../assets/js/components/footer-loader.js" defer></script>
   <script type="module" src="../../../assets/js/main.js"></script>
-  <script type="module" src="../../../assets/js/pages/home.js"></script>
-  <script type="module" src="../../../assets/js/pages/brand.js"></script>
-  <script type="module">
-    import { initBrandTemplate } from '../../../assets/js/pages/brand-template.js';
-    import { initBrandPage } from '../../../assets/js/pages/brand.js';
-    // Initialize brand template and load products on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      initBrandTemplate();
-      initBrandPage();
-    });
-  </script>
   <script src="../../../assets/js/components/login-modal.js"></script>
   <script src="../../../assets/js/services/quote-cart-service.js"></script>
   <script src="../../../assets/js/components/quote-cart-ui.js"></script>
+  <script src="../../../assets/js/pages/brand-products-loader.js"></script>
 </body>
 </html>

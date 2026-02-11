@@ -358,13 +358,14 @@ export function createProductCard(product, isLoggedIn = false) {
     ? `<p class="product-card-specs">${specs.join(' | ')}</p>`
     : '';
 
-  // Footer content based on login state
+  // Footer content based on login state and price availability
   let footerHtml;
+  const hasPrice = isLoggedIn && product.price_excl_vat && parseFloat(product.price_excl_vat) > 0;
   
-  if (isLoggedIn) {
+  if (hasPrice) {
     footerHtml = `
       <div class="product-price-row">
-        <span class="product-price">€${product.price_excl_vat || '0.00'}</span>
+        <span class="product-price">&euro;${product.price_excl_vat}</span>
         <span class="product-vat">,- excl. BTW</span>
       </div>
       <a href="${productUrl}" class="btn-split btn-split-sm" style="width: 100%;">
@@ -375,7 +376,6 @@ export function createProductCard(product, isLoggedIn = false) {
       </a>
     `;
   } else {
-    // Niet ingelogd: Prijs op aanvraag, meer info button
     footerHtml = `
       <span class="product-price-label" style="display: block; margin-bottom: 8px;">Prijs op aanvraag</span>
       <div class="product-buttons">

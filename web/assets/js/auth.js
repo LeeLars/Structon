@@ -17,6 +17,15 @@ export async function checkAuth() {
   isChecking = true;
 
   try {
+    // Check if user just logged out - prevent re-authentication
+    if (localStorage.getItem('logged_out') === 'true') {
+      console.log('User recently logged out, skipping auth check');
+      localStorage.removeItem('logged_out');
+      currentUser = null;
+      updateAuthUI(false);
+      return null;
+    }
+
     // First try API call
     const response = await auth.me();
     
@@ -27,7 +36,7 @@ export async function checkAuth() {
       if (storedUser) {
         try {
           currentUser = JSON.parse(storedUser);
-          console.log('✅ User loaded from localStorage:', currentUser.email);
+          console.log('User loaded from localStorage:', currentUser.email);
           updateAuthUI(true);
           return currentUser;
         } catch (e) {
@@ -50,7 +59,7 @@ export async function checkAuth() {
       localStorage.setItem('user', JSON.stringify(response.user));
     }
     
-    console.log('✅ User authenticated via API:', currentUser.email);
+    console.log('User authenticated via API:', currentUser.email);
     updateAuthUI(true);
     return currentUser;
   } catch (error) {
@@ -61,7 +70,7 @@ export async function checkAuth() {
     if (storedUser) {
       try {
         currentUser = JSON.parse(storedUser);
-        console.log('✅ User loaded from localStorage:', currentUser.email);
+        console.log('User loaded from localStorage:', currentUser.email);
         updateAuthUI(true);
         return currentUser;
       } catch (e) {
@@ -112,38 +121,47 @@ export async function login(email, password) {
  * Logout user - Complete session destruction
  */
 export async function logout() {
-  console.log('🚪 Starting logout...');
+  console.log('Starting logout...');
   
-  // 1. Clear API response cache first
+  // 1. Set logout flag FIRST - prevents checkAuth() from re-authenticating on next page load
+  localStorage.setItem('logged_out', 'true');
+  
+  // 2. Clear API response cache
   clearApiCache();
   
-  // 2. Clear website auth keys (NOT cms keys - those are separate)
+  // 3. Clear all website auth keys
   localStorage.removeItem('auth_token');
   localStorage.removeItem('authToken');
   localStorage.removeItem('token');
   localStorage.removeItem('user');
   localStorage.removeItem('refresh_token');
   
-  // 3. Clear sessionStorage
+  // 4. Clear sessionStorage
   sessionStorage.clear();
   
-  // 4. Clear all cookies (client-side accessible)
+  // 5. Clear all cookies (client-side accessible) including cross-domain attempts
   document.cookie.split(";").forEach(function(c) {
-    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    const name = c.split("=")[0].trim();
+    document.cookie = name + "=;expires=" + new Date(0).toUTCString() + ";path=/";
+    document.cookie = name + "=;expires=" + new Date(0).toUTCString() + ";path=/;domain=" + window.location.hostname;
   });
   
-  // 5. Reset in-memory state
+  // 6. Reset in-memory state
   currentUser = null;
   document.body.classList.remove('is-logged-in');
   
-  // 6. Try API logout to invalidate server-side session/cookie
+  // 7. Update UI immediately to show logged-out state
+  updateAuthUI(false);
+  
+  // 8. Try API logout to invalidate server-side session/cookie
   try {
     await auth.logout();
+    console.log('Server-side logout successful');
   } catch (error) {
-    console.warn('Logout API failed, continuing with client-side logout');
+    console.warn('Logout API call failed, client-side logout completed');
   }
   
-  // 7. Redirect to homepage (NOT reload - reload would re-auth via cookie)
+  // 9. Redirect to homepage
   const basePath = window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   window.location.href = `${basePath}/`;
 }

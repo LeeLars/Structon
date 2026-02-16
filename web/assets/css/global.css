@@ -1144,18 +1144,25 @@ h6 { font-size: var(--text-base); }
 
 /* Mobile menu sections */
 .mobile-menu-section {
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--color-gray-200);
+  display: none; /* Verberg op desktop */
 }
 
-.mobile-menu-section:last-child {
-  border-bottom: none;
-  padding-bottom: var(--space-8);
-}
+@media (max-width: 1023px) {
+  .mobile-menu-section {
+    display: block; /* Toon op mobiel */
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
 
-/* Hide brands section in mobile menu (4th section, not 3rd!) */
-.mobile-menu-section:nth-child(4) {
-  display: none;
+  .mobile-menu-section:last-child {
+    border-bottom: none;
+    padding-bottom: var(--space-8);
+  }
+
+  /* Hide brands section in mobile menu (4th section, not 3rd!) */
+  .mobile-menu-section:nth-child(4) {
+    display: none;
+  }
 }
 
 .menu-section-title {

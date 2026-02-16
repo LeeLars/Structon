@@ -71,7 +71,7 @@
     }
     
     // Legacy behavior for non-locale paths
-    const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'configurator', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina', 'account', 'offerte-aanvragen'];
+    const rootFolders = ['contact', 'over-ons', 'blog', 'faq', 'dealer', 'producten', 'privacy', 'voorwaarden', 'login', 'sitemap-pagina', 'account', 'offerte-aanvragen'];
     
     for (const folder of rootFolders) {
       if (path.includes('/' + folder + '/') || path.endsWith('/' + folder)) {
@@ -195,7 +195,6 @@
           <a href="${basePath}dealer/">Dealer worden</a>
           <a href="${basePath}blog/">Blog</a>
           <a href="${basePath}faq/">FAQ</a>
-          <a href="${basePath}configurator/">Configurator</a>
           <a href="${basePath}contact/">Contact</a>
         </nav>
       </div>

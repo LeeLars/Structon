@@ -9,6 +9,19 @@ import { registerServiceWorker } from './sw-register.js';
 import { initSitemap } from './sitemap.js';
 import { init as initAuthContent } from './utils/auth-content-manager.js';
 
+// Locale detection and UI translations
+function _getLocale() {
+  const m = window.location.pathname.match(/\/(be-nl|nl-nl|be-fr|de-de)\//);
+  return m ? m[1] : 'be-nl';
+}
+const _uiT = {
+  'be-nl': { inStock:'Op voorraad', lowStock:'Nog slechts enkele stuks', onOrder:'Op bestelling', moreInfo:'Meer info', priceOnRequest:'Prijs op aanvraag', exclVat:',- excl. BTW', addToCart:'In winkelwagen', newBadge:'Nieuw', weight:'Gewicht', width:'Breedte', volume:'Inhoud', machineClass:'Machine klasse', attachment:'Ophanging', noResults:'Geen resultaten', noProductsFound:'Geen producten gevonden.', clearFilters:'Filters wissen', oops:'Oeps!', errorOccurred:'Er is een fout opgetreden.', defaultDesc:'Hoogwaardig aanbouwdeel voor uw machine. Robuust en betrouwbaar.', addedToCart:'toegevoegd aan winkelmandje' },
+  'nl-nl': { inStock:'Op voorraad', lowStock:'Nog slechts enkele stuks', onOrder:'Op bestelling', moreInfo:'Meer info', priceOnRequest:'Prijs op aanvraag', exclVat:',- excl. BTW', addToCart:'In winkelwagen', newBadge:'Nieuw', weight:'Gewicht', width:'Breedte', volume:'Inhoud', machineClass:'Machine klasse', attachment:'Ophanging', noResults:'Geen resultaten', noProductsFound:'Geen producten gevonden.', clearFilters:'Filters wissen', oops:'Oeps!', errorOccurred:'Er is een fout opgetreden.', defaultDesc:'Hoogwaardig aanbouwdeel voor uw machine. Robuust en betrouwbaar.', addedToCart:'toegevoegd aan winkelmandje' },
+  'be-fr': { inStock:'En stock', lowStock:'Plus que quelques pi\u00e8ces', onOrder:'Sur commande', moreInfo:'Plus d\'infos', priceOnRequest:'Prix sur demande', exclVat:',- HTVA', addToCart:'Ajouter au panier', newBadge:'Nouveau', weight:'Poids', width:'Largeur', volume:'Contenance', machineClass:'Classe de machine', attachment:'Fixation', noResults:'Aucun r\u00e9sultat', noProductsFound:'Aucun produit trouv\u00e9.', clearFilters:'Effacer les filtres', oops:'Oups !', errorOccurred:'Une erreur s\'est produite.', defaultDesc:'Accessoire de haute qualit\u00e9 pour votre machine. Robuste et fiable.', addedToCart:'ajout\u00e9 au panier' },
+  'de-de': { inStock:'Auf Lager', lowStock:'Nur noch wenige St\u00fcck', onOrder:'Auf Bestellung', moreInfo:'Mehr Infos', priceOnRequest:'Preis auf Anfrage', exclVat:',- zzgl. MwSt.', addToCart:'In den Warenkorb', newBadge:'Neu', weight:'Gewicht', width:'Breite', volume:'Inhalt', machineClass:'Maschinenklasse', attachment:'Aufh\u00e4ngung', noResults:'Keine Ergebnisse', noProductsFound:'Keine Produkte gefunden.', clearFilters:'Filter l\u00f6schen', oops:'Hoppla!', errorOccurred:'Ein Fehler ist aufgetreten.', defaultDesc:'Hochwertiges Anbauger\u00e4t f\u00fcr Ihre Maschine. Robust und zuverl\u00e4ssig.', addedToCart:'zum Warenkorb hinzugef\u00fcgt' }
+};
+function _t(key) { const loc = _getLocale(); return (_uiT[loc] && _uiT[loc][key]) || _uiT['be-nl'][key] || key; }
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
@@ -111,12 +124,12 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
   // Build specs list (Develon Style: Clean Label | Value list)
   const specsHtml = `
     <dl class="product-specs">
-      ${product.weight ? `<dt>Gewicht</dt><dd>${product.weight} kg</dd>` : ''}
-      ${product.width ? `<dt>Breedte</dt><dd>${product.width} mm</dd>` : ''}
-      ${product.volume ? `<dt>Inhoud</dt><dd>${product.volume} liter</dd>` : ''}
+      ${product.weight ? `<dt>${_t('weight')}</dt><dd>${product.weight} kg</dd>` : ''}
+      ${product.width ? `<dt>${_t('width')}</dt><dd>${product.width} mm</dd>` : ''}
+      ${product.volume ? `<dt>${_t('volume')}</dt><dd>${product.volume} liter</dd>` : ''}
       ${product.excavator_weight_min && product.excavator_weight_max ? 
-        `<dt>Machine klasse</dt><dd>${parseFloat(product.excavator_weight_min).toFixed(1).replace('.',',')} - ${parseFloat(product.excavator_weight_max).toFixed(1).replace('.',',')} ton</dd>` : ''}
-      ${product.attachment_type ? `<dt>Ophanging</dt><dd>${product.attachment_type}</dd>` : ''}
+        `<dt>${_t('machineClass')}</dt><dd>${parseFloat(product.excavator_weight_min).toFixed(1).replace('.',',')} - ${parseFloat(product.excavator_weight_max).toFixed(1).replace('.',',')} ton</dd>` : ''}
+      ${product.attachment_type ? `<dt>${_t('attachment')}</dt><dd>${product.attachment_type}</dd>` : ''}
     </dl>
   `;
 
@@ -126,7 +139,7 @@ export function createProductCardHorizontal(product, isLoggedIn = false) {
   // Buttons - Structon Style
   const moreInfoBtn = `
     <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
-      <span class="btn-split-text">Meer info</span>
+      <span class="btn-split-text">${_t('moreInfo')}</span>
       <span class="btn-split-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </span>
@@ -217,13 +230,13 @@ export function createIndustryProductCard(product, isLoggedIn = false) {
         </h3>
         
         <p class="product-card-description">
-          ${product.description ? escapeHtml(product.description.substring(0, 100)) : 'Hoogwaardig aanbouwdeel voor uw machine. Robuust en betrouwbaar.'}
+          ${product.description ? escapeHtml(product.description.substring(0, 100)) : _t('defaultDesc')}
         </p>
         
         <div class="product-actions-wrapper">
           <div class="product-buttons">
             <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
-              <span class="btn-split-text">Meer info</span>
+              <span class="btn-split-text">${_t('moreInfo')}</span>
               <span class="btn-split-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </span>
@@ -272,7 +285,7 @@ window.addToCart = function(productId, productTitle) {
   localStorage.setItem('structon_cart', JSON.stringify(cart));
   
   // Show feedback
-  showToast(`${productTitle} toegevoegd aan winkelmandje`);
+  showToast(`${productTitle} ${_t('addedToCart')}`);
   
   // Update cart icon if exists
   updateCartBadge();
@@ -341,11 +354,11 @@ export function createProductCard(product, isLoggedIn = false) {
   const stock = product.stock || 0;
   let stockStatusHtml = '';
   if (stock > 5) {
-    stockStatusHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>Op voorraad</span>';
+    stockStatusHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>' + _t('inStock') + '</span>';
   } else if (stock > 0) {
-    stockStatusHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>Nog slechts enkele stuks</span>';
+    stockStatusHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>' + _t('lowStock') + '</span>';
   } else {
-    stockStatusHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>Op bestelling</span>';
+    stockStatusHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>' + _t('onOrder') + '</span>';
   }
 
   // Specs formatting (e.g. 34 kg | 42 liter)
@@ -366,10 +379,10 @@ export function createProductCard(product, isLoggedIn = false) {
     footerHtml = `
       <div class="product-price-row">
         <span class="product-price">&euro;${product.price_excl_vat}</span>
-        <span class="product-vat">,- excl. BTW</span>
+        <span class="product-vat">${_t('exclVat')}</span>
       </div>
       <a href="${productUrl}" class="btn-split btn-split-sm" style="width: 100%;">
-        <span class="btn-split-text" style="flex: 1; justify-content: center;">In winkelwagen</span>
+        <span class="btn-split-text" style="flex: 1; justify-content: center;">${_t('addToCart')}</span>
         <span class="btn-split-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></path></svg>
         </span>
@@ -377,10 +390,10 @@ export function createProductCard(product, isLoggedIn = false) {
     `;
   } else {
     footerHtml = `
-      <span class="product-price-label" style="display: block; margin-bottom: 8px;">Prijs op aanvraag</span>
+      <span class="product-price-label" style="display: block; margin-bottom: 8px;">${_t('priceOnRequest')}</span>
       <div class="product-buttons">
         <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
-          <span class="btn-split-text">Meer info</span>
+          <span class="btn-split-text">${_t('moreInfo')}</span>
           <span class="btn-split-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </span>
@@ -392,7 +405,7 @@ export function createProductCard(product, isLoggedIn = false) {
   return `
     <article class="product-card clean-card" data-product-id="${product.id}">
       <a href="${productUrl}" class="product-card-image">
-        ${product.is_new ? '<span class="badge-new">Nieuw</span>' : ''}
+        ${product.is_new ? '<span class="badge-new">' + _t('newBadge') + '</span>' : ''}
         <img src="${imageUrl}" alt="${product.title}" loading="lazy">
       </a>
       <div class="product-card-divider"></div>
@@ -428,11 +441,12 @@ export function showLoading(container, message = '') {
 /**
  * Utility: Show error state
  */
-export function showError(container, message = 'Er is een fout opgetreden.') {
+export function showError(container, message) {
+  const msg = message || _t('errorOccurred');
   container.innerHTML = `
     <div class="no-results">
-      <h3>Oeps!</h3>
-      <p>${message}</p>
+      <h3>${_t('oops')}</h3>
+      <p>${msg}</p>
     </div>
   `;
 }
@@ -440,12 +454,13 @@ export function showError(container, message = 'Er is een fout opgetreden.') {
 /**
  * Utility: Show no results
  */
-export function showNoResults(container, message = 'Geen producten gevonden.') {
+export function showNoResults(container, message) {
+  const msg = message || _t('noProductsFound');
   container.innerHTML = `
     <div class="no-results">
-      <h3>Geen resultaten</h3>
-      <p>${message}</p>
-      <button class="btn btn-primary" onclick="window.location.reload()">Filters wissen</button>
+      <h3>${_t('noResults')}</h3>
+      <p>${msg}</p>
+      <button class="btn btn-primary" onclick="window.location.reload()">${_t('clearFilters')}</button>
     </div>
   `;
 }

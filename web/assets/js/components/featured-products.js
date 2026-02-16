@@ -6,6 +6,15 @@
  */
 import { products } from '../api/client.js';
 
+function _fpLocale() { const m = window.location.pathname.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); return m ? m[1] : 'be-nl'; }
+const _fpT = {
+  'be-nl': { inStock:'Op voorraad', lowStock:'Nog slechts enkele stuks', onOrder:'Op bestelling', moreInfo:'Meer info', priceOnRequest:'Prijs op aanvraag', exclVat:',- excl. BTW', addToCart:'In winkelwagen', newBadge:'Nieuw' },
+  'nl-nl': { inStock:'Op voorraad', lowStock:'Nog slechts enkele stuks', onOrder:'Op bestelling', moreInfo:'Meer info', priceOnRequest:'Prijs op aanvraag', exclVat:',- excl. BTW', addToCart:'In winkelwagen', newBadge:'Nieuw' },
+  'be-fr': { inStock:'En stock', lowStock:'Plus que quelques pi\u00e8ces', onOrder:'Sur commande', moreInfo:'Plus d\'infos', priceOnRequest:'Prix sur demande', exclVat:',- HTVA', addToCart:'Ajouter au panier', newBadge:'Nouveau' },
+  'de-de': { inStock:'Auf Lager', lowStock:'Nur noch wenige St\u00fcck', onOrder:'Auf Bestellung', moreInfo:'Mehr Infos', priceOnRequest:'Preis auf Anfrage', exclVat:',- zzgl. MwSt.', addToCart:'In den Warenkorb', newBadge:'Neu' }
+};
+function _fpTr(k) { const l = _fpLocale(); return (_fpT[l] && _fpT[l][k]) || _fpT['be-nl'][k] || k; }
+
 document.addEventListener('DOMContentLoaded', () => {
   loadFeaturedProducts();
 });
@@ -82,11 +91,11 @@ function buildProductCard(product, isLoggedIn) {
   const stock = product.stock || 0;
   let stockStatusHtml = '';
   if (stock > 5) {
-    stockStatusHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>Op voorraad</span>';
+    stockStatusHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>' + _fpTr('inStock') + '</span>';
   } else if (stock > 0) {
-    stockStatusHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>Nog slechts enkele stuks</span>';
+    stockStatusHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>' + _fpTr('lowStock') + '</span>';
   } else {
-    stockStatusHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>Op bestelling</span>';
+    stockStatusHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>' + _fpTr('onOrder') + '</span>';
   }
 
   // Specs
@@ -106,10 +115,10 @@ function buildProductCard(product, isLoggedIn) {
     footerHtml = `
       <div class="product-price-row">
         <span class="product-price">&euro;${product.price_excl_vat}</span>
-        <span class="product-vat">,- excl. BTW</span>
+        <span class="product-vat">${_fpTr('exclVat')}</span>
       </div>
       <a href="${productUrl}" class="btn-split btn-split-sm" style="width: 100%;">
-        <span class="btn-split-text" style="flex: 1; justify-content: center;">In winkelwagen</span>
+        <span class="btn-split-text" style="flex: 1; justify-content: center;">${_fpTr('addToCart')}</span>
         <span class="btn-split-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         </span>
@@ -117,10 +126,10 @@ function buildProductCard(product, isLoggedIn) {
     `;
   } else {
     footerHtml = `
-      <span class="product-price-label" style="display: block; margin-bottom: 8px;">Prijs op aanvraag</span>
+      <span class="product-price-label" style="display: block; margin-bottom: 8px;">${_fpTr('priceOnRequest')}</span>
       <div class="product-buttons">
         <a href="${productUrl}" class="btn-split btn-split-sm" style="text-decoration: none;">
-          <span class="btn-split-text">Meer info</span>
+          <span class="btn-split-text">${_fpTr('moreInfo')}</span>
           <span class="btn-split-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </span>
@@ -132,7 +141,7 @@ function buildProductCard(product, isLoggedIn) {
   return `
     <article class="product-card clean-card" data-product-id="${product.id}">
       <a href="${productUrl}" class="product-card-image">
-        ${product.is_new ? '<span class="badge-new">Nieuw</span>' : ''}
+        ${product.is_new ? '<span class="badge-new">' + _fpTr('newBadge') + '</span>' : ''}
         <img src="${imageUrl}" alt="${product.title}" loading="lazy">
       </a>
       <div class="product-card-divider"></div>

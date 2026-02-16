@@ -59,6 +59,39 @@
     const assetsPath = basePath + 'assets/';
     const logoUrl = 'https://res.cloudinary.com/dchrgzyb4/image/upload/v1764264700/Logo-transparant_neticz.png';
     
+    const locale = getCurrentLocale() || 'be-nl';
+    const ft = {
+      'be-nl': {
+        tagline: 'Specialist in kraanbakken en<br>graafmachine aanbouwdelen.',
+        navLoading: 'Navigatie laden...',
+        allRights: 'Alle rechten voorbehouden.',
+        terms: 'Voorwaarden',
+        madeBy: 'Gemaakt door'
+      },
+      'nl-nl': {
+        tagline: 'Specialist in kraanbakken en<br>graafmachine aanbouwdelen.',
+        navLoading: 'Navigatie laden...',
+        allRights: 'Alle rechten voorbehouden.',
+        terms: 'Voorwaarden',
+        madeBy: 'Gemaakt door'
+      },
+      'be-fr': {
+        tagline: 'Sp\u00e9cialiste en godets et<br>accessoires pour pelles.',
+        navLoading: 'Chargement de la navigation...',
+        allRights: 'Tous droits r\u00e9serv\u00e9s.',
+        terms: 'Conditions',
+        madeBy: 'R\u00e9alis\u00e9 par'
+      },
+      'de-de': {
+        tagline: 'Spezialist f\u00fcr Baggerl\u00f6ffel und<br>Bagger-Anbauger\u00e4te.',
+        navLoading: 'Navigation wird geladen...',
+        allRights: 'Alle Rechte vorbehalten.',
+        terms: 'AGB',
+        madeBy: 'Erstellt von'
+      }
+    };
+    const t = ft[locale] || ft['be-nl'];
+    
     return `
   <footer class="site-footer">
     <div class="container">
@@ -69,7 +102,7 @@
             <img src="${logoUrl}" alt="Structon" width="120">
           </a>
           <p class="footer-tagline">
-            Specialist in kraanbakken en<br>graafmachine aanbouwdelen.
+            ${t.tagline}
           </p>
         </div>
 
@@ -77,7 +110,7 @@
         <div class="footer-sitemap-col">
           <ul id="footer-sitemap" class="sitemap-grid">
             <!-- Dynamically loaded via sitemap.js -->
-            <li class="sitemap-loading">Navigatie laden...</li>
+            <li class="sitemap-loading">${t.navLoading}</li>
           </ul>
         </div>
 
@@ -96,19 +129,19 @@
       
       <div class="footer-bottom">
         <div class="footer-legal">
-          <p>&copy; 2024 Structon. Alle rechten voorbehouden.</p>
+          <p>&copy; 2024 Structon. ${t.allRights}</p>
           <div class="legal-links">
             <a href="${basePath}sitemap-pagina/">Sitemap</a>
-            <span class="separator">•</span>
+            <span class="separator">&bull;</span>
             <a href="${basePath}privacy/">Privacy</a>
-            <span class="separator">•</span>
-            <a href="${basePath}voorwaarden/">Voorwaarden</a>
+            <span class="separator">&bull;</span>
+            <a href="${basePath}voorwaarden/">${t.terms}</a>
           </div>
         </div>
         
         <div class="footer-creator">
-          <span>Gemaakt door <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
-          <span class="creator-separator">•</span>
+          <span>${t.madeBy} <a href="https://grafixstudio.be/" target="_blank" rel="noopener">Grafix Studio</a></span>
+          <span class="creator-separator">&bull;</span>
           <a href="https://structon-production.up.railway.app/cms/" class="cms-lock-link" target="_blank" rel="noopener" title="CMS Login">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>

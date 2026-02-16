@@ -12,6 +12,14 @@
     return match ? match[1] : 'be-nl';
   }
 
+  var _bpT = {
+    'be-nl': { inStock:'Op voorraad', lowStock:'Nog slechts enkele stuks', onOrder:'Op bestelling', moreInfo:'Meer info', priceOnRequest:'Prijs op aanvraag', noProducts:'Geen producten beschikbaar', loadError:'Producten konden niet geladen worden' },
+    'nl-nl': { inStock:'Op voorraad', lowStock:'Nog slechts enkele stuks', onOrder:'Op bestelling', moreInfo:'Meer info', priceOnRequest:'Prijs op aanvraag', noProducts:'Geen producten beschikbaar', loadError:'Producten konden niet geladen worden' },
+    'be-fr': { inStock:'En stock', lowStock:'Plus que quelques pi\u00e8ces', onOrder:'Sur commande', moreInfo:'Plus d\'infos', priceOnRequest:'Prix sur demande', noProducts:'Aucun produit disponible', loadError:'Les produits n\'ont pas pu \u00eatre charg\u00e9s' },
+    'de-de': { inStock:'Auf Lager', lowStock:'Nur noch wenige St\u00fcck', onOrder:'Auf Bestellung', moreInfo:'Mehr Infos', priceOnRequest:'Preis auf Anfrage', noProducts:'Keine Produkte verf\u00fcgbar', loadError:'Produkte konnten nicht geladen werden' }
+  };
+  function _bt(k) { var l = getLocale(); return (_bpT[l] && _bpT[l][k]) || _bpT['be-nl'][k] || k; }
+
   function getBasePath() {
     return window.location.pathname.includes('/Structon/') ? '/Structon' : '';
   }
@@ -34,11 +42,11 @@
     var stockHtml = '';
     var stock = product.stock || 0;
     if (stock > 5) {
-      stockHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>Op voorraad</span>';
+      stockHtml = '<span class="stock-status status-in-stock"><span class="status-dot"></span>' + _bt('inStock') + '</span>';
     } else if (stock > 0) {
-      stockHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>Nog slechts enkele stuks</span>';
+      stockHtml = '<span class="stock-status status-low-stock"><span class="status-dot"></span>' + _bt('lowStock') + '</span>';
     } else {
-      stockHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>Op bestelling</span>';
+      stockHtml = '<span class="stock-status status-out-stock"><span class="status-dot"></span>' + _bt('onOrder') + '</span>';
     }
 
     var specs = [];
@@ -61,10 +69,10 @@
         '</div>' +
         specsHtml +
         '<div class="product-card-footer">' +
-          '<span class="product-price-label" style="display:block;margin-bottom:8px;">Prijs op aanvraag</span>' +
+          '<span class="product-price-label" style="display:block;margin-bottom:8px;">' + _bt('priceOnRequest') + '</span>' +
           '<div class="product-buttons">' +
             '<a href="' + url + '" class="btn-split btn-split-sm" style="text-decoration:none;">' +
-              '<span class="btn-split-text">Meer info</span>' +
+              '<span class="btn-split-text">' + _bt('moreInfo') + '</span>' +
               '<span class="btn-split-icon">' +
                 '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
               '</span>' +
@@ -96,7 +104,7 @@
       .then(function(data) {
         var items = data.products || data.items || [];
         if (items.length === 0) {
-          container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">Geen producten beschikbaar</div>';
+          container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">' + _bt('noProducts') + '</div>';
           return;
         }
         var selected = shuffle(items).slice(0, PRODUCTS_TO_SHOW);
@@ -104,7 +112,7 @@
       })
       .catch(function(err) {
         console.warn('Brand products load error:', err);
-        container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">Producten konden niet geladen worden</div>';
+        container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">' + _bt('loadError') + '</div>';
       });
   }
 

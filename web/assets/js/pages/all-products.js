@@ -11,6 +11,15 @@ import { initPagination, updatePagination, getOffset, getItemsPerPage } from '..
 import { createExpertBox } from '../components/expert-box.js';
 import { loadProductPrices } from '../pricing.js';
 
+function _apLocale() { const m = window.location.pathname.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); return m ? m[1] : 'be-nl'; }
+const _apT = {
+  'be-nl': { noProductsFilters:'Geen producten gevonden met de huidige filters.', productNotFound:'Product niet gevonden', productNotFoundDesc:'Het product dat u zoekt bestaat niet of is niet meer beschikbaar.', viewAllProducts:'Bekijk alle producten', weight:'Gewicht', width:'Breedte', volume:'Inhoud', attachment:'Ophanging', machineClass:'Machine klasse', articleNr:'Artikelnummer', category:'Categorie', brand:'Merk', volumeSAE:'Inhoud (SAE)', description:'Omschrijving', noDescription:'Geen omschrijving beschikbaar.', noImage:'Geen+Afbeelding' },
+  'nl-nl': { noProductsFilters:'Geen producten gevonden met de huidige filters.', productNotFound:'Product niet gevonden', productNotFoundDesc:'Het product dat u zoekt bestaat niet of is niet meer beschikbaar.', viewAllProducts:'Bekijk alle producten', weight:'Gewicht', width:'Breedte', volume:'Inhoud', attachment:'Ophanging', machineClass:'Machine klasse', articleNr:'Artikelnummer', category:'Categorie', brand:'Merk', volumeSAE:'Inhoud (SAE)', description:'Omschrijving', noDescription:'Geen omschrijving beschikbaar.', noImage:'Geen+Afbeelding' },
+  'be-fr': { noProductsFilters:'Aucun produit trouv\u00e9 avec les filtres actuels.', productNotFound:'Produit introuvable', productNotFoundDesc:'Le produit que vous recherchez n\'existe pas ou n\'est plus disponible.', viewAllProducts:'Voir tous les produits', weight:'Poids', width:'Largeur', volume:'Contenance', attachment:'Fixation', machineClass:'Classe de machine', articleNr:'R\u00e9f\u00e9rence', category:'Cat\u00e9gorie', brand:'Marque', volumeSAE:'Contenance (SAE)', description:'Description', noDescription:'Aucune description disponible.', noImage:'Pas+d\'image' },
+  'de-de': { noProductsFilters:'Keine Produkte mit den aktuellen Filtern gefunden.', productNotFound:'Produkt nicht gefunden', productNotFoundDesc:'Das gesuchte Produkt existiert nicht oder ist nicht mehr verf\u00fcgbar.', viewAllProducts:'Alle Produkte ansehen', weight:'Gewicht', width:'Breite', volume:'Inhalt', attachment:'Aufh\u00e4ngung', machineClass:'Maschinenklasse', articleNr:'Artikelnummer', category:'Kategorie', brand:'Marke', volumeSAE:'Inhalt (SAE)', description:'Beschreibung', noDescription:'Keine Beschreibung verf\u00fcgbar.', noImage:'Kein+Bild' }
+};
+function _ap(k) { const l = _apLocale(); return (_apT[l] && _apT[l][k]) || _apT['be-nl'][k] || k; }
+
 let allProducts = [];
 let currentProduct = null;
 let currentCategory = null;
@@ -446,7 +455,7 @@ function renderProducts(productList) {
   if (!container) return;
 
   if (productList.length === 0) {
-    showNoResults(container, 'Geen producten gevonden met de huidige filters.');
+    showNoResults(container, _ap('noProductsFilters'));
     return;
   }
 
@@ -575,9 +584,9 @@ async function loadSingleProduct(productId) {
 function showProductNotFound(container) {
   container.innerHTML = `
     <div class="no-results" style="text-align: center; padding: 60px 20px;">
-      <h2 style="margin-bottom: 16px;">Product niet gevonden</h2>
-      <p style="margin-bottom: 24px;">Het product dat u zoekt bestaat niet of is niet meer beschikbaar.</p>
-      <a href="./" class="btn btn-primary">Bekijk alle producten</a>
+      <h2 style="margin-bottom: 16px;">${_ap('productNotFound')}</h2>
+      <p style="margin-bottom: 24px;">${_ap('productNotFoundDesc')}</p>
+      <a href="./" class="btn btn-primary">${_ap('viewAllProducts')}</a>
     </div>
   `;
 }
@@ -590,31 +599,31 @@ function renderProductDetail(product, container) {
   injectProStyles();
 
   const images = product.cloudinary_images || [];
-  const mainImage = images[0]?.url || 'https://via.placeholder.com/600x600?text=Geen+Afbeelding';
+  const mainImage = images[0]?.url || 'https://via.placeholder.com/600x600?text=' + _ap('noImage');
   
   // Build specs arrays
   const keySpecs = [];
-  if (product.weight) keySpecs.push({ label: 'Gewicht', value: `${product.weight} kg`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>' }); // Using heart as placeholder, ideally weight icon
-  if (product.width) keySpecs.push({ label: 'Breedte', value: `${product.width} mm`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M5 9v6"/><path d="M19 9v6"/></svg>' });
-  if (product.volume) keySpecs.push({ label: 'Inhoud', value: `${product.volume} L`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' });
-  if (product.attachment_type) keySpecs.push({ label: 'Ophanging', value: product.attachment_type, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' });
+  if (product.weight) keySpecs.push({ label: _ap('weight'), value: `${product.weight} kg`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>' }); // Using heart as placeholder, ideally weight icon
+  if (product.width) keySpecs.push({ label: _ap('width'), value: `${product.width} mm`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M5 9v6"/><path d="M19 9v6"/></svg>' });
+  if (product.volume) keySpecs.push({ label: _ap('volume'), value: `${product.volume} L`, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' });
+  if (product.attachment_type) keySpecs.push({ label: _ap('attachment'), value: product.attachment_type, icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' });
 
   // Fix icons for weight (scale)
-  if (keySpecs.find(s => s.label === 'Gewicht')) {
-     keySpecs.find(s => s.label === 'Gewicht').icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M2 18h20"/></svg>';
+  if (keySpecs.find(s => s.label === _ap('weight'))) {
+     keySpecs.find(s => s.label === _ap('weight')).icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M2 18h20"/></svg>';
   }
 
   const allSpecs = [];
-  if (product.id) allSpecs.push({ label: 'Artikelnummer', value: product.id.substring(0, 8).toUpperCase() });
-  if (product.category_title) allSpecs.push({ label: 'Categorie', value: product.category_title });
-  if (product.brand_title) allSpecs.push({ label: 'Merk', value: product.brand_title });
-  if (product.weight) allSpecs.push({ label: 'Gewicht', value: `${product.weight} kg` });
-  if (product.width) allSpecs.push({ label: 'Breedte', value: `${product.width} mm` });
-  if (product.volume) allSpecs.push({ label: 'Inhoud (SAE)', value: `${product.volume} liter` });
-  if (product.attachment_type) allSpecs.push({ label: 'Ophanging', value: product.attachment_type });
+  if (product.id) allSpecs.push({ label: _ap('articleNr'), value: product.id.substring(0, 8).toUpperCase() });
+  if (product.category_title) allSpecs.push({ label: _ap('category'), value: product.category_title });
+  if (product.brand_title) allSpecs.push({ label: _ap('brand'), value: product.brand_title });
+  if (product.weight) allSpecs.push({ label: _ap('weight'), value: `${product.weight} kg` });
+  if (product.width) allSpecs.push({ label: _ap('width'), value: `${product.width} mm` });
+  if (product.volume) allSpecs.push({ label: _ap('volumeSAE'), value: `${product.volume} liter` });
+  if (product.attachment_type) allSpecs.push({ label: _ap('attachment'), value: product.attachment_type });
   if (product.excavator_weight_min && product.excavator_weight_max) {
     allSpecs.push({ 
-      label: 'Machine klasse', 
+      label: _ap('machineClass'), 
       value: `${parseFloat(product.excavator_weight_min).toFixed(1)} - ${parseFloat(product.excavator_weight_max).toFixed(1)} ton` 
     });
   }

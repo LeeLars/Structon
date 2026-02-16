@@ -6,13 +6,31 @@
 
 import { API_BASE_URL } from './api/client.js';
 
+function getSitemapLocale() {
+  const path = window.location.pathname;
+  const locales = ['be-nl', 'nl-nl', 'be-fr', 'de-de'];
+  for (const loc of locales) {
+    if (path.includes('/' + loc + '/')) return loc;
+  }
+  return 'be-nl';
+}
+
+const sitemapT = {
+  'be-nl': { general: 'Algemeen', home: 'Home', aboutUs: 'Over Ons', customerLogin: 'Klant Login', products: 'Producten', navigation: 'Navigatie', excavatorBuckets: 'Kraanbakken', trenchBuckets: 'Slotenbakken', loading: 'Laden...' },
+  'nl-nl': { general: 'Algemeen', home: 'Home', aboutUs: 'Over Ons', customerLogin: 'Klant Login', products: 'Producten', navigation: 'Navigatie', excavatorBuckets: 'Kraanbakken', trenchBuckets: 'Slotenbakken', loading: 'Laden...' },
+  'be-fr': { general: 'G\u00e9n\u00e9ral', home: 'Accueil', aboutUs: '\u00c0 propos', customerLogin: 'Connexion client', products: 'Produits', navigation: 'Navigation', excavatorBuckets: 'Godets', trenchBuckets: 'Godets de tranch\u00e9e', loading: 'Chargement...' },
+  'de-de': { general: 'Allgemein', home: 'Startseite', aboutUs: '\u00dcber uns', customerLogin: 'Kunden-Login', products: 'Produkte', navigation: 'Navigation', excavatorBuckets: 'Baggerl\u00f6ffel', trenchBuckets: 'Grabenl\u00f6ffel', loading: 'Laden...' }
+};
+
 export async function initSitemap() {
   const sitemapContainer = document.getElementById('footer-sitemap');
   if (!sitemapContainer) return;
 
+  const locale = getSitemapLocale();
+  const t = sitemapT[locale] || sitemapT['be-nl'];
+
   try {
-    // Show loading state
-    sitemapContainer.innerHTML = '<li class="sitemap-loading">Laden...</li>';
+    sitemapContainer.innerHTML = '<li class="sitemap-loading">' + t.loading + '</li>';
 
     // Fetch categories and subcategories
     const [categoriesResponse, subcategoriesResponse] = await Promise.all([
@@ -39,12 +57,12 @@ export async function initSitemap() {
     // 1. Main Pages
     sitemapHtml += `
       <li class="sitemap-section">
-        <h5 class="sitemap-heading">Algemeen</h5>
+        <h5 class="sitemap-heading">${t.general}</h5>
         <ul class="sitemap-links">
-          <li><a href="../../">Home</a></li>
-          <li><a href="../../over-ons/">Over Ons</a></li>
+          <li><a href="../../">${t.home}</a></li>
+          <li><a href="../../over-ons/">${t.aboutUs}</a></li>
           <li><a href="../../contact/">Contact</a></li>
-          <li><a href="#" class="login-trigger">Klant Login</a></li>
+          <li><a href="#" class="login-trigger">${t.customerLogin}</a></li>
         </ul>
       </li>
     `;
@@ -83,7 +101,7 @@ export async function initSitemap() {
       if (productLinks.length > 0) {
         sitemapHtml += `
           <li class="sitemap-section">
-            <h5 class="sitemap-heading">Producten</h5>
+            <h5 class="sitemap-heading">${t.products}</h5>
             <ul class="sitemap-links">
               ${productLinks.join('')}
             </ul>
@@ -100,13 +118,13 @@ export async function initSitemap() {
     // Fallback static sitemap
     sitemapContainer.innerHTML = `
       <li class="sitemap-section">
-        <h5 class="sitemap-heading">Navigatie</h5>
+        <h5 class="sitemap-heading">${t.navigation}</h5>
         <ul class="sitemap-links">
-          <li><a href="../../">Home</a></li>
-          <li><a href="../../over-ons/">Over Ons</a></li>
+          <li><a href="../../">${t.home}</a></li>
+          <li><a href="../../over-ons/">${t.aboutUs}</a></li>
           <li><a href="../../contact/">Contact</a></li>
-          <li><a href="../../kraanbakken/">Kraanbakken</a></li>
-          <li><a href="../../slotenbakken/">Slotenbakken</a></li>
+          <li><a href="../../kraanbakken/">${t.excavatorBuckets}</a></li>
+          <li><a href="../../slotenbakken/">${t.trenchBuckets}</a></li>
         </ul>
       </li>
     `;

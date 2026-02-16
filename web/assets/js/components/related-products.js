@@ -6,6 +6,16 @@
 (function() {
   'use strict';
 
+  // Locale detection and translations
+  function _rpLocale() { var m = window.location.pathname.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); return m ? m[1] : 'be-nl'; }
+  var _rpT = {
+    'be-nl': { moreInfo:'Meer info', loading:'Gerelateerde producten laden...' },
+    'nl-nl': { moreInfo:'Meer info', loading:'Gerelateerde producten laden...' },
+    'be-fr': { moreInfo:'Plus d\'infos', loading:'Chargement des produits associ\u00e9s...' },
+    'de-de': { moreInfo:'Mehr Infos', loading:'Verwandte Produkte werden geladen...' }
+  };
+  function _rpt(k) { var l = _rpLocale(); return (_rpT[l] && _rpT[l][k]) || _rpT['be-nl'][k] || k; }
+
   // API Configuration
   const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:4000/api'
@@ -195,7 +205,7 @@
           ` : ''}
           <div class="product-card-footer">
             <a href="${productUrl}" class="btn-split btn-split-sm" style="width: 100%;">
-              <span class="btn-split-text">Meer info</span>
+              <span class="btn-split-text">${_rpt('moreInfo')}</span>
               <span class="btn-split-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </span>
@@ -222,7 +232,7 @@
     }
 
     // Show loading state
-    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8;">Gerelateerde producten laden...</div>';
+    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #94a3b8;">' + _rpt('loading') + '</div>';
     section.style.display = 'block';
 
     try {

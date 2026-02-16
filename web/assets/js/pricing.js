@@ -6,6 +6,15 @@
 import { products } from './api/client.js';
 import { isLoggedIn, getUser } from './auth.js';
 
+function _prLocale() { const m = window.location.pathname.match(/\/(be-nl|nl-nl|be-fr|de-de)\//); return m ? m[1] : 'be-nl'; }
+const _prT = {
+  'be-nl': { exclVat:'excl. BTW', loading:'Laden...', quantity:'Aantal:', addToQuote:'Toevoegen aan Offerte', addToOrder:'Toevoegen aan Bestelling', loginForPrice:'Login voor prijs', logIn:'Log in', loginToView:'om prijzen te bekijken en te bestellen.', priceOnRequest:'Prijs op aanvraag', contactUs:'Neem contact op', contactForQuote:'Neem contact met ons op voor een offerte.', contactForProduct:'Neem contact met ons op voor dit product.', requestQuote:'Offerte Aanvragen', contactAction:'Contact Opnemen', priceUnavailable:'Prijs niet beschikbaar', errorRetry:'Er is een fout opgetreden. Probeer het later opnieuw.' },
+  'nl-nl': { exclVat:'excl. BTW', loading:'Laden...', quantity:'Aantal:', addToQuote:'Toevoegen aan Offerte', addToOrder:'Toevoegen aan Bestelling', loginForPrice:'Login voor prijs', logIn:'Log in', loginToView:'om prijzen te bekijken en te bestellen.', priceOnRequest:'Prijs op aanvraag', contactUs:'Neem contact op', contactForQuote:'Neem contact met ons op voor een offerte.', contactForProduct:'Neem contact met ons op voor dit product.', requestQuote:'Offerte Aanvragen', contactAction:'Contact Opnemen', priceUnavailable:'Prijs niet beschikbaar', errorRetry:'Er is een fout opgetreden. Probeer het later opnieuw.' },
+  'be-fr': { exclVat:'HTVA', loading:'Chargement...', quantity:'Quantit\u00e9 :', addToQuote:'Ajouter au devis', addToOrder:'Ajouter \u00e0 la commande', loginForPrice:'Connectez-vous pour le prix', logIn:'Connectez-vous', loginToView:'pour consulter les prix et commander.', priceOnRequest:'Prix sur demande', contactUs:'Contactez-nous', contactForQuote:'Contactez-nous pour un devis.', contactForProduct:'Contactez-nous pour ce produit.', requestQuote:'Demander un devis', contactAction:'Nous contacter', priceUnavailable:'Prix non disponible', errorRetry:'Une erreur s\'est produite. R\u00e9essayez plus tard.' },
+  'de-de': { exclVat:'zzgl. MwSt.', loading:'Laden...', quantity:'Menge:', addToQuote:'Zum Angebot hinzuf\u00fcgen', addToOrder:'Zur Bestellung hinzuf\u00fcgen', loginForPrice:'Anmelden f\u00fcr Preis', logIn:'Anmelden', loginToView:'um Preise einzusehen und zu bestellen.', priceOnRequest:'Preis auf Anfrage', contactUs:'Kontaktieren Sie uns', contactForQuote:'Kontaktieren Sie uns f\u00fcr ein Angebot.', contactForProduct:'Kontaktieren Sie uns f\u00fcr dieses Produkt.', requestQuote:'Angebot anfordern', contactAction:'Kontakt aufnehmen', priceUnavailable:'Preis nicht verf\u00fcgbar', errorRetry:'Ein Fehler ist aufgetreten. Versuchen Sie es sp\u00e4ter erneut.' }
+};
+function _pr(k) { const l = _prLocale(); return (_prT[l] && _prT[l][k]) || _prT['be-nl'][k] || k; }
+
 /**
  * Format price in EUR
  */
@@ -26,7 +35,7 @@ export async function loadProductPrice(productId, priceContainer) {
   }
 
   try {
-    priceContainer.innerHTML = '<span class="loader-inline"><span class="loader-spinner-inline"></span> Laden...</span>';
+    priceContainer.innerHTML = '<span class="loader-inline"><span class="loader-spinner-inline"></span> ' + _pr('loading') + '</span>';
     
     const data = await products.getPrice(productId);
     
@@ -84,7 +93,7 @@ function renderPrice(container, data) {
     container.innerHTML = `
       <div class="product-price-compact">
         <div class="product-price-amount">${formatPrice(data.price, data.currency)}</div>
-        <div class="product-price-vat">excl. BTW</div>
+        <div class="product-price-vat">${_pr('exclVat')}</div>
       </div>
     `;
   } else {
@@ -92,7 +101,7 @@ function renderPrice(container, data) {
     container.innerHTML = `
       <div class="product-price">
         ${formatPrice(data.price, data.currency)}
-        <span class="product-price-vat">excl. BTW</span>
+        <span class="product-price-vat">${_pr('exclVat')}</span>
       </div>
       ${renderAddToCart(data)}
     `;
@@ -106,12 +115,12 @@ function renderAddToCart(data) {
   return `
     <div class="product-actions">
       <div class="quantity-selector">
-        <label for="quantity">Aantal:</label>
+        <label for="quantity">${_pr('quantity')}</label>
         <input type="number" id="quantity" class="quantity-input form-input" value="1" min="1" max="99">
       </div>
       <button class="btn btn-primary btn-lg btn-arrow" data-action="add-to-cart">
-        <span class="guest-only-inline">Toevoegen aan Offerte</span>
-        <span class="auth-only-inline">Toevoegen aan Bestelling</span>
+        <span class="guest-only-inline">${_pr('addToQuote')}</span>
+        <span class="auth-only-inline">${_pr('addToOrder')}</span>
       </button>
     </div>
   `;
@@ -124,9 +133,9 @@ function renderLockedPrice(container) {
   container.classList.add('price-locked');
   
   container.innerHTML = `
-    <div class="product-price">Login voor prijs</div>
+    <div class="product-price">${_pr('loginForPrice')}</div>
     <p class="login-prompt">
-      <a href="#" class="login-trigger">Log in</a> om prijzen te bekijken en te bestellen.
+      <a href="#" class="login-trigger">${_pr('logIn')}</a> ${_pr('loginToView')}
     </p>
   `;
 }
@@ -137,16 +146,16 @@ function renderLockedPrice(container) {
 function renderQuoteRequired(container) {
   container.innerHTML = `
     <div class="product-price">
-      <span class="guest-only-inline">Prijs op aanvraag</span>
-      <span class="auth-only-inline">Neem contact op</span>
+      <span class="guest-only-inline">${_pr('priceOnRequest')}</span>
+      <span class="auth-only-inline">${_pr('contactUs')}</span>
     </div>
     <p class="quote-prompt">
-      <span class="guest-only-inline">Neem contact met ons op voor een offerte.</span>
-      <span class="auth-only-inline">Neem contact met ons op voor dit product.</span>
+      <span class="guest-only-inline">${_pr('contactForQuote')}</span>
+      <span class="auth-only-inline">${_pr('contactForProduct')}</span>
     </p>
     <a href="/offerte-aanvragen/" class="btn btn-primary">
-      <span class="guest-only-inline">Offerte Aanvragen</span>
-      <span class="auth-only-inline">Contact Opnemen</span>
+      <span class="guest-only-inline">${_pr('requestQuote')}</span>
+      <span class="auth-only-inline">${_pr('contactAction')}</span>
     </a>
   `;
 }
@@ -156,9 +165,9 @@ function renderQuoteRequired(container) {
  */
 function renderPriceError(container) {
   container.innerHTML = `
-    <div class="product-price text-muted">Prijs niet beschikbaar</div>
+    <div class="product-price text-muted">${_pr('priceUnavailable')}</div>
     <p class="error-prompt">
-      Er is een fout opgetreden. Probeer het later opnieuw.
+      ${_pr('errorRetry')}
     </p>
   `;
 }

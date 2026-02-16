@@ -491,25 +491,33 @@
     font-size: 0.95rem;
   }
 
+  /* USP Item Mobile Layout */
   .usp-item {
     gap: 16px;
-    padding: 24px 0;
+    padding: 32px 0; /* Meer verticale ruimte */
+    align-items: flex-start; /* Zorg dat ze bovenaan uitlijnen */
   }
 
+  /* Nummer styling */
   .usp-number {
     font-size: 2.5rem;
-    min-width: 40px;
-    transform: translateY(-4px);
+    min-width: 32px; /* Iets compacter */
+    line-height: 1;
+    transform: translateY(2px); /* Visueel uitlijnen met titel */
+    text-align: left; /* Links uitlijnen ipv center */
   }
 
   .usp-content h4 {
     font-size: 1.1rem;
     margin-bottom: 8px;
+    line-height: 1.3;
+    margin-top: 0;
   }
 
   .usp-content p {
     font-size: 0.9rem;
     line-height: 1.6;
+    margin-bottom: 0;
   }
 
   .usp-btn .btn-split-text {

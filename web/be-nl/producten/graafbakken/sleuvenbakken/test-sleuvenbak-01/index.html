@@ -5,16 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="test slotenbak beschrijving">
   <title>Test - Sleuvenbak - 01 | Structon</title>
-  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-  <link rel="preconnect" href="https://structon-production.up.railway.app" crossorigin>
-  <link rel="preload" href="../../../../../assets/fonts/ArthouseOwnedBlack.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../../../../../assets/css/fonts.css" as="style">
   <link rel="stylesheet" href="../../../../../assets/css/fonts.css">
   <link rel="stylesheet" href="../../../../../assets/css/global.css?v=8">
-  <link rel="stylesheet" href="../../../../../assets/css/components/mega-menu.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="../../../../../assets/css/components/mega-menu.css"></noscript>
-  <link rel="stylesheet" href="../../../../../assets/css/components/quote-cart.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="../../../../../assets/css/components/quote-cart.css"></noscript>
+  <link rel="stylesheet" href="../../../../../assets/css/components/mega-menu.css">
+  <link rel="stylesheet" href="../../../../../assets/css/components/quote-cart.css">
   <link rel="stylesheet" href="../../../../../assets/css/pages/product.css">
   <link rel="icon" type="image/svg+xml" href="../../../../../assets/images/static/favicon.svg">
   <link rel="canonical" href="https://structon.be/be-nl/producten/graafbakken/sleuvenbakken/test-sleuvenbak-01/">
@@ -27,8 +22,7 @@
 <body>
   <div id="header-placeholder"></div>
   <main style="padding-top: 0;">
-    <!-- Compact Breadcrumb -->
-    <div class="product-breadcrumb-bar">
+    <section class="page-hero" style="padding-top: var(--space-8);">
       <div class="container">
         <nav class="breadcrumb" aria-label="Kruimelpad">
           <a href="../../../../index.html">Home</a><span>/</span>
@@ -37,19 +31,16 @@
           <a href="../">Sleuvenbakken</a><span>/</span>
           <span aria-current="page">Test - Sleuvenbak - 01</span>
         </nav>
+        <h1 class="hero-title">TEST - SLEUVENBAK - 01</h1>
       </div>
-    </div>
-
+    </section>
+    
     <!-- Product Main Section -->
-    <section class="product-section">
+    <section class="section product-section">
       <div class="container">
         <div class="product-layout">
-
-          <!-- LEFT: Gallery -->
-          <div class="product-gallery">
-            <div class="product-image-main">
-              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png" alt="Test - Sleuvenbak - 01" id="main-product-image">
-            </div>
+          
+          <div class="product-gallery animate-on-scroll">
             <div class="product-thumbnails">
               <div class="product-thumbnail active" data-image="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png">
                 <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png" alt="Test - Sleuvenbak - 01 - View 1">
@@ -61,75 +52,81 @@
                 <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png" alt="Test - Sleuvenbak - 01 - View 3">
               </div>
             </div>
-          </div>
-
-          <!-- RIGHT: Product Info -->
-          <div class="product-info-wrapper">
-            <!-- Price -->
-            <div class="product-price-container" id="product-price-container" data-product-id="e378e2f8-9740-40b5-bac9-b00b605d1567" style="display: none;">
-              <div class="product-price" id="product-price">
-                <span class="price-loading">Prijs laden...</span>
-              </div>
+            <div class="product-image-main">
+              <img src="https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png" alt="Test - Sleuvenbak - 01" id="main-product-image">
             </div>
-
-            <!-- Title & Category -->
+          </div>
+          
+          <div class="product-info-wrapper animate-on-scroll">
             <div class="product-header">
               <span class="product-category-label">Graafbakken / Sleuvenbakken</span>
               <h1 class="product-title">TEST - SLEUVENBAK - 01</h1>
               <p class="product-subtitle">test slotenbak beschrijving</p>
             </div>
 
-            <!-- Key Specs as Tags -->
-            <div class="product-spec-tags">
-              <span class="spec-tag"><span class="spec-tag-label">Breedte</span> 300 mm</span>
-              <span class="spec-tag"><span class="spec-tag-label">Gewicht</span> 45 kg</span>
-              <span class="spec-tag"><span class="spec-tag-label">Inhoud</span> 80 L</span>
-              <span class="spec-tag"><span class="spec-tag-label">Ophanging</span> CW10</span>
-              <span class="spec-tag"><span class="spec-tag-label">Machine</span> 3.00-8.00 t</span>
+            <div class="product-key-specs">
+              
+              <div class="key-spec">
+                <span class="key-spec-label">Breedte</span>
+                <span class="key-spec-value">300 mm</span>
+              </div>
+              <div class="key-spec">
+                <span class="key-spec-label">Gewicht</span>
+                <span class="key-spec-value">45 kg</span>
+              </div>
+              <div class="key-spec">
+                <span class="key-spec-label">Ophanging</span>
+                <span class="key-spec-value">CW10</span>
+              </div>
+              <div class="key-spec">
+                <span class="key-spec-label">Graafmachine</span>
+                <span class="key-spec-value">3.00-8.00 t</span>
+              </div>
             </div>
 
-            <!-- Stock Status -->
-            <div class="product-stock-status">
-              <span class="stock-dot stock-available"></span>
-              <span class="stock-text">Op maat gemaakt - levertijd 2-3 weken</span>
-            </div>
-
-            <!-- CTA Section -->
-            <div class="product-cta-section">
-              <div class="product-quantity-wrapper">
-                <div class="quantity-selector">
-                  <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
-                  <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
-                  <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
-                </div>
-                <div class="product-actions">
-                  <button class="btn-split btn-split-primary" id="add-to-quote" data-product='{&quot;id&quot;: &quot;e378e2f8-9740-40b5-bac9-b00b605d1567&quot;, &quot;slug&quot;: &quot;test-sleuvenbak-01&quot;, &quot;category_slug&quot;: &quot;graafbakken&quot;, &quot;subcategory_slug&quot;: &quot;sleuvenbakken&quot;, &quot;title&quot;: &quot;Test - Sleuvenbak - 01&quot;, &quot;image&quot;: &quot;https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png&quot;, &quot;category&quot;: &quot;Graafbakken&quot;, &quot;subcategory&quot;: &quot;Sleuvenbakken&quot;, &quot;specs&quot;: {&quot;width&quot;: &quot;300 mm&quot;, &quot;volume&quot;: &quot;80 L&quot;, &quot;weight&quot;: &quot;45 kg&quot;, &quot;attachment&quot;: &quot;CW10&quot;, &quot;excavator&quot;: &quot;3.00-8.00t&quot;}}'>
-                    <span class="btn-split-text">Toevoegen aan offerte</span>
-                    <span class="btn-split-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </span>
-                  </button>
+            <div class="product-purchase-card">
+              <div class="product-price-container" id="product-price-container" data-product-id="e378e2f8-9740-40b5-bac9-b00b605d1567" style="display: none;">
+                <div class="product-price-label">Prijs:</div>
+                <div class="product-price" id="product-price">
+                  <span class="price-loading">Prijs laden...</span>
                 </div>
               </div>
+              
+              <div class="product-cta-section">
+                <div class="product-quantity-wrapper">
+                  <div class="quantity-selector">
+                    <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
+                    <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
+                  </div>
+                  
+                  <div class="product-actions">
+                    <button class="btn-split btn-split-primary" id="add-to-quote" data-product='{&quot;id&quot;: &quot;e378e2f8-9740-40b5-bac9-b00b605d1567&quot;, &quot;slug&quot;: &quot;test-sleuvenbak-01&quot;, &quot;category_slug&quot;: &quot;graafbakken&quot;, &quot;subcategory_slug&quot;: &quot;sleuvenbakken&quot;, &quot;title&quot;: &quot;Test - Sleuvenbak - 01&quot;, &quot;image&quot;: &quot;https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png&quot;, &quot;category&quot;: &quot;Graafbakken&quot;, &quot;subcategory&quot;: &quot;Sleuvenbakken&quot;, &quot;specs&quot;: {&quot;width&quot;: &quot;300 mm&quot;, &quot;volume&quot;: &quot;80 L&quot;, &quot;weight&quot;: &quot;45 kg&quot;, &quot;attachment&quot;: &quot;CW10&quot;, &quot;excavator&quot;: &quot;3.00-8.00t&quot;}}'>
+                      <span class="btn-split-text">Toevoegen aan offerte</span>
+                      <span class="btn-split-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                
+                <ul class="product-usps">
+                  <li>
+                    <strong>Op maat gemaakt in België</strong>
+                    <span>Elke bak wordt specifiek voor jouw machine geproduceerd in onze werkplaats in Beernem. Perfecte pasvorm, geen compromissen.</span>
+                  </li>
+                  <li>
+                    <strong>Afgestemd op jouw graafmachine</strong>
+                    <span>Ophanging, breedte en geometrie worden afgestemd op de exacte machineklasse voor betere prestaties.</span>
+                  </li>
+                  <li>
+                    <strong>Snelle, gecontroleerde productie</strong>
+                    <span>Lokale productie betekent korte levertijden zonder in te boeten op kwaliteit.</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <!-- Delivery Info Strip -->
-            <div class="delivery-info-strip">
-              <div class="delivery-item">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span>Op maat gemaakt in België</span>
-              </div>
-              <div class="delivery-item">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Levertijd 2-3 weken</span>
-              </div>
-              <div class="delivery-item">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.44 2.78.7 2.81.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c0 0 .03.26 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span>Gratis advies op maat</span>
-              </div>
-            </div>
-
-            <!-- Expert Box -->
             <div class="expert-box">
               <div class="expert-header">
                 <div class="expert-avatar">
@@ -162,83 +159,92 @@
         </div>
       </div>
     </section>
-
-    <!-- Tabs Section -->
-    <section class="product-tabs-section">
+    
+    
+    <section class="section product-details-section fade-in">
       <div class="container">
-        <div class="product-tabs">
-          <button class="product-tab active" data-tab="description">Beschrijving</button>
-          <button class="product-tab" data-tab="specifications">Specificaties</button>
-          <button class="product-tab" data-tab="compatibility">Compatibiliteit</button>
-          <button class="product-tab" data-tab="delivery">Levering</button>
-        </div>
-        <div class="product-tab-content">
-          <div class="tab-panel active" id="tab-description">
-            <h2 class="tab-panel-title">PRODUCTBESCHRIJVING</h2>
-            <p>Deze hoogwaardige kraanbak is speciaal ontworpen voor professionele graafwerkzaamheden. De robuuste constructie en doordachte vorm maken deze bak ideaal voor diverse toepassingen in de grond-, weg- en waterbouw.</p>
-            <p>Vervaardigd uit slijtvast Hardox staal voor maximale duurzaamheid en een lange levensduur, zelfs onder zware werkomstandigheden. De geoptimaliseerde geometrie zorgt voor uitstekende prestaties in verschillende grondsoorten.</p>
-          </div>
-          <div class="tab-panel" id="tab-specifications">
-            <h2 class="tab-panel-title">TECHNISCHE SPECIFICATIES</h2>
-            <table class="specifications-table">
-              <tbody>
-                <tr><th>Breedte</th><td>300 mm</td></tr>
-                <tr><th>Inhoud</th><td>80 L</td></tr>
-                <tr><th>Gewicht</th><td>45 kg</td></tr>
-                <tr><th>Ophanging</th><td>CW10</td></tr>
-                <tr><th>Graafmachine klasse</th><td>3.00 - 8.00 ton</td></tr>
-                <tr><th>Materiaal</th><td>Hardox 450 staal</td></tr>
-                <tr><th>Productie</th><td>Op maat gemaakt in België</td></tr>
-                <tr><th>Levertijd</th><td>2-3 weken</td></tr>
-                <tr><th>Garantie</th><td>12 maanden fabrieksgarantie</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="tab-panel" id="tab-compatibility">
-            <h2 class="tab-panel-title">COMPATIBILITEIT</h2>
-            <p>Deze sleuvenbak is geschikt voor graafmachines van <strong>3.00 tot 8.00 ton</strong> met een <strong>CW10</strong> ophanging.</p>
-            <div class="compatibility-grid">
-              <div class="compatibility-item">
-                <strong>Ophanging</strong>
-                <span>CW10 (snelwissel)</span>
-              </div>
-              <div class="compatibility-item">
-                <strong>Machine klasse</strong>
-                <span>3.00 - 8.00 ton</span>
-              </div>
-              <div class="compatibility-item">
-                <strong>Type machines</strong>
-                <span>Compacte graafmachines, middelgrote graafmachines</span>
-              </div>
+        <div class="product-details-layout">
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
             </div>
-            <p class="compatibility-note">Twijfel je of deze bak past op jouw machine? Neem contact op met onze specialist voor persoonlijk advies.</p>
+            <h3>Technische Specificaties</h3>
+            <p>Alle kraanbakken worden vervaardigd uit hoogwaardig Hardox staal voor maximale sterkte en duurzaamheid. Perfect afgestemd op uw graafmachine.</p>
           </div>
-          <div class="tab-panel" id="tab-delivery">
-            <h2 class="tab-panel-title">LEVERING & PRODUCTIE</h2>
-            <ul class="delivery-details">
-              <li>
-                <strong>Op maat gemaakt in België</strong>
-                <span>Elke bak wordt specifiek voor jouw machine geproduceerd in onze werkplaats in Beernem. Perfecte pasvorm, geen compromissen.</span>
-              </li>
-              <li>
-                <strong>Levertijd: 2-3 weken</strong>
-                <span>Lokale productie betekent korte levertijden zonder in te boeten op kwaliteit.</span>
-              </li>
-              <li>
-                <strong>Afhalen of levering</strong>
-                <span>Afhalen in Beernem of levering op locatie. Neem contact op voor mogelijkheden.</span>
-              </li>
-              <li>
-                <strong>Garantie: 12 maanden</strong>
-                <span>Fabrieksgarantie op materiaal- en constructiefouten.</span>
-              </li>
-            </ul>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <h3>Op Maat Gemaakt</h3>
+            <p>Elke kraanbak wordt op maat geproduceerd in onze werkplaats in Beernem, België. Kwaliteit en precisie gegarandeerd.</p>
+          </div>
+          <div class="product-detail-card">
+            <div class="detail-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3>Snelle Levering</h3>
+            <p>Afhalen in Beernem of levering op locatie. Neem contact op voor levertijden en mogelijkheden.</p>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- Sticky CTA Mobile -->
+    
+    <section class="section specifications-section">
+      <div class="container">
+        <div class="specifications-content">
+          <div class="specifications-description">
+            <h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>
+            <p>Deze hoogwaardige kraanbak is speciaal ontworpen voor professionele graafwerkzaamheden. De robuuste constructie en doordachte vorm maken deze bak ideaal voor diverse toepassingen in de grond-, weg- en waterbouw.</p>
+            <p>Vervaardigd uit slijtvast Hardox staal voor maximale duurzaamheid en een lange levensduur, zelfs onder zware werkomstandigheden. De geoptimaliseerde geometrie zorgt voor uitstekende prestaties in verschillende grondsoorten.</p>
+          </div>
+          
+          <div class="specifications-table-wrapper">
+            <h3 class="specifications-subtitle">Technische Specificaties</h3>
+            <table class="specifications-table">
+              <tbody>
+                <tr>
+                  <th>Breedte</th>
+                  <td>300 mm</td>
+                </tr>
+                <tr>
+                  <th>Inhoud</th>
+                  <td>80 L</td>
+                </tr>
+                <tr>
+                  <th>Gewicht</th>
+                  <td>45 kg</td>
+                </tr>
+                <tr>
+                  <th>Ophanging</th>
+                  <td>CW10</td>
+                </tr>
+                <tr>
+                  <th>Graafmachine klasse</th>
+                  <td>3.00 - 8.00 ton</td>
+                </tr>
+                <tr>
+                  <th>Materiaal</th>
+                  <td>Hardox 450 staal</td>
+                </tr>
+                <tr>
+                  <th>Productie</th>
+                  <td>Op maat gemaakt in België</td>
+                </tr>
+                <tr>
+                  <th>Levertijd</th>
+                  <td>2-3 weken</td>
+                </tr>
+                <tr>
+                  <th>Garantie</th>
+                  <td>12 maanden fabrieksgarantie</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    
     <div class="product-sticky-cta">
       <button class="btn-split btn-split-primary" id="add-to-quote-sticky" data-product='{&quot;id&quot;: &quot;e378e2f8-9740-40b5-bac9-b00b605d1567&quot;, &quot;slug&quot;: &quot;test-sleuvenbak-01&quot;, &quot;category_slug&quot;: &quot;graafbakken&quot;, &quot;subcategory_slug&quot;: &quot;sleuvenbakken&quot;, &quot;title&quot;: &quot;Test - Sleuvenbak - 01&quot;, &quot;image&quot;: &quot;https://res.cloudinary.com/dchrgzyb4/image/upload/v1769079196/structon/products/ucjx8ypop5pndqfr3zck.png&quot;, &quot;category&quot;: &quot;Graafbakken&quot;, &quot;subcategory&quot;: &quot;Sleuvenbakken&quot;, &quot;specs&quot;: {&quot;width&quot;: &quot;300 mm&quot;, &quot;volume&quot;: &quot;80 L&quot;, &quot;weight&quot;: &quot;45 kg&quot;, &quot;attachment&quot;: &quot;CW10&quot;, &quot;excavator&quot;: &quot;3.00-8.00t&quot;}}'>
         <span class="btn-split-text">Toevoegen aan offerte</span>
@@ -247,12 +253,13 @@
         </span>
       </button>
     </div>
+    
 
     <!-- Uitgelichte Producten -->
     <section id="featured-products-section" class="section-featured related-products-section" style="display: none;">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">BEKIJK OOK</h2>
+          <h2 class="section-title">UITGELICHTE PRODUCTEN</h2>
           <a href="../../../" class="btn-link-arrow">
             Bekijk alle producten
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -271,7 +278,6 @@
   <script src="../../../../../assets/js/components/quote-cart-ui.js"></script>
   <script src="../../../../../assets/js/components/product-price.js"></script>
   <script src="../../../../../assets/js/components/product-image-sync.js"></script>
-  <script src="../../../../../assets/js/components/product-tabs.js"></script>
   <script type="module" src="../../../../../assets/js/components/featured-products.js"></script>
 </body>
 </html>

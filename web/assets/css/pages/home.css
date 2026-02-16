@@ -493,18 +493,31 @@
 
   /* USP Item Mobile Layout */
   .usp-item {
-    gap: 16px;
-    padding: 32px 0; /* Meer verticale ruimte */
-    align-items: flex-start; /* Zorg dat ze bovenaan uitlijnen */
+    gap: 20px;
+    padding: 24px 0;
+    align-items: flex-start;
+    border-bottom: none !important; /* Verwijder border op mobiel */
+    margin-bottom: 24px; /* Ruimte tussen items */
   }
 
-  /* Nummer styling */
+  .usp-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Nummer styling - compacter op mobiel */
   .usp-number {
-    font-size: 2.5rem;
-    min-width: 32px; /* Iets compacter */
-    line-height: 1;
-    transform: translateY(2px); /* Visueel uitlijnen met titel */
-    text-align: left; /* Links uitlijnen ipv center */
+    font-size: 2rem; /* Kleiner nummer */
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    transform: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .usp-content h4 {

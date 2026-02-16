@@ -33,9 +33,9 @@
 
 .account-hero-content {
   position: relative;
-  max-width: 1280px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--container-padding);
 }
 
 .account-hero h1 {
@@ -59,9 +59,9 @@
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: var(--space-8);
-  max-width: 1280px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--space-6) var(--space-16);
+  padding: 0 var(--container-padding) var(--space-16);
 }
 
 @media (max-width: 1024px) {

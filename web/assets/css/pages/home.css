@@ -293,7 +293,7 @@
 
 /* Container refinement */
 .section-categories .container {
-  max-width: 1400px;
+  max-width: var(--container-max);
 }
 
 .category-grid {

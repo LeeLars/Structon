@@ -500,7 +500,8 @@ h6 { font-size: var(--text-base); }
   font-size: 14px;
   position: relative;
   z-index: 300;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 /* Hide top-bar when scrolling down, show when scrolling up */
@@ -509,11 +510,13 @@ h6 { font-size: var(--text-base); }
   opacity: 0;
   position: absolute;
   width: 100%;
+  pointer-events: none;
 }
 
 .header-wrapper.scrolled-up .top-bar {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .top-bar .container {

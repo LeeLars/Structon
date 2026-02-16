@@ -147,8 +147,8 @@
     const localeNames = {
       'be-nl': { flag: '🇧🇪', name: 'NL', full: 'Nederlands (BE)' },
       'nl-nl': { flag: '🇳🇱', name: 'NL', full: 'Nederlands (NL)' },
-      'be-fr': { flag: '🇧🇪', name: 'FR', full: 'Français (BE)' },
-      'de-de': { flag: '🇩🇪', name: 'DE', full: 'Deutsch' }
+      'be-fr': { flag: '🇧🇪', name: 'FR', full: 'Français (FR)' },
+      'de-de': { flag: '🇩🇪', name: 'DE', full: 'Deutsch (DE)' }
     };
     
     const current = localeNames[currentLocale] || localeNames[DEFAULT_LOCALE];
@@ -180,6 +180,139 @@
     // All category links should go to /producten/?cat= (not )
     const pagesPrefix = basePath === '../' && window.location.pathname.includes('/producten/') ? '' : basePath + 'producten/';
     
+    // Get current locale for translations
+    const currentLocale = getCurrentLocale() || 'be-nl';
+    
+    // Translations object
+    const t = {
+      'be-nl': {
+        about: 'Over',
+        becomeDealer: 'Dealer worden',
+        blog: 'Blog',
+        faq: 'FAQ',
+        contact: 'Contact',
+        excavatorBuckets: 'Graafbakken',
+        demolitionGrippers: 'Sloop- en sorteergrijpers',
+        other: 'Overige',
+        viewAll: 'Bekijk alles',
+        helpNeeded: 'HULP NODIG?',
+        contactUs: 'Neem contact op',
+        trenchBuckets: 'Slotenbakken',
+        deepBuckets: 'Dieplepelbakken',
+        narrowBuckets: 'Sleuvenbakken',
+        tiltBuckets: 'Kantelbakken',
+        sortingGrippers: 'Sorteergrijpers',
+        demolitionGrippers2: 'Sloopgrijpers',
+        concreteShears: 'Betonscharen',
+        pulverizers: 'Pulverisers',
+        teethWear: 'Tanden & Slijtdelen',
+        hydraulicParts: 'Hydraulische Onderdelen',
+        lubricants: 'Smeermiddelen',
+        accessories: 'Accessoires',
+        otherProducts: 'Overige Producten',
+        helpTextBuckets: 'Weet u niet zeker welke graafbakken geschikt zijn voor uw machine? Onze specialisten helpen u graag.',
+        helpTextGrippers: 'Weet u niet zeker welke sloop- of sorteergrijper geschikt is voor uw machine? Onze specialisten helpen u graag.',
+        helpTextOther: 'Zoekt u een specifiek onderdeel of accessoire? Neem contact op met onze specialisten.',
+        bucketsFor: 'voor kranen van',
+        grippersFor: 'voor kranen van'
+      },
+      'nl-nl': {
+        about: 'Over',
+        becomeDealer: 'Dealer worden',
+        blog: 'Blog',
+        faq: 'FAQ',
+        contact: 'Contact',
+        excavatorBuckets: 'Graafbakken',
+        demolitionGrippers: 'Sloop- en sorteergrijpers',
+        other: 'Overige',
+        viewAll: 'Bekijk alles',
+        helpNeeded: 'HULP NODIG?',
+        contactUs: 'Neem contact op',
+        trenchBuckets: 'Slotenbakken',
+        deepBuckets: 'Dieplepelbakken',
+        narrowBuckets: 'Sleuvenbakken',
+        tiltBuckets: 'Kantelbakken',
+        sortingGrippers: 'Sorteergrijpers',
+        demolitionGrippers2: 'Sloopgrijpers',
+        concreteShears: 'Betonscharen',
+        pulverizers: 'Pulverisers',
+        teethWear: 'Tanden & Slijtdelen',
+        hydraulicParts: 'Hydraulische Onderdelen',
+        lubricants: 'Smeermiddelen',
+        accessories: 'Accessoires',
+        otherProducts: 'Overige Producten',
+        helpTextBuckets: 'Weet u niet zeker welke graafbakken geschikt zijn voor uw machine? Onze specialisten helpen u graag.',
+        helpTextGrippers: 'Weet u niet zeker welke sloop- of sorteergrijper geschikt is voor uw machine? Onze specialisten helpen u graag.',
+        helpTextOther: 'Zoekt u een specifiek onderdeel of accessoire? Neem contact op met onze specialisten.',
+        bucketsFor: 'voor kranen van',
+        grippersFor: 'voor kranen van'
+      },
+      'be-fr': {
+        about: 'À propos',
+        becomeDealer: 'Devenir revendeur',
+        blog: 'Blog',
+        faq: 'FAQ',
+        contact: 'Contact',
+        excavatorBuckets: 'Godets',
+        demolitionGrippers: 'Pinces de tri et démolition',
+        other: 'Autres',
+        viewAll: 'Voir tout',
+        helpNeeded: 'BESOIN D\'AIDE?',
+        contactUs: 'Contactez-nous',
+        trenchBuckets: 'Godets de tranchée',
+        deepBuckets: 'Godets de terrassement',
+        narrowBuckets: 'Godets étroits',
+        tiltBuckets: 'Godets orientables',
+        sortingGrippers: 'Pinces de tri',
+        demolitionGrippers2: 'Pinces de démolition',
+        concreteShears: 'Cisailles à béton',
+        pulverizers: 'Pulvérisateurs',
+        teethWear: 'Dents et pièces d\'usure',
+        hydraulicParts: 'Pièces hydrauliques',
+        lubricants: 'Lubrifiants',
+        accessories: 'Accessoires',
+        otherProducts: 'Autres produits',
+        helpTextBuckets: 'Vous ne savez pas quels godets conviennent à votre machine? Nos spécialistes sont là pour vous aider.',
+        helpTextGrippers: 'Vous ne savez pas quelle pince convient à votre machine? Nos spécialistes sont là pour vous aider.',
+        helpTextOther: 'Vous cherchez une pièce ou un accessoire spécifique? Contactez nos spécialistes.',
+        bucketsFor: 'pour pelles de',
+        grippersFor: 'pour pelles de'
+      },
+      'de-de': {
+        about: 'Über uns',
+        becomeDealer: 'Händler werden',
+        blog: 'Blog',
+        faq: 'FAQ',
+        contact: 'Kontakt',
+        excavatorBuckets: 'Baggerlöffel',
+        demolitionGrippers: 'Sortier- und Abbruchgreifer',
+        other: 'Sonstige',
+        viewAll: 'Alles ansehen',
+        helpNeeded: 'HILFE BENÖTIGT?',
+        contactUs: 'Kontaktieren Sie uns',
+        trenchBuckets: 'Grabenlöffel',
+        deepBuckets: 'Tieflöffel',
+        narrowBuckets: 'Schlitzlöffel',
+        tiltBuckets: 'Schwenklöffel',
+        sortingGrippers: 'Sortiergreifer',
+        demolitionGrippers2: 'Abbruchgreifer',
+        concreteShears: 'Betonscheren',
+        pulverizers: 'Pulverisierer',
+        teethWear: 'Zähne & Verschleißteile',
+        hydraulicParts: 'Hydraulikteile',
+        lubricants: 'Schmiermittel',
+        accessories: 'Zubehör',
+        otherProducts: 'Sonstige Produkte',
+        helpTextBuckets: 'Sie sind sich nicht sicher, welche Baggerlöffel für Ihre Maschine geeignet sind? Unsere Spezialisten helfen Ihnen gerne.',
+        helpTextGrippers: 'Sie sind sich nicht sicher, welcher Greifer für Ihre Maschine geeignet ist? Unsere Spezialisten helfen Ihnen gerne.',
+        helpTextOther: 'Suchen Sie ein bestimmtes Teil oder Zubehör? Kontaktieren Sie unsere Spezialisten.',
+        bucketsFor: 'für Bagger von',
+        grippersFor: 'für Bagger von'
+      }
+    };
+    
+    const trans = t[currentLocale];
+    
     return `
   <!-- Header Wrapper (Sticky) -->
   <div class="header-wrapper" id="header-wrapper">
@@ -191,11 +324,11 @@
           <div class="account-menu-wrapper" id="account-menu-wrapper">
             <!-- Account menu will be dynamically populated based on login state -->
           </div>
-          <a href="${basePath}over-ons/">Over</a>
-          <a href="${basePath}dealer/">Dealer worden</a>
-          <a href="${basePath}blog/">Blog</a>
-          <a href="${basePath}faq/">FAQ</a>
-          <a href="${basePath}contact/">Contact</a>
+          <a href="${basePath}over-ons/">${trans.about}</a>
+          <a href="${basePath}dealer/">${trans.becomeDealer}</a>
+          <a href="${basePath}blog/">${trans.blog}</a>
+          <a href="${basePath}faq/">${trans.faq}</a>
+          <a href="${basePath}contact/">${trans.contact}</a>
         </nav>
       </div>
     </div>
@@ -210,7 +343,7 @@
         <div class="menu">
           <div class="menu-item">
             <a href="${pagesPrefix}?cat=graafbakken">
-              Graafbakken <span class="dropdown-arrow">▼</span>
+              ${trans.excavatorBuckets} <span class="dropdown-arrow">▼</span>
             </a>
             
             <!-- Mega Menu Dropdown - Graafbakken -->
@@ -218,15 +351,15 @@
               <div class="menu-dropdown-container">
                 <div class="menu-dropdown-content" style="width: 100%;">
                   <div class="menu-dropdown-header">
-                    <h3 class="menu-dropdown-title">Graafbakken</h3>
+                    <h3 class="menu-dropdown-title">${trans.excavatorBuckets}</h3>
                     <a href="${pagesPrefix}?cat=graafbakken" class="menu-dropdown-view-all">
-                      <span>Bekijk alles</span>
+                      <span>${trans.viewAll}</span>
                     </a>
                   </div>
                   
                   <div class="menu-dropdown-grid">
                     <div class="menu-column">
-                      <a href="${pagesPrefix}graafbakken/slotenbakken/" class="menu-column-title">Slotenbakken</a>
+                      <a href="${pagesPrefix}graafbakken/slotenbakken/" class="menu-column-title">${trans.trenchBuckets}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 1 - 3 ton</span></a>
                         <a href="${pagesPrefix}graafbakken/slotenbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Slotenbakken voor kranen van 3 - 8 ton</span></a>
@@ -237,7 +370,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}graafbakken/dieplepelbakken/" class="menu-column-title">Dieplepelbakken</a>
+                      <a href="${pagesPrefix}graafbakken/dieplepelbakken/" class="menu-column-title">${trans.deepBuckets}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 1 - 3 ton</span></a>
                         <a href="${pagesPrefix}graafbakken/dieplepelbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Dieplepelbakken voor kranen van 3 - 8 ton</span></a>
@@ -248,7 +381,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}graafbakken/sleuvenbakken/" class="menu-column-title">Sleuvenbakken</a>
+                      <a href="${pagesPrefix}graafbakken/sleuvenbakken/" class="menu-column-title">${trans.narrowBuckets}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 1 - 3 ton</span></a>
                         <a href="${pagesPrefix}graafbakken/sleuvenbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Sleuvenbakken voor kranen van 3 - 8 ton</span></a>
@@ -257,7 +390,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}graafbakken/kantelbakken/" class="menu-column-title">Kantelbakken</a>
+                      <a href="${pagesPrefix}graafbakken/kantelbakken/" class="menu-column-title">${trans.tiltBuckets}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=1-3t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 1 - 3 ton</span></a>
                         <a href="${pagesPrefix}graafbakken/kantelbakken/?tonnage=3-8t" class="menu-tonnage-link"><span>•</span> <span>Kantelbakken voor kranen van 3 - 8 ton</span></a>
@@ -268,11 +401,11 @@
                   
                   <div class="menu-cta-box">
                     <div class="menu-cta-content">
-                      <h4 class="menu-cta-title">HULP NODIG?</h4>
-                      <p class="menu-cta-text">Weet u niet zeker welke graafbakken geschikt zijn voor uw machine? Onze specialisten helpen u graag.</p>
+                      <h4 class="menu-cta-title">${trans.helpNeeded}</h4>
+                      <p class="menu-cta-text">${trans.helpTextBuckets}</p>
                     </div>
                     <a href="${basePath}contact/" class="btn-split">
-                      <span class="btn-split-text">Neem contact op</span>
+                      <span class="btn-split-text">${trans.contactUs}</span>
                       <span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                     </a>
                   </div>
@@ -283,7 +416,7 @@
           
           <div class="menu-item">
             <a href="${pagesPrefix}?cat=sloop-sorteergrijpers">
-              Sloop- en sorteergrijpers <span class="dropdown-arrow">▼</span>
+              ${trans.demolitionGrippers} <span class="dropdown-arrow">▼</span>
             </a>
             
             <!-- Mega Menu Dropdown - Sloop -->
@@ -291,13 +424,13 @@
               <div class="menu-dropdown-container">
                 <div class="menu-dropdown-content" style="width: 100%;">
                   <div class="menu-dropdown-header">
-                    <h3 class="menu-dropdown-title">Sloop- en Sorteergrijpers</h3>
-                    <a href="${pagesPrefix}?cat=sloop-sorteergrijpers" class="menu-dropdown-view-all"><span>Bekijk alles</span></a>
+                    <h3 class="menu-dropdown-title">${trans.demolitionGrippers}</h3>
+                    <a href="${pagesPrefix}?cat=sloop-sorteergrijpers" class="menu-dropdown-view-all"><span>${trans.viewAll}</span></a>
                   </div>
                   
                   <div class="menu-dropdown-grid">
                     <div class="menu-column">
-                      <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/" class="menu-column-title">Sorteergrijpers</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/" class="menu-column-title">${trans.sortingGrippers}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/?tonnage=1t-5t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 1t - 5t</span></a>
                         <a href="${pagesPrefix}sloop-sorteergrijpers/sorteergrijpers/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sorteergrijpers voor kranen van 5t - 10t</span></a>
@@ -307,7 +440,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/" class="menu-column-title">Sloopgrijpers</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/" class="menu-column-title">${trans.demolitionGrippers2}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/?tonnage=5t-10t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 5t - 10t</span></a>
                         <a href="${pagesPrefix}sloop-sorteergrijpers/sloopgrijpers/?tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Sloopgrijpers voor kranen van 10t - 20t</span></a>
@@ -317,7 +450,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/" class="menu-column-title">Betonscharen</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/" class="menu-column-title">${trans.concreteShears}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/?tonnage=10t-20t" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 10t - 20t</span></a>
                         <a href="${pagesPrefix}sloop-sorteergrijpers/betonscharen/?tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Betonscharen voor kranen van 20t - 30t</span></a>
@@ -326,7 +459,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/" class="menu-column-title">Pulverisers</a>
+                      <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/" class="menu-column-title">${trans.pulverizers}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/?tonnage=20t-30t" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 20t - 30t</span></a>
                         <a href="${pagesPrefix}sloop-sorteergrijpers/pulverisers/?tonnage=30t-40t" class="menu-tonnage-link"><span>•</span> <span>Pulverisers voor kranen van 30t - 40t</span></a>
@@ -337,11 +470,11 @@
                   
                   <div class="menu-cta-box">
                     <div class="menu-cta-content">
-                      <h4 class="menu-cta-title">HULP NODIG?</h4>
-                      <p class="menu-cta-text">Weet u niet zeker welke sloop- of sorteergrijper geschikt is voor uw machine? Onze specialisten helpen u graag.</p>
+                      <h4 class="menu-cta-title">${trans.helpNeeded}</h4>
+                      <p class="menu-cta-text">${trans.helpTextGrippers}</p>
                     </div>
                     <a href="${basePath}contact/" class="btn-split">
-                      <span class="btn-split-text">Neem contact op</span>
+                      <span class="btn-split-text">${trans.contactUs}</span>
                       <span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                     </a>
                   </div>
@@ -352,7 +485,7 @@
           
           <div class="menu-item">
             <a href="${pagesPrefix}?cat=overige">
-              Overige <span class="dropdown-arrow">▼</span>
+              ${trans.other} <span class="dropdown-arrow">▼</span>
             </a>
             
             <!-- Mega Menu Dropdown - Overige -->
@@ -360,13 +493,13 @@
               <div class="menu-dropdown-container">
                 <div class="menu-dropdown-content" style="width: 100%;">
                   <div class="menu-dropdown-header">
-                    <h3 class="menu-dropdown-title">Overige Producten</h3>
-                    <a href="${pagesPrefix}?cat=overige" class="menu-dropdown-view-all"><span>Bekijk alles</span></a>
+                    <h3 class="menu-dropdown-title">${trans.otherProducts}</h3>
+                    <a href="${pagesPrefix}?cat=overige" class="menu-dropdown-view-all"><span>${trans.viewAll}</span></a>
                   </div>
                   
                   <div class="menu-dropdown-grid">
                     <div class="menu-column">
-                      <a href="${pagesPrefix}overige/tanden-slijtdelen/" class="menu-column-title">Tanden & Slijtdelen</a>
+                      <a href="${pagesPrefix}overige/tanden-slijtdelen/" class="menu-column-title">${trans.teethWear}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}overige/tanden-slijtdelen/?type=graaftanden" class="menu-tonnage-link"><span>•</span> <span>Graaftanden (diverse types)</span></a>
                         <a href="${pagesPrefix}overige/tanden-slijtdelen/?type=slijtplaten" class="menu-tonnage-link"><span>•</span> <span>Slijtplaten Hardox</span></a>
@@ -375,7 +508,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}overige/hydrauliek/" class="menu-column-title">Hydraulische Onderdelen</a>
+                      <a href="${pagesPrefix}overige/hydrauliek/" class="menu-column-title">${trans.hydraulicParts}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}overige/hydrauliek/?type=cilinders" class="menu-tonnage-link"><span>•</span> <span>Hydraulische cilinders</span></a>
                         <a href="${pagesPrefix}overige/hydrauliek/?type=slangen" class="menu-tonnage-link"><span>•</span> <span>Hydraulische slangen</span></a>
@@ -384,7 +517,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}overige/smeermiddelen/" class="menu-column-title">Smeermiddelen</a>
+                      <a href="${pagesPrefix}overige/smeermiddelen/" class="menu-column-title">${trans.lubricants}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}overige/smeermiddelen/?type=vet" class="menu-tonnage-link"><span>•</span> <span>Smeervet</span></a>
                         <a href="${pagesPrefix}overige/smeermiddelen/?type=olie" class="menu-tonnage-link"><span>•</span> <span>Hydraulische olie</span></a>
@@ -393,7 +526,7 @@
                     </div>
                     
                     <div class="menu-column">
-                      <a href="${pagesPrefix}overige/accessoires/" class="menu-column-title">Accessoires</a>
+                      <a href="${pagesPrefix}overige/accessoires/" class="menu-column-title">${trans.accessories}</a>
                       <div class="menu-tonnage-list">
                         <a href="${pagesPrefix}overige/accessoires/?type=hijsogen" class="menu-tonnage-link"><span>•</span> <span>Hijsogen</span></a>
                         <a href="${pagesPrefix}overige/accessoires/?type=beschermkappen" class="menu-tonnage-link"><span>•</span> <span>Beschermkappen</span></a>
@@ -404,11 +537,11 @@
                   
                   <div class="menu-cta-box">
                     <div class="menu-cta-content">
-                      <h4 class="menu-cta-title">HULP NODIG?</h4>
-                      <p class="menu-cta-text">Zoekt u een specifiek onderdeel of accessoire? Neem contact op met onze specialisten.</p>
+                      <h4 class="menu-cta-title">${trans.helpNeeded}</h4>
+                      <p class="menu-cta-text">${trans.helpTextOther}</p>
                     </div>
                     <a href="${basePath}contact/" class="btn-split">
-                      <span class="btn-split-text">Neem contact op</span>
+                      <span class="btn-split-text">${trans.contactUs}</span>
                       <span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
                     </a>
                   </div>
@@ -419,7 +552,7 @@
         </div>
         
         <div class="nav-actions">
-          <a href="${basePath}producten/" class="cta-button">Bekijk alles</a>
+          <a href="${basePath}producten/" class="cta-button">${trans.viewAll}</a>
         </div>
         
         <button class="menu-toggle" id="menu-toggle" aria-label="Menu openen">

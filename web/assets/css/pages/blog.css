@@ -277,94 +277,221 @@
    KENNISBANK INDEX PAGE
    ============================================ */
 
+/* Blog Grid & Cards - Integrated Industrial Style */
 .blog-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-}
-
-@media (max-width: 1024px) {
-  .blog-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .blog-grid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: 1fr;
+  gap: var(--space-16);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .blog-card {
-  background: white;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
   text-decoration: none;
   color: inherit;
-  display: block;
+  transition: all 0.4s ease;
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-gray-200);
 }
 
-.blog-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+.blog-card:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  .blog-card {
+    grid-template-columns: 380px 1fr;
+    align-items: flex-start;
+    gap: var(--space-12);
+  }
 }
 
 .blog-card-image {
-  aspect-ratio: 16/9;
-  background: var(--color-gray-200);
+  aspect-ratio: 16/10;
+  background: var(--color-gray-100);
   overflow: hidden;
   position: relative;
-  transition: all 0.3s ease;
+  border-radius: var(--radius-md);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .blog-card:hover .blog-card-image {
-  opacity: 0.9;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .blog-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.blog-card:hover .blog-card-image img {
+  transform: scale(1.08);
+}
+
+.blog-card-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(35, 103, 115, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.blog-card:hover .blog-card-image::after {
+  opacity: 1;
 }
 
 .blog-card-content {
-  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .blog-card-category {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-size: var(--text-xs);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-primary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-3);
-  background: rgba(35, 103, 115, 0.1);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
+  letter-spacing: 0.2em;
+  margin-bottom: var(--space-4);
+}
+
+.blog-card-category::after {
+  content: '';
+  height: 1px;
+  width: 30px;
+  background: var(--color-primary);
+  margin-left: var(--space-3);
+  opacity: 0.5;
 }
 
 .blog-card-title {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  margin-bottom: var(--space-3);
-  line-height: 1.4;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 900;
+  margin-bottom: var(--space-4);
+  line-height: 1.1;
   color: var(--color-gray-900);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+
+.blog-card:hover .blog-card-title {
+  color: var(--color-primary);
 }
 
 .blog-card-excerpt {
-  font-size: var(--text-sm);
+  font-size: 1.125rem;
   color: var(--color-gray-600);
   line-height: 1.7;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-8);
+  max-width: 600px;
+}
+
+.blog-card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-4);
 }
 
 .blog-card-meta {
   font-size: var(--text-xs);
-  color: var(--color-gray-500);
-  font-weight: 500;
+  color: var(--color-gray-400);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.blog-card-read-more {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: var(--text-xs);
+  gap: var(--space-3);
+  transition: all 0.3s ease;
+}
+
+.blog-card-read-more svg {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.blog-card:hover .blog-card-read-more {
+  letter-spacing: 0.2em;
+}
+
+.blog-card:hover .blog-card-read-more svg {
+  transform: translateX(8px);
+}
+
+/* Related Articles - Integrated Look */
+.related-articles {
+  background: white;
+  padding: var(--space-20) 0;
+  border-top: 1px solid var(--color-gray-100);
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+.related-card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.related-card-image {
+  aspect-ratio: 16/9;
+  background: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.related-card:hover .related-card-image {
+  transform: translateY(-4px);
+}
+
+.related-card h4 {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+  color: var(--color-gray-900);
+  transition: color 0.3s ease;
+}
+
+.related-card:hover h4 {
+  color: var(--color-primary);
+}
+
+.related-card p {
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* ============================================

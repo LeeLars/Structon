@@ -41,10 +41,10 @@ async function initSitemapPage() {
         <h2>Hoofdpagina's</h2>
         <ul>
           <li><a href="../">Home</a></li>
+          <li><a href="../producten/">Alle Producten</a></li>
           <li><a href="../over-ons/">Over Ons</a></li>
           <li><a href="../contact/">Contact</a></li>
-          <li><a href="../blog/">Blog</a></li>
-          <li><a href="../faq/">Veelgestelde Vragen</a></li>
+          <li><a href="../offerte-aanvragen/">Offerte Aanvragen</a></li>
         </ul>
       </div>
     `;
@@ -150,27 +150,55 @@ async function initSitemapPage() {
       `;
     });
 
-    // 5. Services
+    // 5. Kennisbank
     html += `
       <div class="sitemap-column">
-        <h2>Diensten</h2>
+        <h2>Kennisbank</h2>
         <ul>
-          <li><a href="../configurator/">Product Configurator</a></li>
-          <li><a href="../dealer/">Dealer Worden</a></li>
-          <li><a href="../offerte-aanvragen/">Offerte Aanvragen</a></li>
+          <li><a href="../kennisbank/">Kennisbank Overzicht</a></li>
+          <li><a href="../kennisbank/wat-is-een-cw-aansluiting/">Wat is een CW-aansluiting?</a></li>
+          <li><a href="../kennisbank/slotenbak-vs-dieplepelbak/">Slotenbak vs Dieplepelbak</a></li>
+          <li><a href="../kennisbank/welke-kraanbak-heb-ik-nodig/">Welke kraanbak heb ik nodig?</a></li>
         </ul>
       </div>
     `;
 
-    // 6. Other
+    // 6. Sectoren
+    html += `
+      <div class="sitemap-column">
+        <h2>Sectoren</h2>
+        <ul>
+          <li><a href="../sectoren/">Sectoren Overzicht</a></li>
+          <li><a href="../sectoren/grondwerkers/">Grondwerkers</a></li>
+          <li><a href="../sectoren/wegenbouw/">Wegenbouw</a></li>
+          <li><a href="../sectoren/recycling/">Recycling</a></li>
+          <li><a href="../sectoren/sloop-afbraak/">Sloop & Afbraak</a></li>
+          <li><a href="../sectoren/verhuurbedrijven/">Verhuurbedrijven</a></li>
+        </ul>
+      </div>
+    `;
+
+    // 7. Product Categorieën (Statische Pagina's)
+    html += `
+      <div class="sitemap-column">
+        <h2>Product Categorieën</h2>
+        <ul>
+          <li><a href="../kraanbakken/">Kraanbakken Overzicht</a></li>
+          <li><a href="../slotenbakken/">Slotenbakken</a></li>
+          <li><a href="../sorteergrijpers/">Sorteergrijpers</a></li>
+          <li><a href="../sloophamers/">Sloophamers</a></li>
+        </ul>
+      </div>
+    `;
+
+    // 8. Other
     html += `
       <div class="sitemap-column">
         <h2>Overig</h2>
         <ul>
-          <li><a href="#" class="login-trigger">Klant Login</a></li>
-          <li><a href="../account/">Mijn Account</a></li>
           <li><a href="../privacy/">Privacybeleid</a></li>
           <li><a href="../voorwaarden/">Algemene Voorwaarden</a></li>
+          <li><a href="../sitemap-pagina/">Sitemap</a></li>
         </ul>
       </div>
     `;

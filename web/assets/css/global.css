@@ -721,7 +721,7 @@ h6 { font-size: var(--text-base); }
   min-width: 110px;
   position: absolute;
   top: -30px;
-  left: max(0px, calc((100vw - var(--container-max)) / 2));
+  left: max(16px, calc((100vw - var(--container-max)) / 2));
   border-radius: 0 0 16px 16px;
   z-index: 20;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);

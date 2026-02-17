@@ -163,7 +163,20 @@ async function initSitemapPage() {
       </div>
     `;
 
-    // 6. Sectoren
+    // 6. Blog
+    html += `
+      <div class="sitemap-column">
+        <h2>Blog</h2>
+        <ul>
+          <li><a href="../blog/">Blog Overzicht</a></li>
+          <li><a href="../blog/de-juiste-graafbak-kiezen/">De juiste graafbak kiezen</a></li>
+          <li><a href="../blog/cw-snelwissels-waarom-overstappen-loont/">CW-snelwissels: waarom overstappen loont</a></li>
+          <li><a href="../blog/onderhoud-van-je-kraanbak/">Onderhoud van je kraanbak</a></li>
+        </ul>
+      </div>
+    `;
+
+    // 7. Sectoren
     html += `
       <div class="sitemap-column">
         <h2>Sectoren</h2>

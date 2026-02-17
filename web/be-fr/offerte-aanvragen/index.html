@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Preconnect to external resources for faster loading -->
+  
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
   <link rel="preconnect" href="https://structon-production.up.railway.app" crossorigin>
   <link rel="dns-prefetch" href="https://res.cloudinary.com">
@@ -12,20 +12,20 @@
   <meta name="description" content="Demandez un devis pour godets et équipements pour pelles mécaniques. Réponse de nos spécialistes sous 24 heures.">
   <title>Demander un Devis | Structon</title>
   
-  <!-- Fonts - Custom Arthouse -->
+  
   <link rel="preload" href="../../assets/css/fonts.css" as="style">
   <link rel="stylesheet" href="../../assets/css/fonts.css">
   
-  <!-- Styles -->
+  
   <link rel="stylesheet" href="../../assets/css/global.css?v=8">
   <link rel="stylesheet" href="../../assets/css/components/mega-menu.css">
   <link rel="stylesheet" href="../../assets/css/components/quote-cart.css">
   <link rel="stylesheet" href="../../assets/css/pages/contact.css">
   
-  <!-- Favicon -->
+  
   <link rel="icon" type="image/svg+xml" href="../../assets/images/static/favicon.svg">
 
-  <!-- Hreflang tags for multilanguage SEO -->
+  
   <link rel="alternate" hreflang="nl-BE" href="https://leelars.github.io/Structon/be-nl/offerte-aanvragen/">
   <link rel="alternate" hreflang="nl-NL" href="https://leelars.github.io/Structon/nl-nl/offerte-aanvragen/">
   <link rel="alternate" hreflang="fr-BE" href="https://leelars.github.io/Structon/be-fr/offerte-aanvragen/">
@@ -35,12 +35,12 @@
   <script src="../../assets/js/canonical.js" defer></script>
 </head>
 <body>
-  <!-- Header Wrapper (Sticky) -->
-  <!-- Header loaded dynamically -->
+  
+  
   <div id="header-placeholder"></div>
 
 <main class="contact-page">
-    <!-- Page Hero (Universal) -->
+    
     <section class="page-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Fil d'Ariane">
@@ -69,7 +69,7 @@
 
     <div class="container" style="margin-top: var(--space-12);">
       <div class="contact-grid">
-        <!-- Left: Quote Form -->
+        
         <div class="contact-form-section">
           <div class="form-card">
             <h2 class="form-title">
@@ -81,16 +81,16 @@
               <strong>Attention :</strong> Structon livre exclusivement aux clients professionnels (B2B). Le paiement se fait par facture.
             </p>
             
-            <!-- Quote Form -->
+            
             <form id="quote-form" class="quote-form" novalidate>
-              <!-- Hidden fields for tracking -->
+              
               <input type="hidden" name="source_page" id="source-page">
               <input type="hidden" name="product_id" id="product-id">
               <input type="hidden" name="product_slug" id="product-slug">
               <input type="hidden" name="industry" id="industry">
               <input type="hidden" name="brand" id="brand">
               
-              <!-- Form Type Selection -->
+              
               <div class="form-group">
                 <label class="form-label">Que souhaitez-vous faire? *</label>
                 <div class="radio-group">
@@ -112,7 +112,7 @@
                 </div>
               </div>
               
-              <!-- Personal Info -->
+              
               <div class="form-row">
                 <div class="form-group">
                   <label for="customer_name" class="form-label">Nom *</label>
@@ -138,18 +138,18 @@
                 </div>
               </div>
               
-              <!-- BTW nummer (B2B verplicht) -->
+              
               <div class="form-group">
                 <label for="vat_number" class="form-label">Numéro de TVA *</label>
                 <input type="text" id="vat_number" name="vat_number" class="form-input" required placeholder="BE0123456789">
                 <span class="form-error">Veuillez entrer un numéro de TVA valide</span>
               </div>
               
-              <!-- Technical Fields Container (Hidden for 'Vraag') -->
+              
               <div id="technical-fields">
                 <div class="form-section-title">Spécifications</div>
                 
-                <!-- Product Selection -->
+                
                 <div class="form-group" id="product-selection-group" style="display: none;">
                   <label for="product_category" class="form-label">Produit / Type de godet</label>
                   <select id="product_category" name="product_category" class="form-select">
@@ -163,7 +163,7 @@
                   </select>
                 </div>
                 
-                <!-- Pre-filled product info (shown when coming from product page) -->
+                
                 <div class="form-group product-prefilled" id="product-prefilled" style="display: none;">
                   <label class="form-label">Produit sélectionné</label>
                   <div class="prefilled-product-card" style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 16px; position: relative;">
@@ -183,14 +183,14 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Hidden fields for prefilled data -->
+                  
                   <input type="hidden" name="prefilled_product_name" id="prefilled-product-name-input">
                   <input type="hidden" name="prefilled_product_category" id="prefilled-product-category-input">
                   <input type="hidden" name="prefilled_product_brand" id="prefilled-product-brand-input">
                   <input type="hidden" name="prefilled_product_tonnage" id="prefilled-product-tonnage-input">
                 </div>
                 
-                <!-- Machine Info -->
+                
                 <div class="form-row">
                   <div class="form-group">
                     <label for="machine_brand" class="form-label">Marque de la pelle</label>
@@ -238,13 +238,13 @@
                 </div>
               </div>
               
-              <!-- Message -->
+              
               <div class="form-group">
                 <label for="message" class="form-label">Votre question ou remarques</label>
                 <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="Décrivez votre question, dimensions souhaitées ou autres spécifications..."></textarea>
               </div>
               
-              <!-- Confidentialité -->
+              
               <div class="form-group">
                 <label class="checkbox-label">
                   <input type="checkbox" name="privacy_accepted" required>
@@ -253,7 +253,7 @@
                 <span class="form-error">Vous devez accepter la politique de confidentialité</span>
               </div>
               
-              <!-- Submit -->
+              
               <button type="submit" class="btn-submit" id="submit-btn">
                 <span class="btn-text">Demander un devis</span>
                 <span class="btn-loading" style="display: none;">
@@ -265,7 +265,7 @@
               </button>
             </form>
             
-            <!-- Success Message -->
+            
             <div id="form-success" class="form-success" style="display: none;">
               <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
@@ -284,10 +284,10 @@
           </div>
         </div>
         
-        <!-- Right: Contact Info -->
+        
         <div class="contact-info-section">
           
-          <!-- Team Card -->
+          
           <div class="info-card team-card">
             <h3 class="info-title">Rencontrez l'équipe</h3>
             <p class="team-intro">Nous réfléchissons avec vous pour trouver la meilleure solution.</p>
@@ -321,7 +321,7 @@
               </div>
             </div>
           </div>
-          <!-- Contact Card -->
+          
           <div class="info-card">
             <h3 class="info-title">Contact direct</h3>
             <div class="info-item">
@@ -359,7 +359,7 @@
             </div>
           </div>
           
-          <!-- Opening Hours -->
+          
           <div class="info-card">
             <h3 class="info-title">Heures d'ouverture</h3>
             <div class="hours-list">
@@ -378,7 +378,7 @@
             </div>
           </div>
           
-          <!-- Quick Links -->
+          
           <div class="info-card">
             <h3 class="info-title">Liens rapides</h3>
             <div class="quick-links">
@@ -405,7 +405,7 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  
   <div id="footer-placeholder"></div>
 
   <script src="../../../assets/js/components/footer-loader.js" defer></script>

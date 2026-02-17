@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <!-- Preconnect to external resources for faster loading -->
+  
   <link crossorigin="" href="https://res.cloudinary.com" rel="preconnect"/>
   <link crossorigin="" href="https://structon-production.up.railway.app" rel="preconnect"/>
   <link href="https://res.cloudinary.com" rel="dns-prefetch"/>
@@ -12,18 +12,18 @@
   <title>
    Tous les Produits | Structon
   </title>
-  <!-- Fonts - Custom Arthouse -->
+  
   <link as="style" href="../../assets/css/fonts.css" rel="preload"/>
   <link href="../../assets/css/fonts.css" rel="stylesheet"/>
-  <!-- Styles -->
+  
   <link href="../../assets/css/global.css?v=8" rel="stylesheet"/>
   <link href="../../assets/css/components/mega-menu.css" rel="stylesheet"/>
   <link href="../../assets/css/pages/category.css" rel="stylesheet"/>
   <link href="../../assets/css/pages/products.css" rel="stylesheet"/>
   <link href="../../assets/css/components/lightbox.css" rel="stylesheet"/>
-  <!-- Favicon -->
+  
   <link href="../../assets/images/static/favicon.svg" rel="icon" type="image/svg+xml"/>
-  <!-- Hreflang tags for multilanguage SEO -->
+  
   <link href="https://leelars.github.io/Structon/be-nl/producten/" hreflang="nl-BE" rel="alternate"/>
   <link href="https://leelars.github.io/Structon/nl-nl/producten/" hreflang="nl-NL" rel="alternate"/>
   <link href="https://leelars.github.io/Structon/be-fr/producten/" hreflang="fr-BE" rel="alternate"/>
@@ -33,12 +33,12 @@
   <script src="../../assets/js/canonical.js" defer></script>
 </head>
  <body>
-  <!-- Header Wrapper (Sticky) -->
-  <!-- Header loaded dynamically -->
+  
+  
   <div id="header-placeholder">
   </div>
   <main style="padding-top: 0;">
-   <!-- Page Hero -->
+   
    <section class="page-hero" style="padding-top: var(--space-8);">
     <div class="container">
      <nav aria-label="Fil d'Ariane" class="breadcrumb">
@@ -64,13 +64,13 @@
      </div>
     </div>
    </section>
-   <!-- Products with Filters -->
+   
    <section class="section category-section">
     <div class="container">
      <div class="category-layout">
-      <!-- Mobile Filter Overlay -->
+      
       <div class="filters-overlay" id="filters-overlay"></div>
-      <!-- Sidebar Filters -->
+      
       <aside class="filters-sidebar" id="filters-sidebar">
        <div class="filters-header">
         <h3 class="filters-title">
@@ -88,7 +88,7 @@
          </button>
         </div>
        </div>
-       <!-- Brand Filter -->
+       
        <div class="filter-group">
         <h4 class="filter-group-title">
          Merk
@@ -101,10 +101,10 @@
          </span>
         </div>
         <div id="brand-filters-container" style="display: none;">
-         <!-- Brand checkboxes will be dynamically loaded here -->
+         
         </div>
        </div>
-       <!-- Volume Range -->
+       
        <div class="filter-group">
         <h4 class="filter-group-title">
          Inhoud (liter)
@@ -122,7 +122,7 @@
          </div>
         </div>
        </div>
-       <!-- Excavator Class -->
+       
        <div class="filter-group">
         <h4 class="filter-group-title">
          pelle Klasse
@@ -158,7 +158,7 @@
          </span>
         </label>
        </div>
-       <!-- Width -->
+       
        <div class="filter-group">
         <h4 class="filter-group-title">
          Largeur (mm)
@@ -194,7 +194,7 @@
          </span>
         </label>
        </div>
-       <!-- Attachment Type -->
+       
        <div class="filter-group">
         <h4 class="filter-group-title">
          Fixation
@@ -230,30 +230,30 @@
          </span>
         </label>
        </div>
-       <!-- Mobile Apply Button -->
+       
        <button class="btn btn-primary btn-full" id="apply-filters" style="display: none;">
         Filters Toepassen
        </button>
       </aside>
-      <!-- Main Content -->
+      
       <div class="category-content">
-       <!-- Category Header (Dynamic) - MOVED ABOVE SUBCATEGORIES -->
+       
        <div class="category-header" id="category-header" style="display: none;">
         <h2 class="category-header-title" id="category-header-title">
         </h2>
         <p class="category-header-description" id="category-header-description">
         </p>
        </div>
-       <!-- Subcategories (Integrated) -->
+       
        <div id="subcategories-section" style="display: none; margin-bottom: 40px;">
         <h2 class="subcategories-title">
          Subcategorieën
         </h2>
         <div class="subcategories-grid" id="subcategories-grid">
-         <!-- Subcategories will be dynamically loaded here -->
+         
         </div>
        </div>
-       <!-- Toolbar -->
+       
        <div class="products-toolbar">
         <div class="toolbar-left">
          <button class="btn-filter-toggle" id="toggle-filters">
@@ -294,7 +294,7 @@
          </select>
         </div>
        </div>
-       <!-- Products List (vloeiend met borders) -->
+       
        <div class="products-list" id="products-grid">
         <div class="loading">
          <div class="spinner">
@@ -304,7 +304,7 @@
          </p>
         </div>
        </div>
-       <!-- Pagination -->
+       
        <div class="pagination" id="pagination" style="display: none;">
         <button class="pagination-btn" disabled="" id="prev-page">
          Vorige
@@ -321,10 +321,10 @@
     </div>
    </section>
   </main>
-  <!-- Footer -->
+  
   <div id="footer-placeholder">
   </div>
-  <!-- Scripts -->
+  
   <script src="../../assets/js/url-redirects.js">
   </script>
   <script defer="" src="../../assets/js/components/header-loader.js">

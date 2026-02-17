@@ -306,33 +306,26 @@
 }
 
 .blog-card-category {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   font-size: var(--text-xs);
-  font-weight: 800;
-  color: var(--color-primary);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: var(--space-3);
-}
-
-.blog-card-category::after {
-  content: '';
-  height: 1px;
-  width: 30px;
-  background: var(--color-primary);
-  margin-left: var(--space-3);
-  opacity: 0.5;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  background: rgba(35, 103, 115, 0.08);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
 }
 
 .blog-card-title {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  font-weight: 900;
-  margin-bottom: var(--space-3);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
   color: var(--color-gray-900);
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
   transition: color 0.3s ease;
 }
 
@@ -341,10 +334,10 @@
 }
 
 .blog-card-excerpt {
-  font-size: 1.125rem;
+  font-size: var(--text-base);
   color: var(--color-gray-600);
-  line-height: 1.7;
-  margin-bottom: var(--space-6);
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
   max-width: 800px;
 }
 
@@ -357,21 +350,21 @@
 
 .blog-card-meta {
   font-size: var(--text-xs);
-  color: var(--color-gray-400);
-  font-weight: 700;
+  color: var(--color-gray-500);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 
 .blog-card-read-more {
   display: inline-flex;
   align-items: center;
   color: var(--color-primary);
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   font-size: var(--text-xs);
-  gap: var(--space-3);
+  gap: var(--space-2);
   transition: all 0.3s ease;
 }
 
@@ -380,11 +373,11 @@
 }
 
 .blog-card:hover .blog-card-read-more {
-  letter-spacing: 0.2em;
+  letter-spacing: 0.15em;
 }
 
 .blog-card:hover .blog-card-read-more svg {
-  transform: translateX(8px);
+  transform: translateX(6px);
 }
 
 /* Related Articles - Integrated Look */

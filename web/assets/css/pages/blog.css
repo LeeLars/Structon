@@ -277,23 +277,22 @@
    KENNISBANK INDEX PAGE
    ============================================ */
 
-/* Blog Grid & Cards - Integrated Industrial Style */
 .blog-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-16);
+  gap: var(--space-8);
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .blog-card {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   text-decoration: none;
   color: inherit;
   transition: all 0.4s ease;
-  padding-bottom: var(--space-12);
+  padding: var(--space-8) 0;
   border-bottom: 1px solid var(--color-gray-200);
 }
 
@@ -301,59 +300,9 @@
   border-bottom: none;
 }
 
-@media (min-width: 768px) {
-  .blog-card {
-    grid-template-columns: 380px 1fr;
-    align-items: flex-start;
-    gap: var(--space-12);
-  }
-}
-
-.blog-card-image {
-  aspect-ratio: 16/10;
-  background: var(--color-gray-100);
-  overflow: hidden;
-  position: relative;
-  border-radius: var(--radius-md);
-  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.blog-card:hover .blog-card-image {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.blog-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
-
-.blog-card:hover .blog-card-image img {
-  transform: scale(1.08);
-}
-
-.blog-card-image::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent 0%, rgba(35, 103, 115, 0.15) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.blog-card:hover .blog-card-image::after {
-  opacity: 1;
-}
-
 .blog-card-content {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .blog-card-category {
@@ -364,7 +313,7 @@
   color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .blog-card-category::after {
@@ -379,7 +328,7 @@
 .blog-card-title {
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 900;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   line-height: 1.1;
   color: var(--color-gray-900);
   text-transform: uppercase;
@@ -395,8 +344,8 @@
   font-size: 1.125rem;
   color: var(--color-gray-600);
   line-height: 1.7;
-  margin-bottom: var(--space-8);
-  max-width: 600px;
+  margin-bottom: var(--space-6);
+  max-width: 800px;
 }
 
 .blog-card-footer {
@@ -404,7 +353,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: var(--space-4);
 }
 
 .blog-card-meta {
@@ -449,7 +397,7 @@
 .related-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-8);
+  gap: var(--space-12);
   margin-top: var(--space-8);
 }
 
@@ -459,19 +407,12 @@
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-gray-100);
 }
 
-.related-card-image {
-  aspect-ratio: 16/9;
-  background: var(--color-gray-100);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-5);
-  overflow: hidden;
-  transition: transform 0.4s ease;
-}
-
-.related-card:hover .related-card-image {
-  transform: translateY(-4px);
+.related-card:hover {
+  border-color: var(--color-primary);
 }
 
 .related-card h4 {
@@ -481,6 +422,7 @@
   margin-bottom: var(--space-2);
   color: var(--color-gray-900);
   transition: color 0.3s ease;
+  line-height: 1.2;
 }
 
 .related-card:hover h4 {

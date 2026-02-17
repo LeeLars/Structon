@@ -31,9 +31,7 @@
   <script src="../../../assets/js/canonical.js" defer></script>
 
   <style>
-    .article-hero { background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); color: white; padding: var(--space-12) 0; }
-    .article-hero h1 { font-size: 2.25rem; margin-bottom: var(--space-4); max-width: 800px; }
-    .article-meta { display: flex; gap: var(--space-4); font-size: var(--text-sm); opacity: 0.9; }
+    
     .article-content { max-width: 800px; margin: 0 auto; padding: var(--space-12) var(--space-4); }
     .article-content h2 { font-size: 1.5rem; margin-top: var(--space-10); margin-bottom: var(--space-4); color: var(--color-gray-900); text-transform: uppercase; }
     .article-content h3 { font-size: 1.25rem; margin-top: var(--space-6); margin-bottom: var(--space-3); color: var(--color-gray-800); }
@@ -60,23 +58,28 @@
   <div id="header-placeholder"></div>
 
   <main>
-    <section class="article-hero">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Fil d'Ariane" style="margin-bottom: var(--space-4);">
-          <a href="../../index.html" style="color: rgba(255,255,255,0.8);">Accueil</a>
-          <span style="color: rgba(255,255,255,0.5);">/</span>
-          <a href="../" style="color: rgba(255,255,255,0.8);">Blog</a>
-          <span style="color: rgba(255,255,255,0.5);">/</span>
-          <span style="color: white;">Entretien de votre godet</span>
-        </nav>
-        <h1>ENTRETIEN DE VOTRE GODET : COMMENT PROLONGER SA DURÉE DE VIE</h1>
-        <div class="article-meta">
-          <span>5 min de lecture</span>
+    <section class="page-hero" style="padding-top: var(--space-8);">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html">Accueil</a>
+        <span>/</span>
+        <a href="../">Blog</a>
+        <span>/</span>
+        <span aria-current="page">ENTRETIEN DE VOTRE GODET : COMMENT PROLONGER SA DURÉE DE VIE</span>
+      </nav>
+      
+      <div class="page-hero-content">
+        <div class="page-hero-text">
+          <h1 class="page-title">ENTRETIEN DE VOTRE GODET : COMMENT PROLONGER SA DURÉE DE VIE</h1>
+          <div class="article-meta" style="margin-top: var(--space-4); display: flex; gap: var(--space-4); font-size: var(--text-sm); color: var(--color-gray-600);">
+            <span>5 min de lecture</span>
           <span>Entretien</span>
           <span>17 février 2026</span>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
     <article class="article-content">
       <p>

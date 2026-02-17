@@ -284,7 +284,6 @@
    PRODUCT HEADER
    =========================================== */
 .product-header {
-  border-bottom: 1px solid var(--structon-border);
   padding-bottom: var(--space-4);
 }
 

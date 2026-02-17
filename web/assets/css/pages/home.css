@@ -494,14 +494,14 @@
   /* USP Item Mobile Layout */
   .usp-item {
     gap: 20px;
-    padding: 24px 0;
+    padding: 30px 0;
     align-items: flex-start;
-    border-bottom: none !important; /* Verwijder border op mobiel */
-    margin-bottom: 24px; /* Ruimte tussen items */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .usp-item:last-child {
-    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
   /* Nummer styling - compacter op mobiel */

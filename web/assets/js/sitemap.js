@@ -18,9 +18,41 @@ function getSitemapLocale() {
 const sitemapT = {
   'be-nl': { general: 'Algemeen', home: 'Home', aboutUs: 'Over Ons', customerLogin: 'Klant Login', products: 'Producten', navigation: 'Navigatie', excavatorBuckets: 'Kraanbakken', trenchBuckets: 'Slotenbakken', loading: 'Laden...' },
   'nl-nl': { general: 'Algemeen', home: 'Home', aboutUs: 'Over Ons', customerLogin: 'Klant Login', products: 'Producten', navigation: 'Navigatie', excavatorBuckets: 'Kraanbakken', trenchBuckets: 'Slotenbakken', loading: 'Laden...' },
-  'be-fr': { general: 'G\u00e9n\u00e9ral', home: 'Accueil', aboutUs: '\u00c0 propos', customerLogin: 'Connexion client', products: 'Produits', navigation: 'Navigation', excavatorBuckets: 'Godets', trenchBuckets: 'Godets de tranch\u00e9e', loading: 'Chargement...' },
-  'de-de': { general: 'Allgemein', home: 'Startseite', aboutUs: '\u00dcber uns', customerLogin: 'Kunden-Login', products: 'Produkte', navigation: 'Navigation', excavatorBuckets: 'Baggerl\u00f6ffel', trenchBuckets: 'Grabenl\u00f6ffel', loading: 'Laden...' }
+  'be-fr': { general: 'Général', home: 'Accueil', aboutUs: 'À propos', customerLogin: 'Connexion client', products: 'Produits', navigation: 'Navigation', excavatorBuckets: 'Godets', trenchBuckets: 'Godets de tranchée', loading: 'Chargement...' },
+  'de-de': { general: 'Allgemein', home: 'Startseite', aboutUs: 'Über uns', customerLogin: 'Kunden-Login', products: 'Produkte', navigation: 'Navigation', excavatorBuckets: 'Baggerlöffel', trenchBuckets: 'Grabenlöffel', loading: 'Laden...' }
 };
+
+// Translation mapping for subcategories
+const subcategoryTranslations = {
+  'be-fr': {
+    'Snelwissels': 'Attaches rapides',
+    'Adapterplaten': 'Plaques d\'adaptation',
+    'Rotators': 'Rotateurs',
+    'Tiltrotators': 'Tiltrotateurs',
+    'Kantelstukken': 'Pièces d\'inclinaison',
+    'Graafbakken': 'Godets de terrassement',
+    'Overige': 'Autres',
+    'Sloop- en sorteergrijpers': 'Pinces de démolition et de tri'
+  },
+  'de-de': {
+    'Snelwissels': 'Schnellwechsler',
+    'Adapterplaten': 'Adapterplatten',
+    'Rotators': 'Rotatoren',
+    'Tiltrotators': 'Tiltrotatoren',
+    'Kantelstukken': 'Kippstücke',
+    'Graafbakken': 'Baggerlöffel',
+    'Overige': 'Sonstige',
+    'Sloop- en sorteergrijpers': 'Abbruch- und Sortiergreifer'
+  }
+};
+
+function translateSubcategory(title, locale) {
+  if (locale === 'be-nl' || locale === 'nl-nl') return title;
+  if (subcategoryTranslations[locale] && subcategoryTranslations[locale][title]) {
+    return subcategoryTranslations[locale][title];
+  }
+  return title;
+}
 
 export async function initSitemap() {
   const sitemapContainer = document.getElementById('footer-sitemap');
@@ -84,7 +116,7 @@ export async function initSitemap() {
           catSubcategories.forEach(sub => {
             productLinks.push(`
               <li>
-                <a href="../../producten/?cat=${sub.slug}" class="sitemap-cat-link">${sub.title}</a>
+                <a href="../../producten/?cat=${sub.slug}" class="sitemap-cat-link">${translateSubcategory(sub.title, locale)}</a>
               </li>
             `);
           });
@@ -92,7 +124,7 @@ export async function initSitemap() {
           // Show regular category
           productLinks.push(`
             <li>
-              <a href="../../producten/?cat=${cat.slug}" class="sitemap-cat-link">${cat.title}</a>
+              <a href="../../producten/?cat=${cat.slug}" class="sitemap-cat-link">${translateSubcategory(cat.title, locale)}</a>
             </li>
           `);
         }

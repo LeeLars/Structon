@@ -27,7 +27,6 @@
     if (path.includes('aanvragen.html')) return 'requests';
     if (path.includes('orders.html')) return 'orders';
     if (path.includes('products.html')) return 'products';
-    if (path.includes('blogs.html')) return 'blogs';
     if (path.includes('users.html')) return 'users';
     if (path.endsWith('/cms/') || path.endsWith('/cms')) return 'dashboard';
     return 'dashboard';

@@ -7,7 +7,7 @@
 CREATE TABLE IF NOT EXISTS seo_pages (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     slug VARCHAR(255) UNIQUE NOT NULL,
-    page_type VARCHAR(50) NOT NULL, -- 'category', 'brand', 'sector', 'blog', 'landing'
+    page_type VARCHAR(50) NOT NULL, -- 'category', 'brand', 'sector', 'landing'
     
     -- SEO Meta
     title_tag VARCHAR(70),
@@ -27,40 +27,6 @@ CREATE TABLE IF NOT EXISTS seo_pages (
     
     -- Status
     is_published BOOLEAN DEFAULT true,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
--- ============================================
--- BLOG POSTS TABLE
--- ============================================
-CREATE TABLE IF NOT EXISTS blog_posts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    slug VARCHAR(255) UNIQUE NOT NULL,
-    
-    -- SEO Meta
-    title_tag VARCHAR(70),
-    meta_description VARCHAR(160),
-    og_title VARCHAR(70),
-    og_description VARCHAR(200),
-    og_image_url VARCHAR(500),
-    
-    -- Content
-    title VARCHAR(255) NOT NULL,
-    excerpt TEXT,
-    content TEXT,
-    featured_image_url VARCHAR(500),
-    
-    -- Categorization
-    category VARCHAR(100), -- 'kennisbank', 'nieuws', 'tips'
-    tags JSONB DEFAULT '[]'::jsonb,
-    
-    -- Author
-    author_id UUID REFERENCES users(id),
-    
-    -- Status
-    is_published BOOLEAN DEFAULT false,
-    published_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -147,12 +113,9 @@ CREATE INDEX IF NOT EXISTS idx_redirects_from ON redirects(from_path);
 -- ============================================
 CREATE INDEX IF NOT EXISTS idx_seo_pages_slug ON seo_pages(slug);
 CREATE INDEX IF NOT EXISTS idx_seo_pages_type ON seo_pages(page_type);
-CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
-CREATE INDEX IF NOT EXISTS idx_blog_posts_published ON blog_posts(is_published, published_at);
 CREATE INDEX IF NOT EXISTS idx_machine_brands_slug ON machine_brands(slug);
 
 -- ============================================
 -- TRIGGERS
 -- ============================================
 CREATE TRIGGER update_seo_pages_updated_at BEFORE UPDATE ON seo_pages FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_blog_posts_updated_at BEFORE UPDATE ON blog_posts FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

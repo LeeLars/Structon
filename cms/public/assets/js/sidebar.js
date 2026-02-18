@@ -18,8 +18,6 @@ export function renderSidebar(activePage = '') {
     { id: 'products', href: '/cms/products.html', icon: 'products', label: 'Producten' },
     { id: 'categories', href: '/cms/categories.html', icon: 'categories', label: 'Categorieën' },
     { id: 'brands', href: '/cms/brands.html', icon: 'brands', label: 'Merken' },
-    { section: 'Content' },
-    { id: 'blogs', href: '/cms/blogs.html', icon: 'blogs', label: 'Blog' },
     { section: 'Instellingen' },
     { id: 'users', href: '/cms/users.html', icon: 'users', label: 'Gebruikers' },
   ];
@@ -31,7 +29,6 @@ export function renderSidebar(activePage = '') {
     products: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>',
     categories: '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>',
     brands: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>',
-    blogs: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>',
     users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle>',
   };
 
@@ -140,7 +137,6 @@ export function detectActivePage() {
   if (path.includes('products')) return 'products';
   if (path.includes('categories')) return 'categories';
   if (path.includes('brands')) return 'brands';
-  if (path.includes('blogs')) return 'blogs';
   if (path.includes('users')) return 'users';
   
   return 'dashboard';

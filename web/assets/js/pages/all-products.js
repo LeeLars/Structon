@@ -215,12 +215,12 @@ async function loadSubcategories(categorySlug) {
       return;
     }
     
-    // Update page title and description
+    // Update page title and hide description
     const pageTitle = document.querySelector('.page-title');
     const pageSubtitle = document.querySelector('.page-subtitle');
     if (pageTitle) pageTitle.textContent = mainCategory.title.toUpperCase();
-    if (pageSubtitle && mainCategory.description) {
-      pageSubtitle.textContent = mainCategory.description;
+    if (pageSubtitle) {
+      pageSubtitle.style.display = 'none';
     }
     
     // Render subcategories

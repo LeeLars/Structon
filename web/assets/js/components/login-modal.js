@@ -66,7 +66,9 @@ const translations = {
       passwordTooShort: 'Wachtwoord moet minimaal 8 tekens bevatten.',
       resetSuccess: 'Uw wachtwoord is succesvol gewijzigd. U kunt nu inloggen.',
       resetFailed: 'Kon wachtwoord niet resetten. Probeer het opnieuw of neem contact op.',
-      invalidToken: 'Deze reset link is ongeldig of verlopen. Vraag een nieuwe aan.'
+      invalidToken: 'Deze reset link is ongeldig of verlopen. Vraag een nieuwe aan.',
+      rateLimitTitle: 'Te veel inlogpogingen.',
+      rateLimitDescription: 'Probeer opnieuw over'
     }
   },
   'nl-nl': {
@@ -104,7 +106,9 @@ const translations = {
       passwordTooShort: 'Wachtwoord moet minimaal 8 tekens bevatten.',
       resetSuccess: 'Uw wachtwoord is succesvol gewijzigd. U kunt nu inloggen.',
       resetFailed: 'Kon wachtwoord niet resetten. Probeer het opnieuw of neem contact op.',
-      invalidToken: 'Deze reset link is ongeldig of verlopen. Vraag een nieuwe aan.'
+      invalidToken: 'Deze reset link is ongeldig of verlopen. Vraag een nieuwe aan.',
+      rateLimitTitle: 'Te veel inlogpogingen.',
+      rateLimitDescription: 'Probeer opnieuw over'
     }
   },
   'be-fr': {
@@ -142,7 +146,9 @@ const translations = {
       passwordTooShort: 'Le mot de passe doit contenir au moins 8 caractères.',
       resetSuccess: 'Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.',
       resetFailed: 'Impossible de réinitialiser le mot de passe. Réessayez ou contactez-nous.',
-      invalidToken: 'Ce lien de réinitialisation est invalide ou expiré. Demandez-en un nouveau.'
+      invalidToken: 'Ce lien de réinitialisation est invalide ou expiré. Demandez-en un nouveau.',
+      rateLimitTitle: 'Trop de tentatives de connexion.',
+      rateLimitDescription: 'Réessayez dans'
     }
   },
   'de-de': {
@@ -180,7 +186,9 @@ const translations = {
       passwordTooShort: 'Das Passwort muss mindestens 8 Zeichen enthalten.',
       resetSuccess: 'Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt anmelden.',
       resetFailed: 'Passwort konnte nicht zurückgesetzt werden. Versuchen Sie es erneut oder kontaktieren Sie uns.',
-      invalidToken: 'Dieser Reset-Link ist ungültig oder abgelaufen. Fordern Sie einen neuen an.'
+      invalidToken: 'Dieser Reset-Link ist ungültig oder abgelaufen. Fordern Sie einen neuen an.',
+      rateLimitTitle: 'Zu viele Anmeldeversuche.',
+      rateLimitDescription: 'Bitte versuchen Sie es erneut in'
     }
   }
 };
@@ -190,6 +198,71 @@ const t = translations[currentLocale];
 
 // Current view state: 'login', 'forgot', 'reset'
 let currentView = 'login';
+
+// Login rate limit handling
+const LOGIN_RATE_LIMIT_KEY = 'structon_login_lock_until';
+const LOGIN_RATE_LIMIT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
+let loginRateLimitTimerId = null;
+
+function formatRemainingTime(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+  const seconds = String(totalSeconds % 60).padStart(2, '0');
+  return `${minutes}:${seconds}`;
+}
+
+function startLoginRateLimitTimer(alertEl, submitBtn, lockUntil) {
+  if (!alertEl || !submitBtn) return;
+
+  // Clear any existing timer
+  if (loginRateLimitTimerId) {
+    clearInterval(loginRateLimitTimerId);
+    loginRateLimitTimerId = null;
+  }
+
+  const update = () => {
+    const now = Date.now();
+    const remaining = lockUntil - now;
+
+    if (remaining <= 0) {
+      // Lock expired
+      if (loginRateLimitTimerId) {
+        clearInterval(loginRateLimitTimerId);
+        loginRateLimitTimerId = null;
+      }
+      try {
+        localStorage.removeItem(LOGIN_RATE_LIMIT_KEY);
+      } catch (e) {}
+      alertEl.style.display = 'none';
+      submitBtn.disabled = false;
+      submitBtn.textContent = t.loginBtn;
+      return;
+    }
+
+    const timerEl = alertEl.querySelector('#login-rate-limit-timer');
+    if (timerEl) {
+      timerEl.textContent = formatRemainingTime(remaining);
+    }
+  };
+
+  // Build localized alert content with countdown placeholder
+  alertEl.className = 'login-modal-alert error';
+  alertEl.innerHTML = `
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <p style="margin: 0;">${t.errors.rateLimitTitle}</p>
+      <p style="margin: 0;">${t.errors.rateLimitDescription} <strong id="login-rate-limit-timer"></strong>.</p>
+    </div>
+  `;
+  alertEl.style.display = 'block';
+
+  // Disable submit while locked
+  submitBtn.disabled = true;
+  submitBtn.textContent = t.loggingIn;
+
+  // Initial update + interval
+  update();
+  loginRateLimitTimerId = setInterval(update, 1000);
+}
 
 // Get API base URL
 function getApiBase() {
@@ -483,6 +556,29 @@ function openLoginModal() {
     document.body.style.overflow = 'hidden';
     // Show login view by default
     showView('login');
+
+    // If there is an active rate limit, show countdown immediately
+    let lockUntil = null;
+    try {
+      const stored = localStorage.getItem(LOGIN_RATE_LIMIT_KEY);
+      if (stored) {
+        const ts = parseInt(stored, 10);
+        if (!isNaN(ts) && ts > Date.now()) {
+          lockUntil = ts;
+        } else if (!isNaN(ts)) {
+          // Expired lock, clean up
+          localStorage.removeItem(LOGIN_RATE_LIMIT_KEY);
+        }
+      }
+    } catch (e) {}
+
+    if (lockUntil) {
+      const alertEl = document.getElementById('login-modal-alert');
+      const submitBtn = document.getElementById('login-modal-submit');
+      if (alertEl && submitBtn) {
+        startLoginRateLimitTimer(alertEl, submitBtn, lockUntil);
+      }
+    }
   }
 }
 
@@ -556,6 +652,20 @@ async function handleLoginSubmit(e) {
   const submitBtn = document.getElementById('login-modal-submit');
   const alertEl = document.getElementById('login-modal-alert');
   
+  // Check if login is currently rate-limited
+  try {
+    const stored = localStorage.getItem(LOGIN_RATE_LIMIT_KEY);
+    if (stored) {
+      const lockUntil = parseInt(stored, 10);
+      if (!isNaN(lockUntil) && lockUntil > Date.now()) {
+        startLoginRateLimitTimer(alertEl, submitBtn, lockUntil);
+        return;
+      } else if (!isNaN(lockUntil)) {
+        localStorage.removeItem(LOGIN_RATE_LIMIT_KEY);
+      }
+    }
+  } catch (e) {}
+  
   // Validate
   if (!email || !password) {
     alertEl.className = 'login-modal-alert error';
@@ -608,9 +718,19 @@ async function handleLoginSubmit(e) {
     } else {
       // Error from server
       console.error('Login failed:', data);
-      alertEl.className = 'login-modal-alert error';
-      alertEl.textContent = data.error || data.message || t.errors.invalid;
-      alertEl.style.display = 'block';
+
+      // Handle rate limit (too many attempts) specifically
+      if (response.status === 429 || (data && typeof data.error === 'string' && data.error.toLowerCase().includes('too many'))) {
+        const lockUntil = Date.now() + LOGIN_RATE_LIMIT_DURATION_MS;
+        try {
+          localStorage.setItem(LOGIN_RATE_LIMIT_KEY, String(lockUntil));
+        } catch (e) {}
+        startLoginRateLimitTimer(alertEl, submitBtn, lockUntil);
+      } else {
+        alertEl.className = 'login-modal-alert error';
+        alertEl.textContent = data.error || data.message || t.errors.invalid;
+        alertEl.style.display = 'block';
+      }
     }
     
   } catch (error) {
@@ -619,8 +739,22 @@ async function handleLoginSubmit(e) {
     alertEl.textContent = t.errors.connection;
     alertEl.style.display = 'block';
   } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = t.loginBtn;
+    // Only re-enable button if there is no active rate-limit
+    let hasActiveLock = false;
+    try {
+      const stored = localStorage.getItem(LOGIN_RATE_LIMIT_KEY);
+      if (stored) {
+        const lockUntil = parseInt(stored, 10);
+        if (!isNaN(lockUntil) && lockUntil > Date.now()) {
+          hasActiveLock = true;
+        }
+      }
+    } catch (e) {}
+
+    if (!hasActiveLock) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = t.loginBtn;
+    }
   }
 }
 

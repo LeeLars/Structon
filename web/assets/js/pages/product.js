@@ -10,6 +10,16 @@ import { createExpertBox } from '../components/expert-box.js';
 
 let currentProduct = null;
 
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /**
  * Build URL for quote request with all product details
  */
@@ -136,210 +146,206 @@ function renderProduct(product) {
   // Generate dynamic SEO description based on product data
   const seoDescription = generateSeoDescription(product);
 
-  container.innerHTML = `
-    <button class="product-back-button" onclick="window.history.back()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      <span>Terug</span>
-    </button>
-    <div class="product-layout">
-      <!-- LEFT: Gallery with vertical thumbnails -->
-      <div class="product-gallery">
-        ${images.length > 1 ? `
-        <div class="product-thumbnails">
-          ${images.map((img, i) => `
-            <div class="product-thumbnail ${i === 0 ? 'active' : ''}" data-image="${img.url}">
-              <img src="${img.url}" alt="${product.title} ${i + 1}">
-            </div>
-          `).join('')}
-        </div>
-        ` : ''}
-        <div class="product-image-main">
-          <img src="${mainImage}" alt="${product.title}" id="main-product-image">
-        </div>
-      </div>
+  const cartProductData = JSON.stringify({
+    id: product.id,
+    title: product.title,
+    image: mainImage,
+    category: product.category_title || '',
+    specs: { width: product.width || '', weight: product.weight || '' }
+  });
 
-      <!-- RIGHT: Product Info -->
-      <div class="product-info-wrapper">
-        <div class="product-header">
-          <span class="product-category-label">${product.category_title || 'Product'}</span>
-          <h1 class="product-title">${product.title}</h1>
-          <div class="product-sku">Artikelnummer: ${product.article_number || product.sku || 'N/A'}</div>
-          <p class="product-subtitle">${product.short_description || `Hoogwaardige ${product.title.toLowerCase()} voor professioneel gebruik.`}</p>
-        </div>
+  // Render static skeleton - no user data in innerHTML
+  container.innerHTML = [
+    '<button class="product-back-button" onclick="window.history.back()">',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">',
+    '<line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+    '<span>Terug</span></button>',
+    '<div class="product-layout">',
+    '<div class="product-gallery">',
+    '<div class="product-thumbnails" id="product-thumbnails-wrap"></div>',
+    '<div class="product-image-main"><img id="main-product-image" src="" alt=""></div>',
+    '</div>',
+    '<div class="product-info-wrapper">',
+    '<div class="product-header">',
+    '<span class="product-category-label" id="pd-category"></span>',
+    '<h1 class="product-title" id="pd-title"></h1>',
+    '<div class="product-sku" id="pd-sku"></div>',
+    '<p class="product-subtitle" id="pd-subtitle"></p>',
+    '</div>',
+    '<div class="product-key-specs" id="pd-key-specs"></div>',
+    '<div class="product-purchase-card">',
+    '<div class="product-price-container" id="price-section">',
+    '<div class="product-price-label">Prijs:</div>',
+    '<div class="product-price">Login voor prijs</div>',
+    '<p class="login-prompt"><a href="#" class="login-trigger">Log in</a> om prijzen te bekijken en te bestellen.</p>',
+    '</div>',
+    '<div class="product-cta-section">',
+    '<div class="product-quantity-wrapper">',
+    '<div class="quantity-selector">',
+    '<button type="button" class="quantity-btn minus" onclick="var i=this.nextElementSibling;i.value=Math.max(1,parseInt(i.value||1)-1)">-</button>',
+    '<input type="number" id="quantity" name="quantity" value="1" min="1" max="99">',
+    '<button type="button" class="quantity-btn plus" onclick="var i=this.previousElementSibling;i.value=Math.min(99,parseInt(i.value||1)+1)">+</button>',
+    '</div>',
+    '<div class="product-actions">',
+    '<button class="btn-split add-to-quote-btn" id="pd-add-btn">',
+    '<span class="btn-split-text">Toevoegen aan offerte</span>',
+    '<span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>',
+    '</button></div></div>',
+    '<ul class="product-usps">',
+    '<li>Op maat gemaakt in België - perfecte pasvorm</li>',
+    '<li>Afgestemd op jouw graafmachine</li>',
+    '<li>Snelle, gecontroleerde productie</li>',
+    '</ul></div></div>',
+    createExpertBox(),
+    '</div></div>',
+    '<section class="product-details-section"><div class="product-container"><div class="product-details-layout">',
+    '<div class="product-detail-card"><div class="detail-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div>',
+    '<h3>Geproduceerd uit Hardox 450 staal</h3><p>Slijtvast staal van topkwaliteit voor intensief professioneel gebruik.<br><strong>Langere levensduur, minder slijtage, lagere onderhoudskosten.</strong></p></div>',
+    '<div class="product-detail-card"><div class="detail-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>',
+    '<h3>Op maat gemaakt in België</h3><p>Geen stockproduct. Elk aanbouwdeel wordt specifiek voor jouw machine geproduceerd in onze werkplaats in Beernem.<br><strong>Perfecte pasvorm, geen compromissen.</strong></p></div>',
+    '<div class="product-detail-card"><div class="detail-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>',
+    '<h3>Afhalen of levering op locatie</h3><p>Afhaling in Beernem of levering waar nodig.<br><strong>Flexibel volgens jouw planning.</strong></p></div>',
+    '</div></div></section>',
+    '<section class="product-action-shot" id="pd-action-shot"><div class="action-shot-content">',
+    '<h2>Kracht in elke beweging</h2>',
+    '<p>Ontworpen voor maximale prestaties en efficiëntie op de werf. Onze <span id="pd-action-cat"></span> graven soepeler, vullen beter en gaan langer mee.</p>',
+    '</div></section>',
+    '<section class="specifications-section"><div class="product-container"><div class="specifications-content">',
+    '<div class="specifications-description">',
+    '<h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>',
+    '<p id="pd-desc"></p><p id="pd-apps"></p>',
+    '</div>',
+    '<div class="specifications-table-wrapper">',
+    '<h3 class="specifications-subtitle">Technische Specificaties</h3>',
+    '<table class="specifications-table"><tbody id="pd-specs-tbody"></tbody></table>',
+    '</div></div></div></section>',
+    '<div class="product-sticky-cta">',
+    '<button class="btn-split btn-split-primary add-to-quote-btn" id="pd-sticky-btn">',
+    '<span class="btn-split-text">Toevoegen aan offerte</span>',
+    '<span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>',
+    '</button></div>'
+  ].join('');
 
-        ${product.width || product.weight || product.attachment_type ? `
-        <div class="product-key-specs">
-          ${product.width ? `
-          <div class="key-spec">
-            <span class="key-spec-label">Breedte</span>
-            <span class="key-spec-value">${product.width} mm</span>
-          </div>
-          ` : ''}
-          ${product.weight ? `
-          <div class="key-spec">
-            <span class="key-spec-label">Gewicht</span>
-            <span class="key-spec-value">${product.weight} kg</span>
-          </div>
-          ` : ''}
-          ${product.attachment_type ? `
-          <div class="key-spec">
-            <span class="key-spec-label">Ophanging</span>
-            <span class="key-spec-value">${product.attachment_type}</span>
-          </div>
-          ` : ''}
-          ${product.excavator_weight_min && product.excavator_weight_max ? `
-          <div class="key-spec">
-            <span class="key-spec-label">Graafmachine</span>
-            <span class="key-spec-value">${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</span>
-          </div>
-          ` : ''}
-        </div>
-        ` : ''}
+  // Now safely inject all user-controlled data via DOM API
+  const seoDesc = generateSeoDescription(product);
 
-        <div class="product-purchase-card">
-          <div class="product-price-container" id="price-section" data-product-id="${product.id}">
-            <div class="product-price-label">Prijs:</div>
-            <div class="product-price">Login voor prijs</div>
-            <p class="login-prompt">
-              <a href="#" class="login-trigger">Log in</a> om prijzen te bekijken en te bestellen.
-            </p>
-          </div>
-          
-          <div class="product-cta-section">
-            <div class="product-quantity-wrapper">
-              <div class="quantity-selector">
-                <button type="button" class="quantity-btn minus" onclick="var i=this.nextElementSibling;i.value=Math.max(1,parseInt(i.value||1)-1)">-</button>
-                <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
-                <button type="button" class="quantity-btn plus" onclick="var i=this.previousElementSibling;i.value=Math.min(99,parseInt(i.value||1)+1)">+</button>
-              </div>
-              
-              <div class="product-actions">
-                <button class="btn-split" 
-                  onclick="window.quoteCart.addItem({
-                    id: '${product.id}',
-                    title: '${product.title.replace(/'/g, "\\'")}',
-                    image: '${mainImage}',
-                    category: '${product.category_title || ''}',
-                    specs: {
-                      width: '${product.width || ''}',
-                      weight: '${product.weight || ''}'
-                    },
-                    quantity: parseInt(document.getElementById('quantity').value) || 1
-                  });"
-                >
-                  <span class="btn-split-text">Toevoegen aan offerte</span>
-                  <span class="btn-split-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                  </span>
-                </button>
-              </div>
-            </div>
-            
-            <ul class="product-usps">
-              <li>Op maat gemaakt in België - perfecte pasvorm</li>
-              <li>Afgestemd op jouw graafmachine</li>
-              <li>Snelle, gecontroleerde productie</li>
-            </ul>
-          </div>
-        </div>
+  // Text content (auto-escaped by browser)
+  container.querySelector('#pd-category').textContent = product.category_title || 'Product';
+  container.querySelector('#pd-title').textContent = product.title;
+  container.querySelector('#pd-sku').textContent = 'Artikelnummer: ' + (product.article_number || product.sku || 'N/A');
+  container.querySelector('#pd-subtitle').textContent = product.short_description || `Hoogwaardige ${product.title.toLowerCase()} voor professioneel gebruik.`;
+  container.querySelector('#pd-action-cat').textContent = product.category_title || 'producten';
+  container.querySelector('#pd-desc').textContent = product.description || seoDesc.intro;
+  container.querySelector('#pd-apps').textContent = seoDesc.applications;
 
-        ${createExpertBox()}
-      </div>
-    </div>
+  // Images (src/alt are safe attributes)
+  const mainImg = container.querySelector('#main-product-image');
+  mainImg.src = mainImage;
+  mainImg.alt = product.title;
 
-    <!-- Product Details Section -->
-    <section class="product-details-section">
-      <div class="product-container">
-        <div class="product-details-layout">
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-            </div>
-            <h3>Geproduceerd uit Hardox 450 staal</h3>
-            <p>Slijtvast staal van topkwaliteit voor intensief professioneel gebruik.<br><strong>Langere levensduur, minder slijtage, lagere onderhoudskosten.</strong></p>
-          </div>
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            </div>
-            <h3>Op maat gemaakt in België</h3>
-            <p>Geen stockproduct. Elk aanbouwdeel wordt specifiek voor jouw machine geproduceerd in onze werkplaats in Beernem.<br><strong>Perfecte pasvorm, geen compromissen.</strong></p>
-          </div>
-          <div class="product-detail-card">
-            <div class="detail-card-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            </div>
-            <h3>Afhalen of levering op locatie</h3>
-            <p>Afhaling in Beernem of levering waar nodig.<br><strong>Flexibel volgens jouw planning.</strong></p>
-          </div>
-        </div>
-      </div>
-    </section>
+  // Thumbnails
+  const thumbsWrap = container.querySelector('#product-thumbnails-wrap');
+  if (images.length > 1) {
+    images.forEach((img, i) => {
+      const div = document.createElement('div');
+      div.className = 'product-thumbnail' + (i === 0 ? ' active' : '');
+      div.dataset.image = img.url;
+      const thumbImg = document.createElement('img');
+      thumbImg.src = img.url;
+      thumbImg.alt = `${product.title} ${i + 1}`;
+      div.appendChild(thumbImg);
+      thumbsWrap.appendChild(div);
+    });
+  } else {
+    thumbsWrap.style.display = 'none';
+  }
 
-    <!-- Action Shot -->
-    <section class="product-action-shot" style="background-image: url('${mainImage}');">
-      <div class="action-shot-content">
-        <h2>Kracht in elke beweging</h2>
-        <p>Ontworpen voor maximale prestaties en efficiëntie op de werf. Onze ${product.category_title || 'producten'} graven soepeler, vullen beter en gaan langer mee.</p>
-      </div>
-    </section>
+  // Action shot background
+  container.querySelector('#pd-action-shot').style.backgroundImage = `url('${mainImage.replace(/'/g, "\\'")}')`;
 
-    <!-- Specs Matrix -->
-    <section class="specifications-section">
-      <div class="product-container">
-        <div class="specifications-content">
-          <div class="specifications-description">
-            <h2 class="specifications-title">PRODUCTBESCHRIJVING</h2>
-            <p>${product.description || generateSeoDescription(product).intro}</p>
-            <p>${generateSeoDescription(product).applications}</p>
-          </div>
-          
-          <div class="specifications-table-wrapper">
-            <h3 class="specifications-subtitle">Technische Specificaties</h3>
-            <table class="specifications-table">
-              <tbody>
-                ${product.article_number ? `<tr><th>Artikelnummer</th><td>${product.article_number}</td></tr>` : ''}
-                ${product.brand_title ? `<tr><th>Merk Machine</th><td>${product.brand_title}</td></tr>` : ''}
-                ${product.category_title ? `<tr><th>Categorie</th><td>${product.category_title}</td></tr>` : ''}
-                ${product.attachment_type ? `<tr><th>Aansluiting</th><td>${product.attachment_type}</td></tr>` : ''}
-                ${product.width ? `<tr><th>Breedte</th><td>${product.width} mm</td></tr>` : ''}
-                ${product.volume ? `<tr><th>Inhoud (SAE)</th><td>${product.volume} liter</td></tr>` : ''}
-                ${product.weight ? `<tr><th>Eigen Gewicht</th><td>${product.weight} kg</td></tr>` : ''}
-                ${product.excavator_weight_min && product.excavator_weight_max ? `
-                  <tr><th>Machine Klasse</th><td>${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}</td></tr>
-                ` : ''}
-                ${product.material ? `<tr><th>Materiaal</th><td>${product.material}</td></tr>` : '<tr><th>Materiaal</th><td>Hardox 450 / S355</td></tr>'}
-                ${product.warranty ? `<tr><th>Garantie</th><td>${product.warranty}</td></tr>` : '<tr><th>Garantie</th><td>2 Jaar Constructiegarantie</td></tr>'}
-                ${renderExtraSpecs(product.specs)}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
+  // Price section product-id
+  container.querySelector('#price-section').dataset.productId = product.id;
 
-    <div class="product-sticky-cta">
-      <button class="btn-split btn-split-primary" onclick="window.quoteCart.addItem({
-        id: '${product.id}',
-        title: '${product.title.replace(/'/g, "\\'")}',
-        image: '${mainImage}',
-        category: '${product.category_title || ''}',
-        specs: {
-          width: '${product.width || ''}',
-          weight: '${product.weight || ''}'
-        },
-        quantity: parseInt(document.getElementById('quantity').value) || 1
-      });">
-        <span class="btn-split-text">Toevoegen aan offerte</span>
-        <span class="btn-split-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </span>
-      </button>
-    </div>
-  `;
+  // Cart data on buttons
+  container.querySelector('#pd-add-btn').dataset.product = cartProductData;
+  container.querySelector('#pd-sticky-btn').dataset.product = cartProductData;
+
+  // Key specs
+  const keySpecsEl = container.querySelector('#pd-key-specs');
+  if (product.width || product.weight || product.attachment_type || (product.excavator_weight_min && product.excavator_weight_max)) {
+    const specsData = [];
+    if (product.width) specsData.push(['Breedte', `${product.width} mm`]);
+    if (product.weight) specsData.push(['Gewicht', `${product.weight} kg`]);
+    if (product.attachment_type) specsData.push(['Ophanging', product.attachment_type]);
+    if (product.excavator_weight_min && product.excavator_weight_max) {
+      specsData.push(['Graafmachine', `${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}`]);
+    }
+    specsData.forEach(([label, value]) => {
+      const div = document.createElement('div');
+      div.className = 'key-spec';
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'key-spec-label';
+      labelSpan.textContent = label;
+      const valueSpan = document.createElement('span');
+      valueSpan.className = 'key-spec-value';
+      valueSpan.textContent = value;
+      div.appendChild(labelSpan);
+      div.appendChild(valueSpan);
+      keySpecsEl.appendChild(div);
+    });
+  } else {
+    keySpecsEl.style.display = 'none';
+  }
+
+  // Specs table
+  const tbody = container.querySelector('#pd-specs-tbody');
+  const specRows = [
+    [product.article_number, 'Artikelnummer', product.article_number],
+    [product.brand_title, 'Merk Machine', product.brand_title],
+    [product.category_title, 'Categorie', product.category_title],
+    [product.attachment_type, 'Aansluiting', product.attachment_type],
+    [product.width, 'Breedte', product.width ? `${product.width} mm` : null],
+    [product.volume, 'Inhoud (SAE)', product.volume ? `${product.volume} liter` : null],
+    [product.weight, 'Eigen Gewicht', product.weight ? `${product.weight} kg` : null],
+  ];
+  specRows.forEach(([condition, label, value]) => {
+    if (!condition) return;
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.textContent = label;
+    const td = document.createElement('td');
+    td.textContent = value;
+    tr.appendChild(th);
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+  if (product.excavator_weight_min && product.excavator_weight_max) {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.textContent = 'Machine Klasse';
+    const td = document.createElement('td');
+    td.textContent = `${formatWeight(product.excavator_weight_min)} - ${formatWeight(product.excavator_weight_max)}`;
+    tr.appendChild(th);
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
+  const matTr = document.createElement('tr');
+  const matTh = document.createElement('th');
+  matTh.textContent = 'Materiaal';
+  const matTd = document.createElement('td');
+  matTd.textContent = product.material || 'Hardox 450 / S355';
+  matTr.appendChild(matTh);
+  matTr.appendChild(matTd);
+  tbody.appendChild(matTr);
+  const warTr = document.createElement('tr');
+  const warTh = document.createElement('th');
+  warTh.textContent = 'Garantie';
+  const warTd = document.createElement('td');
+  warTd.textContent = product.warranty || '2 Jaar Constructiegarantie';
+  warTr.appendChild(warTh);
+  warTr.appendChild(warTd);
+  tbody.appendChild(warTr);
+  tbody.insertAdjacentHTML('beforeend', renderExtraSpecs(product.specs));
 
   // Add related products section container after product detail
   const existingRelatedSection = document.getElementById('related-products-section');
@@ -408,7 +414,7 @@ function renderExtraSpecs(specs) {
   if (!specs || typeof specs !== 'object') return '';
 
   return Object.entries(specs)
-    .map(([key, value]) => `<tr><th>${formatSpecKey(key)}</th><td>${value}</td></tr>`)
+    .map(([key, value]) => `<tr><th>${escapeHtml(formatSpecKey(key))}</th><td>${escapeHtml(value)}</td></tr>`)
     .join('');
 }
 
@@ -572,17 +578,21 @@ window.openProductLightbox = function(imageUrl, productTitle) {
   // Create lightbox overlay
   const lightbox = document.createElement('div');
   lightbox.className = 'product-lightbox-overlay';
-  lightbox.innerHTML = `
-    <div class="product-lightbox-content">
-      <button class="product-lightbox-close" onclick="closeProductLightbox()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-      <img src="${imageUrl}" alt="${productTitle}">
-    </div>
-  `;
+  const lightboxContent = document.createElement('div');
+  lightboxContent.className = 'product-lightbox-content';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'product-lightbox-close';
+  closeBtn.setAttribute('onclick', 'closeProductLightbox()');
+  closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+
+  const img = document.createElement('img');
+  img.src = imageUrl;
+  img.alt = productTitle;
+
+  lightboxContent.appendChild(closeBtn);
+  lightboxContent.appendChild(img);
+  lightbox.appendChild(lightboxContent);
   
   document.body.appendChild(lightbox);
   document.body.style.overflow = 'hidden';

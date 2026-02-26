@@ -695,7 +695,8 @@ h6 { font-size: var(--text-base); }
   height: 90px; /* Fixed height for better alignment */
   display: flex;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: var(--z-sticky);
 }
 

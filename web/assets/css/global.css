@@ -194,7 +194,6 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 body {
@@ -204,7 +203,6 @@ body {
   line-height: 1.6;
   color: var(--color-gray-800);
   background-color: var(--color-white);
-  overflow-x: hidden;
 }
 
 img {
@@ -691,12 +689,11 @@ h6 { font-size: var(--text-base); }
    ============================================ */
 .main-nav {
   background-color: white;
-  border-bottom: 2px solid #2C5F6F; /* Border in Petrol color */
-  height: 90px; /* Fixed height for better alignment */
+  border-bottom: 2px solid #2C5F6F;
+  height: 90px;
   display: flex;
   align-items: center;
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: var(--z-sticky);
 }
 

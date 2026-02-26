@@ -211,9 +211,9 @@ function renderProduct(product) {
           <div class="product-cta-section">
             <div class="product-quantity-wrapper">
               <div class="quantity-selector">
-                <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
+                <button type="button" class="quantity-btn minus" onclick="var i=this.nextElementSibling;i.value=Math.max(1,parseInt(i.value||1)-1)">-</button>
                 <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
-                <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
+                <button type="button" class="quantity-btn plus" onclick="var i=this.previousElementSibling;i.value=Math.min(99,parseInt(i.value||1)+1)">+</button>
               </div>
               
               <div class="product-actions">

@@ -263,9 +263,13 @@ class QuoteCartUI {
     
     try {
       const product = JSON.parse(productData);
-      const quantityInput = document.getElementById('quantity');
-      const quantity = quantityInput ? (parseInt(quantityInput.value) || 1) : 1;
+      // Read quantity from the nearest quantity input (within the same wrapper or page)
+      const wrapper = btn.closest('.product-quantity-wrapper') || btn.closest('.product-cta-section');
+      let quantityInput = wrapper ? wrapper.querySelector('input[name="quantity"]') : null;
+      if (!quantityInput) quantityInput = document.getElementById('quantity');
+      const quantity = quantityInput ? (parseInt(quantityInput.value, 10) || 1) : 1;
       product.quantity = quantity;
+      console.log('🛒 Adding product with quantity:', quantity);
       const wasInCart = window.quoteCart.hasItem(product.id);
       
       if (window.quoteCart.addItem(product)) {

@@ -389,18 +389,14 @@
   width: 28px;
   height: 28px;
   border: none;
-  background: transparent;
+  background: var(--color-gray-100);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-md);
-  opacity: 0;
-  transition: all 0.2s ease;
-}
-
-.quote-cart-item:hover .quote-cart-item-remove {
   opacity: 1;
+  transition: all 0.2s ease;
 }
 
 .quote-cart-item-remove:hover {

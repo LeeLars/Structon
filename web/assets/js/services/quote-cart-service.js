@@ -120,15 +120,16 @@ class QuoteCartService {
     }
 
     const existingIndex = this.cart.items.findIndex(item => item.id === product.id);
+    const addedQuantity = product.quantity || 1;
     
     if (existingIndex >= 0) {
-      // Increase quantity
-      this.cart.items[existingIndex].quantity = (this.cart.items[existingIndex].quantity || 1) + 1;
+      // Increase quantity by the amount being added
+      this.cart.items[existingIndex].quantity = (this.cart.items[existingIndex].quantity || 1) + addedQuantity;
     } else {
-      // Add new item
+      // Add new item with the specified quantity
       this.cart.items.push({
         ...product,
-        quantity: 1,
+        quantity: addedQuantity,
         addedAt: new Date().toISOString()
       });
     }

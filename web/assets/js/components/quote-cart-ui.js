@@ -263,6 +263,9 @@ class QuoteCartUI {
     
     try {
       const product = JSON.parse(productData);
+      const quantityInput = document.getElementById('quantity');
+      const quantity = quantityInput ? (parseInt(quantityInput.value) || 1) : 1;
+      product.quantity = quantity;
       const wasInCart = window.quoteCart.hasItem(product.id);
       
       if (window.quoteCart.addItem(product)) {

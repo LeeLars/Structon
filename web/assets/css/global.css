@@ -194,6 +194,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -203,6 +204,7 @@ body {
   line-height: 1.6;
   color: var(--color-gray-800);
   background-color: var(--color-white);
+  overflow-x: hidden;
 }
 
 img {

@@ -122,8 +122,13 @@
   transform: translateX(0);
 }
 
-/* Mobile: Bottom sheet style */
+/* Mobile: FAB + Bottom sheet style */
 @media (max-width: 768px) {
+  .quote-cart-fab {
+    right: 16px;
+    bottom: 16px;
+  }
+
   .quote-cart-panel {
     top: auto;
     bottom: 0;

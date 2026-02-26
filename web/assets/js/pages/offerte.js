@@ -4,7 +4,10 @@
  * Now includes quote cart integration
  */
 
-import { quotes, products } from '../api/client.js';
+import { quotes, products, notifications } from '../api/client.js';
+
+// Email addresses for form notifications
+const NOTIFICATION_EMAILS = ['klantenleads@grafixstudio.be', 'offertes@structon.be'];
 
 // Form state
 let isSubmitting = false;
@@ -707,6 +710,25 @@ async function handleFormSubmit(e) {
     
     console.log('✅ Quote submitted successfully:', response);
     
+    // Send email notifications
+    try {
+      const emailBody = formatQuoteEmail(quoteData, cartItems);
+      const emailPromises = NOTIFICATION_EMAILS.map(email => 
+        notifications.sendEmail({
+          to: email,
+          subject: `Nieuwe ${formData.get('request_type') === 'offerte' ? 'offerte aanvraag' : formData.get('request_type') === 'maatwerk' ? 'maatwerk aanvraag' : 'vraag'} van ${quoteData.customer_name}`,
+          body: emailBody,
+          replyTo: quoteData.customer_email,
+          formType: 'quote'
+        })
+      );
+      await Promise.all(emailPromises);
+      console.log('✅ Email notifications sent');
+    } catch (emailError) {
+      console.error('⚠️ Email notification failed:', emailError);
+      // Don't fail the form if email fails
+    }
+    
     // Show success message
     showSuccessMessage(response.reference || response.id || generateReference());
     
@@ -749,6 +771,57 @@ function generateReference() {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
   return `STR-${year}${month}-${random}`;
+}
+
+/**
+ * Format quote email body for notifications
+ */
+function formatQuoteEmail(data, cartItems) {
+  const requestTypeLabels = {
+    'offerte': 'Offerte aanvraag',
+    'vraag': 'Vraag',
+    'maatwerk': 'Maatwerk aanvraag'
+  };
+  
+  let email = `NIEUWE ${requestTypeLabels[data.request_type]?.toUpperCase() || 'AANVRAAG'}
+
+Bedrijfsgegevens:
+- Bedrijfsnaam: ${data.company_name || 'Niet opgegeven'}
+- BTW nummer: ${data.vat_number || 'Niet opgegeven'}
+
+Contactgegevens:
+- Naam: ${data.customer_name}
+- E-mail: ${data.customer_email}
+- Telefoon: ${data.customer_phone || 'Niet opgegeven'}
+
+Aanvraag details:
+- Type: ${requestTypeLabels[data.request_type] || data.request_type}
+`;
+  
+  if (data.machine_brand) email += `- Machine merk: ${data.machine_brand}\n`;
+  if (data.machine_model) email += `- Machine model: ${data.machine_model}\n`;
+  if (data.attachment_type) email += `- Attachment type: ${data.attachment_type}\n`;
+  if (data.product_category) email += `- Product categorie: ${data.product_category}\n`;
+  if (data.prefilled_product_name) email += `- Voorgevuld product: ${data.prefilled_product_name}\n`;
+  if (data.industry) email += `- Industrie: ${data.industry}\n`;
+  if (data.brand) email += `- Merk: ${data.brand}\n`;
+  
+  if (cartItems && cartItems.length > 0) {
+    email += `\nProducten in mandje:\n`;
+    cartItems.forEach((item, index) => {
+      email += `${index + 1}. ${item.title} (${item.quantity || 1}x)${item.category ? ' - ' + item.category : ''}\n`;
+    });
+  }
+  
+  if (data.message) {
+    email += `\nBericht:\n${data.message}\n`;
+  }
+  
+  email += `\n---
+Verzonden op: ${new Date().toLocaleString('nl-BE')}
+Pagina: ${data.source_page || window.location.href}`;
+  
+  return email;
 }
 
 /**
@@ -795,14 +868,18 @@ function showErrorMessage(message) {
     max-width: 400px;
     animation: slideIn 0.3s ease;
   `;
-  toast.innerHTML = `
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="12" y1="8" x2="12" y2="12"></line>
-      <line x1="12" y1="16" x2="12.01" y2="16"></line>
-    </svg>
-    <span>${message}</span>
-  `;
+  const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svgIcon.setAttribute('width', '24');
+  svgIcon.setAttribute('height', '24');
+  svgIcon.setAttribute('viewBox', '0 0 24 24');
+  svgIcon.setAttribute('fill', 'none');
+  svgIcon.setAttribute('stroke', 'currentColor');
+  svgIcon.setAttribute('stroke-width', '2');
+  svgIcon.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>';
+  const msgSpan = document.createElement('span');
+  msgSpan.textContent = message;
+  toast.appendChild(svgIcon);
+  toast.appendChild(msgSpan);
   
   document.body.appendChild(toast);
   

@@ -52,18 +52,33 @@ function renderBlogPost(blog) {
   const headerEl = document.getElementById('post-header');
   const date = formatDate(blog.published_at);
   
-  headerEl.innerHTML = `
-    <h1>${escapeHtml(blog.title)}</h1>
-    <div class="post-meta">
-      <span>${date}</span>
-      ${blog.author_email ? `<span>Door ${blog.author_email.split('@')[0]}</span>` : ''}
-    </div>
-    ${blog.featured_image ? `
-      <div class="post-featured-image">
-        <img src="${blog.featured_image}" alt="${escapeHtml(blog.title)}">
-      </div>
-    ` : ''}
-  `;
+  // Build header safely using DOM methods
+  headerEl.innerHTML = '';
+  const h1 = document.createElement('h1');
+  h1.textContent = blog.title;
+  headerEl.appendChild(h1);
+  
+  const metaDiv = document.createElement('div');
+  metaDiv.className = 'post-meta';
+  const dateSpan = document.createElement('span');
+  dateSpan.textContent = date;
+  metaDiv.appendChild(dateSpan);
+  if (blog.author_email) {
+    const authorSpan = document.createElement('span');
+    authorSpan.textContent = 'Door ' + blog.author_email.split('@')[0];
+    metaDiv.appendChild(authorSpan);
+  }
+  headerEl.appendChild(metaDiv);
+  
+  if (blog.featured_image) {
+    const imgDiv = document.createElement('div');
+    imgDiv.className = 'post-featured-image';
+    const img = document.createElement('img');
+    img.src = blog.featured_image;
+    img.alt = blog.title || '';
+    imgDiv.appendChild(img);
+    headerEl.appendChild(imgDiv);
+  }
   
   // Render content
   const contentEl = document.getElementById('post-content');
@@ -79,7 +94,9 @@ function renderBlogPost(blog) {
       .join('');
   }
   
-  contentEl.innerHTML = content;
+  // Blog content is trusted CMS HTML - sanitize to remove script tags
+  const sanitized = content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  contentEl.innerHTML = sanitized;
 }
 
 /**
@@ -89,16 +106,20 @@ function showError(message) {
   const headerEl = document.getElementById('post-header');
   const contentEl = document.getElementById('post-content');
   
-  headerEl.innerHTML = `
-    <div class="empty-state">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="8" x2="12" y2="12"></line>
-        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-      </svg>
-      <p>${message}</p>
-    </div>
-  `;
+  headerEl.innerHTML = '';
+  const emptyState = document.createElement('div');
+  emptyState.className = 'empty-state';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  svg.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>';
+  emptyState.appendChild(svg);
+  const msgP = document.createElement('p');
+  msgP.textContent = message;
+  emptyState.appendChild(msgP);
+  headerEl.appendChild(emptyState);
   contentEl.innerHTML = '';
 }
 

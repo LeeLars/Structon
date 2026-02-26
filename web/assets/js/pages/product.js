@@ -212,7 +212,7 @@ function renderProduct(product) {
             <div class="product-quantity-wrapper">
               <div class="quantity-selector">
                 <button type="button" class="quantity-btn minus" onclick="this.nextElementSibling.stepDown()">-</button>
-                <input type="number" id="quantity_${product.id}" name="quantity" value="1" min="1" max="99">
+                <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
                 <button type="button" class="quantity-btn plus" onclick="this.previousElementSibling.stepUp()">+</button>
               </div>
               
@@ -227,7 +227,7 @@ function renderProduct(product) {
                       width: '${product.width || ''}',
                       weight: '${product.weight || ''}'
                     },
-                    quantity: parseInt(document.getElementById('quantity_${product.id}').value) || 1
+                    quantity: parseInt(document.getElementById('quantity').value) || 1
                   });"
                 >
                   <span class="btn-split-text">Toevoegen aan offerte</span>
@@ -331,7 +331,7 @@ function renderProduct(product) {
           width: '${product.width || ''}',
           weight: '${product.weight || ''}'
         },
-        quantity: parseInt(document.getElementById('quantity_${product.id}').value) || 1
+        quantity: parseInt(document.getElementById('quantity').value) || 1
       });">
         <span class="btn-split-text">Toevoegen aan offerte</span>
         <span class="btn-split-icon">

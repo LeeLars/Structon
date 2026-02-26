@@ -472,6 +472,21 @@ export const blogs = {
   }
 };
 
+/**
+ * Notifications API - For sending email notifications from forms
+ */
+export const notifications = {
+  /**
+   * Send form notification email
+   */
+  async sendEmail({ to, subject, body, replyTo, formType }) {
+    return request('/notifications/email', {
+      method: 'POST',
+      body: JSON.stringify({ to, subject, body, replyTo, formType })
+    });
+  }
+};
+
 // Default export with all APIs
 export default {
   auth,
@@ -486,5 +501,6 @@ export default {
   favorites,
   addresses,
   account,
-  blogs
+  blogs,
+  notifications
 };

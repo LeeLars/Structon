@@ -3,7 +3,10 @@
  * Handles contact form submission to CMS
  */
 
-import { quotes } from '../api/client.js';
+import { quotes, notifications } from '../api/client.js';
+
+// Email addresses for form notifications
+const NOTIFICATION_EMAILS = ['klantenleads@grafixstudio.be', 'offertes@structon.be'];
 
 // Form state
 let isSubmitting = false;
@@ -81,6 +84,25 @@ async function handleSubmit(e) {
     
     console.log('✅ Contact request submitted successfully:', response);
     
+    // Send email notifications
+    try {
+      const emailBody = formatContactEmail(data);
+      const emailPromises = NOTIFICATION_EMAILS.map(email => 
+        notifications.sendEmail({
+          to: email,
+          subject: `Nieuw contact bericht van ${data.customer_name}`,
+          body: emailBody,
+          replyTo: data.customer_email,
+          formType: 'contact'
+        })
+      );
+      await Promise.all(emailPromises);
+      console.log('✅ Email notifications sent');
+    } catch (emailError) {
+      console.error('⚠️ Email notification failed:', emailError);
+      // Don't fail the form if email fails
+    }
+    
     // Show success message
     showSuccessMessage();
     
@@ -112,6 +134,24 @@ function generateQuoteSlug(customerName) {
     .slice(0, 30);
   
   return `contact-${dateStr}-${nameSlug}`;
+}
+
+/**
+ * Format contact email body for notifications
+ */
+function formatContactEmail(data) {
+  return `NIEUW CONTACT BERICHT
+
+Naam: ${data.customer_name}
+E-mail: ${data.customer_email}
+Telefoon: ${data.customer_phone || 'Niet opgegeven'}
+
+Bericht:
+${data.message}
+
+---
+Verzonden op: ${new Date().toLocaleString('nl-BE')}
+Pagina: ${window.location.href}`;
 }
 
 /**

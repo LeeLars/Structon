@@ -3,8 +3,9 @@
  * Handles dealer registration form submission to CMS with confirmation email
  */
 
-import { quotes } from '../api/client.js';
+import { quotes, notifications } from '../api/client.js';
 
+const NOTIFICATION_EMAILS = ['klantenleads@grafixstudio.be', 'offertes@structon.be'];
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('dealer-form');
   const submitBtn = document.getElementById('submit-btn');
@@ -87,6 +88,25 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await quotes.submit(quoteData);
       console.log('✅ Dealer application submitted:', result);
       
+      // Send email notifications
+      try {
+        const emailBody = formatDealerMessage(data);
+        const emailPromises = NOTIFICATION_EMAILS.map(email => 
+          notifications.sendEmail({
+            to: email,
+            subject: `Nieuwe dealer aanmelding: ${data.company_name}`,
+            body: emailBody,
+            replyTo: data.email,
+            formType: 'dealer'
+          })
+        );
+        await Promise.all(emailPromises);
+        console.log('✅ Email notifications sent');
+      } catch (emailError) {
+        console.error('⚠️ Email notification failed:', emailError);
+        // Don't fail the form if email fails
+      }
+      
       // Show success message
       showSuccessMessage(data.email);
       
@@ -113,27 +133,49 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function showSuccessMessage(email) {
     const formWrapper = document.querySelector('.dealer-form-wrapper');
-    formWrapper.innerHTML = `
-      <div class="success-message" style="text-align: center; padding: 60px 20px;">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" style="margin-bottom: 24px;">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-          <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        <h2 style="color: var(--color-primary); margin-bottom: 16px;">Bedankt voor je aanmelding!</h2>
-        <p style="font-size: 1.1rem; color: #555; margin-bottom: 24px;">
-          We hebben je dealer aanvraag ontvangen en nemen zo snel mogelijk contact met je op.
-        </p>
-        <p style="color: #666; margin-bottom: 32px;">
-          Een bevestiging is verzonden naar <strong>${email}</strong>
-        </p>
-        <a href="../index.html" class="btn-split usp-btn">
-          <span class="btn-split-text">Terug naar Home</span>
-          <span class="btn-split-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </span>
-        </a>
-      </div>
-    `;
+    formWrapper.innerHTML = '';
+    
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.style.cssText = 'text-align: center; padding: 60px 20px;';
+    
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '80');
+    svg.setAttribute('height', '80');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', '#22c55e');
+    svg.setAttribute('stroke-width', '2');
+    svg.style.marginBottom = '24px';
+    svg.innerHTML = '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>';
+    successDiv.appendChild(svg);
+    
+    const h2 = document.createElement('h2');
+    h2.style.cssText = 'color: var(--color-primary); margin-bottom: 16px;';
+    h2.textContent = 'Bedankt voor je aanmelding!';
+    successDiv.appendChild(h2);
+    
+    const p1 = document.createElement('p');
+    p1.style.cssText = 'font-size: 1.1rem; color: #555; margin-bottom: 24px;';
+    p1.textContent = 'We hebben je dealer aanvraag ontvangen en nemen zo snel mogelijk contact met je op.';
+    successDiv.appendChild(p1);
+    
+    const p2 = document.createElement('p');
+    p2.style.cssText = 'color: #666; margin-bottom: 32px;';
+    p2.appendChild(document.createTextNode('Een bevestiging is verzonden naar '));
+    const strong = document.createElement('strong');
+    strong.textContent = email;
+    p2.appendChild(strong);
+    successDiv.appendChild(p2);
+    
+    const link = document.createElement('a');
+    link.href = '../index.html';
+    link.className = 'btn-split usp-btn';
+    link.innerHTML = '<span class="btn-split-text">Terug naar Home</span><span class="btn-split-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>';
+    successDiv.appendChild(link);
+    
+    formWrapper.appendChild(successDiv);
     
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
